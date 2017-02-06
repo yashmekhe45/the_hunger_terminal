@@ -57,3 +57,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'cancancan'
 gem 'minitest-rails'
+gem 'factory_girl_rails', '~> 4.0'

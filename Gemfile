@@ -58,3 +58,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'minitest-rails'
 gem 'factory_girl_rails', '~> 4.0'
+
+group :test do
+  gem 'database_cleaner'
+end

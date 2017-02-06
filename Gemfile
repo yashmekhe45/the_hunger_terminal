@@ -56,9 +56,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'cancancan'
-gem 'minitest-rails'
-gem 'factory_girl_rails', '~> 4.0'
 
-group :test do
+group :development, :test do
+  gem 'minitest-rails'
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
 end

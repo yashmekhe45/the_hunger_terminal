@@ -43,4 +43,24 @@ ActiveRecord::Schema.define(version: 20170208093105) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "addresses", force: :cascade do |t|
+    t.string   "house_no"
+    t.integer  "pincode"
+    t.string   "locality"
+    t.string   "city"
+    t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_addresses_on_company_id", using: :btree
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name"
+    t.string   "landline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "addresses", "companies"
 end

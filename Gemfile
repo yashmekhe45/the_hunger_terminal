@@ -58,9 +58,12 @@ gem 'devise'
 gem 'cancancan'
 gem 'faker'
 
+group :test do 
+  gem "codeclimate-test-reporter", "~> 1.0.0"
+end
+
 group :development, :test do
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
-
 end

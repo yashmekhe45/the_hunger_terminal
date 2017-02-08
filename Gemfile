@@ -58,7 +58,8 @@ gem 'devise'
 gem 'cancancan'
 
 group :test do 
-  gem "codeclimate-test-reporter", "~> 1.0.0"
+  gem 'codeclimate-test-reporter', '~> 1.0.0'
+  gem 'simplecov', :require => false
 end
 
 group :development, :test do

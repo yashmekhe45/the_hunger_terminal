@@ -1,0 +1,7 @@
+database:
+  post:
+    - bundle exec rake db:migrate
+    - bundle exec rake db:seed
+test:
+  post:
+    - bundle exec codeclimate-test-reporter

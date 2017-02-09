@@ -64,4 +64,5 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'faker', '~> 1.6', '>= 1.6.3'
 end

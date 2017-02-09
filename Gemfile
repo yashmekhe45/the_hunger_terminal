@@ -42,6 +42,9 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'minitest-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -59,10 +62,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'cancancan'
+gem 'faker'
 
-group :development, :test do
-  gem 'minitest-rails'
-  gem 'factory_girl_rails'
-  gem 'database_cleaner'
-  gem 'faker', '~> 1.6', '>= 1.6.3'
+group :test do 
+  gem 'codeclimate-test-reporter', '~> 1.0.0'
+  gem 'simplecov', :require => false
 end

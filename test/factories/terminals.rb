@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :terminal do
     name { Faker::Name.name }
-    landline "022-12648975"
+    landline { Faker::PhoneNumber.phone_number }
   end
 end

@@ -3,7 +3,6 @@ class CreateCompanies < ActiveRecord::Migration[5.0]
     create_table :companies do |t|
       t.string :name
       t.string :landline
-
       t.timestamps
     end
   end

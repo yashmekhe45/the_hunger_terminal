@@ -1,0 +1,23 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.jumbotron {
+  position: relative;
+  //background: url("jumbo.jpg") no-repeat center center;
+  background-color:transparent !important;
+  width:100%;
+  height: 100%;
+  background-size: 100% 100%;
+  padding-top: 7%;
+  padding-bottom: 7%;
+  font-family: Lucida Calligraphy;
+}
+
+.thumbnail {
+  height: 150px;
+  width: 150px;
+  text-align: center;
+}
+
+

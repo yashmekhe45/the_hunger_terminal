@@ -13,3 +13,98 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+/* universal */
+
+body {
+  background: url("jumbo.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: Lucida Calligraphy;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 25px;
+  margin-top:25px;
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+h1 {
+  //font-size: 2em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.3em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 12px;
+  font-weight: bold;
+  font-family: BlackChancery;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+    
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: rgb(0,0,0);
+  color: white;
+  //padding: 25px;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  width:100%;
+} 

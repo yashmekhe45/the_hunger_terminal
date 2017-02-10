@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'home/index'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users, :skip => [:registration]
   as :user do
@@ -7,4 +9,5 @@ Rails.application.routes.draw do
     patch'users' => 'devise/registrations#update', :as => 'user_registration'
   end
   
+  root to: 'home#index'
 end

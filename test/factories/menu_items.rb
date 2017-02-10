@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :menu_item do
-    name "MyString"
-    veg false
-    price 1
+    name { Faker::Name.name }
+    veg {Faker::Boolean.boolean}
+    price { Faker::Number.positive }
   end
 end

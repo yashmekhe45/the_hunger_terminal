@@ -9,12 +9,9 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema.define(version: 20170208162530) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
   create_table "addresses", force: :cascade do |t|
     t.string   "house_no"
     t.integer  "pincode"

@@ -1,14 +1,6 @@
 require "test_helper"
 
 class CompanyTest < ActiveSupport::TestCase
-  def company
-    @company ||= Company.new
-  end
-
-  # def test_valid
-  #   assert_not company.valid?, "saved company record without any attribute"
-  # end
-
   test "name should be present" do
     company_obj = FactoryGirl.build(:company,:name => nil)
     company_obj.valid?
@@ -20,17 +12,14 @@ class CompanyTest < ActiveSupport::TestCase
     company_obj.valid?
     assert company_obj.errors[:landline].include?("can't be blank")
   end
-
   
   test "landline should be unique" do
     company = FactoryGirl.build(:company)
     duplicate_record =company.dup
     company.save(validate: false)
     duplicate_record.valid?
-    # assert duplicate_record.errors
     assert duplicate_record.errors[:landline].include?("has already been taken")
   end
-
 
   test "name should be unique under case insensitive scope" do
     company = FactoryGirl.build(:company)
@@ -40,7 +29,6 @@ class CompanyTest < ActiveSupport::TestCase
     duplicate_record.valid?
     assert duplicate_record.errors[:name].include?("has already been taken")
   end
-
 
   test "landline should be valid indian landline number" do
     company = FactoryGirl.build(:company, :landline => 'k')

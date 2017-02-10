@@ -4,7 +4,6 @@ class CreateMenuItems < ActiveRecord::Migration[5.0]
       t.string :name
       t.boolean :veg
       t.integer :price
-
       t.timestamps
     end
   end

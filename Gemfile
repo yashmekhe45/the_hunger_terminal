@@ -60,6 +60,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'cancancan'
+gem 'faker'
 
 group :test do 
   gem 'codeclimate-test-reporter', '~> 1.0.0'

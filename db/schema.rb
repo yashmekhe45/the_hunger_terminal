@@ -9,12 +9,9 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema.define(version: 20170208162530) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
   create_table "addresses", force: :cascade do |t|
     t.string   "house_no"
     t.integer  "pincode"
@@ -28,6 +25,23 @@ ActiveRecord::Schema.define(version: 20170208162530) do
   end
 
   create_table "companies", force: :cascade do |t|
+    t.string   "name"
+    t.string   "landline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "menu_items", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "veg"
+    t.integer  "price"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "terminal_id"
+    t.index ["terminal_id"], name: "index_menu_items_on_terminal_id", using: :btree
+  end
+
+  create_table "terminals", force: :cascade do |t|
     t.string   "name"
     t.string   "landline"
     t.datetime "created_at", null: false
@@ -60,4 +74,5 @@ ActiveRecord::Schema.define(version: 20170208162530) do
   end
 
   add_foreign_key "addresses", "companies"
+  add_foreign_key "menu_items", "terminals"
 end

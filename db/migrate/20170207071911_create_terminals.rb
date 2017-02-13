@@ -1,6 +1,6 @@
-class CreateCompanies < ActiveRecord::Migration[5.0]
+class CreateTerminals < ActiveRecord::Migration[5.0]
   def change
-    create_table :companies do |t|
+    create_table :terminals do |t|
       t.string :name
       t.string :landline
       t.timestamps

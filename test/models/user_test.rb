@@ -1,5 +1,5 @@
 require "test_helper"
-include FactoryGirl::Syntax::Methods
+
 class UserTest < ActiveSupport::TestCase
   test "email address must be present" do
     user = build(:user,:email => nil)

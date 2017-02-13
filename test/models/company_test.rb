@@ -1,5 +1,5 @@
 require "test_helper"
-include FactoryGirl::Syntax::Methods
+
 class CompanyTest < ActiveSupport::TestCase
   test "name should be present" do
     company_obj = build(:company,:name => nil)

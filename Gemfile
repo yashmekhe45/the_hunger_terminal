@@ -11,6 +11,7 @@ gem 'autoprefixer-rails', '~> 6.7', '>= 6.7.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'rails', '~> 5.0.1'
 gem 'toastr-rails'
+gem 'haml-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server

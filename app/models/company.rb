@@ -1,5 +1,5 @@
 class Company < ApplicationRecord
-  include ActiveModel::Validations
+  # include ActiveModel::Validations
 
   validates_with LandlineValidator
   validates :name, :landline, presence: true
@@ -18,5 +18,5 @@ class Company < ApplicationRecord
     end
     self.name = name.squish
   end
-  # has_many :users, as :employees, dependent: :destroy
+  has_many :users, as: :employees, dependent: :destroy
 end

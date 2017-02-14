@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     patch'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
+  resources :companies
 end

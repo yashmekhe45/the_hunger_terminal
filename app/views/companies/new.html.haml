@@ -1,0 +1,26 @@
+.container.center
+  .row
+    .col-md-4
+    .col-md-4
+      .company-fields
+        %h5 Company Details
+        = simple_nested_form_for(@company, html: { class: 'form-verticle' }) do |f|
+          = f.input :name, :label => false, :placeholder => "Name"
+          = f.input :landline, :label => false, :placeholder => "Landline" 
+          .location
+            %h5 Company Location Details:
+            = f.simple_fields_for :address do |a|
+              = a.input :house_no, :label => false, :placeholder => "House No"
+              = a.input :pincode, :label => false, :placeholder => "PIN Code"
+              = a.input :locality, :label => false, :placeholder => "Locality"
+              = a.input :state, :label => false, :placeholder => "State"
+              = a.input :city, :label => false, :placeholder => "City"
+          .admin
+            %h5 Company Admin Details:
+            = f.simple_fields_for :employees do |u|
+              = u.input :name, :label => false, :placeholder => "Name"
+              = u.input :email, :label => false, :placeholder => "Email"
+              = u.input :mobile_number, :label => false, :placeholder => "Mobile_No"
+              = u.input :password, :label => false, :placeholder => "Password"
+            = f.submit 'Sign up', class: "btn btn-primary"
+    .col-md-4

@@ -1,0 +1,12 @@
+= simple_nested_form_for @company do |f|
+ -if flash[:error].present?
+  = flash[:error]
+ =f.input :name
+ =f.input :landline
+ =f.simple_fields_for :address, :wrapper => false do |address_form|
+  =address_form.input :house_no
+  =address_form.input :pincode, type: 'integer'
+  =address_form.input :locality
+  =address_form.input :city
+  =address_form.input :state
+ =f.submit"submit"

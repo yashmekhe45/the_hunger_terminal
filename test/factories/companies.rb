@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     after(:build) do |company, evaluator|
         build_list(:user, evaluator.users_count, company: company)
-         build(:address, location: company)
+        build(:address, location: company)
     end
   end
 

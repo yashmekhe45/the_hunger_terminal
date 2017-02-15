@@ -1,0 +1,23 @@
+
+%h3.text-center= @company.name 
+%table.table-condensed.table-hover{:border =>3,:align=>"center",:style=>"width:60%"}
+  %tbody
+    %tr
+      %th Phone Number:
+      %td= @company.landline
+    %tr
+      %th House Number
+      %td= @company.address.house_no
+    %tr
+      %th Locality
+      %td= @company.address.locality
+    %tr
+      %th City
+      %td= @company.address.city
+    %tr
+      %th Pincode
+      %td= @company.address.pincode
+    %tr
+      %th State
+      %td= @company.address.state
+        

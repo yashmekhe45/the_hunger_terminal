@@ -5,6 +5,5 @@ FactoryGirl.define do
     locality "baner"
     city {Faker::Address.city}
     state {Faker::Address.state}
-    association :location, factory: :company
   end
 end

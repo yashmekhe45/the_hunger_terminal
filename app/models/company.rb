@@ -7,10 +7,11 @@ class Company < ApplicationRecord
   validates :landline, uniqueness: true
   validates :landline, length: {is: 12}
   validates :address, presence: true
-  validates :employees, presence: true
 
-  has_one :address, dependent: :destroy, as: :location
+  has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
+  accepts_nested_attributes_for :address 
+
   before_validation :remove_space
   def remove_space
     #squish method is not for nil classes
@@ -18,6 +19,5 @@ class Company < ApplicationRecord
       return
     end
     self.name = name.squish
-  end
-  
+  end  
 end

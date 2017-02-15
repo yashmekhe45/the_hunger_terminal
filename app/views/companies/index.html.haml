@@ -1,0 +1,14 @@
+%h2.text-center Companies
+%table.table-condensed.table-hover{:border =>3,:align=>"center",:style=>"width:60%"}
+  %tbody
+      
+    - @companies.each do |company|
+      %tr
+        %td= company.name
+        
+        -$name= company.name
+        %td= link_to "show",company_path(company.id)
+
+        %td= link_to "Edit",edit_company_path(company.id)
+
+        %td= link_to "delete",company_path(company.id),method: :delete,data: { confirm: 'Are you sure?' }

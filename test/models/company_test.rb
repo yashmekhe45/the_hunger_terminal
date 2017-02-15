@@ -2,12 +2,6 @@ require "test_helper"
 
 class CompanyTest < ActiveSupport::TestCase
 
-  test "must save a new company with all params" do
-    assert_difference 'Company.count' do
-      company = create(:company)
-    end
-  end
-
   test "name should be present" do
     company_obj = build(:company,:name => nil)
     company_obj.valid?
@@ -54,12 +48,5 @@ class CompanyTest < ActiveSupport::TestCase
     company = build(:company, :address => nil, :landline => "0233-1234567")
     company.valid?
     assert company.errors[:address].include?("can't be blank")
-  end
-
-  test "company admin should be present" do
-    # address1 = build(:address)
-    company = build(:company, employees: [])
-    company.valid?
-    assert company.errors[:employees].include?("can't be blank")
   end
 end

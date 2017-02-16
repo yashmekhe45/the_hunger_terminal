@@ -1,25 +1,25 @@
 require "test_helper"
 class MenuItemTest < ActiveSupport::TestCase
   test "should not save without item name" do
-    menuitem = FactoryGirl.build(:menu_item,:name=>"")
+    menuitem = build(:menu_item,:name=>"")
     menuitem.valid?
     assert_not_empty menuitem.errors[:name]
   end
 
   test "should not save without veg/nonveg specified" do
-    menuitem = FactoryGirl.build(:menu_item,:veg=>"")
+    menuitem = build(:menu_item,:veg=>"")
     menuitem.valid?
     assert_not_empty menuitem.errors[:veg]
   end
 
   test "should not save without showing price" do
-    menuitem = FactoryGirl.build(:menu_item,:price=>"")
+    menuitem = build(:menu_item,:price=>"")
     menuitem.valid?
     assert_not_empty menuitem.errors[:price]
   end
 
   test "should not have price less than zero" do
-    menuitem = FactoryGirl.build(:menu_item,:price=>0)
+    menuitem = build(:menu_item,:price=>0)
     menuitem.valid?
     assert_not_empty menuitem.errors[:price]
   end

@@ -48,12 +48,21 @@ class TerminalsController < ApplicationController
   end
 
   def import
-    @menu_item_errors = Terminal.import(params[:file],params[:id])
+    @menu_item_errors,$FILE = Terminal.import(params[:file],params[:id]) 
+    if @menu_item_errors.valid?
+      redirect_to terminal_path notice: "You have successfully added menu items."
+    else
+      download 
+    end
   end  
 
   private
 
   def terminal_param
     params.require(:terminal).permit(:name,:landline, menu_items_attributes: [:id, :name, :veg, :price, :_destroy])
+  end
+
+  def download
+    send_file("#{Rails.root}/#{$FILE}")
   end
 end

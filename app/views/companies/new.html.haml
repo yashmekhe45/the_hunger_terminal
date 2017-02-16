@@ -1,0 +1,51 @@
+.container.center.Absolute-Center.is-Responsive
+  .row
+    .col-md-3
+    .col-md-6
+      .panel.panel-success
+        .panel-heading
+          .panel-title 
+            %h5 Company Sign Up Form
+        .panel-body
+          = simple_nested_form_for(@company, html: { class: 'form-verticle' }) do |f|
+            .form-group
+              .col-md-6
+                = f.input :name, :label => false, :placeholder => "Name"
+              .col-md-6
+                = f.input :landline, :label => false, :placeholder => "Landline" 
+            .location
+              %h5 Company Location Details:
+              = f.simple_fields_for :address do |a|
+                .form-group
+                  .col-md-6
+                    = a.input :house_no, :label => false, :placeholder => "House No"
+                  .col-md-6
+                    = a.input :pincode, :label => false, :placeholder => "PIN Code"
+                .form-group 
+                  .col-md-6   
+                    = a.input :locality, :label => false, :placeholder => "Locality"
+                  .col-md-6
+                    = a.input :state, :label => false, :placeholder => "State"
+                .form-group
+                  .col-md-6
+                    = a.input :city, :label => false, :placeholder => "City"
+                  .col-md-6
+            .admin
+              .form-group
+                .col-md-12
+                  %h5 Company Admin Details:
+              = f.simple_fields_for :employees do |u|
+                .form-group
+                  .col-md-6
+                    = u.input :name, :label => false, :placeholder => "Name"
+                  .col-md-6
+                    = u.input :mobile_number, :label => false, :placeholder => "Mobile_No"
+                .form-group
+                  .col-md-6
+                    = u.input :email, :label => false, :placeholder => "Email"
+                  .col-md-6
+                    = u.input :password, :label => false, :placeholder => "Password"
+            .form-group
+              .col-md-12
+                = f.submit 'Sign up', class: "btn btn-primary"
+    .col-md-3

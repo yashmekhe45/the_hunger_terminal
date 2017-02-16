@@ -12,10 +12,11 @@
         %h2 Want to be a part of this application??
         %h2 
           %span.glyphicon.glyphicon-chevron-down
-        = link_to "Sign up now!", '#', class: "btn btn-lg btn-primary"
-        %h3{:style => "text-align:center;"} Get Your food at your doorstep
-        %br/
-        %button.btn.btn-primary{"data-target" => "#steps", "data-toggle" => "collapse", :type => "button"} See How
+        = link_to "Sign up now!", new_company_path, class: "btn btn-lg btn-primary"
+    .container-fluid.bg-3.text-center
+      %h3{:style => "text-align:center;"} Get Your food at your doorstep
+      %br/
+      %button.btn.btn-primary{"data-target" => "#steps", "data-toggle" => "collapse", :type => "button"} See How
       #steps.collapse
         .container
           .row

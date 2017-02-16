@@ -8,12 +8,13 @@ class User < ApplicationRecord
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
   validates :mobile_number, length: {is: 13}
-  validates_presence_of :company_id, :unless => Proc.new{:role == "super_admin"}
-  validates_presence_of :is_active, :if => Proc.new{:role == "employee"}
+  validates_presence_of :company_id, :if => Proc.new{:role == "employee"}
+  validates_presence_of :is_active, :unless => Proc.new{:role == "super_admin"}
 
   belongs_to :company
 
   before_validation :remove_space
+  
   def remove_space
     if(self.name == nil || self.mobile_number == nil|| self.email == nil)
       return

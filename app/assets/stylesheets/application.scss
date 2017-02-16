@@ -26,8 +26,8 @@ body {
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weight: 400;
-  margin-bottom: 25px;
-  margin-top:25px;
+  margin-bottom: 5%;
+  margin-top: 5%;
 }
 
 /* typography */
@@ -106,3 +106,9 @@ footer {
   bottom:0px;
   width:100%;
 } 
+
+/* Put all forms at the middle of page */
+
+.Absolute-Center.is-Responsive {
+  padding: 5%;
+}

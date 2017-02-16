@@ -4,7 +4,7 @@ class Address < ApplicationRecord
   validates :pincode, numericality:{only_integer:true}
   validates :pincode , length: {is: 6}
   belongs_to :location, polymorphic: true
-
+    
   before_validation :remove_space
   def remove_space
     if(self.house_no == nil || self.locality == nil || 

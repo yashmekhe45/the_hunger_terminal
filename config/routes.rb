@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :menu_items
     member { post :import }
   end
+
+  resources :companies
   
   root to: 'home#index'
 end

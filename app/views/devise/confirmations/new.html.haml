@@ -1,0 +1,20 @@
+.container.Absolute-Center.is-Responsive
+  .row
+    .col-md-4
+    .col-md-4
+      .panel.panel-success
+        .panel-heading
+          .panel-title
+            %h2 Resend confirmation instructions
+        .panel-body
+          = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| 
+            = f.error_notification 
+            = f.full_error :confirmation_token 
+
+            .form-inputs
+              = f.input :email, required: true, autofocus: true 
+
+            .form-actions
+              = f.button :submit, "Resend confirmation instructions" 
+        .panel-footer
+          = render "devise/shared/links" 

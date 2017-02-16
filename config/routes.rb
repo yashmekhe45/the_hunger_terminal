@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :menu_items
     member { post :import }
   end
+
+  resources :companies
   
   get 'terminals/download' => 'terminals#download'
   root to: 'home#index'

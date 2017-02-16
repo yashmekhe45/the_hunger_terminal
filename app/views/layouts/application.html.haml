@@ -4,11 +4,28 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title TheHungerTerminal
     = csrf_meta_tags
+    %link{:href => "http://www.w3schools.com/lib/w3.css", :rel => "stylesheet"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    
   %body
-    %p.notice= notice
-    %p.alert= alert
+    %nav.w3-sidenav.w3-black
+      %i.fa.fa-person.w3-xlarge
+
+      %a.w3-padding-16{:href => "#"}
+        %i.fa.fa-user.w3-xlarge
+        Employee
+      %a.w3-padding-16{:href => "#"}
+        %i.fa.fa-edit.w3-xlarge
+        Order
+      %a.w3-padding-16{:href => "#"}
+        %i.fa.fa-file.w3-xlarge
+        Report
+      %a.w3-padding-16{:href => "#"}
+        %i.fa.fa-cutlery.w3-xlarge
+        Terminal
+
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header
@@ -40,6 +57,24 @@
         - flash.each do |f|
           - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
           toastr['#{type}']('#{f[1]}');
+    
+        
     = yield
     %footer.container-fluid.text-center
-      %p © the hunger terminal
+      .w3-section.w3-padding-top.w3-large
+        %a.w3-hover-white.w3-hover-text-indigo.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-facebook-official
+        %a.w3-hover-white.w3-hover-text-purple.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-instagram
+        %a.w3-hover-white.w3-hover-text-yellow.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-snapchat
+        %a.w3-hover-white.w3-hover-text-red.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-pinterest-p
+        %a.w3-hover-white.w3-hover-text-light-blue.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-twitter
+        %a.w3-hover-white.w3-hover-text-indigo.w3-show-inline-block{:href => "#"}
+          %i.fa.fa-linkedin
+          
+
+    
+

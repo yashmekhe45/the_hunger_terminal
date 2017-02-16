@@ -18,7 +18,7 @@
 /* universal */
 
 body {
-  background: url("jumbo.jpg") no-repeat center center fixed;
+  background: url("background.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -98,7 +98,7 @@ textarea {
     
 /* Add a gray background color and some padding to the footer */
 footer {
-  background-color: rgb(0,0,0);
+  background-color: #111;
   color: white;
   //padding: 25px;
   position:fixed;
@@ -106,3 +106,32 @@ footer {
   bottom:0px;
   width:100%;
 } 
+
+.container-fluid text-center {
+  height: 50px;
+
+}
+.bottom {
+  padding-left: 10px;
+}
+
+.w3-xlarge {
+  font-size: 32px !important;
+}
+
+.w3-sidenav a {
+  padding: 4px 2px 4px 0px;
+  text-align: center;
+}
+
+.fa {
+  padding-left: 2px;
+}
+
+.w3-section.w3-padding-top.w3-large {
+  padding-left: 122px;
+}
+
+.w3-sidenav.w3-black {
+  width: 70px;
+}

@@ -7,15 +7,15 @@
   %body
     .jumbotron
       .container.text-center
+
         %h1 Welcome to the Hunger Terminal
         %h2 Want to be a part of this application??
-        %h2
+        %h2 
           %span.glyphicon.glyphicon-chevron-down
         = link_to "Sign up now!", new_company_path, class: "btn btn-lg btn-primary"
-    .container-fluid.bg-3.text-center
-      %h3{:style => "text-align:center;"} Get Your food at your doorstep
-      %br/
-      %button.btn.btn-primary{"data-target" => "#steps", "data-toggle" => "collapse", :type => "button"} See How
+        %h3{:style => "text-align:center;"} Get Your food at your doorstep
+        %br/
+        %button.btn.btn-primary{"data-target" => "#steps", "data-toggle" => "collapse", :type => "button"} See How
       #steps.collapse
         .container
           .row
@@ -35,12 +35,12 @@
               .step-one 4. Enjoy
               .login-image= image_tag("enjoy_food.png",width:"55px",height:"34px")
               .description Food is prepared and delivered to your door
-    %hr/
+              
     .container-fluid.bg-3.text-center
       .row
-        %h4 Our Associates
+        %h4.cen Our Associates 
       .container
-        .row{:style => "margin: 0; display: inline-block; float: left;"}
+        .row.ter
           .col-md-2
             .thumbnail
               = image_tag("foodpandalogo.jpg", class: "img-responsive",width:"80%", height:"100%")

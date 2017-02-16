@@ -1,5 +1,4 @@
 class TerminalsController < ApplicationController
-  
   def new
     @terminal = Terminal.new
     @terminal.menu_items.build
@@ -49,12 +48,11 @@ class TerminalsController < ApplicationController
   end
 
   def import
-    @menu_item_errors,@csv_error_file = Terminal.import(params[:file],params[:id])
-    $FILE = @csv_error_file
+    @menu_item_errors,$FILE = Terminal.import(params[:file],params[:id]) 
     if @menu_item_errors.valid?
       redirect_to terminal_path notice: "You have successfully added menu items."
     else
-      download alert: ""
+      download 
     end
   end  
 

@@ -5,4 +5,9 @@ Rails.application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     patch'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
+
+  resources :terminals do
+    resources :menu_items
+    member { post :import }
+  end
 end

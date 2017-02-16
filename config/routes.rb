@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, :skip => [:registration]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    patch'users' => 'devise/registrations#update', :as => 'user_registration'
+    patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
 
   resources :terminals do
@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     member { post :import }
   end
   
+  get 'terminals/download' => 'terminals#download'
   root to: 'home#index'
 end

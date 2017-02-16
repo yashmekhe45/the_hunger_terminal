@@ -5,7 +5,6 @@
   = f.input :name, label: 'Your shop name',placeholder: 'KFC' 
   %br
   = f.input :landline, placeholder: '022-12365987'
-  = f.input :file, as: :file
   %br
   %table#tasks
     = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|

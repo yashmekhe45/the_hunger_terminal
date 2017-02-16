@@ -1,4 +1,6 @@
 = stylesheet_link_tag 'terminals'
+-if flash[:notice].present?
+  =flash[:notice]
 %h1 terminal details
 %p= @terminal.name
 %p= @terminal.landline

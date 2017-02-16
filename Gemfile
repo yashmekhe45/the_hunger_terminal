@@ -9,6 +9,7 @@ gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'autoprefixer-rails', '~> 6.7', '>= 6.7.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'rails', '~> 5.0.1'
+gem 'toastr-rails'
 gem "nested_form"
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'

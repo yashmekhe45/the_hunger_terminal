@@ -9,7 +9,9 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 20170208162530) do
+
+ActiveRecord::Schema.define(version: 20170213104958) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +21,11 @@ ActiveRecord::Schema.define(version: 20170208162530) do
     t.string   "locality"
     t.string   "city"
     t.string   "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "company_id"
-    t.index ["company_id"], name: "index_addresses_on_company_id", using: :btree
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "location_type"
+    t.integer  "location_id"
+    t.index ["location_type", "location_id"], name: "index_addresses_on_location_type_and_location_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
@@ -70,10 +73,12 @@ ActiveRecord::Schema.define(version: 20170208162530) do
     t.string   "mobile_number"
     t.string   "role"
     t.boolean  "is_active"
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "addresses", "companies"
   add_foreign_key "menu_items", "terminals"
+  add_foreign_key "users", "companies"
 end

@@ -51,7 +51,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @terminal2.name ,@terminal.name
   end
 
-  test "should successfully import csv"
+  test "should successfully import csv" do
     csv_rows = <<-eos
 name,price,veg
 beer,224,true
@@ -64,12 +64,11 @@ eos
     assert_difference "MenuItem.count", 2 do
       post import_terminal_path(@terminal.id), :file => Rack::Test::UploadedFile.new(file, 'text/csv')
     end
-
     assert_redirected_to terminal_path
     assert_equal "all menu items added", flash[:success]
   end
 
-  test "should gives invalid csv records"
+  test "should gives invalid csv records" do
     csv_rows = <<-eos
 name,price,veg
 beer,-44,true
@@ -82,6 +81,22 @@ eos
     assert_difference "MenuItem.count", 0 do
       post import_terminal_path(@terminal.id), :file => Rack::Test::UploadedFile.new(file, 'text/csv')
     end
-    assert_equal "You have invalid records.", flash[:alert]
+    assert_equal "You have invalid some records.Correct it and upload again.", flash[:alert]
+  end
+
+  test "should give error for invalid csv file" do
+    csv_rows = <<-eos
+name,price,veg,dsff
+beer,-44,true
+Name3,-78,true
+eos
+    file = Tempfile.new('new_users.csv')
+    file.write(csv_rows)
+    file.rewind
+    @terminal = Terminal.create(name:"kjnf",landline:"0125-1563156")
+    assert_difference "MenuItem.count", 0 do
+      post import_terminal_path(@terminal.id), :file => Rack::Test::UploadedFile.new(file, 'text/csv')
+    end
+    assert_equal "You have invlaid csv please upload csv with valid headers.", flash[:error]
   end
 end

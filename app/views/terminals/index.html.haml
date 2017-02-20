@@ -1,5 +1,5 @@
 = stylesheet_link_tag 'terminals'
-%table
+%table{:align => "center"}
   %tbody
     %tr
       %th Id
@@ -15,5 +15,5 @@
       %td= link_to "Destroy", terminal_path(object.id), method: :delete,data: {confirm: 'Are  you sure to delete'}
       %td
         = form_tag import_terminal_path(object.id), multipart: true do
-          = file_field_tag :file
+          =file_field_tag :file, accept: '.csv'
           = submit_tag "Import CSV"

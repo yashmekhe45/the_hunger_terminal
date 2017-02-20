@@ -56,24 +56,32 @@ class TerminalsController < ApplicationController
     @terminal = Terminal.find(params[:id])
     @menu_item_errors = MenuItem.new(name:"cxkvbivbad",price:2424,veg:true,terminal_id:@terminal.id)
     $INVALID_RECORD_CSV = nil
-    CSV.foreach(params[:file].path, headers: true) do |row|
-      @menu_item= @terminal.menu_items.build(row.to_h)
-      if @menu_item.valid?
-        @menu_item.save
-      else
-        CSV.open($INVALID_RECORD_CSV="public/#{@terminal.name}-invalid_records-#{Date.today}.csv", "a+") do |csv|
-          row << @menu_item.errors.messages.to_a
-          csv << row
+    csv_file = File.open(params[:file].path)
+    menu_items = CSV.parse(csv_file, headers: true)
+    if menu_items.headers == ["name","price","veg"]
+      menu_items.each do |row|
+        next if row.to_a == ["name","price","veg"]
+        @menu_item = @terminal.menu_items.build(row.to_h)
+        if @menu_item.valid?
+          @menu_item.save
+        else
+          CSV.open($INVALID_RECORD_CSV="public/#{@terminal.name}-invalid_records-#{Date.today}.csv", "a+") do |csv|
+            row << @menu_item.errors.messages.to_a
+            csv << row
+          end
+          @menu_item_errors = @menu_item
         end
-        @menu_item_errors = @menu_item
-      end 
-    end 
-    if @menu_item_errors.valid?
-      flash[:success] = "all menu items added"
-      redirect_to terminal_path(@terminal.id)
+      end
+      if @menu_item_errors.valid?
+        flash[:success] = "all menu items added"
+        redirect_to terminal_path(@terminal.id)
+      else
+        flash[:alert] = "You have invalid some records.Correct it and upload again." 
+      end     
     else
-      flash[:alert] = "You have invalid records." 
-    end
+      flash[:error] = "You have invlaid csv please upload csv with valid headers."
+      redirect_to terminals_path
+    end   
   end 
 
   private

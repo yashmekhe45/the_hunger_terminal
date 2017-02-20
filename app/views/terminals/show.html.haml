@@ -1,0 +1,19 @@
+= stylesheet_link_tag 'terminals'
+-if flash[:notice].present?
+  =flash[:notice]
+%h1 terminal details
+%p= @terminal.name
+%p= @terminal.landline
+%table
+  %tbody
+    %tr
+      %th Id
+      %th Name
+      %th price
+      %th veg
+    - @menu_items.each do |menuitem|
+      %tr  
+      %td= menuitem.id
+      %td= menuitem.name
+      %td= menuitem.price
+      %td= menuitem.veg

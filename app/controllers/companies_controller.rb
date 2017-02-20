@@ -1,11 +1,21 @@
-
 class CompaniesController < ApplicationController
  
- def new
-   @company = Company.new
-   @company.build_address
-   @company.employees.build
- end
+  def new
+    @company = Company.new
+    @company.build_address
+    @company.employees.build
+  end
+
+  def create
+    @company = Company.new(company_params)
+    if @company.save
+      redirect_to root_path
+    else
+      flash[:error] = @company.errors.messages
+      render :'new'
+    end
+  end
+
   def update
     @company = Company.find(params[:id])
  
@@ -42,8 +52,9 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name,:landline,address_attributes: [:id,
-                    :house_no, :locality, :pincode, :city, :state, :_destroy])
+    params.require(:company).permit(:name, :landline, 
+      address_attributes: [:house_no, :pincode, :locality, :city, :state],
+      employees_attributes: [:name, :email, :mobile_number, :password])
   end
 
 end

@@ -1,13 +1,13 @@
 require "test_helper"
 class TerminalTest < ActiveSupport::TestCase
   test "should not save terminal without landline" do
-    terminal =  FactoryGirl.build(:terminal ,:landline =>  nil)
+    terminal =  build(:terminal ,:landline =>  nil)
     terminal.valid?
     assert_not_empty terminal.errors[:landline]    
   end
 
   test "should not save terminal without name" do
-    terminal = FactoryGirl.build(:terminal,:name => nil)
+    terminal = build(:terminal,:name => nil)
     terminal.valid?
     assert_not_empty terminal.errors[:name]
   end
@@ -26,7 +26,7 @@ class TerminalTest < ActiveSupport::TestCase
   end
 
   test "landline no should have only [0-9] and dash" do
-    terminal = FactoryGirl.build(:terminal,:landline => "akshaykakade")
+    terminal = build(:terminal,:landline => "akshaykakade")
     terminal.valid?
     assert_not_empty terminal.errors[:landline]
   end

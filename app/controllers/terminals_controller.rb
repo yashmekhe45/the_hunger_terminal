@@ -1,3 +1,4 @@
+require 'csv'
 class TerminalsController < ApplicationController
   def new
     @terminal = Terminal.new
@@ -22,8 +23,12 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    @terminal = Terminal.find(params[:id])
-    @menu_items = @terminal.menu_items.all
+    if params[:id] == "download"
+      download
+    else  
+      @terminal = Terminal.find(params[:id])
+      @menu_items = @terminal.menu_items.all
+    end
   end  
 
   def update
@@ -48,13 +53,28 @@ class TerminalsController < ApplicationController
   end
 
   def import
-    @menu_item_errors,$FILE = Terminal.import(params[:file],params[:id]) 
+    @terminal = Terminal.find(params[:id])
+    @menu_item_errors = MenuItem.new(name:"cxkvbivbad",price:2424,veg:true,terminal_id:@terminal.id)
+    $INVALID_RECORD_CSV = nil
+    CSV.foreach(params[:file].path, headers: true) do |row|
+      @menu_item= @terminal.menu_items.build(row.to_h)
+      if @menu_item.valid?
+        @menu_item.save
+      else
+        CSV.open($INVALID_RECORD_CSV="public/#{@terminal.name}-invalid_records-#{Date.today}.csv", "a+") do |csv|
+          row << @menu_item.errors.messages.to_a
+          csv << row
+        end
+        @menu_item_errors = @menu_item
+      end 
+    end 
     if @menu_item_errors.valid?
-      redirect_to terminal_path notice: "You have successfully added menu items."
+      flash[:success] = "all menu items added"
+      redirect_to terminal_path(@terminal.id)
     else
-      download 
+      flash[:alert] = "You have invalid records." 
     end
-  end  
+  end 
 
   private
 
@@ -63,6 +83,6 @@ class TerminalsController < ApplicationController
   end
 
   def download
-    send_file("#{Rails.root}/#{$FILE}")
+    send_file("#{Rails.root}/#{$INVALID_RECORD_CSV}")
   end
 end

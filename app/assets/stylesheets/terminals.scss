@@ -6,10 +6,35 @@ th, td {
 }
 .w3-container
 {
-  margin-left: 60px;
-  margin-right: 40px;
+  margin:80px;
 }
 .w3-responsive
 {
-  margin: 20px; 
+  margin: 20px;
+}
+.container
+{
+  width: 400px;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+%table.w3-table-all.w3-hoverable.w3-centered
+{
+  width:auto; 
+}
+#imaginary_container{
+    margin-top:20px;
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+  border-right:0; 
+  box-shadow:0 0 0; 
+  border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
 }

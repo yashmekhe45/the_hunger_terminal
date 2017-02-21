@@ -1,19 +1,26 @@
 = stylesheet_link_tag 'terminals'
-%table
-  %tbody
-    %tr
-      %th Id
-      %th Name
-      %th Landline
-    - @terminal.each do |object|
-      %tr
-      %td= object.id
-      %td= object.name
-      %td= object.landline
-      %td= link_to "Show", terminal_path(object.id)
-      %td= link_to "Edit", edit_terminal_path(object.id)
-      %td= link_to "Destroy", terminal_path(object.id), method: :delete,data: {confirm: 'Are  you sure to delete'}
-      %td
-        = form_tag import_terminal_path(object.id), multipart: true do
-          = file_field_tag :file
-          = submit_tag "Import CSV"
+= javascript_include_tag 'terminals'
+.w3-container 
+  .w3-responsive
+    %table.w3-table-all.w3-hoverable.w3-centered
+      %tbody
+        %tr
+          %th Id
+          %th Name
+          %th Landline
+          %th Show
+          %th Edit
+          %th Delete
+          %th CSV upload
+        - @terminal.each do |object|
+          %tr
+          %td.w3-large= object.id
+          %td.text-center.w3-large= object.name
+          %td= object.landline
+          %td= link_to "Show", terminal_path(object.id), class:"btn btn-success"
+          %td= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
+          %td= link_to "Destroy", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-danger"
+          %td
+            = form_tag import_terminal_path(object.id),class:"form-inline",multipart:true do
+              = file_field_tag :file, accept: '.csv',class: "form-group"
+              = submit_tag "Import",name:nil,class:"btn btn-default go inline" 

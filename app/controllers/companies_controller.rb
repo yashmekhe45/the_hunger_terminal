@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
  
+  before_action :load_company, only: [:update, :show, :destroy,:edit]
   def new
     @company = Company.new
     @company.build_address
@@ -27,12 +28,6 @@ class CompaniesController < ApplicationController
    end
   end
 
-  def edit
-
-    @company = Company.find(params[:id])
-    
-  end
-
   def destroy
     @company = Company.find(params[:id])
     @company.destroy
@@ -41,20 +36,23 @@ class CompaniesController < ApplicationController
   end
 
   def index
-    @companies = Company.all
+    @companies = Company.all.order('created_at').page(params[:page]).per(5)
   end 
 
-  def show
-    @company = Company.find(params[:id])
-  
-  end
+  # def show
+  # end
 
+  
   private
 
   def company_params
     params.require(:company).permit(:name, :landline, 
       address_attributes: [:house_no, :pincode, :locality, :city, :state],
-      employees_attributes: [:name, :email, :mobile_number, :password])
+      employees_attributes: [:name, :email, :mobile_number, :password, :id])
+  end
+
+  def load_company
+    @company = Company.find(params[:id])
   end
 
 end

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
   resources :companies do
-    resources :users
+    resources :users  
   end
 
   resources :terminals do
@@ -19,5 +19,6 @@ Rails.application.routes.draw do
   resources :companies
   
   get 'terminals/download' => 'terminals#download'
+
   root to: 'home#index'
 end

@@ -17,4 +17,4 @@
 //= require jquery_nested_form
 //= require toastr
 //= require_tree .
-//= require jquery_nested_form
+

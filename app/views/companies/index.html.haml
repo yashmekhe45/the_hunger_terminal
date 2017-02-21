@@ -1,7 +1,8 @@
-%h2.text-center Companies
-%table.table-condensed.table-hover{:border =>3,:align=>"center",:style=>"width:60%"}
-  %tbody
-      
+= stylesheet_link_tag 'companies'
+
+%h3.text-center{:style=>"color:white"} Companies
+%table.table-condensed.table-hover{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
+  %tbody  
     - @companies.each do |company|
       %tr
         %td= company.name
@@ -9,6 +10,11 @@
         -$name= company.name
         %td= link_to "show",company_path(company.id)
 
-        %td= link_to "Edit",edit_company_path(company.id)
+        %td= link_to "Edit Company Details",edit_company_path(company.id)
 
         %td= link_to "delete",company_path(company.id),method: :delete,data: { confirm: 'Are you sure?' }
+
+        %td= link_to  "Update company admin", edit_company_user_path(company.id,company.employees.find_by(:role => "company_admin"))
+
+.text-center
+  = paginate @companies

@@ -4,6 +4,15 @@ class TerminalsController < ApplicationController
     @terminal = Terminal.new
     @terminal.menu_items.build
   end
+  
+  def create
+   @terminal = Terminal.new(terminal_param)
+     if @terminal.save
+        redirect_to terminals_path
+      else
+        render :new
+      end
+  end
 
   def index
     if params[:search].present?

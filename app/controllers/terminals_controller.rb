@@ -6,15 +6,14 @@ class TerminalsController < ApplicationController
   end
 
   def index
-    @terminal = Terminal.all
-  end 
-
-  def create
-    @terminal = Terminal.new(terminal_param)
-     if @terminal.save
-      redirect_to terminals_path
+    if params[:search].present?
+      search_type = params[:search]
+      @terminal_search = Terminal.where(["name LIKE ?", "%#{params[:search]}%"])
+      if @terminal_search.empty?
+        flash[:notice] = "Vendor not present."
+      end
     else
-      render :new
+      @terminal = Terminal.order(:name)
     end
   end
 

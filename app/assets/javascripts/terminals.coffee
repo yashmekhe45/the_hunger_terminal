@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-  $('.w3-container').submit ->
+  $('.container').submit ->
     if $(this).find('input[name="file"]').val() == ''
       alert 'You must select a file!'
       return false

@@ -57,8 +57,7 @@
         - flash.each do |f|
           - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
           toastr['#{type}']('#{f[1]}');
-    
-        
+       
     = yield
     %footer.container-fluid.text-center
       .w3-section.w3-padding-top.w3-large
@@ -76,5 +75,4 @@
           %i.fa.fa-linkedin
           
 
-    
-
+  

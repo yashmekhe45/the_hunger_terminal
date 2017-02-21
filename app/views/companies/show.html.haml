@@ -1,0 +1,26 @@
+= stylesheet_link_tag 'companies'
+
+%h3.text-center{:style=>"color:white"}=@company.name
+%table.w3-table-all.w3-hoverable.w3-centered{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
+  %tbody
+    %tr
+      %th Phone Number:
+      %td= @company.landline
+    %tr
+      %th House Number
+      %td= @company.address.house_no
+    %tr
+      %th Locality
+      %td= @company.address.locality
+    %tr
+      %th City
+      %td= @company.address.city
+    %tr
+      %th Pincode
+      %td= @company.address.pincode
+    %tr.info
+      %th State
+      %td= @company.address.state
+    
+          
+        

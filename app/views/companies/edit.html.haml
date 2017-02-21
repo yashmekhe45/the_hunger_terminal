@@ -1,0 +1,32 @@
+.container.center
+  .row
+    .col-md-3
+    .col-md-6
+      .panel.panel-success
+        .panel-heading
+          .panel-title 
+            %h5  Edit Company Record
+        .panel-body
+          = simple_nested_form_for(@company) do |f|
+            .form-group
+              = f.input :landline, :label => "Landline", :placeholder => "Landline" 
+              
+            %h5 Company Location Details:
+            = f.simple_fields_for :address do |a|
+              .form-group
+                .col-md-6
+                  = a.input :house_no, :label => "House No.", :placeholder => "House No"
+                .col-md-6
+                  = a.input :pincode, :label => "PIN Code", :placeholder => "PIN Code"
+              .form-group 
+                .col-md-6   
+                  = a.input :locality, :label => "Locality", :placeholder => "Locality"
+                .col-md-6
+                  = a.input :state, :label => "State", :placeholder => "State"
+              .form-group
+                .col-md-6
+                  = a.input :city, :label => "City", :placeholder => "City"
+                .col-md-6
+            .form-group
+              .col-md-12
+                = f.submit 'Submit', class: "btn btn-primary"

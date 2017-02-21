@@ -10,6 +10,7 @@ gem 'autoprefixer-rails', '~> 6.7', '>= 6.7.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'rails', '~> 5.0.1'
 gem 'toastr-rails'
+gem 'haml-rails'
 gem "nested_form"
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
@@ -17,7 +18,6 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-gem 'haml-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -31,6 +31,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'haml', '~> 4.0', '>= 4.0.7'
+gem 'kaminari'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

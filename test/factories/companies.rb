@@ -10,5 +10,5 @@ FactoryGirl.define do
         build_list(:user, evaluator.users_count, company: company)
         build(:address, location: company)
     end
-
+  end
 end

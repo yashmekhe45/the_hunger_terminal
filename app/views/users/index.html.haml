@@ -1,0 +1,42 @@
+
+-if flash[:error].present?
+  = flash[:error]
+%br
+%br
+%br
+
+%h1.text-center EMPLOYEES
+/ .container-fluied
+/   .row
+/     .col-md-9.col-sm-7
+/     .col-md-3.col-sm-3
+/       %form{"accept-charset" => "UTF-8", :action => "users/search", :method => "get"}
+/         %input#q{:name => "search_value", :type => "text",:required => true,:placeholder => "Enter the name..."}
+/         %input{:name => "commit", :type => "submit", :value => "Search"}
+/ %br
+/ %br
+/ %br
+.container
+  %table.table.table-fixed{:border =>3,:align => "center",:style=>"width:50%",fontsize: "150px"}
+   
+    
+    %tbody
+      %tr
+        %th 
+          .text-center
+            NAME:
+        %th 
+          .text-center
+            STATUS
+        %th 
+          .text-center
+            ACTION
+        =render "common_index" ,object: @user, as: 'user'
+
+
+
+
+
+
+.text-center
+  = paginate @users

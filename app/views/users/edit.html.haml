@@ -1,0 +1,23 @@
+/ Form to update company Admin details
+.container.center
+  .row
+    .col-md-3
+    .col-md-6
+      .panel.panel-success
+        .panel-heading
+          .panel-title 
+            %h5  update  Company Admin 
+        .panel-body
+  
+          = simple_form_for([@user.company,@user])   do |u|
+            .form-group
+              .col-md-6.col-sm-6
+                = u.input :name, :label => "Name", :placeholder => "Name"
+              .col-md-6.col-sm-6
+                = u.input :mobile_number, :label => "Mobile Number", :placeholder => "Mobile_No"
+            .form-group
+              .col-md-6.col-sm-6
+                = u.input :email, :label => "Email", :placeholder => "Email"
+            .form-group
+              .col-md-12.col-md-12
+                = u.submit 'Update', class: "btn btn-primary"

@@ -1,17 +1,17 @@
 = stylesheet_link_tag 'terminals'
-= simple_nested_form_for @terminal  do |f|
-  -if flash[:error].present?
-    =flash[:error]
-  = f.input :name  
-  %br
-  = f.input :landline
-  %br
-  %table
-    = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|
-      %tr.fields
-        %td= menu_form.input :name
-        %td= menu_form.input :price
-        %td= menu_form.input :veg, as: :boolean
-        %td= menu_form.link_to_remove "Remove this task",data:{confirm: 'Are  you sure to delete?'}
-  %br
-  = f.button :submit
+#formcontainer
+  = simple_nested_form_for (@terminal)  do |f|
+    -if flash[:error].present?
+      =flash[:error] 
+    = f.input :name     
+    = f.input :landline
+    = f.input :file,as: :file,hint: 'Upload csv file of menu items with headers.'
+    %table#edit_terminal
+      = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|
+        %tr.fields
+          %td= menu_form.input :name
+          %td= menu_form.input :price
+          %td= menu_form.input :veg, as: :radio_buttons
+          %td= menu_form.link_to_remove "Remove this item",data:{confirm: 'Are  you sure to delete?'}
+    = f.link_to_add "Add a menuitem", :menu_items, "data-target" => "#edit_terminal"
+    = f.button :submit

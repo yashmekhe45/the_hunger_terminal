@@ -1,13 +1,6 @@
 require "test_helper"
 
 class AddressTest < ActiveSupport::TestCase
-  # def address
-  #  @address ||= Address.new
-  # end
-
-  # def test_valid
-  #   assert address.valid?
-  # end
 
   test "house_no should be present" do
     address = build(:address,:house_no => nil)

@@ -5,11 +5,11 @@ class Company < ApplicationRecord
   validates :name, :landline, presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
-  
   validates :landline, length: {is: 12}
+  validates :address, presence: true
 
-  has_one :address, dependent: :destroy, as: :location
-  has_many :employees, class_name: "User", dependent: :destroy
+  has_one :address,  as: :location, dependent: :destroy
+  has_many :employees , class_name: "User", dependent: :destroy
 
   accepts_nested_attributes_for :address, :employees
 
@@ -28,5 +28,4 @@ class Company < ApplicationRecord
       self.employees.first.role = "company_admin"
       self.employees.first.is_active = true
     end
-
 end

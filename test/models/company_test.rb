@@ -1,6 +1,7 @@
 require "test_helper"
 
 class CompanyTest < ActiveSupport::TestCase
+
   test "name should be present" do
     company_obj = build(:company,:name => nil)
     company_obj.valid?
@@ -31,14 +32,21 @@ class CompanyTest < ActiveSupport::TestCase
   end
 
   test "landline should be valid indian landline number" do
-    company = build(:company, :landline => 'k')
+    company = build(:company,:landline => 'k')
     company.valid?
-    assert company.errors[:landline].include?("Please enter valid landline number!")
+    assert company.errors[:landline].include?('please enter valid landline no eg.022-20316523')
   end
 
   test "landline should have 12 characters " do
-    company = build(:company)
+    company = build(:company, :landline => '6128')
     company.valid?
     assert company.errors[:landline].include?("is the wrong length (should be 12 characters)")
   end 
+
+  test "address should be present" do
+    # address1 = build(:address)
+    company = build(:company, :address => nil, :landline => "0233-1234567")
+    company.valid?
+    assert company.errors[:address].include?("can't be blank")
+  end
 end

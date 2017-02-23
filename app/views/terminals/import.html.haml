@@ -1,5 +1,8 @@
+= stylesheet_link_tag 'terminals'
 -if @menu_item_errors.valid?
-    %h1 all record inserted
+  -if flash[:success].present?
+    =flash[:success] 
 -else
-    %h1 Some records have validation errors
-   
+  -if flash[:alert].present?
+    =flash[:alert]
+  = link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'

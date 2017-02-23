@@ -19,3 +19,4 @@
 /config/secrets.yml
 /config/database.yml
 /coverage
+.env

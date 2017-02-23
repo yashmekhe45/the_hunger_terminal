@@ -16,6 +16,7 @@ class User < ApplicationRecord
   validates :is_active, inclusion: {in: [true, false, 't','f', 'true','false']}, :unless => :is_super_admin?
 
   belongs_to :company
+  has_many :orders, dependent: :destroy
 
   before_validation :not_a_string , :remove_space
   def remove_space

@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :order do
-    user nil
-    company nil
-    date "2017-02-20"
-    total_cost 1
+    date { Faker::Date.between(Date.today,1.days.from_now) }
+    total_cost { Faker::Number.positive }
+
+    association :user
+    association :company
   end
 end

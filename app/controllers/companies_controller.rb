@@ -1,6 +1,8 @@
 class CompaniesController < ApplicationController
  
   before_action :load_company, only: [:update, :show, :destroy,:edit]
+  skip_before_action :authenticate_user!, :only => [:new, :create]
+
   def new
     @company = Company.new
     @company.build_address

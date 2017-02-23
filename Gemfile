@@ -45,6 +45,7 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'pg'
 end
 
 group :development do

@@ -7,7 +7,7 @@
           .panel-title 
             %h5 Company Sign Up Form
         .panel-body
-          = simple_nested_form_for(@company, html: { class: 'form-verticle' }) do |f|
+          = simple_nested_form_for(@company) do |f|
             .form-group
               .col-md-6
                 = f.input :name, :label => false, :placeholder => "Name"

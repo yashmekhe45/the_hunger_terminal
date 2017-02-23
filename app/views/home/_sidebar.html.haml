@@ -1,15 +1,25 @@
-%nav.w3-sidenav.w3-black
-  %i.fa.fa-person.w3-xlarge
-
-  %a.w3-padding-16{:href => "#"}
-    %i.fa.fa-user.w3-xlarge
-    Employee
-  %a.w3-padding-16{:href => "#"}
-    %i.fa.fa-edit.w3-xlarge
-    Order
-  %a.w3-padding-16{:href => "#"}
-    %i.fa.fa-file.w3-xlarge
-    Report
-  %a.w3-padding-16{:href => "#"}
-    %i.fa.fa-cutlery.w3-xlarge
-    Terminal
+%nav.sidenav
+  %div.icon
+    %a{:href => "/companies/#{current_user.company_id}/users"}
+      %span.glyphicon.glyphicon-user.gly
+      .name Employee
+  
+  %li.dropdown.icon
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
+      %span.glyphicon.glyphicon-list.gly
+      Order
+      %span.caret
+    %ul.dropdown-menu
+      %li
+        %a#menu{:href => "menu_items/menu_index"} Place Order
+      %li
+        %a#menu{:href => "#"} My Order
+   
+  %div.icon   
+    %a{:href => "#"}
+      %span.glyphicon.glyphicon-file.gly
+      .name#report Report
+  %div.icon    
+    %a{:href => "/terminals"}
+      %span.glyphicon.glyphicon-cutlery.gly
+      .name#terminal Terminal  

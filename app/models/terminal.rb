@@ -1,4 +1,3 @@
-require "csv"
 class Terminal < ApplicationRecord
   validates_with LandlineValidator
   validates :name, :landline ,presence: true

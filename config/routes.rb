@@ -24,4 +24,6 @@ Rails.application.routes.draw do
   get 'terminals/download' => 'terminals#download'
 
   root to: 'home#index'
+  
+  get 'menu_items/menu_index' => 'menu_items#menu_index'
 end

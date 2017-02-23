@@ -1,17 +1,20 @@
 = stylesheet_link_tag 'terminals'
-%h1 terminal details
-%p= @terminal.name
-%p= @terminal.landline
-%table{:align => "center"}
-  %tbody
-    %tr
-      %th Id
-      %th Name
-      %th price
-      %th veg
-    - @menu_items.each do |menuitem|
-      %tr  
-      %td= menuitem.id
-      %td= menuitem.name
-      %td= menuitem.price
-      %td= menuitem.veg
+-if flash[:alert].present?
+  =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
+-else  
+  %h1 terminal details
+  %p= @terminal.name
+  %p= @terminal.landline
+  %table{:align => "center"}
+    %tbody
+      %tr
+        %th Id
+        %th Name
+        %th price
+        %th veg
+      - @menu_items.each do |menuitem|
+        %tr  
+        %td= menuitem.id
+        %td= menuitem.name
+        %td= menuitem.price
+        %td= menuitem.veg

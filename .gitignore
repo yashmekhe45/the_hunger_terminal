@@ -20,3 +20,4 @@
 /config/credentials.yml
 /config/database.yml
 /coverage
+.env

@@ -4,11 +4,9 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title TheHungerTerminal
     = csrf_meta_tags
-    %link{:href => "https://www.w3schools.com/lib/w3.css", :rel => "stylesheet"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
-    
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/  
   %body
     - if user_signed_in?  
       =render  "home/sidebar"
@@ -46,19 +44,5 @@
        
     = yield
     %footer.container-fluid.text-center
-      .w3-section.w3-padding-top.w3-large
-        %a.w3-hover-white.w3-hover-text-indigo.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-facebook-official
-        %a.w3-hover-white.w3-hover-text-purple.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-instagram
-        %a.w3-hover-white.w3-hover-text-yellow.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-snapchat
-        %a.w3-hover-white.w3-hover-text-red.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-pinterest-p
-        %a.w3-hover-white.w3-hover-text-light-blue.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-twitter
-        %a.w3-hover-white.w3-hover-text-indigo.w3-show-inline-block{:href => "#"}
-          %i.fa.fa-linkedin
-          
+      %p © the hunger terminal
 
-  

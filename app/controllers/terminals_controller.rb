@@ -6,12 +6,37 @@ class TerminalsController < ApplicationController
   end
   
   def create
-   @terminal = Terminal.new(terminal_param)
-     if @terminal.save
-        redirect_to terminals_path
+    flag = true
+    valid_menus = params[:terminal][:menu_items_attributes]
+    valid_menus.each do |valid_menu|
+      if valid_menus[valid_menu][:name].empty? || valid_menus[valid_menu][:price].empty?
+        @terminal = Terminal.new(terminal_param)
+        flag = false
+        if @terminal.save
+          flash[:success] = "Only new terminal added"
+          if params[:terminal][:file].nil?
+            redirect_to terminals_path
+          else
+            import(@terminal.id)
+          end
+        else
+          render :new 
+        end 
+      end 
+    end 
+    if flag
+      @terminal = Terminal.new(terminal_menu_param)
+      if @terminal.save
+        flash[:success] = "terminal with menu items added"
+        if params[:terminal][:file].nil?
+            redirect_to terminals_path
+          else
+            import(@terminal.id)
+        end
       else
         render :new
       end
+    end
   end
 
   def index
@@ -22,7 +47,7 @@ class TerminalsController < ApplicationController
         flash[:notice] = "Vendor not present."
       end
     else
-      @terminal = Terminal.order(:name)
+      @terminal = Terminal.order(:name).page(params[:page]).per(7)
     end
   end
 
@@ -41,16 +66,21 @@ class TerminalsController < ApplicationController
 
   def update
     @terminal = Terminal.find(params[:id])
-    if @terminal.update_attributes(terminal_param)
+    if @terminal.update_attributes(terminal_menu_param)
       flash[:success] = "terminal updated"
-      if @terminal.menu_items.empty?
-        @terminal.destroy
-        redirect_to terminals_path
+      if params[:terminal][:file].nil?
+        if @terminal.menu_items.empty?
+          flash[:alert] = "you deleted all items so your terminal is deleted"
+          @terminal.destroy
+          redirect_to terminals_path
+        else
+          redirect_to terminal_path
+        end
       else
-        redirect_to terminal_path
+        import(params[:id])
       end
     else
-      render 'edit'
+      render :edit
     end
   end
 
@@ -60,11 +90,11 @@ class TerminalsController < ApplicationController
     redirect_to terminals_path
   end
 
-  def import
-    @terminal = Terminal.find(params[:id])
+  def import(object_id)
+    @terminal = Terminal.find(object_id)
     @menu_item_errors = MenuItem.new(name:"cxkvbivbad",price:2424,veg:true,terminal_id:@terminal.id)
     $INVALID_RECORD_CSV = nil
-    csv_file = File.open(params[:file].path)
+    csv_file = File.open(params[:terminal][:file].path)
     menu_items = CSV.parse(csv_file, headers: true)
     if menu_items.headers == ["name","price","veg"]
       menu_items.each do |row|
@@ -81,10 +111,11 @@ class TerminalsController < ApplicationController
         end
       end
       if @menu_item_errors.valid?
-        flash[:success] = "all menu items added"
+        flash[:success] = "all menu items added using csv file"
         redirect_to terminal_path(@terminal.id)
       else
         flash[:alert] = "You have invalid some records.Correct it and upload again." 
+        redirect_to terminal_path(@terminal.id)
       end     
     else
       flash[:error] = "You have invlaid csv please upload csv with valid headers."
@@ -95,6 +126,10 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_param
+    params.require(:terminal).permit(:name,:landline)
+  end
+
+  def terminal_menu_param
     params.require(:terminal).permit(:name,:landline, menu_items_attributes: [:id, :name, :veg, :price, :_destroy])
   end
 

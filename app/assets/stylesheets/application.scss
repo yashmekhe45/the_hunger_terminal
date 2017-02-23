@@ -13,11 +13,9 @@
  *= require toastr
  *= require_tree
  */
-
-
-
-
-/* universal */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "terminal";
 
 body {
 
@@ -188,5 +186,3 @@ a.name{
 }
 
 
-@import "bootstrap-sprockets";
-@import "bootstrap";

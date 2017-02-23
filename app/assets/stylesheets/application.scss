@@ -12,14 +12,11 @@
  *
  *= require toastr
  *= require_tree
- */
+*/
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "terminal";
-
+@import "terminals";
 body {
-
-  background: url("background.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -31,7 +28,6 @@ body {
   margin-top: 5%;
 }
 
-/* typography */
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
@@ -56,7 +52,6 @@ p {
   line-height: 1.7em;
 }
 
-/* header */
 
 #logo {
   float: left;
@@ -97,7 +92,6 @@ textarea {
   border-radius: 0;
 }
     
-/* Add a gray background color and some padding to the footer */
 footer {
   background-color: #111;
   color: white;
@@ -109,7 +103,6 @@ footer {
 } 
 
 
-/* Put all forms at the middle of page */
 
 .Absolute-Center.is-Responsive {
   padding: 5%;
@@ -184,5 +177,3 @@ a.name{
 {
   padding-left: 55px;
 }
-
-

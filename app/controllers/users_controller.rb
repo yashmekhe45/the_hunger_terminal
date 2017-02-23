@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  require 'csv'
+
   before_action :load_user , only:[:show, :edit, :update]
 
   def new
@@ -35,7 +37,7 @@ class UsersController < ApplicationController
     end
   end
 
- def search
+  def search
     search_value = params[:search_value]
     p search_value
     if search_value
@@ -46,6 +48,7 @@ class UsersController < ApplicationController
       render "index"
     end
   end
+
 
   private
 

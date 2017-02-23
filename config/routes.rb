@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   end  
   resources :companies do
     resources :users do
-       get 'search', :on => :collection
+      get 'search', :on => :collection
+      collection { post :import }
     end
   end
 

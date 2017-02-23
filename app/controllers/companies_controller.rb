@@ -12,10 +12,9 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      p "==="
       redirect_to new_user_session_path
+      flash[:notice] = "You will receive an email with instructions for how to confirm your email address in a few minutes."
     else
-      flash[:error] = @company.errors.messages
       render :'new'
     end
   end

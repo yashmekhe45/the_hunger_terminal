@@ -3,7 +3,8 @@ ENV["RAILS_ENV"] = "test"
 require 'simplecov' 
 require "codeclimate-test-reporter"
 SimpleCov.start 
-# CodeClimate::TestReporter.start
+CodeClimate::TestReporter.start
+
 
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"

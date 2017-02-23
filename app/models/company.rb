@@ -25,6 +25,7 @@ class Company < ApplicationRecord
     end
 
     def add_employee_attributes
+      # byebug
       self.employees.first.role = "company_admin"
       self.employees.first.is_active = true
     end

@@ -12,7 +12,8 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to root_path
+      p "==="
+      redirect_to new_user_session_path
     else
       flash[:error] = @company.errors.messages
       render :'new'
@@ -20,10 +21,13 @@ class CompaniesController < ApplicationController
   end
 
   def update
+    if !params[:page]
+      params[:page] = 1
+    end
     @company = Company.find(params[:id])
  
    if @company.update(company_params)
-      redirect_to companies_path
+      redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
    else
       flash[:error] = @company.errors.messages
       render :edit
@@ -40,9 +44,6 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all.order('created_at').page(params[:page]).per(5)
   end 
-
-  # def show
-  # end
 
   
   private

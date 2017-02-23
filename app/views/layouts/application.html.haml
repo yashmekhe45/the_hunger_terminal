@@ -5,10 +5,11 @@
     %title TheHungerTerminal
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'  
-  %body   
-    - if user_signed_in?
-      =render "home/sidebar"
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+  %body
+    - if user_signed_in?  
+      =render  "home/sidebar"
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header

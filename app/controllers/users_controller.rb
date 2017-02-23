@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   def index
     @company = Company.find(params[:company_id])
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(5)  
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(2)  
   end
   
   def update

@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   get 'terminals/download' => 'terminals#download'
 
   root to: 'home#index'
+  
 end

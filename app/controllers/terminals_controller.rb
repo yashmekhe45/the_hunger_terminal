@@ -39,6 +39,8 @@ class TerminalsController < ApplicationController
     end
   end
 
+  
+
   def index
     if params[:search].present?
       search_type = params[:search]

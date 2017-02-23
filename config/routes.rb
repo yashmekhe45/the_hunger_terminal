@@ -25,4 +25,5 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
   
+  get 'menu_items/menu_index' => 'menu_items#menu_index'
 end

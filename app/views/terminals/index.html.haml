@@ -26,7 +26,7 @@
             %td.text-center= link_to object.name, terminal_path(object.id)
             %td.text-center= object.landline
             %td.text-center= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
-            %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-danger" 
+            %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 
         -else
           - @terminal_search.each_with_index do |object,i|
             %tr

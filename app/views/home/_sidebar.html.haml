@@ -1,17 +1,17 @@
 %nav.sidenav
   %div.icon
-    %a{:href => "#"}
+    %a{:href => "/companies/#{current_user.company_id}/users"}
       %span.glyphicon.glyphicon-user.gly
       .name Employee
   
   %li.dropdown.icon
-    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
       %span.glyphicon.glyphicon-list.gly
       Order
       %span.caret
     %ul.dropdown-menu
       %li
-        %a#menu{:href => "#"} Place Order
+        %a#menu{:href => "menu_items/menu_index"} Place Order
       %li
         %a#menu{:href => "#"} My Order
    
@@ -20,6 +20,7 @@
       %span.glyphicon.glyphicon-file.gly
       .name#report Report
   %div.icon    
-    %a{:href => "#"}
+    %a{:href => "/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
+      .name#terminal Terminal  
       .name#terminal Terminal  

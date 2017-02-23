@@ -17,6 +17,7 @@
 .byebug_history
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 /config/secrets.yml
+/config/credentials.yml
 /config/database.yml
 /config/credentials.yml
 /coverage

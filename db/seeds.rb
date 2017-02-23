@@ -60,6 +60,18 @@ company2.employees.find_or_create_by(name: 'Nisha Kasar', mobile_number: "+91858
   user.password = "password"
   user.confirmed_at = Time.now
 end
+
+company2.employees.find_or_create_by(name: 'Nisha patil', mobile_number: "+918689999999", email: "nishap@twitter.com",
+                          is_active: true, role: "employee") do |user|
+  user.password = "password"
+  user.confirmed_at = Time.now
+end
+
+company2.employees.find_or_create_by(name: 'umesh Tirthkar', mobile_number: "+918089999999", email: "umesh@twitter.com",
+                           is_active: true, role: "employee") do |user|
+  user.password = "password"
+  user.confirmed_at = Time.now
+end
 # company2.employees.find_or_create_by(name: 'Shubham Yerawar', mobile_number: "+918789999999", email: "shubhamy@twitter.com",
 #                           is_active: true, role: "employee",password: "shubham123")
 # company2.employees.find_or_create_by(name: 'Namrata Tirthkar', mobile_number: "+918689999999", email: "namrata@twitter.com",

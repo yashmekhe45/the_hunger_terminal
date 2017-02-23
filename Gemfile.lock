@@ -93,11 +93,7 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.8.1)
-<<<<<<< HEAD
-    jbuilder (2.6.2)
-=======
     jbuilder (2.6.1)
->>>>>>> 65240e3b7ecf7eef265b3a1a16f6944d85d3c43f
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     jquery-rails (4.2.2)

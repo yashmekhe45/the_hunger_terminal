@@ -7,7 +7,7 @@
           .panel-title 
             %h5  Edit Company Record
         .panel-body
-          = simple_nested_form_for(@company) do |f|
+          = simple_nested_form_for(@company,  url: "#{company_path(@company)}" + "?page=" + "#{params[:page]}", method: 'PATCH') do |f|
             .form-group
               = f.input :landline, :label => "Landline", :placeholder => "Landline" 
               

@@ -1,5 +1,5 @@
 module UsersHelper
-  def is_active_user?(user)
+  def is_inactive_user?(user)
     print "user.active = ", user.is_active
     !user.is_active
   end

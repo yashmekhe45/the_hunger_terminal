@@ -10,22 +10,8 @@
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     
   %body
-    %nav.w3-sidenav.w3-black
-      %i.fa.fa-person.w3-xlarge
-
-      %a.w3-padding-16{:href => "#"}
-        %i.fa.fa-user.w3-xlarge
-        Employee
-      %a.w3-padding-16{:href => "#"}
-        %i.fa.fa-edit.w3-xlarge
-        Order
-      %a.w3-padding-16{:href => "#"}
-        %i.fa.fa-file.w3-xlarge
-        Report
-      %a.w3-padding-16{:href => "#"}
-        %i.fa.fa-cutlery.w3-xlarge
-        Terminal
-
+    - if user_signed_in?  
+      =render  "home/sidebar"
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header

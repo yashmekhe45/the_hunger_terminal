@@ -1,26 +1,26 @@
 /Form to Activate/ Deactivate Employee details
-%table{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
-  %tr
-    %td
-      =link_to company_user_path(@company.id,user.id) do
-        .text-center
-          #{user.name}
 
-    %td{:width => "200px"}
+%tr
+  %td
+    =link_to company_user_path(@company.id,user.id) do
       .text-center
-        -if is_active_user?(user) 
-          = "INACTIVE"
-        -else 
-          = "ACTIVE"
-          
-    %td 
-      -if user.is_active
-        =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_active_user?(user),'change_status' => 'true','page' => params[:page]), class: 'activate', method: :patch do
-          .text-center
-            %button.btn.btn-success{:type => "button"}
-              %span.glyphicon.glyphicon-ok-circle>
+        #{user.name}
+  %td=user.email
+
+  %td{:width => "200px"}
+    .text-center
+      -if is_inactive_user?(user) 
+        = "INACTIVE"
       -else 
-        =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_active_user?(user),'change_status' => 'true','page' => params[:page]) , method: :patch, class: 'activate',method: :patch do
-          .text-center
-            %button.btn.btn-danger{:type => "button"}
-              %span.glyphicon.glyphicon-remove-circle>
+        = "ACTIVE"
+        
+  %td
+    =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), class: 'activate', method: :patch ,data: { confirm: 'Are you sure?' } do
+      -if user.is_active
+        .text-center
+          %button.btn.btn-success{:type => "button"}
+            %span.glyphicon.glyphicon-ok-circle>
+      -else 
+        .text-center
+          %button.btn.btn-danger{:type => "button"}
+            %span.glyphicon.glyphicon-remove-circle>

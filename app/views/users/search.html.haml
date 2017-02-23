@@ -1,6 +1,9 @@
 
 -if flash[:error].present?
   = flash[:error]
+%br
+%br
+%br
 
 %h1.text-center{:style=>"color:white"} EMPLOYEES
 /Search Bar#################################
@@ -8,7 +11,7 @@
   .row
     .col-md-4.col-sm-4
     .col-md-6.col-sm-6
-      %form{"accept-charset" => "UTF-8", :action => "users/search",:page => params[:page], :method => "get"}
+      %form{"accept-charset" => "UTF-8", :action => "users/search", :method => "get"}
         %input#search_bar{:name => "search_value", :type => "text", :required=> true, :placeholder=> "name / email...."}
         %input{:name => "commit", :type => "submit", :value => "Search", :class => "btn btn-primary"}
         =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"

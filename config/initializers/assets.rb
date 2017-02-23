@@ -6,6 +6,7 @@ Rails.application.config.assets.precompile += %w( terminals.scss )
 Rails.application.config.assets.precompile += %w( home.scss )
 Rails.application.config.assets.precompile += %w( companies.scss )
 Rails.application.config.assets.precompile += %w( companies.coffee )
+Rails.application.config.assets.precompile += %w( users.scss)
 
 
 # Add additional assets to the asset load path

@@ -6,18 +6,25 @@
       .panel.panel-success
         .panel-heading
           .panel-title 
-            %h5  update  Company Admin 
+            %h5  Update  Company Admin 
         .panel-body
-  
-          = simple_form_for([@user.company,@user])   do |u|
+          = simple_form_for([@user.company,@user], url: "#{company_user_path(@user.company, @user)}" + "?page=" + "#{params[:page]}", method: 'PATCH', html: { class: 'form-verticle' })   do |u|
             .form-group
-              .col-md-6.col-sm-6
+              .col-md-12.col-sm-12
                 = u.input :name, :label => "Name", :placeholder => "Name"
-              .col-md-6.col-sm-6
+            .form-group
+              .col-md-12.col-sm-12
                 = u.input :mobile_number, :label => "Mobile Number", :placeholder => "Mobile_No"
             .form-group
-              .col-md-6.col-sm-6
+              .col-md-12.col-sm-12
                 = u.input :email, :label => "Email", :placeholder => "Email"
             .form-group
-              .col-md-12.col-md-12
+              .col-md-6.col-sm-6
+                - hidden_field :page, :value => params[:page]
+                / = u.input_field :page, as: :hidden, value: params[:page]sss
                 = u.submit 'Update', class: "btn btn-primary"
+              .col-md-6.col-sm-6
+                =link_to 'Back', companies_path, class: "btn btn-primary"
+           
+               
+           

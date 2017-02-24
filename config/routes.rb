@@ -21,9 +21,10 @@ Rails.application.routes.draw do
 
   resources :companies
   
-  get 'terminals/download' => 'terminals#download'
+  get 'terminals/download' =>'terminals#download'
+
+  get 'custom_actions/selected_terminals' 
 
   root to: 'home#index'
-  
   get 'menu_items/menu_index' => 'menu_items#menu_index'
 end

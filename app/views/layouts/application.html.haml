@@ -6,7 +6,7 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/  
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   %body
     - if user_signed_in?  
       =render  "home/sidebar"
@@ -18,11 +18,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a#logo.navbar-brand{:href => "#"} The Hunger Terminal
+          %a#logo.navbar-brand{:href => "home/index"} The Hunger Terminal
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
             %li.active
-              %a{:href => "#"}
+              %a{:href => "home/index"}
                 Home
                 %span.sr-only (current)
             %li

@@ -12,8 +12,8 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
+      redirect_to new_user_session_path
       flash[:notice] = "You will receive an email with instructions for how to confirm your email address in a few minutes."
-      redirect_to root_path
     else
       render :'new'
     end

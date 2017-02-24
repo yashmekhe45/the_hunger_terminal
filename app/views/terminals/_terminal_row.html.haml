@@ -1,0 +1,17 @@
+%tr
+  %td.text-center= i+1
+  %td.text-center= link_to terminal.name, terminal_path(terminal.id)
+  %td.text-center= terminal.landline
+  %td.text-center= link_to "Edit", edit_terminal_path(terminal.id), class:"btn btn-info"
+  %td.text-center= link_to "Delete", terminal_path(terminal.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers"
+  %td
+    =link_to terminal_path(terminal.id,'terminal[is_active]' =>is_inactive_terminal?(terminal)), method: :patch, data: {confirm: 'Are you sure?'} do 
+      -if terminal.is_active
+        .text-center
+          %button.btn.btn-success{:type=> "button"}
+            %span.glyphicon.glyphicon-ok-circle>
+      -else
+        .text-center
+          %button.btn.btn-danger{:type=> "button"}
+            %span.glyphicon.glyphicon-remove-circle>        
+            

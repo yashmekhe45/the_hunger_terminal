@@ -2,9 +2,9 @@
   -if flash[:alert].present?
     =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
   -else  
-    %h1 terminal details
-    %p= @terminal.name
-    %p= @terminal.landline
+    %h1.text-center terminal details
+    %p.text-center= @terminal.name
+    %p.text-center= @terminal.landline
     %table{:align => "center"}
       %tbody
         %tr

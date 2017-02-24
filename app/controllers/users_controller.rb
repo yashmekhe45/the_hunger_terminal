@@ -1,26 +1,31 @@
 class UsersController < ApplicationController
 
-  before_action :load_user , only:[:show, :index, :edit, :update]
+  require 'csv'
+
+  before_action :load_user , only:[:show, :edit, :update]
 
   def new
-    @user = User.new
     @company = Company.new
+    @user = @company.employees.build
   end
 
   def index
-    @users = @company.employees.page(params[:page]).per(1)  
+    @company = Company.find(params[:company_id])
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(2)  
   end
   
   def update
     page = 1
-
+    if !params[:page]
+      params[:page] = page
+    end
     if @user.update(user_params)
       #Company admin will be updated by Super Admin
       if (@user.role == "company_admin")
-        redirect_to companies_path
+        redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
       #Employess will be activated/deactivated by Company admin
       else
-        render company_users_path(params[:company_id],:page=>params[:page])
+        redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
       end
     else
       flash[:error]= @user.errors.messages
@@ -32,6 +37,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    search_value = params[:search_value]
+    p search_value
+    if search_value
+      @company = Company.find_by(id: params[:company_id])
+      @users = @company.employees.where(role: "employee").where("name like ? or email like ?",
+              "%#{search_value}%","%#{search_value}%").all.order('created_at').page(params[:page]).per(2)
+    else
+      render "index"
+    end
+  end
+
+
   private
 
   def user_params
@@ -40,7 +58,7 @@ class UsersController < ApplicationController
 
   def load_user
     @company = Company.find(params[:company_id])
-    @user = User.find(params[:id])
+    @user = @company.employees.find(params[:id])
   end
 
 end

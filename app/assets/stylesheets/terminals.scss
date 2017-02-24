@@ -4,27 +4,32 @@
 th, td {
   padding: 10px;
 }
-.w3-container
-{
-  margin:80px;
+td{
+  font-size: large;
 }
-.w3-responsive
+#indexcontainer
+{
+  margin-left: 30px;
+}
+#formcontainer
+{
+  margin: 80px
+}
+#searchcontainer
+{
+  width:auto
+}
+.table-responsive
 {
   margin: 20px;
+  margin-left: 20%;
 }
-.container
+%table.table-hover
 {
-  width: 400px;
-  margin-right: 0px;
-  margin-left: 0px;
-  padding-left: 0px;
-}
-%table.w3-table-all.w3-hoverable.w3-centered
-{
-  width:auto; 
+  width: auto; 
 }
 #imaginary_container{
-    margin-top:20px;
+    margin-top: 20px;
 }
 .stylish-input-group .input-group-addon{
     background: white !important; 
@@ -38,3 +43,15 @@ th, td {
     border:0;
     background:transparent;
 }
+%a.button.btn.btn-info
+{
+  margin-top: 20px; 
+  margin-left: 50px;
+}
+Name.required:after {
+  content:" *";
+}
+Landline.required:after {
+  content:" *";
+}
+

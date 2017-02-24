@@ -41,3 +41,8 @@
 .text-center
   = paginate @users
 / %h3 Import Data
+.text-center
+  %h2 Import Products
+  = form_tag import_company_users_path, multipart: true do
+    = file_field_tag :file , accept: '.csv ' 
+    = submit_tag "Import"

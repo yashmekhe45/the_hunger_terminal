@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'search', :on => :collection
       collection { post :import }
     end
+
   end
 
   resources :terminals do

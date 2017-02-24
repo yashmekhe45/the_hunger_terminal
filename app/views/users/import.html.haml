@@ -1,0 +1,6 @@
+-if flash[:error].present?
+  =flash[:error]
+-elsif flash[:notice].present?
+  =flash[:notice]
+-else
+  =flash[:success]

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if current_user.role == "company_admin"
-      terminals_path
+      company_terminals_path(current_user.company_id)
     end
   end
 end

@@ -13,17 +13,18 @@ Rails.application.routes.draw do
       collection { post :import }
     end
   end
-
-  resources :terminals do
-    resources :menu_items
-    member { post :import }
-  end
+  resources :companies do
+    resources :terminals do
+      resources :menu_items
+      member { post :import }
+    end
+  end  
 
   resources :companies
   
   get 'terminals/download' => 'terminals#download'
-
-  root to: 'home#index'
   
+  root to: 'home#index'
+  get 'companie/:company_id/terminals' => 'custom_actions#selected_terminals' , :as => 'selection'
   get 'menu_items/menu_index' => 'menu_items#menu_index'
 end

@@ -4,12 +4,12 @@ FactoryGirl.define do
     landline {"02472-240728"}
 
     transient do
-      users_count 5
+      users_count 1
     end
 
     after(:build) do |company, evaluator|
-        build_list(:user, evaluator.users_count, company: company)
-        build(:address, location: company)
+        company.employees_attributes = [FactoryGirl.attributes_for(:user)]
+        company.address_attributes = FactoryGirl.attributes_for(:address)
     end
   end
 end

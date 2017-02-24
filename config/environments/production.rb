@@ -86,7 +86,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false 
 
-  config.action_mailer.default_url_options = { :host => 'stark-crag-12943.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'frozen-journey-27891.herokuapp.com' }
 
   config.action_mailer.perform_deliveries = true
 

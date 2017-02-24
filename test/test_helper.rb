@@ -23,7 +23,14 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   fixtures :all
   DatabaseCleaner.strategy = :truncation
-  DatabaseCleaner.start
-  DatabaseCleaner.clean
+
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
+ #after { DatabaseCleaner.clean }
   # Add more helper methods to be used by all tests here...
 end

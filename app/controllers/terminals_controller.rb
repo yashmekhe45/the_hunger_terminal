@@ -13,10 +13,9 @@ class TerminalsController < ApplicationController
     valid_menus.each do |valid_menu|
       if valid_menus[valid_menu][:name].empty? || valid_menus[valid_menu][:price].empty?
         @company = Company.find(params[:company_id])
-        @terminal = @company.terminals.build(terminal_param)
+        @terminal = @company.terminals.build(terminal_menu_param)
         flag = false
         if @terminal.save
-          p @terminal.id
           flash[:success] = "Only new terminal added"
           if params[:terminal][:file].nil?
             redirect_to company_terminals_path
@@ -81,13 +80,7 @@ class TerminalsController < ApplicationController
     if @terminal.update_attributes(terminal_menu_param)
       flash[:success] = "terminal updated"
       if params[:terminal][:file].nil?
-        if @terminal.menu_items.empty?
-          flash[:alert] = "you deleted all items so your terminal is deleted"
-          @terminal.destroy
-          redirect_to company_terminals_path
-        else
-          redirect_to company_terminal_path
-        end
+        redirect_to company_terminals_path
       else
         import(params[:id])
       end

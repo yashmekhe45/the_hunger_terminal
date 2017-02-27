@@ -1,5 +1,7 @@
 class MenuItemsController < ApplicationController
   def menu_index
-    @menus = MenuItem.all
-  end
+  	@company = Company.find(params[:company_id])
+  	@terminals = @company.terminals.where(:is_active => true).ids
+  	@menus = MenuItem.where(:terminal_id => @terminals)
+  end	
 end

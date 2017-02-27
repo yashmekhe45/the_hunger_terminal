@@ -1,16 +1,14 @@
 .container
   #searchcontainer 
-    .row
+    =link_to "Active terminal", selection_path(params[:company_id]),class:"btn btn-info"
+    %a.btn.btn-info{:href => "/companies/#{current_user.company_id}/terminals/new"} New Terminal
     .col-sm-6.col-sm-offset-3
-      #imaginary_container
-        %form{action:company_terminals_path(params[:company_id])}
-          .input-group.stylish-input-group
-            %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-            %span.input-group-addon
-              %button{type:"submit"}
-                %span.glyphicon.glyphicon-search
-    %a.btn.btn-info{:href => "/companies/#{current_user.company_id}/terminals/new",style:"margin-top: 20px; margin-left: 50px;"} New Terminal
-    =link_to "selected terminal", selection_path(params[:company_id]),class:"btn btn-info"
+      %form{action:company_terminals_path(params[:company_id])}
+        .input-group.stylish-input-group
+          %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+          %span.input-group-addon
+            %button{type:"submit"}
+              %span.glyphicon.glyphicon-search  
   #indexcontainer
     .table-responsive
       %table.table-hover

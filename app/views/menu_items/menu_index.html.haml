@@ -1,16 +1,21 @@
-#indexcontainer
-  .table-responsive
-    %table.table-hover
-      %tbody
-        %tr
-          %th.text-center Sr No.
-          %th.text-center Name
-          %th.text-center Price
-          %th.text-center Type
-        - @menus.each_with_index do |object,i| 
-          %tr
-          %td.text-center= i+1
-          %td.text-center= object.name
-          %td.text-center= object.price
-          %td.text-center= object.veg
+
            
+
+.container
+  .row{:style => "padding-top:64px;,padding-bottom:64px;"}
+    .col-lg-6{:style => "padding-top:12px;padding-bottom:12px;padding-left:24px;padding-right:24px;"}
+      %h6 Today's Menu
+      %br/
+      - @menus.each_with_index do |object,i|
+        - if object.veg == true
+          %h4.text-success= object.name
+        - else  
+          %h4.text-danger= object.name
+        %h2.text-left= object.terminal.name 
+        %span.label.label-default= object.price
+        %button.btn.btn-info.btn-sm{:type => "button"} ADD 
+        %hr/  
+    .col-lg-6{:style => "padding-top:12px;padding-bottom:12px;padding-left:24px;padding-right:24px;"}
+      .img-thumbnail
+        = image_tag("background.jpg", class: "img-responsive",width:"500", height:"750")
+

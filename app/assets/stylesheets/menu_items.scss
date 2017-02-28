@@ -1,3 +1,24 @@
 // Place all the styles related to the MenuItems controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h6{
+	font-size: 30px;
+	text-align: center;
+}
+
+.row{
+
+    padding-left: 100px;
+}
+
+.img-thumbnail{
+	position: fixed;
+}
+.label.label-default{
+	font-size: 100%;
+}
+
+.btn.btn-info.btn-sm{
+	float: right;
+	line-height: 1;
+}

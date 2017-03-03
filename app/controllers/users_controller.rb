@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(2)  
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)  
   end
   
   def update
@@ -83,11 +83,11 @@ class UsersController < ApplicationController
 
 
   def search
-    search_value = params[:search_value]
+    search_value = params[:search_value].downcase
     p search_value
     if search_value
       @company = Company.find_by(id: params[:company_id])
-      @users = @company.employees.where(role: "employee").where("name like ? or email like ?",
+      @users = @company.employees.where(role: "employee").where("lower(name) like ? or lower(email) like ?",
               "%#{search_value}%","%#{search_value}%").all.order('created_at').page(params[:page]).per(2)
     else
       render "index"

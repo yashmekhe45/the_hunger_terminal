@@ -6,18 +6,19 @@
 /Search Bar#################################
 .container-fluied
   .row
-    .col-md-4.col-sm-4
+    .col-md-3.col-sm-3
     .col-md-6.col-sm-6
-      %form{"accept-charset" => "UTF-8", :action => "users/search",:page => params[:page], :method => "get"}
-        %input#search_bar{:name => "search_value", :type => "text", :required=> true, :placeholder=> "name / email....", :size => "30"}
-        %input{:name => "commit", :type => "submit", :value => "Search", :class => "btn btn-primary"}
+      = form_tag({controller: "users", action:"search"}, method: "get") do
+        = label_tag(:search_value, "Search for:")
+        = text_field_tag(:search_value)
+        = submit_tag("Search")
         =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"
     / .col-md-3.col-sm-3
 %br
 %br
 %br
 
-.container
+.container-fluid
   %table.table.table-fixed{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
    
     
@@ -41,8 +42,10 @@
 .text-center
   = paginate @users
 / %h3 Import Data
-.text-center
-  %h2 Import Products
-  = form_tag import_company_users_path, multipart: true do
-    = file_field_tag :file , accept: '.csv ' 
-    = submit_tag "Import"
+
+.container-fluid
+  .center
+    %h2 Add Employee Records
+    = form_tag import_company_users_path,id: "import_form", multipart: true do
+      = file_field_tag :file , accept: '.csv ' 
+      = submit_tag "Import"

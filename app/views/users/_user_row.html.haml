@@ -5,7 +5,9 @@
     =link_to company_user_path(@company.id,user.id) do
       .text-center
         #{user.name}
-  %td=user.email
+  %td
+    .text-center
+      =user.email
 
   %td{:width => "200px"}
     .text-center

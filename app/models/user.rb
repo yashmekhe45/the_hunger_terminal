@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :role, inclusion: {in: ['super_admin', 'company_admin', 'employee']}
   validates_presence_of :company_id , :if => :is_employee? 
   validates :is_active, inclusion: {in: [true, false, 't','f', 'true','false']}, :unless => :is_super_admin?
-
+  validates :mobile_number, uniqueness: { scope: :company_id}
   belongs_to :company
 
   before_validation :not_a_string , :remove_space

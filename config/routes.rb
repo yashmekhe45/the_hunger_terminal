@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :companies do
     resources :users do
       get 'search', :on => :collection
+      get 'download', :on => :collection
       collection { post :import }
     end
 

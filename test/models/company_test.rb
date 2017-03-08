@@ -15,18 +15,16 @@ class CompanyTest < ActiveSupport::TestCase
   end
   
   test "landline should be unique" do
-    company = build(:company)
-    duplicate_record =company.dup
-    company.save(validate: false)
+    company = create(:company)
+    duplicate_record = build(:company,:landline =>company.landline)
     duplicate_record.valid?
     assert duplicate_record.errors[:landline].include?("has already been taken")
   end
 
   test "name should be unique under case insensitive scope" do
-    company = build(:company)
-    duplicate_record =company.dup
+    company = create(:company)
+    duplicate_record = build(:company)
     duplicate_record[:name] = company[:name].upcase
-    company.save(validate: false)
     duplicate_record.valid?
     assert duplicate_record.errors[:name].include?("has already been taken")
   end
@@ -45,7 +43,8 @@ class CompanyTest < ActiveSupport::TestCase
 
   test "address should be present" do
     # address1 = build(:address)
-    company = build(:company, :address => nil, :landline => "0233-1234567")
+    company = build(:company, :landline => "0233-1234567")
+    company.address = nil
     company.valid?
     assert company.errors[:address].include?("can't be blank")
   end

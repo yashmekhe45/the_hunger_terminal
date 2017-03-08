@@ -37,11 +37,11 @@ class User < ApplicationRecord
   end
 
   def not_a_string
-    p self.is_active_before_type_cast
+    
     if [true,false,'t', 'f', 'true','false',1,0].include?(self.is_active_before_type_cast) 
-        return true
+      return true
     else
-      p self.errors[:is_active] << 'This must be true or false.' 
+      self.errors[:is_active] << 'This must be true or false.' 
       return false
     end
   end

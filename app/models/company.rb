@@ -6,10 +6,11 @@ class Company < ApplicationRecord
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
   validates :landline, length: {is: 12}
-  validates :address, presence: true
 
   has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
+
+  validates_presence_of :address
 
   accepts_nested_attributes_for :address, :employees
 

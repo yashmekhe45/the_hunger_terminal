@@ -1,12 +1,15 @@
 class Order < ApplicationRecord
-  belongs_to :user
-  belongs_to :company
-
   validates :date, :total_cost, :user, :company, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validate :date_cannot_be_in_the_past
   validate :can_order_be_created?, on: :create
 
+  belongs_to :user
+  belongs_to :company
+  has_many :order_details
+
+  accepts_nested_attributes_for :order_details
+  
   after_initialize :set_date
 
   private

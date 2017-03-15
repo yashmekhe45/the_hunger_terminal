@@ -26,5 +26,5 @@ Rails.application.routes.draw do
   
   root to: 'home#index'
   get 'companie/:company_id/terminals' => 'custom_actions#selected_terminals' , :as => 'selection'
-  get 'company/:company_id/terminals' => 'menu_items#menu_index' , :as => 'menus'
+  get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 end

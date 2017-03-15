@@ -6,8 +6,9 @@ h6{
 	text-align: center;
 }
 
-.row{
-
+.row.cont{
+    padding-top:64px;
+    padding-bottom:64px;
     padding-left: 100px;
 }
 
@@ -21,4 +22,68 @@ h6{
 .btn.btn-info.btn-sm{
 	float: right;
 	line-height: 1;
+
+}
+
+.card-header{
+	background-color: grey;
+	height: 31px;
+	padding-top: 5px;
+}
+
+%button.btn-block{
+	height: 31px;
+}
+
+.row.order{
+	padding-left: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.col-lg-6.cart{
+	position: fixed;
+	right: 0px;
+	width: 44%;
+	padding-top:12px;
+	padding-bottom:12px;
+	padding-left:24px;
+	padding-right:24px;
+}
+
+.col-lg-6.menu{
+	padding-top:12px;
+	padding-bottom:12px;
+	padding-left:24px;
+	padding-right:24px;
+}
+
+.card.text-center{
+	width: 88%;
+}
+
+input.number {
+	width: 35px;
+	padding-left: 5px;
+	font-size: 17px;
+}
+
+form.selector{
+	float: right;
+	line-height: 1;
+	color: green;
+	
+}
+
+.row.order.col-sm-3{
+	font-style: bold;
+}
+
+.card-footer.text-muted{
+	background-color: greenyellow;
+}
+
+.card-footer.text-muted.col-sm-6.total{
+	left: 82px;
+
 }

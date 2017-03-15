@@ -4,7 +4,7 @@ class TerminalsController < ApplicationController
     #byebug
     @company = Company.find(params[:company_id])
     @terminal = @company.terminals.build
-    @terminal.menu_items.build
+    @terminal.menu_items.build  
   end
   
   def create
@@ -13,7 +13,7 @@ class TerminalsController < ApplicationController
     valid_menus.each do |valid_menu|
       if valid_menus[valid_menu][:name].empty? || valid_menus[valid_menu][:price].empty?
         @company = Company.find(params[:company_id])
-        @terminal = @company.terminals.build(terminal_menu_param)
+        @terminal = @company.terminals.build(terminal_param)
         flag = false
         if @terminal.save
           flash[:success] = "Only new terminal added"

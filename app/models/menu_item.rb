@@ -4,4 +4,5 @@ class MenuItem < ApplicationRecord
   validates :veg, inclusion: { in: [false, true] }
   validates :name, uniqueness: { scope: :terminal_id , case_sensitive: false}
   belongs_to :terminal
+  has_many :order_details
 end

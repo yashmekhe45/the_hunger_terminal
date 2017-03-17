@@ -11,7 +11,7 @@
       %span.caret
     %ul.dropdown-menu
       %li
-        %a#menu{:href => "/company/#{current_user.company_id}/menus"} Place Order
+        %a#menu{:href => "/orders/new"} Place Order
       %li
         %a#menu{:href => "#"} My Order
    
@@ -22,4 +22,4 @@
   %div.icon    
     %a{:href => "/companies/#{current_user.company_id}/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
-      .name#termin Terminal  
+      .name#termin Terminal     

@@ -5,7 +5,7 @@ class Company < ApplicationRecord
   validates :name, :landline, presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
-  validates :landline, length: {is: 12}
+  validates :landline, length: {is: 10}
   validates :address, presence: true
 
   has_one :address,  as: :location, dependent: :destroy

@@ -12,7 +12,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)  
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    if @users.empty?
+      flash.now[:error] = "Sorry, No record is found"
+      render "index"
+    end 
   end
   
   def update
@@ -56,8 +60,6 @@ class UsersController < ApplicationController
             user = @company.employees.build(name: user_hash["name"],email: user_hash["email"], 
               mobile_number: user_hash["mobile_number"],is_active: true, role: "employee",
               password: Devise.friendly_token.first(8))
-            p "=========="
-            p user
             if user.valid?
               user.save
             else
@@ -73,9 +75,6 @@ class UsersController < ApplicationController
           flash.now[:success] = "all users added through csv data"
           redirect_to company_users_path(params[:company_id])
         else
-          p "===="
-          p @check_user
-          p "======="
           flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
         end
       else
@@ -91,15 +90,11 @@ class UsersController < ApplicationController
 
   def search
     search_value = params[:search_value].downcase
-    p "==========="
-    p search_value
-    p "========"
-    # byebug
+   
     if search_value
-      # @company = Company.find_by(id: params[:company_id])
-      @users = @company.employees.where(role: "employee").where("lower(name) like ? or lower(email) like ?",
-              "%#{search_value}%","%#{search_value}%").all.order('created_at').page(params[:page]).per(2)
-      # byebug
+      @users = @company.employees.where(role: "employee").where("lower(name) like ? or
+       lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
+       order('created_at').page(params[:page]).per(2)
       if @users.empty?
         p "No record found"
         flash[:error] = "No record found"

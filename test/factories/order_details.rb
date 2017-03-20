@@ -4,7 +4,6 @@ FactoryGirl.define do
     price { Faker::Number.positive }
     quantity { Faker::Number.positive }
     veg { Faker::Boolean.boolean }
-    total_price { Faker::Number.positive }
     
     association :order
     association :terminal

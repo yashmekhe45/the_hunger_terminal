@@ -9,5 +9,5 @@
         -@selected_terminals.each_with_index do |terminal,i|
           %tr  
           %td.text-center= i+1
-          %td.text-center= link_to terminal.name, terminal_path(terminal.id)
+          %td.text-center= link_to terminal.name, company_terminal_path(params[:company_id],terminal.id)
           %td.text-center= terminal.landline

@@ -10,7 +10,7 @@ class Company < ApplicationRecord
 
   has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
-
+  has_many :terminals
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space, :add_employee_attributes

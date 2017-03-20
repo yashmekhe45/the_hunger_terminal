@@ -1,5 +1,5 @@
 #formcontainer
-  = simple_nested_form_for @terminal,:html => {:multipart => true}  do |f|
+  = simple_nested_form_for [@company,@terminal],:html => {:multipart => true}  do |f|
     -if flash[:error].present?
       =flash[:error]
     = f.input :name, label: 'Your shop name',placeholder: 'KFC' 

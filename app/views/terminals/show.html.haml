@@ -1,21 +1,22 @@
-#indexcontainer
-  -if flash[:alert].present?
-    =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
-  -else  
-    %h1.text-center terminal details
-    %p.text-center= @terminal.name
-    %p.text-center= @terminal.landline
-    %table{:align => "center"}
-      %tbody
-        %tr
-          %th Id
-          %th Name
-          %th price
-          %th veg
-        - @menu_items.each do |menuitem|
-          %tr  
-          %td= menuitem.id
-          %td= menuitem.name
-          %td= menuitem.price
-          %td= menuitem.veg
+.container.center
+-if flash[:alert].present?
+  =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
+-else  
+%div.detail{:align => "center"}
+  %h1 terminal details
+  %p= @terminal.name
+  %p= @terminal.landline
+%table{:align => "center"}
+  %tbody
+    %tr
+      %th Id
+      %th Name
+      %th price
+      %th veg
+    - @menu_items.each do |menuitem|
+      %tr  
+      %td= menuitem.id
+      %td= menuitem.name
+      %td= menuitem.price
+      %td= menuitem.veg
 

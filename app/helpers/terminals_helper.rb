@@ -1,6 +1,7 @@
 module TerminalsHelper
-  def is_inactive_terminal?(terminal)
-    print "terminal.active = ", terminal.is_active
-    !terminal.is_active
+  def is_inactive_object?(object)
+    print "object.active = ",object.is_active
+    !object.is_active
   end  
 end
+

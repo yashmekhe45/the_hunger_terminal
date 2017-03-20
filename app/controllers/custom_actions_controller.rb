@@ -1,5 +1,6 @@
 class CustomActionsController < ApplicationController
   def selected_terminals
-    @selected_terminals = Terminal.all.where(is_active:true)
+  	@company = Company.find(params[:company_id])
+    @selected_terminals = @company.terminals.all.where(is_active:true)
   end
 end

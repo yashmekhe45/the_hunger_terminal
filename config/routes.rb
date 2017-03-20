@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :orders
   get 'home/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users, :skip => [:registration]
@@ -13,11 +14,12 @@ Rails.application.routes.draw do
       collection { post :import }
     end
   end
-
-  resources :terminals do
-    resources :menu_items
-    member { post :import }
-  end
+  resources :companies do
+    resources :terminals do
+      resources :menu_items
+      member { post :import }
+    end
+  end  
 
   resources :companies
   
@@ -26,5 +28,8 @@ Rails.application.routes.draw do
   get 'custom_actions/selected_terminals' 
 
   root to: 'home#index'
-  get 'menu_items/menu_index' => 'menu_items#menu_index'
+  
+  root to: 'home#index'
+  get 'companie/:company_id/terminals' => 'custom_actions#selected_terminals' , :as => 'selection'
+  get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 end

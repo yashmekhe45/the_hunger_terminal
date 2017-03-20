@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308084510) do
+ActiveRecord::Schema.define(version: 20170224072300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20170308084510) do
     t.boolean  "veg"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "total_price"
     t.index ["order_id"], name: "index_order_details_on_order_id", using: :btree
     t.index ["terminal_id"], name: "index_order_details_on_terminal_id", using: :btree
   end

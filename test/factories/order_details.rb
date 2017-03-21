@@ -3,9 +3,8 @@ FactoryGirl.define do
     menu_item_name "menu_name"
     price { Faker::Number.positive }
     quantity { Faker::Number.positive }
-    veg { Faker::Boolean.boolean }
     
     association :order
-    association :terminal
+    association :menu_item
   end
 end

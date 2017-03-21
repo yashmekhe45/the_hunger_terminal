@@ -5,5 +5,9 @@ FactoryGirl.define do
 
     association :user
     association :company
+
+    after(:build) do |order|
+      order.order_details_attributes = [FactoryGirl.attributes_for(:order_detail)]
+    end
   end
 end

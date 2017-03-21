@@ -1,15 +1,14 @@
 class Company < ApplicationRecord
-  # include ActiveModel::Validations
   
   validates_with LandlineValidator
-  validates :name, :landline, presence: true
+  validates :name, :landline, :email, :address, presence: true
+  validates :start_ordering_at, :review_ordering_at, :end_ordering_at,  presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
   validates :landline, length: {is: 12}
-  validates :address, presence: true
   validate :create_company_admin, on: :create
 
-  has_one :address, dependent: :destroy, as: :location
+  has_one :address, as: :location, dependent: :destroy
   has_many :employees, class_name: "User", dependent: :destroy
   has_many :orders, dependent: :destroy
 

@@ -11,16 +11,16 @@
  * It is generally better to create a new file per style scope.
  *
  *= require toastr
- */
+ *= require_tree
+*/
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
-/* universal */
-
+@import "terminals";
+@import "companies";
+@import "home";
+@import "menu_items";
+@import "users";
 body {
-  background: url("background.jpg") no-repeat center center fixed;
-
-
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -32,7 +32,6 @@ body {
   margin-top: 5%;
 }
 
-/* typography */
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
@@ -57,7 +56,6 @@ p {
   line-height: 1.7em;
 }
 
-/* header */
 
 #logo {
   float: left;
@@ -98,7 +96,6 @@ textarea {
   border-radius: 0;
 }
     
-/* Add a gray background color and some padding to the footer */
 footer {
   background-color: #111;
   color: white;
@@ -109,36 +106,78 @@ footer {
   width:100%;
 } 
 
-.container-fluid text-center {
-  height: 50px;
 
-}
-.bottom {
-  padding-left: 10px;
-}
-
-.w3-xlarge {
-  font-size: 32px !important;
-}
-
-.w3-sidenav a {
-  padding: 4px 2px 4px 0px;
-  text-align: center;
-}
-
-.fa {
-  padding-left: 2px;
-}
-
-.w3-section.w3-padding-top.w3-large {
-  padding-left: 115px;
-}
-
-.w3-sidenav.w3-black {
-  width: 70px;
-}
-/* Put all forms at the middle of page */
 
 .Absolute-Center.is-Responsive {
   padding: 5%;
+}
+
+.sidenav {
+   
+    height: 100%;
+    width: 75px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #337ab7;
+   
+    transition: 0.3s
+}
+
+.icon :hover, .offcanvas .icon:focus{
+    color: #f1f1f1;
+}
+
+span.gly {
+  font-size: 24px;
+ left: -7px;
+}
+div.icon {
+ padding-top:16px;
+ padding-bottom:19px;
+ height: 68px;
+ width: 75px;
+ display: block;
+ }
+a.name{
+  padding-left: 1px;
+  width: 114px;
+  text-align: center;
+}
+
+
+#report{
+  padding-left: 12px;
+}
+
+#terminal{
+  padding-left: 6px;
+}
+ .dropdown{
+ padding-top: 13px;
+ }
+
+#menu {
+  font-size: 12px;
+  padding-left: 0px;
+} 
+ 
+ 
+#steps {
+  color: black;
+}
+
+.row
+{
+  padding-left: 55px;
 }

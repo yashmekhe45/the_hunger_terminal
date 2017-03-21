@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_user.role == "company_admin"
       terminals_path
-    end
+    elsif current_user.role == "employee"
+      terminals_path # REDIRECT TO PLACE ORDER PATH
+    end 
   end
 end

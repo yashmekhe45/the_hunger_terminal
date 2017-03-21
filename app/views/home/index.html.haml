@@ -3,8 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title TheHungerTerminal
-    = stylesheet_link_tag  'home'
-  %body
+   
+  %body   
     .jumbotron
       .container.text-center
         %h1 Welcome to the Hunger Terminal
@@ -39,10 +39,9 @@
               
     .container-fluid.bg-3.text-center
       .row
-        %h4.cen Our Associates 
+        %h4 Our Associates 
       .container
-        .row.ter
-
+        .row
           .col-md-2
             .thumbnail
               = image_tag("foodpandalogo.jpg", class: "img-responsive",width:"80%", height:"100%")

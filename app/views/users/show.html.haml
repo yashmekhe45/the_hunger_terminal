@@ -1,0 +1,17 @@
+= stylesheet_link_tag 'users'
+%br
+%br
+%h3.text-center{:style=>"color:white"} Employee Record
+%br
+%br
+%table.table-hover{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
+  %tbody
+    %tr
+      %th Name:
+      %td= @user.name
+    %tr
+      %th Email ID:
+      %td= @user.email
+    %tr
+      %th Mobile Number
+      %td= @user.mobile_number

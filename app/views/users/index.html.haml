@@ -1,42 +1,58 @@
 
--if flash[:error].present?
-  = flash[:error]
+/ -if flash.now[:error].present?
+/   = flash.now[:error]
+
+%h1.text-center{:style=>"color:white"} EMPLOYEES
+/Search Bar#################################
+.container
+  .row
+    .col-md-6.col-sm-6 
+      .col-md-6.col-sm-6
+        %h4 Add Employee Records
+        = form_tag import_company_users_path,id: "import_form", multipart: true do
+          = file_field_tag :file , accept: '.csv ' 
+          = submit_tag "Import"
+      .col-md-6.col-sm-6
+        %button.btn.btn-info.btn-lg{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"} Add Single Employee Record
+
+    .col-md-6.col-sm-6
+      = form_tag({controller: "users", action:"search"}, method: "get") do
+        = label_tag(:search_value, "Search for:")
+        = text_field_tag(:search_value)
+        = submit_tag("Search")
+        =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"
+    .col-md-3.col-sm-3
 %br
 %br
 %br
 
-%h1.text-center EMPLOYEES
-/ .container-fluied
-/   .row
-/     .col-md-9.col-sm-7
-/     .col-md-3.col-sm-3
-/       %form{"accept-charset" => "UTF-8", :action => "users/search", :method => "get"}
-/         %input#q{:name => "search_value", :type => "text",:required => true,:placeholder => "Enter the name..."}
-/         %input{:name => "commit", :type => "submit", :value => "Search"}
-/ %br
-/ %br
-/ %br
-.container
-  %table.table.table-fixed{:border =>3,:align => "center",:style=>"width:50%",fontsize: "150px"}
+.container-fluid
+  %table.table.table-fixed{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
    
     
     %tbody
       %tr
         %th 
           .text-center
-            NAME:
+            NAME
+        %th
+          .text-center
+            EMAIL ID 
         %th 
           .text-center
             STATUS
         %th 
           .text-center
             ACTION
+      %tr
         =render "common_index" ,object: @user, as: 'user'
-
-
-
-
-
 
 .text-center
   = paginate @users
+
+/ .container-fluid
+/   .center
+/     %h2 Add Employee Records
+/     = form_tag import_company_users_path,id: "import_form", multipart: true do
+/       = file_field_tag :file , accept: '.csv ' 
+/       = submit_tag "Import"

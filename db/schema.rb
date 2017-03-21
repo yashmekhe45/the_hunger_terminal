@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315092907) do
+ActiveRecord::Schema.define(version: 20170224062217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,38 +45,12 @@ ActiveRecord::Schema.define(version: 20170315092907) do
     t.index ["terminal_id"], name: "index_menu_items_on_terminal_id", using: :btree
   end
 
-  create_table "order_details", force: :cascade do |t|
-    t.integer  "quantity"
-    t.string   "menu_item_name"
-    t.float    "menu_item_price"
-    t.boolean  "veg"
-    t.string   "terminal_name"
-    t.integer  "menu_item_id"
-    t.integer  "order_id"
-    t.integer  "terminal_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["menu_item_id"], name: "index_order_details_on_menu_item_id", using: :btree
-    t.index ["order_id"], name: "index_order_details_on_order_id", using: :btree
-    t.index ["terminal_id"], name: "index_order_details_on_terminal_id", using: :btree
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.date     "date"
-    t.float    "total_cost"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
-  end
-
   create_table "terminals", force: :cascade do |t|
     t.string   "name"
     t.string   "landline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
-    t.boolean  "is_active"
     t.index ["company_id"], name: "index_terminals_on_company_id", using: :btree
   end
 
@@ -108,10 +82,6 @@ ActiveRecord::Schema.define(version: 20170315092907) do
   end
 
   add_foreign_key "menu_items", "terminals"
-  add_foreign_key "order_details", "menu_items"
-  add_foreign_key "order_details", "orders"
-  add_foreign_key "order_details", "terminals"
-  add_foreign_key "orders", "users"
   add_foreign_key "terminals", "companies"
   add_foreign_key "users", "companies"
 end

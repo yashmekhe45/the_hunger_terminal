@@ -5,6 +5,8 @@
     = f.input :name, label: 'Your shop name',placeholder: 'KFC' 
     = f.input :landline, input_html: { maxlength: 12 }, placeholder: '022-12365987,0123-1236547,02134-123456'
     = f.input :file, as: :file, accepts: '.csv',hint: 'Upload csv file of menu items with headers.'
+    =f.file_field :image
+    =f.label :remote_image_url, "Upload logo of terminal"
     %table#terminals
       = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|
         %tr.fields

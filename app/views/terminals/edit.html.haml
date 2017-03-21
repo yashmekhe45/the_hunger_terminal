@@ -5,6 +5,8 @@
     = f.input :name     
     = f.input :landline
     = f.input :file,as: :file,hint: 'Upload csv file of menu items with headers.'
+    =f.file_field :image
+    =f.label :remote_image_url, 'Upload logo of terminal'
     %table#edit_terminal
       = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|
         %tr.fields

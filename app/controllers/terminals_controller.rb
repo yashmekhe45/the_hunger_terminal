@@ -138,11 +138,11 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_param
-    params.require(:terminal).permit(:name,:landline)
+    params.require(:terminal).permit(:name,:landline,:image)
   end
 
   def terminal_menu_param
-    params.require(:terminal).permit(:name,:landline, :is_active, menu_items_attributes: [:id, :name, :veg, :price, :_destroy])
+    params.require(:terminal).permit(:name,:landline,:image ,:is_active, menu_items_attributes: [:id, :name, :veg, :price, :_destroy])
   end
 
   def download

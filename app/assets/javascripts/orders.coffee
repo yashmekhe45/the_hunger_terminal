@@ -51,6 +51,7 @@ $(document).ready ->
       sum += num
 
     $('#total').text(sum)
+    $('#order_total_cost').val(sum)
 
 
   $(document).on 'click', '.delete', ->

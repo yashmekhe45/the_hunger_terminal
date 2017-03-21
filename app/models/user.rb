@@ -9,13 +9,14 @@ class User < ApplicationRecord
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
   validates :mobile_number, length: {is: 13}
-  validates :role, inclusion: {in: ['super_admin', 'company_admin', 'employee']}
-  validates_presence_of :company_id , :if => :is_employee? 
+  validates :role, inclusion: {in: USER_ROLES}
+  validates_presence_of :company_id, :if => :is_employee? 
   validates :is_active, inclusion: {in: [true, false, 't','f', 'true','false']}, :unless => :is_super_admin?
   validates :mobile_number, uniqueness: { scope: :company_id}
-  belongs_to :company
-
   before_validation :not_a_string , :remove_space
+
+  belongs_to :company
+  has_many :orders, dependent: :destroy
 
   def remove_space
     if(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
@@ -37,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def not_a_string
-    
+
     if [true,false,'t', 'f', 'true','false',1,0].include?(self.is_active_before_type_cast) 
       return true
     else

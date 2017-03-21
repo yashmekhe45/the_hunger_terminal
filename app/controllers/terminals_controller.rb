@@ -1,65 +1,37 @@
 require 'csv'
 class TerminalsController < ApplicationController
+
+  before_action :authenticate_user!  
+  before_action :load_company
+  before_action :load_terminal, only: [:show, :edit, :update, :destroy]
+
   def new
-    #byebug
-    @company = Company.find(params[:company_id])
-    @terminal = @company.terminals.build
+    @terminal = @current_company.terminals.build
     @terminal.menu_items.build  
   end
   
   def create
-    flag = true
-    valid_menus = params[:terminal][:menu_items_attributes]
-    valid_menus.each do |valid_menu|
-      if valid_menus[valid_menu][:name].empty? || valid_menus[valid_menu][:price].empty?
-        @company = Company.find(params[:company_id])
-        @terminal = @company.terminals.build(terminal_param)
-        flag = false
-        if @terminal.save
-          flash[:success] = "Only new terminal added"
-          if params[:terminal][:file].nil?
-            redirect_to company_terminals_path
-          else
-            import(@terminal.id)
-          end
-        else
-          render :new 
-        end 
-      end 
-    end 
-    if flag
-      @company = Company.find(params[:company_id])
-      @terminal = @company.terminals.new(terminal_menu_param)
-      if @terminal.save
-        flash[:success] = "terminal with menu items added"
-        if params[:terminal][:file].nil?
-            redirect_to company_terminals_path
-          else
-            import(@terminal.id)
-        end
-      else
-        render :new
-      end
+    @terminal = @current_company.terminals.build terminal_param
+    if @terminal.save
+      flash[:success] = "terminal created successfully"
+      redirect_to company_terminals_path and return
     end
+    render :new
   end
 
   def index
     if params[:search].present?
       search_type = params[:search]
-      @company = Company.find(params[:company_id])
-      @terminals = @company.terminals.where(["name LIKE ?", "%#{params[:search]}%"]).page(params[:page]).per(7)
+      @terminals = @current_company.terminals.where(["name LIKE ?", "%#{params[:search]}%"]).page(params[:page]).per(7)
       if @terminals.empty?
         flash[:notice] = "Vendor not present."
       end
     else
-      @company = Company.find(params[:company_id])
-      @terminals = @company.terminals.order(:name).page(params[:page]).per(7)
+      @terminals = @current_company.terminals.order(:name).page(params[:page]).per(7)
     end
   end
 
   def edit
-    @company = Company.find(params[:company_id])
-    @terminal = @company.terminals.find(params[:id])
   end
 
   def show
@@ -68,16 +40,12 @@ class TerminalsController < ApplicationController
     elsif params[:id] == "download"
       download
     else 
-      @company = Company.find(params[:company_id]) 
-      @terminal = @company.terminals.find(params[:id])
-      @menu_items = @terminal.menu_items.all
+      @menu_items = @terminal.menu_items
     end
   end  
 
   def update
-    @company = Company.find(params[:company_id])
-    @terminal = @company.terminals.find(params[:id])
-    if @terminal.update_attributes(terminal_menu_param)
+    if @terminal.update_attributes(terminal_param)
       flash[:success] = "terminal updated"
       if params[:terminal][:file].nil?
         redirect_to company_terminals_path
@@ -88,8 +56,6 @@ class TerminalsController < ApplicationController
   end
 
   def destroy
-    @company = Company.find(params[:company_id])
-    @terminal = @company.terminals.find(params[:id])
     @terminal.destroy
     redirect_to company_terminals_path
   end
@@ -136,11 +102,23 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_param
-    params.require(:terminal).permit(:name,:landline)
+    params.require(:terminal).permit(:name,:landline, :is_active)
   end
 
-  def terminal_menu_param
-    params.require(:terminal).permit(:name,:landline, :is_active, menu_items_attributes: [:id, :name, :veg, :price, :_destroy])
+  def load_company
+    @current_company = current_user.company
+    unless @current_company
+      flash[:warning] = 'Company not found'
+      redirect_to root_path and return
+    end
+  end
+
+  def load_terminal
+    @terminal = @current_company.terminals.find params[:id]
+    unless @terminal
+      flash[:warning] = 'Terminal not found'
+      redirect_to terminals_path and return
+    end
   end
 
   def download

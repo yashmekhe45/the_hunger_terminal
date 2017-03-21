@@ -1,10 +1,11 @@
 class Order < ApplicationRecord
   
-  validates :date, :total_cost, presence: true
+  validates :date, :total_cost, :status, :terminal_id, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
+  validates :status, inclusion: {in: ORDER_STATUS}
   validate :date_cannot_be_in_the_past
   validate :order_can_be_created?, on: :create
-  validates :status, inclusion: {in: ORDER_STATUS}
+  
 
   belongs_to :user
   belongs_to :company

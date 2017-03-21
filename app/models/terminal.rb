@@ -1,11 +1,9 @@
 class Terminal < ApplicationRecord
   validates_with LandlineValidator
-  validates :name, :landline ,presence: true
-  validates :landline ,uniqueness: true
+  validates :name, :landline ,:email, :active, presence: true
+  validates :landline ,:email, uniqueness: true
   validates :landline ,length:{ is:12 } 
 
-  has_one :address, as: :location, dependent: :destroy
   has_many :menu_items,dependent: :destroy
-  has_many :orders,dependent: :destroy
-  accepts_nested_attributes_for :menu_items, allow_destroy: true 
+  has_many :order
 end

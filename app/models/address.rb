@@ -6,6 +6,7 @@ class Address < ApplicationRecord
   belongs_to :location, polymorphic: true
     
   before_validation :remove_space
+  
   def remove_space
     if(self.house_no == nil || self.locality == nil || 
       self.city == nil || self.state == nil)

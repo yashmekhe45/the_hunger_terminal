@@ -2,7 +2,7 @@ class Company < ApplicationRecord
   
   validates_with LandlineValidator
   validates :name, :landline, :email, :address, presence: true
-  validates :start_ordering_at, :review_ordering_at, :end_ordering_at,  presence: true
+  # validates :start_ordering_at, :review_ordering_at, :end_ordering_at,  presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
   validates :landline, length: {is: 12}

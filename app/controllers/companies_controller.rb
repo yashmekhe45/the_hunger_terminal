@@ -47,9 +47,9 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :landline, 
+    params.require(:company).permit(:name, :landline, :email, 
       address_attributes: [:house_no, :pincode, :locality, :city, :state],
-      employees_attributes: [:name, :email, :mobile_number, :password, :id])
+      employees_attributes: [:name, :email, :mobile_number, :password, :password_confirmation])
   end
 
   def load_company

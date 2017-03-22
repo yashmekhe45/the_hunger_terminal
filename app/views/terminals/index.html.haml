@@ -1,39 +1,40 @@
-#searchcontainer 
-  .row
-  .col-sm-6.col-sm-offset-3
-    #imaginary_container
-      %form{action:terminals_path}
-        .input-group.stylish-input-group
-          %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-          %span.input-group-addon
-            %button{type:"submit"}
-              %span.glyphicon.glyphicon-search
-  %a.btn.btn-info{:href => "/terminals/new",style:"margin-top: 20px; margin-left: 50px;"} New Terminal
-#indexcontainer
-  .table-responsive
-    %table.table-hover
-      %tbody
-        %tr
-          %th.text-center Sr No.
-          %th.text-center Name
-          %th.text-center Landline
-          %th.text-center Edit Terminal
-          %th.text-center Delete Terminal
-        - if !@terminal.nil?
-          - @terminal.each_with_index do |object,i|
-            %tr
-            %td.text-center= i+1
-            %td.text-center= link_to object.name, terminal_path(object.id)
-            %td.text-center= object.landline
-            %td.text-center= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
-            %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 
-        -else
-          - @terminal_search.each_with_index do |object,i|
-            %tr
-            %td.text-center= i+1
-            %td.text-center= link_to object.name, terminal_path(object.id)
-            %td.text-center= object.landline
-            %td.text-center= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
-            %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-danger"
-.text-center
-  = paginate @terminal 
+.container
+  #searchcontainer 
+    .row
+    .col-sm-6.col-sm-offset-3
+      #imaginary_container
+        %form{action:terminals_path}
+          .input-group.stylish-input-group
+            %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+            %span.input-group-addon
+              %button{type:"submit"}
+                %span.glyphicon.glyphicon-search
+    %a.btn.btn-info{:href => "/terminals/new",style:"margin-top: 20px; margin-left: 50px;"} New Terminal
+  #indexcontainer
+    .table-responsive
+      %table.table-hover
+        %tbody
+          %tr
+            %th.text-center Sr No.
+            %th.text-center Name
+            %th.text-center Landline
+            %th.text-center Edit Terminal
+            %th.text-center Delete Terminal
+          - if !@terminal.nil?
+            - @terminal.each_with_index do |object,i|
+              %tr
+              %td.text-center= i+1
+              %td.text-center= link_to object.name, terminal_path(object.id)
+              %td.text-center= object.landline
+              %td.text-center= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
+              %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 
+          -else
+            - @terminal_search.each_with_index do |object,i|
+              %tr
+              %td.text-center= i+1
+              %td.text-center= link_to object.name, terminal_path(object.id)
+              %td.text-center= object.landline
+              %td.text-center= link_to "Edit", edit_terminal_path(object.id), class:"btn btn-info"
+              %td.text-center= link_to "Delete", terminal_path(object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-danger"
+  .text-center
+    = paginate @terminal 

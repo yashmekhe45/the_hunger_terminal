@@ -8,13 +8,13 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   %body
-    .container-fluid
+    .container
       - if user_signed_in?  
         =render  "home/sidebar"
         =render "home/navbar"
       -else
         =render "home/navbar"
-    = yield  
+      = yield  
     - unless flash.empty?
       %script
         - flash.each do |f|

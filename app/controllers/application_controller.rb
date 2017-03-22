@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
@@ -6,6 +7,9 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_user.role == "company_admin"
       company_terminals_path(current_user.company_id)
-    end
+    elsif current_user.role == "employee"
+      company_terminals_path(current_user.company_id) # REDIRECT TO PLACE ORDER PATH
+    end 
   end
+
 end

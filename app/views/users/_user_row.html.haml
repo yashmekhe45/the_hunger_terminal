@@ -5,7 +5,9 @@
     =link_to company_user_path(@company.id,user.id) do
       .text-center
         #{user.name}
-  %td=user.email
+  %td
+    .text-center
+      =user.email
 
   %td{:width => "200px"}
     .text-center
@@ -15,7 +17,7 @@
         = "ACTIVE"
         
   %td
-    =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), class: 'activate', method: :patch ,data: { confirm: 'Are you sure?' } do
+    =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
       -if user.is_active
         .text-center
           %button.btn.btn-success{:type => "button"}

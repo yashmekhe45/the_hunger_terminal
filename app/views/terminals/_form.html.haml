@@ -1,5 +1,6 @@
-= f.input :name, require: true
+= f.input :name, required: true
 = f.input :landline, required: true
-= f.input :is_active, as: :boolean
+= f.input :email
+= f.input :active, required:true, as: :boolean
 = f.button :submit, class: "btn btn-success"
 

@@ -5,7 +5,7 @@
   %td.text-center= link_to "Edit", edit_terminal_path(terminal.id), class:"btn btn-info"
   %td.text-center= link_to "Delete", terminal_path(terminal.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers"
   %td
-    =link_to terminal_path(terminal.id,'terminal[is_active]' =>is_inactive_terminal?(terminal)), method: :patch, data: {confirm: 'Are you sure?'} do 
+    =link_to terminal_path(terminal.id,'terminal[active]' =>is_inactive_terminal?(terminal)), method: :patch, data: {confirm: 'Are you sure?'} do 
       -if terminal.is_active
         .text-center
           %button.btn.btn-success{:type=> "button"}

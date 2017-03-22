@@ -7,7 +7,7 @@ class MenuItemsController < ApplicationController
 
   def menu_index
   	@company = Company.find(params[:company_id])
-  	@terminals = @company.terminals.where(:is_active => true).ids
+  	@terminals = @company.terminals.where(:available => true).ids
   	@menus = MenuItem.where(:terminal_id => @terminals)
   end	
 
@@ -66,7 +66,7 @@ class MenuItemsController < ApplicationController
   end
 
   def menu_items_params
-    params.require(:menu_item).permit(:name, :price, :veg, :is_active, :terminal_id)
+    params.require(:menu_item).permit(:name, :price, :veg, :available, :terminal_id, active_days: [])
   end
 
 end

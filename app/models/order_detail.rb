@@ -1,7 +1,10 @@
 class OrderDetail < ApplicationRecord
+  
+  validates :status, :menu_item_id, presence: true
+  validates :status, inclusion: {in: ORDER_DETAIL_STATUS}
   belongs_to :menu_item
   belongs_to :order
-  belongs_to :terminal
+  
   after_initialize :assign_menu_item_details, if: :menu_item
 
   def assign_menu_item_details
@@ -11,4 +14,5 @@ class OrderDetail < ApplicationRecord
     self.terminal_name = menu_item.terminal.name
     self.terminal = menu_item.terminal
   end
+
 end

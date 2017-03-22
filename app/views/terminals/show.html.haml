@@ -21,7 +21,7 @@
               %td= menu_item.name
               %td= "#{menu_item.price}/-"
               %td= menu_item.veg ? "Veg" : "Non Veg"
-              %td= menu_item.is_active ? "Available" : "Not Available"
+              %td= menu_item.available ? "Available" : "Not Available"
               %td
                 = link_to 'Edit', edit_company_terminal_menu_item_path(@current_company, @terminal, menu_item), remote: true
                 = link_to 'Delete', company_terminal_menu_item_path(@current_company, @terminal, menu_item), method: :delete, data: { confirm: 'Are you sure?' }

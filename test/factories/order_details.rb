@@ -1,12 +1,10 @@
 FactoryGirl.define do
   factory :order_detail do
-    quantity 1
-    menu_item_name "MyString"
-    menu_item_price 1.5
-    veg false
-    terminal_name "MyString"
-    menu_item nil
     order nil
     terminal nil
+    menu_item_name "MyString"
+    price 1
+    quantity 1
+    veg false
   end
 end

@@ -28,8 +28,8 @@
             %td.text-center= link_to "Edit", edit_company_terminal_path(params[:company_id],object.id), class:"btn btn-info"
             %td.text-center= link_to "Delete", company_terminal_path(params[:company_id],object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 
             %td
-              =link_to company_terminal_path(params[:company_id],object.id,'terminal[is_active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
-                -if object.is_active
+              =link_to company_terminal_path(params[:company_id],object.id,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
+                -if object.active
                   .text-center
                     %button.btn.btn-success{:type=> "button"}
                       %span.glyphicon.glyphicon-ok-circle>

@@ -7,5 +7,6 @@ FactoryGirl.define do
     
     association :order
     association :menu_item
+
   end
 end

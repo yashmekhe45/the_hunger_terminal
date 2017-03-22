@@ -10,7 +10,9 @@ FactoryGirl.define do
     association :terminal
 
     after(:build) do |order|
-      order.order_details_attributes = [FactoryGirl.attributes_for(:order_detail)]
+      menu_item = create(:menu_item)
+      order.order_details_attributes = [FactoryGirl.attributes_for(:order_detail,
+        menu_item_name: menu_item.name, price: menu_item.price,menu_item_id: menu_item.id)]
     end
   end
 end

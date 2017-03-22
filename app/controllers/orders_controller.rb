@@ -1,35 +1,50 @@
 class OrdersController < ApplicationController
   
   def index
-    @orders = current_user.orders
+    @orders = current_user.orders 
+  end
+
+  def load_terminal
+    @terminals = Terminal.where(active: true, company: current_user.company)
   end
 
   def new
-    @order = Order.new
-    load_menu_items
+    @order = Order.new  
+    @terminal_id = params[:terminal_id]
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+    
   end
 
   def create
     @order = Order.new(order_params)
+    load_order_detail
     if @order.save
-      redirect_to orders_path
+      redirect_to @order
     else
       flash[:error] = @order.errors.messages
-      load_menu_items
       render :new
     end
   end
-
+  
+  def show
+    @order = Order.find(params[:id])
+  end
+  def destroy
+    @order = Order.find(params[:id])
+    @order.destroy
+    redirect_to vendors_path
+  end
   private
+
   def order_params
     params.require(:order).permit(
-      :total_cost, order_details_attributes:[:menu_item_id, :quantity]
+      :total_cost,:terminal_id, order_details_attributes:[:menu_item_id, :quantity]
     ).merge(user_id: current_user.id)
   end
 
-  def load_menu_items
-     terminals_ids = Terminal.where(is_active: true, company: current_user.company).ids
-     @menu_items = MenuItem.where(terminal_id: terminals_ids)
+  def load_order_detail
+    @order.date = Date.today
+    @order.company_id = current_user.company.id
   end
 
 end

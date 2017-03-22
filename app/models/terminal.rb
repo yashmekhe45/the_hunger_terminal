@@ -11,4 +11,5 @@ class Terminal < ApplicationRecord
   has_many :order
   belongs_to :company
 
+  mount_uploader :image, ImageUploader
 end

@@ -102,7 +102,7 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_param
-    params.require(:terminal).permit(:name,:landline, :active, :email)
+    params.require(:terminal).permit(:name,:landline, :active, :email,:image)
   end
 
   def load_company

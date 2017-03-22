@@ -1,14 +1,5 @@
 require "test_helper"
 
-<<<<<<< HEAD
-describe Order do
-  let(:order) { Order.new }
-
-  it "must be valid" do
-    value(order).must_be :valid?
-  end
-end
-=======
 class OrderTest < ActiveSupport::TestCase
   
   before :each do
@@ -87,4 +78,3 @@ class OrderTest < ActiveSupport::TestCase
     assert_empty order_obj.errors[:date] unless (hour > 9 && hour < 14)
   end
 end
->>>>>>> e46a738d4f36a8c5ddd352689288342fadc67d01

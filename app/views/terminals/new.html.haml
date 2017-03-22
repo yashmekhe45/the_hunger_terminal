@@ -1,7 +1,28 @@
+<<<<<<< HEAD
 .container
   .row
     .col-md-4
       %h2 New Terminal
       = simple_form_for @terminal, url: company_terminals_path, html: { class: 'form-horizontal' } do |f|
         = render 'form', f: f
+=======
+#formcontainer
+  = simple_nested_form_for [@company,@terminal],:html => {:multipart => true}  do |f|
+    -if flash[:error].present?
+      =flash[:error]
+    = f.input :name, label: 'Your shop name',placeholder: 'KFC' 
+    = f.input :landline, input_html: { maxlength: 12 }, placeholder: '022-12365987,0123-1236547,02134-123456'
+    = f.input :file, as: :file, accepts: '.csv',hint: 'Upload csv file of menu items with headers.'
+    =f.file_field :image
+    =f.label :remote_image_url, "Upload logo of terminal"
+    %table#terminals
+      = f.simple_fields_for :menu_items, :wrapper => false do |menu_form|
+        %tr.fields
+          %td= menu_form.input :name, required: false
+          %td= menu_form.input :price, required: false
+          %td= menu_form.input :veg, as: :radio_buttons
+          %td= menu_form.link_to_remove "Remove menuitem"
+    = f.link_to_add "Add a menuitem", :menu_items, "data-target" => "#terminals"
+    = f.button :submit
+>>>>>>> 2e0d0e0c884775773cbe0fc56e2df1418369d94a
 

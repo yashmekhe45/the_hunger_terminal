@@ -51,6 +51,9 @@ $(document).ready ->
       sum += num
 
     $('#total').text(sum)
+    $('#order_total_cost').val(sum)
+    # $('#order_terminal').text(vendor_name)
+
 
 
   $(document).on 'click', '.delete', ->
@@ -66,3 +69,5 @@ $(document).ready ->
       sum += num
 
     $('#total').text(sum)
+    $('#order_total_cost').val(sum)
+

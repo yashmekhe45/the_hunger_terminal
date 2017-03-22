@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     if current_user.role == "company_admin"
       company_terminals_path(current_user.company_id)
     elsif current_user.role == "employee"
-      company_terminals_path(current_user.company_id) # REDIRECT TO PLACE ORDER PATH
+      vendors_path # REDIRECT TO PLACE ORDER PATH
     end 
   end
 

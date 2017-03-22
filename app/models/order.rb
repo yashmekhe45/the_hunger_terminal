@@ -6,15 +6,11 @@ class Order < ApplicationRecord
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
   # validate :can_be_updated?, on: :update
-
+  
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
-  has_many :order_details, dependent: :destroy, inverse_of: :orde
-  
-  belongs_to :user
-  belongs_to :company
-  
+  has_many :order_details, dependent: :destroy, inverse_of: :order
 
   after_initialize :set_date
 

@@ -20,14 +20,14 @@
               - @order.order_details.each do |order_detail|
                 %tr
                   %td= order_detail.menu_item_name  
-                  %td= order_detail.terminal.name   
+                  %td= @order.terminal.name 
                   %td
                     %span ₹
-                    %span.price= order_detail.menu_item_price
+                    %span.price= order_detail.price
                   %td.text-center= order_detail.quantity
                   %td.text-center
                     %span ₹
-                    %span.sub-total= order_detail.menu_item_price*order_detail.quantity
+                    %span.sub-total= order_detail.price * order_detail.quantity
 
         .col-sm-4
           .detail
@@ -44,12 +44,13 @@
               %strong Total:
               ₹#{}          
       %a.card-link{:href => "#"} Edit Order
-      %a.card-link{:href => "#"} Delete Order
+      %a.card-link{:href =>  order_path(@order),method: :delete} Delete Order
+      %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'}
 
 
 
 
-    
+
 
   
 

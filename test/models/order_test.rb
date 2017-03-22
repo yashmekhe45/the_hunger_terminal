@@ -1,7 +1,8 @@
 require "test_helper"
 
 class OrderTest < ActiveSupport::TestCase
-  
+  include CreateOrderHelper
+
   before :each do
     DatabaseCleaner.start
   end
@@ -42,21 +43,21 @@ class OrderTest < ActiveSupport::TestCase
     assert_empty order_obj.errors[:date]
   end
 
-  test "order should not be created between 9 AM to 2 PM" do
-    some_time = Time.zone.parse "11:20 AM"
+  test "order should not be created after 11 AM" do
+    some_time = Time.parse "2 PM"
     Time.stub(:now, some_time) do
       order_obj = build(:order)  
       order_obj.save
-      assert order_obj.errors[:date].include?("order cannot be created between 9 AM to 2 PM")
+      assert order_obj.errors[:base].include?("order cannot be created after 11 AM")
     end
   end
 
-  test "order should be created from 2 PM to 9 AM" do
-    some_time = Time.zone.parse "4 PM"  ## gives time object in IST time zone
+  test "order should be created from 12 AM to 11 AM" do
+    some_time = Time.parse "10 AM"  ## gives time object in IST time zone
     Time.stub(:now, some_time) do
       order_obj = build(:order)  
       order_obj.save
-      assert_not order_obj.errors[:date].include?("order cannot be created between 9 AM to 2 PM")
+      assert_not order_obj.errors[:base].include?("order cannot be created after 11 AM")
     end
   end
 
@@ -74,18 +75,54 @@ class OrderTest < ActiveSupport::TestCase
     assert order_obj.errors[:company].include?("can't be blank")
   end
 
-  ##TODO
-  # test "order should have atleast one order detail"
+  test "order should have atleast one order detail" do
+    order_obj = build(:order)
+    order_obj.order_details=[]
+    order_obj.valid?
+    assert order_obj.errors[:base].include?("order shold have minimum one menu item")
+  end
 
-  # test "total_cost of order should be updated"
+  test "correct date should be set for the order" do
+    order = Order.new
+    assert_equal order.date, Date.today
+  end
 
-  # test "order should be saved with valid params"
+  test "order should not be created on sunday" do
+    d = Date.today.end_of_week
+    some_time = Time.new(d.year,d.month,d.day,10,0,0)
+    Time.stub(:now, some_time) do
+      order_obj = build(:order)
+      order_obj.valid?
+      assert order_obj.errors[:base].include?("order cannot be created on saturday and sunday")
+    end
+  end
 
-  # test "order should not be deleted after it has been placed to terminal"
+  test "order should not be created on saturday" do
+    d = Date.today.end_of_week.prev_day
+    some_time = Time.new(d.year,d.month,d.day,10,0,0)
+    Time.stub(:now, some_time) do
+      order_obj = build(:order)
+      order_obj.valid?
+      assert order_obj.errors[:base].include?("order cannot be created on saturday and sunday")
+    end
+  end
 
-  # test "order should not be updated after it has been placed to terminal"
+  test "one user can place only one order per day" do
+    order = create_order
+    order2 = order.dup
+    order2.date = order.date
+    order2.valid?
+    assert order2.errors[:user_id].include?("has already been taken")
+  end
 
-  # test "correct date should be set for the order" do
-  #   order_obj = build(:order)
-  # end
+  # TODO
+=begin
+  test "total_cost of order should be updated"
+
+  test "order should be saved with valid params"
+
+  test "order should not be deleted after it has been placed to terminal"
+
+  test "order should not be updated after it has been placed to terminal"
+=end
 end

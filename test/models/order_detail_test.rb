@@ -1,5 +1,4 @@
 require "test_helper"
-
 class OrderDetailTest < ActiveSupport::TestCase
   include CreateOrderHelper
 

@@ -20,25 +20,25 @@
 @import "home";
 @import "menu_items";
 @import "users";
+
 body {
   -webkit-background-size: cover;
-  -moz-background-size: cover;
+
   -o-background-size: cover;
   background-size: cover;
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weight: 400;
   margin-bottom: 5%;
-  margin-top: 5%;
+  margin-top: 2%;
 }
-
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
 
 h1 {
-  //font-size: 2em;
+  font-size: 1.5em;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -55,7 +55,6 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
-
 
 #logo {
   float: left;
@@ -106,32 +105,30 @@ footer {
   width:100%;
 } 
 
-
-
 .Absolute-Center.is-Responsive {
   padding: 5%;
 }
 
 .sidenav {
    
-    height: 100%;
-    width: 75px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 60px;
+  height: 100%;
+  width: 75px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 15px;
-    color: #337ab7;
-   
-    transition: 0.3s
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #337ab7;
+ 
+  transition: 0.3s
 }
 
 .icon :hover, .offcanvas .icon:focus{
@@ -160,7 +157,7 @@ a.name{
   padding-left: 12px;
 }
 
-#terminal{
+#termin{
   padding-left: 6px;
 }
  .dropdown{
@@ -172,12 +169,15 @@ a.name{
   padding-left: 0px;
 } 
  
- 
 #steps {
   color: black;
 }
 
-.row
-{
-  padding-left: 55px;
+/*.btn-primary{
+  width: -moz-available;
+  text-align: -moz-right;
+}*/
+
+.order-show{
+  background-color: whitesmoke;
 }

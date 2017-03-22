@@ -12,7 +12,7 @@
               .col-md-6
                 = f.input :name, :label => false, :placeholder => "Name"
               .col-md-6
-                = f.input :landline, :label => false, :placeholder => "Landline" 
+                = f.input :landline, :label => false, input_html: { maxlength: 10 }, :placeholder => "Landline" 
             .location
               %h5 Company Location Details:
               = f.simple_fields_for :address do |a|
@@ -39,13 +39,15 @@
                   .col-md-6
                     = u.input :name, :label => false, :placeholder => "Name"
                   .col-md-6
-                    = u.input :mobile_number, :label => false, :placeholder => "Mobile_No"
+                    = u.input :mobile_number, :label => false, input_html: { maxlength: 10 }, :placeholder => "Mobile_No"
                 .form-group
                   .col-md-6
                     = u.input :email, :label => false, :placeholder => "Email"
                   .col-md-6
                     = u.input :password, :label => false, :placeholder => "Password"
             .form-group
-              .col-md-12
+              .col-md-6
                 = f.submit 'Sign up', class: "btn btn-primary"
+              .col-md-6
+                =link_to "Back", root_path, :class=> "btn btn-success"
     .col-md-3

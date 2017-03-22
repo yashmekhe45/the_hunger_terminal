@@ -19,6 +19,5 @@
 /config/secrets.yml
 /config/credentials.yml
 /config/database.yml
-/config/credentials.yml
 /coverage
 .env

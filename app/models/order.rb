@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}

@@ -1,0 +1,64 @@
+.container
+  .alert.alert-success 
+    %strong Thank You!
+    You will receive an email confirmation shortly at #{@order.user.email}
+  %hr
+  .card
+    .card-block
+      %h4.card-title Today's Order
+      .row
+        .col-sm-8
+          %table.table.order-show
+            %thead
+              %tr
+                %th Product
+                %th Vendor
+                %th UnitPrice
+                %th Quantity
+                %th.text-center Subtotal
+            %tbody
+              - @order.order_details.each do |order_detail|
+                %tr
+                  %td= order_detail.menu_item_name  
+                  %td= @order.terminal.name 
+                  %td
+                    %span ₹
+                    %span.price= order_detail.price
+                  %td.text-center= order_detail.quantity
+                  %td.text-center
+                    %span ₹
+                    %span.sub-total= order_detail.price * order_detail.quantity
+
+        .col-sm-4
+          .detail
+            %h4 
+              %strong Date: 
+              %span #{@order.date}
+            %h4 
+              %strong Subtotal: 
+              ₹#{@order.total_cost}  
+            %h4  
+              %strong Subsidy: 
+              ₹#{}
+            %h4
+              %strong Total:
+              ₹#{}          
+      %a.card-link{:href => "#"} Edit Order
+      %a.card-link{:href =>  order_path(@order),method: :delete} Delete Order
+      %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'}
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+

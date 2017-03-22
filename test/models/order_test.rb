@@ -125,4 +125,3 @@ class OrderTest < ActiveSupport::TestCase
 
   test "order should not be updated after it has been placed to terminal"
 =end
-end

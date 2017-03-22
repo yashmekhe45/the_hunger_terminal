@@ -1,0 +1,26 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a#logo.navbar-brand{:href => root_path} The Hunger Terminal
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li.active
+          %a{:href => root_path}
+            Home
+            %span.sr-only (current)
+        %li
+          %a{:href => "#"} About
+        %li
+          - if !user_signed_in?
+            = link_to new_user_session_path do
+              %span.glyphicon.glyphicon-log-in
+              Login
+          - else
+            = link_to destroy_user_session_path, method: :delete do
+              %span.glyphicon.glyphicon-log-out
+              Logout

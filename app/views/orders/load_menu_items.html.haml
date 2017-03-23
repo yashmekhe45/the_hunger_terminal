@@ -4,5 +4,4 @@
       .card-block
         %h3.card-title= terminal.name
         %p.card-text= image_tag terminal.image_url(:thumb) if terminal.image?
-
         = link_to terminal.name, new_order_path(:terminal_id => terminal.id) 

@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 20170322104724) do
     t.integer  "company_id"
     t.string   "email"
     t.boolean  "active",           default: true
-    t.float    "min_order_amount"
     t.string   "image"
+    t.float    "min_order_amount"
     t.index ["company_id"], name: "index_terminals_on_company_id", using: :btree
   end
 

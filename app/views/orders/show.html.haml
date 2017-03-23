@@ -38,14 +38,13 @@
               %strong Subtotal: 
               ₹#{@order.total_cost}  
             %h4  
-              %strong Subsidy: 
-              ₹#{}
+              %strong Discount: 
+              ₹#{@order.discount}
             %h4
               %strong Total:
-              ₹#{}          
-      %a.card-link{:href => "#"} Edit Order
-      %a.card-link{:href =>  order_path(@order),method: :delete} Delete Order
-      %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'}
+              ₹#{@order.total_cost-@order.discount}          
+      %a.card-link= link_to 'Edit Order',edit_order_path(@order),class:"btn btn-info"
+      %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
 
 
 

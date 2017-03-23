@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
       redirect_to @order
     else
       flash[:error] = @order.errors.messages
-      render :new
+      redirect_to vendors_path
     end
   end
   

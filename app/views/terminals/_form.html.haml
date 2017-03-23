@@ -2,6 +2,8 @@
 = f.input :landline, required: true
 = f.input :email
 = f.input :min_order_amount, required: true
+= f.file_field :image
+= f.label :remote_image_url, "Upload logo of terminal"
 = f.input :active, required:true, as: :boolean
 = f.button :submit, class: "btn btn-success"
 

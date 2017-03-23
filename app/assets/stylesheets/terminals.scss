@@ -1,44 +1,59 @@
 // Place all the styles related to the Terminals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 th, td {
   padding: 10px;
 }
+
+/*.container.terminal{
+  margin-top: 80px
+}*/
+
 td{
   font-size: large;
 }
+
 #indexcontainer
 {
   margin-left: 30px;
 }
+
 #formcontainer
 {
   margin: 80px
 }
+
 #searchcontainer
 {
   width:auto
 }
+
 .table-responsive
 {
   margin: 20px;
   margin-left: 20%;
 }
+
 %table.table-hover
 {
   width: auto; 
 }
+
 #imaginary_container{
     margin-top: 20px;
 }
+
 .stylish-input-group .input-group-addon{
     background: white !important; 
 }
+
 .stylish-input-group .form-control{
   border-right:0; 
   box-shadow:0 0 0; 
   border-color:#ccc;
 }
+
 .stylish-input-group button{
     border:0;
     background:transparent;

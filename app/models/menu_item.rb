@@ -8,6 +8,6 @@ class MenuItem < ApplicationRecord
   has_many :order_details
   belongs_to :terminal
 
-  before_validation :is_valid_day?
+  # before_validation :is_valid_day?
   
 end

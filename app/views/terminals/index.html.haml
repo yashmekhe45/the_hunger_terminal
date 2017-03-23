@@ -1,19 +1,20 @@
 .container
   .row 
     #searchcontainer
-      .col-md-6
+      .col-md-2
+      .col-md-7
         %form{action:company_terminals_path}
           .input-group.stylish-input-group
             %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-            %span.input-group-addon
+            %span.input-group-addon{align:"center"}
               %button{type:"submit"}
                 %span.glyphicon.glyphicon-search 
-      .col-md-3  
+      .col-md-3   
         .pull-left
           = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
     .col-md-12
       .table-responsive
-        %table.table-hover.table-bordered
+        %table.table-hover.table-bordered{:align => "center"}
           %tbody
             %tr
               %th.text-center Sr No.

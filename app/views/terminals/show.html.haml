@@ -1,7 +1,8 @@
 .container
   .row
     #searchcontainer 
-      .col-md-6
+      .col-md-2
+      .col-md-7
         %form{action:company_terminal_path}
           .input-group.stylish-input-group
             %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
@@ -11,9 +12,11 @@
       .col-md-3  
         .pull-left
           = link_to 'New Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
-    .col-md-12
+    .col-md-2
+    .col-md-9
+
       .table-responsive  
-        %table.table-hover.table-bordered
+        %table.table-hover.table-bordered{:align=>"center"}
           %thead
             %tr
               %th #
@@ -33,6 +36,7 @@
                 %td= menu_item.available ? "Available" : "Not Available"
                 %td 
                   = link_to 'Delete', company_terminal_menu_item_path(@current_company, @terminal, menu_item), method: :delete, data: { confirm: 'Are you sure?' }
+
       .text-center          
         = paginate @menu_items
 

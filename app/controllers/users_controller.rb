@@ -1,6 +1,8 @@
+require 'csv'
+
 class UsersController < ApplicationController
 
-  require 'csv'
+  load_and_authorize_resource
 
   before_action :load_user , only:[:show, :edit, :update]
 

@@ -47,4 +47,9 @@ class User < ApplicationRecord
     end
   end
 
+  def role?(base_role)
+    p base_role.to_s
+    USER_ROLES.index(base_role.to_s) <= USER_ROLES.index(role)
+  end
+
 end

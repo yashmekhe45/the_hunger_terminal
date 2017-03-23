@@ -47,6 +47,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.0.6)
+    cancan (1.6.10)
     cancancan (1.16.0)
     codeclimate-test-reporter (0.6.0)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -239,6 +240,7 @@ DEPENDENCIES
   autoprefixer-rails (~> 6.7, >= 6.7.2)
   bootstrap-sass (~> 3.3, >= 3.3.6)
   byebug
+  cancan
   cancancan
   codeclimate-test-reporter (< 1.0.0)
   coffee-rails (~> 4.2)

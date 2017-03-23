@@ -1,5 +1,8 @@
 require 'csv'
 class TerminalsController < ApplicationController
+
+  load_and_authorize_resource
+  
   def new
     @terminal = Terminal.new
     @terminal.menu_items.build

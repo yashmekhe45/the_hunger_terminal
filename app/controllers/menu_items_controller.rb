@@ -5,12 +5,6 @@ class MenuItemsController < ApplicationController
   before_action :load_terminal
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
 
-  def menu_index
-  	@company = Company.find(params[:company_id])
-  	@terminals = @company.terminals.where(:available => true).ids
-  	@menus = MenuItem.where(:terminal_id => @terminals)
-  end	
-
   def index
     @menu_items = @terminal.menu_items.page params[:page]
   end

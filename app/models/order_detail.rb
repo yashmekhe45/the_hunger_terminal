@@ -1,7 +1,7 @@
 class OrderDetail < ApplicationRecord
   
-  # validates :status, :menu_item_id, presence: true
-  # validates :status, inclusion: {in: ORDER_DETAIL_STATUS}
+  validates :status, :menu_item_id, presence: true
+  validates :status, inclusion: {in: ORDER_DETAIL_STATUS}
 
   belongs_to :menu_item
   belongs_to :order
@@ -9,7 +9,8 @@ class OrderDetail < ApplicationRecord
 
   def assign_menu_item_details
     self.menu_item_name = menu_item.name
-    self.price = menu_item.price   
+    self.price = menu_item.price  
+    self.status = 'available' 
   end
 
 end

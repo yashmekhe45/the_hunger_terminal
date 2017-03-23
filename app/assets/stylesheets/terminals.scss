@@ -6,10 +6,6 @@ th, td {
   padding: 10px;
 }
 
-/*.container.terminal{
-  margin-top: 80px
-}*/
-
 td{
   font-size: large;
 }
@@ -26,13 +22,14 @@ td{
 
 #searchcontainer
 {
-  width:auto
+  width:auto;
+  margin-left: 12%;
 }
 
 .table-responsive
 {
   margin: 20px;
-  margin-left: 20%;
+  padding-left: 10%;
 }
 
 %table.table-hover

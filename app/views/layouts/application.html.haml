@@ -10,7 +10,9 @@
   %body
     - if user_signed_in?  
       =render "home/sidebar"
-      =render "home/navbar"    
+      =render "home/navbar" 
+    - else
+      =render "home/navbar"   
     - unless flash.empty?
       %script
         - flash.each do |f|

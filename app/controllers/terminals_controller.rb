@@ -16,13 +16,12 @@ class TerminalsController < ApplicationController
       flash[:success] = "terminal created successfully"
       redirect_to company_terminals_path and return
     end
-    render :new
+    render :new and return
   end
 
   def index
     if params[:search].present?
-      search_type = params[:search]
-      @terminals = @current_company.terminals.where(["name LIKE ?", "%#{params[:search]}%"]).page(params[:page]).per(7)
+      @terminals = @current_company.terminals.where(["LOWER(name) LIKE ?", "%#{params[:search].downcase}%"]).page(params[:page]).per(7)
       if @terminals.empty?
         flash[:notice] = "Vendor not present."
       end
@@ -35,12 +34,13 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    if params[:id] == "selected"
-      selected 
-    elsif params[:id] == "download"
-      download
+    if params[:search_item].present?
+      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(7)
+      if @menu_items.empty?
+        flash[:notice] = "Vendor not present."
+      end
     else 
-      @menu_items = @terminal.menu_items
+      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(7)
     end
   end  
 
@@ -48,16 +48,16 @@ class TerminalsController < ApplicationController
     if @terminal.update_attributes(terminal_param)
       flash[:success] = "terminal updated"
       if params[:terminal][:file].nil?
-        redirect_to company_terminals_path
+        redirect_to company_terminals_path and return
       else
-        render :edit
+        render :edit and return
       end
     end
   end
 
   def destroy
     @terminal.destroy
-    redirect_to company_terminals_path
+    redirect_to company_terminals_path and return
   end
 
   def import(object_id)
@@ -102,7 +102,7 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_param
-    params.require(:terminal).permit(:name,:landline, :active, :email,:image)
+    params.require(:terminal).permit(:name,:landline, :active, :email, :min_order_amount, :company_id, :image,)
   end
 
   def load_company

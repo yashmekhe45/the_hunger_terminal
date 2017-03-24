@@ -1,20 +1,30 @@
--if flash[:alert].present?
-  =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
--else  
-  %h1 terminal details
-  %p= @terminal.name
-  %p= @terminal.landline
-  %table{:align => "center"}
-    %tbody
-      %tr
-        %th Id
-        %th Name
-        %th price
-        %th veg
-      - @menu_items.each do |menuitem|
-        %tr  
-        %td= menuitem.id
-        %td= menuitem.name
-        %td= menuitem.price
-        %td= menuitem.veg
+.container
+  .row
+    .col-md-12
+      %h2 Menu Items
+      .pull-right
+        = link_to 'New Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
+    .col-md-12    
+      %table.table.table-bordered
+        %thead
+          %tr
+            %th #
+            %th Name
+            %th Price
+            %th Type
+            %th Avaibility
+            %th Actions
+        %tbody
+          - @menu_items.each_with_index do |menu_item, index|
+            %tr
+              %td= index+1
+              %td= menu_item.name
+              %td= "#{menu_item.price}/-"
+              %td= menu_item.veg ? "Veg" : "Non Veg"
+              %td= menu_item.available ? "Available" : "Not Available"
+              %td
+                = link_to 'Edit', edit_company_terminal_menu_item_path(@current_company, @terminal, menu_item), remote: true
+                = link_to 'Delete', company_terminal_menu_item_path(@current_company, @terminal, menu_item), method: :delete, data: { confirm: 'Are you sure?' }
+      =# paginate @menu_items
 
+#menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}

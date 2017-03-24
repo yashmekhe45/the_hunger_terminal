@@ -14,10 +14,10 @@
       -if is_inactive_user?(user) 
         = "INACTIVE"
       -else 
-        = "ACTIVE"
+        = "ACTIVE" 
         
   %td
-    =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' }, id: :active  do
+    =link_to company_user_path(@company.id,user.id,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' }, class: 'activate', id: 'activate'  do
       -if user.is_active
         .text-center
           %button.btn.btn-success{:type => "button"}

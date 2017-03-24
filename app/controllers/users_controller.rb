@@ -56,6 +56,7 @@ class UsersController < ApplicationController
       users_data = CSV.parse(users_csv,headers:true)
       if users_data.headers == valid_header
         users_data.each do |user_row|
+         
           next if user_row.to_a == valid_header
           user_hash = user_row.to_h 
           if !user_hash.empty?
@@ -80,7 +81,7 @@ class UsersController < ApplicationController
           flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
         end
       else
-        flash.now[:error] = "invalid headres in your csv."
+        flash.now[:error] = "invalid headers in your csv."
       end
     else
       flash.now[:error] = "invalid type of file please upload csv with valid headers"

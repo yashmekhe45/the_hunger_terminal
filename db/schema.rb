@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321093849) do
+ActiveRecord::Schema.define(version: 20170322104724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,17 +37,19 @@ ActiveRecord::Schema.define(version: 20170321093849) do
     t.time     "review_ordering_at"
     t.time     "end_ordering_at"
     t.string   "email"
+    t.float    "subsidy"
   end
 
   create_table "menu_items", force: :cascade do |t|
     t.string   "name"
     t.boolean  "veg"
     t.integer  "price"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "terminal_id"
-    t.boolean  "available"
-    t.string   "active_days", default: [],              array: true
+    t.boolean  "available",   default: true
+    t.string   "active_days", default: [],                array: true
+    t.text     "description"
     t.index ["terminal_id"], name: "index_menu_items_on_terminal_id", using: :btree
   end
 
@@ -73,7 +75,7 @@ ActiveRecord::Schema.define(version: 20170321093849) do
     t.datetime "updated_at",  null: false
     t.integer  "terminal_id"
     t.string   "status"
-    t.float    "subsidy"
+    t.float    "discount"
     t.index ["company_id"], name: "index_orders_on_company_id", using: :btree
     t.index ["terminal_id"], name: "index_orders_on_terminal_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -82,10 +84,14 @@ ActiveRecord::Schema.define(version: 20170321093849) do
   create_table "terminals", force: :cascade do |t|
     t.string   "name"
     t.string   "landline"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "email"
-    t.boolean  "active"
+    t.boolean  "active",           default: true
+    t.integer  "company_id"
+    t.string   "image"
+    t.float    "min_order_amount"
+    t.index ["company_id"], name: "index_terminals_on_company_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,5 +127,6 @@ ActiveRecord::Schema.define(version: 20170321093849) do
   add_foreign_key "orders", "companies"
   add_foreign_key "orders", "terminals"
   add_foreign_key "orders", "users"
+  add_foreign_key "terminals", "companies"
   add_foreign_key "users", "companies"
 end

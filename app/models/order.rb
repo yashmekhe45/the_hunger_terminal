@@ -7,7 +7,7 @@ class Order < ApplicationRecord
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
   # validate :can_be_updated?, on: :update
-  before_create :set_discount
+  
   
   belongs_to :user
   belongs_to :company
@@ -15,8 +15,26 @@ class Order < ApplicationRecord
   has_many :order_details, dependent: :destroy, inverse_of: :order
 
   after_initialize :set_date
+  before_validation :set_discount
 
   accepts_nested_attributes_for :order_details
+
+  def self.daily_orders(t_id,c_id)
+    self.
+      joins(:user,:order_details).
+      where('orders.date' => Date.today,'orders.terminal_id' => t_id, 'orders.company_id' => c_id).
+      select('orders.id','users.name AS emp_name',
+        'order_details.menu_item_name AS menu,quantity').
+      order("users.name ASC")
+  end
+
+  def self.menu_details(t_id,c_id)
+    self.
+      joins(:order_details).
+      where('orders.date'=> Date.today,'orders.terminal_id' => t_id,'orders.company_id'=> c_id).
+      group('order_details.menu_item_name').
+      select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
+  end
 
   private
 
@@ -28,7 +46,7 @@ class Order < ApplicationRecord
     def can_be_created?
       current_time = Time.now
       start_time = Time.parse "12 AM"
-      end_time = Time.parse "11 AM"
+      end_time = Time.parse "11 PM"
       day = current_time.wday
       if day%7 != 0 and day%7 != 6
         if !current_time.between?(start_time, end_time)

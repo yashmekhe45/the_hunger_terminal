@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   get 'custom_actions/index'
   get 'custom_actions/order_detail'
   get 'custom_actions/confirm'
+  get 'custom_actions/place_orders'
   root to: 'home#index'
   
-  root to: 'home#index'
   get 'companie/:company_id/terminals' => 'custom_actions#selected_terminals' , :as => 'selection'
   get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 end

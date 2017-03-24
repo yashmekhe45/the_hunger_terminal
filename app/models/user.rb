@@ -19,6 +19,10 @@ class User < ApplicationRecord
 
   before_validation :not_a_string , :remove_space
 
+  def active_for_authentication?  
+    super && is_active  
+  end
+
   def remove_space
     if(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
       return

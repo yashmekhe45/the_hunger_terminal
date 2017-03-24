@@ -5,18 +5,17 @@
       %button.close{"data-dismiss" => "modal", :type => "button"} ×
       %h4.modal-title 
     .modal-body
-      .table-responsive
-        %table.table-hover
-          %tbody
-            %tr
-              %th.text-center Employee
-              %th.text-center Item
-              %th.text-center Quantity
-            -@order_details.each do |order_detail|
-              %tr  
-              %td.text-center= order_detail.emp_name
-              %td.text-center= order_detail.menu
-              %td.text-center= order_detail.quantity
+      %table.table-hover
+        %tbody
+          %tr
+            %th.text-center Employee
+            %th.text-center Item
+            %th.text-center Quantity
+          -@order_details.each do |order_detail|
+            %tr  
+            %td.text-center= order_detail.emp_name
+            %td.text-center= order_detail.menu
+            %td.text-center= order_detail.quantity
     .modal-footer
       %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
 

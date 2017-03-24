@@ -7,6 +7,7 @@ class Order < ApplicationRecord
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
   # validate :can_be_updated?, on: :update
+  before_create :set_discount
   
   belongs_to :user
   belongs_to :company
@@ -47,4 +48,12 @@ class Order < ApplicationRecord
         errors.add(:base,"order shold have minimum one menu item")
       end
     end
+
+    def set_discount
+      a = self.company.subsidy
+      b = self.total_cost
+      self.discount = [a, (a*b)/100].min
+      self.status = 'pending'
+    end 
 end
+ 

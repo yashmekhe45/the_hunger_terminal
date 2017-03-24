@@ -11,6 +11,7 @@ class OrderDetail < ApplicationRecord
 
   def assign_menu_item_details
     self.menu_item_name = menu_item.name
-    self.price = menu_item.price   
+    self.price = menu_item.price  
+    self.status = 'available' 
   end
 end

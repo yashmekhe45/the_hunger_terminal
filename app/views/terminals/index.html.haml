@@ -26,7 +26,7 @@
             - @terminals.each_with_index do |object,i|
               %tr
               %td.text-center= i+1
-              %td.text-center= link_to object.name, company_terminal_path(params[:company_id],object.id)
+              %td.text-center= link_to object.name, company_terminal_menu_items_path(params[:company_id],object.id)
               %td.text-center= object.landline
               %td.text-center= link_to "Edit", edit_company_terminal_path(params[:company_id],object.id), class:"btn btn-info"
               %td.text-center= link_to "Delete", company_terminal_path(params[:company_id],object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 

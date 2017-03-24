@@ -31,6 +31,7 @@ class TerminalsController < ApplicationController
   end
 
   def edit
+    # render :new
   end
 
   def show

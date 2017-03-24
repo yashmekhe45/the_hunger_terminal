@@ -1,43 +1,35 @@
-.container
-  .row
-    #searchcontainer 
-      .col-md-2
-      .col-md-7
-        %form{action:company_terminal_path}
-          .input-group.stylish-input-group
-            %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
-            %span.input-group-addon
-              %button{type:"submit"}
-                %span.glyphicon.glyphicon-search
-      .col-md-3  
-        .pull-left
-          = link_to 'New Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
-    .col-md-2
-    .col-md-9
+/ .container
+/   .row
+/     #searchcontainer 
+/       .col-md-2
+/       .col-md-7
+/         %form{action:company_terminal_path}
+/           .input-group.stylish-input-group
+/             %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
+/             %span.input-group-addon
+/               %button{type:"submit"}
+/                 %span.glyphicon.glyphicon-search
+/       .col-md-3  
+/         .pull-left
+/           = link_to 'New Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
+/     .col-md-2
+/     .col-md-9
 
-      .table-responsive  
-        %table.table-hover.table-bordered{:align=>"center"}
-          %thead
-            %tr
-              %th #
-              %th Name
-              %th Price
-              %th Type
-              %th Avaibility
-              %th Actions
-          %tbody
-            - @menu_items.each_with_index do |menu_item, index|
-              %tr
-                %td= index+1
-                %td
-                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_company_terminal_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
-                %td= "#{menu_item.price}/-"
-                %td= menu_item.veg ? "Veg" : "Non Veg"
-                %td= menu_item.available ? "Available" : "Not Available"
-                %td 
-                  = link_to 'Delete', company_terminal_menu_item_path(@current_company, @terminal, menu_item), method: :delete, data: { confirm: 'Are you sure?' }
+/       .table-responsive  
+/         %table.table-hover.table-bordered{:align=>"center"}
+/           %thead
+/             %tr
+/               %th #
+/               %th Name
+/               %th Price
+/               %th Type
+/               %th Avaibility
+/               %th Actions
+/           %tbody
+/             - @menu_items.each_with_index do |menu_item, index|
+/               =render "terminal_menu_items" , menu_item: menu_item, index: index
 
-      .text-center          
-        = paginate @menu_items
+/       .text-center          
+/         = paginate @menu_items
 
-#menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}
+/ #menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}

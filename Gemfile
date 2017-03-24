@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml', '~> 4.0', '>= 4.0.7'
 gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
-
+gem 'sidekiq'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'

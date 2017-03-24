@@ -28,9 +28,12 @@ class MenuItemsController < ApplicationController
   end
 
   def update
-    @menu_item.update_attributes(menu_items_params)
-    flash[:success] = "Menu Item updated"
-    render 'create'
+    if @menu_item.update_attributes(menu_items_params)
+      flash[:success] = "Menu Item updated"
+      redirect_to company_terminal_menu_items_path and return
+    else
+      render 'create'
+    end
   end
 
   def destroy

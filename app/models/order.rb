@@ -36,6 +36,22 @@ class Order < ApplicationRecord
       select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
   end
 
+  def self.update_status(t_id,c_id)
+    @orders = Order.where('orders.date' => Date.today, 
+      'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
+    @orders.each do |order|
+      order.update_attribute(:status,"placed")
+    end
+  end
+
+  # def self.find_employees(t_id,c_id)
+  #   self.
+  #     joins(:user).
+  #     where('orders.date' => Date.today, 'orders.terminal_id' => t_id,
+  #      'orders.company_id' => c_id).
+  #     select('users.email as email')
+  # end
+
   private
 
     # needs to be evaluated

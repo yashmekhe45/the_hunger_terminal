@@ -39,8 +39,13 @@ class Order < ApplicationRecord
   def self.update_status(t_id,c_id)
     @orders = Order.where('orders.date' => Date.today, 
       'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
-    @orders.each do |order|
-      order.update_attribute(:status,"placed")
+    Order.where('orders.date' => Date.today,
+      'orders.terminal_id' => t_id, 'orders.company_id' => c_id).update_all(:status => "placed")
+    @employees =  @orders.
+                    joins(:user).
+                    pluck('users.email AS email')
+    @employees.each do |emp|
+      OrderMailer.send_mail_to_employees(emp).deliver_now
     end
   end
 

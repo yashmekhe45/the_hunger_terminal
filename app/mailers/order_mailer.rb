@@ -7,4 +7,8 @@ class OrderMailer < ApplicationMailer
     mail(to: @terminal.email, subject: 'orders for today')
   end
 
+  def send_mail_to_employees(employee)
+    mail(to: employee, subject: 'status of order')
+  end
+
 end

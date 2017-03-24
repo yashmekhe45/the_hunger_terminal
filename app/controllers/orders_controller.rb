@@ -20,7 +20,11 @@ class OrdersController < ApplicationController
     if @order.save
       redirect_to @order
     else
-      flash[:error] = @order.errors.full_messages
+      if @order.errors.full_messages.include?("User has already been taken")
+        flash[:error] = "Only one order is allowed per day"
+      else
+        flash[:error] = @order.errors.full_messages.join(",")
+      end 
       redirect_to vendors_path
     end
   end

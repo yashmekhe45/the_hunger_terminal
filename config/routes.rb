@@ -28,8 +28,12 @@ Rails.application.routes.draw do
   
   get 'terminals/download' =>'terminals#download'
 
+
   get 'custom_actions/selected_terminals' 
 
+  get 'custom_actions/index'
+  get 'custom_actions/order_detail'
+  get 'custom_actions/confirm'
   root to: 'home#index'
   
   root to: 'home#index'

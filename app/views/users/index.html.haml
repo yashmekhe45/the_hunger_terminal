@@ -1,7 +1,3 @@
-
-/ -if flash.now[:error].present?
-/   = flash.now[:error]
-
 %h1.text-center{:style=>"color:white"} EMPLOYEES
 /Search Bar#################################
 .container
@@ -13,7 +9,7 @@
           = file_field_tag :file , accept: '.csv ' 
           = submit_tag "Import"
       .col-md-3.col-sm-3
-        %button.btn.btn-info{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"} Add Single Record
+        = link_to 'New Employee', new_company_user_path(@company), class: "btn btn-success", remote: true , "data-target" => "#user", "data-toggle" => "modal"
       .col-md-3.col-sm-3
 
     .col-md-4.col-sm-4
@@ -29,8 +25,6 @@
 
 .container-fluid
   %table.table.table-fixed{:border =>3,:align=>"center",:style=>"width:60%;background-color:white"}
-   
-    
     %tbody
       %tr
         %th 
@@ -50,10 +44,4 @@
 
 .text-center
   = paginate @users
-
-/ .container-fluid
-/   .center
-/     %h2 Add Employee Records
-/     = form_tag import_company_users_path,id: "import_form", multipart: true do
-/       = file_field_tag :file , accept: '.csv ' 
-/       = submit_tag "Import"
+#user.modal.fade{"aria-labPelledby" => "User", :role => "dialog", :tabindex => "-1"}

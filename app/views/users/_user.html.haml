@@ -1,0 +1,14 @@
+.modal-dialog{:role => "document"}
+  .modal-content
+    = simple_form_for [@company,@user], remote: true, url: company_users_path do |f| 
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} 
+        %h4.modal-title New Employee 
+      .modal-body
+        = f.input :name, required: true
+        = f.input :email, required: true
+        = f.input :mobile_number ,requred: true
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button.btn.btn-primary{:type => "submit"} Add 

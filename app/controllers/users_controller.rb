@@ -5,12 +5,28 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   before_action :load_user , only:[:show, :edit, :update]
+  before_action :load_company, only: [:index, :import, :search, :new, :create]
 
-  before_action :load_company, only: [:index, :import, :search]
+  respond_to :html, :json
 
   def new
     @company = Company.new
     @user = @company.employees.build
+  end
+
+  def create
+    @user = @company.employees.build(:name => user_params[:name],
+     :email => user_params[:email], :mobile_number => user_params[:mobile_number],
+      :is_active =>true, :role => "employee",:password=> Devise.friendly_token.first(8))
+
+    if @user.valid?
+      @user.save
+      # redirect_to company_users_path
+    else
+      p @user.errors
+      flash[:error]=  @user.errors.messages
+      render :new 
+    end
   end
 
   def index
@@ -22,6 +38,7 @@ class UsersController < ApplicationController
   end
   
   def update
+    p params
     page = 1
     if !params[:page]
       params[:page] = page

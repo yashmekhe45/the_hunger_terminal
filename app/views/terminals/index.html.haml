@@ -1,6 +1,5 @@
 .container
   #searchcontainer 
-
     =link_to "Active terminal", selection_path(params[:company_id]),class:"btn btn-info"
     %a.btn.btn-info{:href => "/companies/#{current_user.company_id}/terminals/new"} New Terminal
     .col-sm-6.col-sm-offset-3
@@ -13,7 +12,6 @@
   #indexcontainer
     .table-responsive
       %table.table-hover.table-bordered
-
         %tbody
           %tr
             %th.text-center Sr No.

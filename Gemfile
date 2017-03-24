@@ -33,6 +33,9 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'haml', '~> 4.0', '>= 4.0.7'
 gem 'cancan'
+gem 'rmagick'
+gem 'carrierwave', '~> 1.0'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -59,8 +62,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
+gem 'devise-async', git: 'git@github.com:mhfs/devise-async.git', branch: 'devise-4.x'
 gem 'cancancan'
 gem 'faker'
+gem 'sidekiq'
 
 group :test do 
   gem 'codeclimate-test-reporter', '< 1.0.0'
@@ -68,4 +73,3 @@ group :test do
 end
 
 gem 'rails_12factor', group: :production
-ruby "2.3.3"

@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   validates :status, inclusion: {in: ORDER_STATUS}
   validate :date_cannot_be_in_the_past
   validate :order_can_be_created?, on: :create
-  before_create :set_discount 
+  before_validation :set_discount 
 
   
 

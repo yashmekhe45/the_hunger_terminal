@@ -32,6 +32,7 @@ class TerminalsController < ApplicationController
   end
 
   def edit
+    
   end
 
   def show
@@ -50,6 +51,7 @@ class TerminalsController < ApplicationController
       if params[:terminal][:file].nil?
         redirect_to company_terminals_path
       else
+        flash[:error] = @terminal.errors.messages
         render :edit
       end
     end

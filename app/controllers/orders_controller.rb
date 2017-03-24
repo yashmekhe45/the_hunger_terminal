@@ -33,6 +33,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.destroy
     redirect_to vendors_path
+
   end
   private
 

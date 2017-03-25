@@ -18,6 +18,15 @@ require "database_cleaner"
 # Umment for awesome colorful output
 # require "minitest/pride"
 
+module CreateOrderHelper
+  def create_order
+    some_time = Time.parse "10 AM"  ## gives time object in IST time zone
+    Time.stub(:now, some_time) do
+      order_obj = create :order
+    end
+  end
+end
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   include FactoryGirl::Syntax::Methods

@@ -1,14 +1,21 @@
 class CustomActionsController < ApplicationController
 
   def index
-  @res = Terminal.joins(:order).where('orders.date' => Date.today).group('terminals.id').select('terminals.name,terminals.min_order_amount,terminals.id, sum(total_cost) AS total') 		
+    @res = Terminal.daily_terminals(current_user.company_id) 		
   end
 
   def order_detail
-  	@order_details = Order.joins(:user,:order_details).where('orders.date' => Date.today,'orders.terminal_id' => params[:terminal_id]).select('orders.id','users.name AS emp_name','order_details.menu_item_name AS menu,quantity').order("users.name ASC")
+  	@order_details = Order.daily_orders(params[:terminal_id],current_user.company_id)
   end
 
   def confirm
-    @order = Order.joins(:order_details).where('orders.date'=> Date.today,'orders.terminal_id' => params[:terminal_id]).group('order_details.menu_item_name').select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
+    @orders = Order.menu_details(params[:terminal_id],current_user.company_id)
+  end
+
+  def place_orders
+    SendOrderMailJob.perform_now(params[:terminal_id], current_user.company_id)
+    flash[:notice] = "email sent successfully"
+    # Order.update_status(params[:terminal_id], current_user.company_id)
+    redirect_to custom_actions_index_path
   end
 end

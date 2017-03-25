@@ -1,4 +1,4 @@
-class CustomActionsController < ApplicationController
+class AdminDashboardController < ApplicationController
 
   def index
     @res = Terminal.daily_terminals(current_user.company_id) 		
@@ -16,6 +16,6 @@ class CustomActionsController < ApplicationController
     OrderMailer.send_mail_to_terminal(params[:terminal_id], current_user.company_id).deliver_now
     flash[:notice] = "email sent successfully"
     Order.update_status(params[:terminal_id], current_user.company_id)
-    redirect_to custom_actions_index_path
+    redirect_to admin_dashboard_index_path
   end
 end

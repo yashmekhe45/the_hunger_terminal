@@ -9,6 +9,7 @@ class Ability
       can :manage, Order
     end
     if user.role == "company_admin"
+      can :manage, Order
       can :manage, Terminal
       can :manage, User
       can :create, Company

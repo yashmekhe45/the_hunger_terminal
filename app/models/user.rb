@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :async
 
 
   validates_with MobileNoValidator
@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
 
   before_validation :not_a_string , :remove_space
+
+  def active_for_authentication?  
+    super && is_active  
+  end
 
   def remove_space
     if(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)

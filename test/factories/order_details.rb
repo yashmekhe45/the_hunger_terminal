@@ -1,10 +1,12 @@
 FactoryGirl.define do
   factory :order_detail do
-    order nil
-    terminal nil
-    menu_item_name "MyString"
-    price 1
-    quantity 1
-    veg false
+    menu_item_name "menu_name"
+    price { Faker::Number.positive }
+    quantity { Faker::Number.positive }
+    status {"available"}
+    
+    association :order
+    association :menu_item
+
   end
 end

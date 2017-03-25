@@ -1,6 +1,8 @@
 require 'csv'
 class TerminalsController < ApplicationController
 
+  load_and_authorize_resource
+  
   before_action :authenticate_user!  
   before_action :load_company
   before_action :load_terminal, only: [:show, :edit, :update, :destroy, :import]
@@ -47,7 +49,7 @@ class TerminalsController < ApplicationController
   def update
     if @terminal.update_attributes(terminal_param)
       flash[:success] = "terminal updated"
-      if params[:terminal][:file].nil? && params[:terminal][:file].co
+      if params[:terminal][:file].nil?
         redirect_to company_terminals_path and return
       else
         render :edit and return
@@ -105,9 +107,9 @@ class TerminalsController < ApplicationController
       menu_items = CSV.parse( csv_file, headers: true )
       if menu_items.headers == ["name","price","veg","active_days","description"]
         invalid_menu_file = ImportCsvWorker.perform_async(@current_company.id, @terminal.id, menu_items) 
-        unless invalid_menu_file.nil?
-          redirect_to import_company_terminal_menu_items_path(@current_company,@terminal)
-        end
+        # unless invalid_menu_file.nil?
+        #   redirect_to company_terminal_path(params[:custom_action]=="download")
+        # end
       else
         flash[:error] = "Invalid headers with name,price,veg,active_days,description" and return    
       end  

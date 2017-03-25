@@ -1,7 +1,9 @@
+
 .container
+  %h3.text-center Vendor List
   - @terminals.each do |terminal|
     .col-sm-6
       .card-block
         %h3.card-title= terminal.name
         %p.card-text= image_tag terminal.image_url(:thumb) if terminal.image?
-        = link_to terminal.name, new_order_path(:terminal_id => terminal.id) 
+        = link_to terminal.name+" >", new_order_path(:terminal_id => terminal.id) ,class:"btn btn-info terminal"

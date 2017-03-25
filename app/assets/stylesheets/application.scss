@@ -30,7 +30,10 @@ body {
   color: #2F4F4F; //#ffffff;
   font-weight: 400;
   margin-bottom: 5%;
-  margin-top: 5%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
 }
 
 
@@ -156,10 +159,17 @@ a.name{
   color: black;
 }
 
+
 /*.btn-primary{
   width: -moz-available;
   text-align: -moz-right;
 }*/
+
+.btn.btn-info.terminal{
+  width: -moz-available;
+  text-align: -moz-right;
+}
+
 
 .order-show{
   background-color: whitesmoke;

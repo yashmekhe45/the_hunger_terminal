@@ -13,6 +13,9 @@
                 = f.input :name, :label => false, :placeholder => "Name"
               .col-md-6
                 = f.input :landline, :label => false, input_html: { maxlength: 10 }, :placeholder => "Landline" 
+            .form-group
+              .col-md-12
+                = f.input :email, :label => false, :placeholder => "Email"
             .location
               %h5 Company Location Details:
               = f.simple_fields_for :address do |a|
@@ -22,32 +25,37 @@
                   .col-md-6
                     = a.input :pincode, :label => false, :placeholder => "PIN Code"
                 .form-group 
-                  .col-md-6   
+                  .col-md-12   
                     = a.input :locality, :label => false, :placeholder => "Locality"
-                  .col-md-6
-                    = a.input :state, :label => false, :placeholder => "State"
                 .form-group
                   .col-md-6
                     = a.input :city, :label => false, :placeholder => "City"
                   .col-md-6
+                    = a.input :state, :label => false, :placeholder => "State"
             .admin
               .form-group
                 .col-md-12
                   %h5 Company Admin Details:
               = f.simple_fields_for :employees do |u|
                 .form-group
-                  .col-md-6
+                  .col-md-12
                     = u.input :name, :label => false, :placeholder => "Name"
+                .form-group
                   .col-md-6
                     = u.input :mobile_number, :label => false, input_html: { maxlength: 10 }, :placeholder => "Mobile_No"
                 .form-group
                   .col-md-6
                     = u.input :email, :label => false, :placeholder => "Email"
+                .form-group
                   .col-md-6
-                    = u.input :password, :label => false, :placeholder => "Password"
-            .form-group
-              .col-md-6
-                = f.submit 'Sign up', class: "btn btn-primary"
-              .col-md-6
-                =link_to "Back", root_path, :class=> "btn btn-success"
-    .col-md-3
+                    = u.input :password, :label => false, :placeholder => "Password",  class: 'form-control'
+                  .col-md-6
+                    = u.password_field :password_confirmation, class: 'form-control', :placeholder => "Confirm Password"
+                    %br 
+                    %br            
+                .form-group
+                  .col-md-6
+                    = f.submit 'Sign up', class: "btn btn-primary"
+                  .col-md-6
+                    = link_to "Back", root_path, :class=> "btn btn-success"
+                

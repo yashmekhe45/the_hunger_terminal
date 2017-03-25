@@ -1,0 +1,31 @@
+.modal-dialog
+  / Modal content
+  .modal-content
+    .modal-header 
+      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title 
+    .modal-body
+      - if !@orders.any?
+        %p No orders at this point of time
+      - else
+        .table-responsive
+          %table.table-hover
+            %tbody
+              %tr
+                / %th.text-center Employee
+                %th.text-center Item
+                %th.text-center Quantity
+              -@orders.each do |order|
+                %tr  
+                / %td.text-center= order_detail.emp_name
+                %td.text-center= order.menu
+                %td.text-center= order.quantity
+    .modal-footer
+      - if @orders.any?
+        = link_to "Place_orders", admin_dashboard_place_orders_path(:terminal_id =>params[:terminal_id]), class: "btn btn-info"
+      - else
+        / .tooltip-wrapper{"data-title" => "You cannot place empty order"}
+        /   %button.btn.btn-default{:disabled => "disabled"} Place Orders
+        %button.btn.btn-info{:type => "button",:disabled => "disabled"} Place Orders
+        / %button.btn.btn-default{:type => "button"} Place Orders, custom_actions
+      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

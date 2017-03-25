@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  
+  load_and_authorize_resource
   def index
     @orders = current_user.orders 
   end
@@ -11,8 +11,7 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new  
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
-    
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]) 
   end
 
   def create
@@ -21,8 +20,12 @@ class OrdersController < ApplicationController
     if @order.save
       redirect_to @order
     else
-      flash[:error] = @order.errors.messages
-      render :new
+      if @order.errors.full_messages.include?("User has already been taken")
+        flash[:error] = "Only one order is allowed per day"
+      else
+        flash[:error] = @order.errors.full_messages.join(",")
+      end 
+      redirect_to vendors_path
     end
   end
   
@@ -43,7 +46,7 @@ class OrdersController < ApplicationController
   end
 
   def load_order_detail
-    @order.date = Date.today
+    # @order.date = Date.today
     @order.company_id = current_user.company.id
   end
 

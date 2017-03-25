@@ -32,6 +32,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'haml', '~> 4.0', '>= 4.0.7'
+gem 'cancan'
 gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
 gem 'sidekiq'
@@ -62,8 +63,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
+gem 'devise-async', git: 'git@github.com:mhfs/devise-async.git', branch: 'devise-4.x'
 gem 'cancancan'
 gem 'faker'
+gem 'sidekiq'
 
 group :test do 
   gem 'codeclimate-test-reporter', '< 1.0.0'

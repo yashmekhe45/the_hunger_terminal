@@ -1,11 +1,11 @@
 FactoryGirl.define do
-  factory :user do |u|
-    u.name {Faker::Name.name}
-    u.role "company_admin"
-    u.email {Faker::Internet.email}
-    u.mobile_number {"+919876543210"}
-    u.is_active {true}
-    u.password {Faker::Internet.password}
+  factory :user do
+    name {Faker::Name.name}
+    role "company_admin"
+    email { Faker::Internet.email }
+    mobile_number { Faker::Number.number(10) }
+    is_active {true}
+    password {Faker::Internet.password}
     #association :company
   end
 end

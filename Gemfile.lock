@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:mhfs/devise-async.git
+  revision: 177f6363a002f7ff28f1d289c8cab7ad8d9cb8c5
+  branch: devise-4.x
+  specs:
+    devise-async (0.10.2)
+      devise (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,6 +55,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.0.6)
+    cancan (1.6.10)
     cancancan (1.16.0)
     carrierwave (1.0.0)
       activemodel (>= 4.0.0)
@@ -253,12 +262,14 @@ DEPENDENCIES
   autoprefixer-rails (~> 6.7, >= 6.7.2)
   bootstrap-sass (~> 3.3, >= 3.3.6)
   byebug
+  cancan
   cancancan
   carrierwave (~> 1.0)
   codeclimate-test-reporter (< 1.0.0)
   coffee-rails (~> 4.2)
   database_cleaner
   devise
+  devise-async!
   factory_girl_rails
   faker
   haml (~> 4.0, >= 4.0.7)
@@ -288,4 +299,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.14.5
+   1.14.6

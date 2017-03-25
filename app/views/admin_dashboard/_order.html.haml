@@ -1,0 +1,24 @@
+.modal-dialog
+  / Modal content
+  .modal-content
+    .modal-header 
+      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title 
+    .modal-body
+      - if !@order_details.any?
+        %p No orders at this point of time
+      - else
+        %table.table-hover
+          %tbody
+            %tr
+              %th.text-center Employee
+              %th.text-center Item
+              %th.text-center Quantity
+            -@order_details.each do |order_detail|
+              %tr  
+              %td.text-center= order_detail.emp_name
+              %td.text-center= order_detail.menu
+              %td.text-center= order_detail.quantity
+    .modal-footer
+      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+

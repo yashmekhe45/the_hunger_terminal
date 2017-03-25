@@ -1,4 +1,4 @@
-USER_ROLES= ['super_admin', 'company_admin', 'employee']
+USER_ROLES= ['employee', 'company_admin']
 DAYS= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 ORDER_STATUS= ['pending', 'placed', 'confirmed', 'review', 'cancelled']
 ORDER_DETAIL_STATUS= ['available', 'unavailable']

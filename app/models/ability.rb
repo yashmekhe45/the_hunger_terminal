@@ -13,6 +13,7 @@ class Ability
       can :manage, Terminal
       can :manage, User
       can :create, Company
+      can :manage, MenuItem
       can :index, :order_management
       can :order_detail, :order_management
       can :confirm, :order_management

@@ -22,7 +22,8 @@ class Order < ApplicationRecord
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).
-      where('orders.date' => Date.today,'orders.terminal_id' => t_id, 'orders.company_id' => c_id).
+      where('orders.date' => Date.today,'orders.terminal_id' => t_id, 'orders.company_id' => c_id,
+        'orders.status' => ['pending','review']).
       select('orders.id','users.name AS emp_name',
         'order_details.menu_item_name AS menu,quantity').
       order("users.name ASC")
@@ -31,7 +32,8 @@ class Order < ApplicationRecord
   def self.menu_details(t_id,c_id)
     self.
       joins(:order_details).
-      where('orders.date'=> Date.today,'orders.terminal_id' => t_id,'orders.company_id'=> c_id).
+      where('orders.date'=> Date.today,'orders.terminal_id' => t_id,
+        'orders.company_id'=> c_id,'orders.status' => ['pending','review']).
       group('order_details.menu_item_name').
       select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
   end

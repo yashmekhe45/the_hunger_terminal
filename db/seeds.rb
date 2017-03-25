@@ -9,7 +9,7 @@ company1.build_address(house_no: "67", locality: "kharadi", pincode: 416417, cit
 company1.save!
 
 10.times do |i|
-  u = company1.employees.find_or_create_by(name: "test#{i}", email: "test#{i}@test.com}", mobile_number: "987654456#{i}", is_active: true, role: "employee")
+  u = company1.employees.find_or_create_by(name: "test#{i}", email: "test#{i}@test.com", mobile_number: "987654456#{i}", is_active: true, role: "employee")
   u.password = "test@#{i}"
   u.confirmed_at = Time.now if !u.confirmed?
   u.save!

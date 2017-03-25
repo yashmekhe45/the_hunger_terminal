@@ -28,15 +28,12 @@ Rails.application.routes.draw do
   
   get 'terminals/download' =>'terminals#download'
 
-
-  get 'custom_actions/selected_terminals' 
-
-  get 'custom_actions/index'
-  get 'custom_actions/order_detail'
-  get 'custom_actions/confirm'
-  get 'custom_actions/place_orders'
+  get 'admin_dashboard/index'
+  get 'admin_dashboard/order_detail'
+  get 'admin_dashboard/confirm'
+  get 'admin_dashboard/place_orders'
   root to: 'home#index'
   
-  get 'companie/:company_id/terminals' => 'custom_actions#selected_terminals' , :as => 'selection'
+  get 'companie/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'
   get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 end

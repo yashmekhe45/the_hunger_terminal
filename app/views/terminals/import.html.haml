@@ -1,7 +1,2 @@
--if @menu_item_errors.valid?
-  -if flash[:success].present?
-    =flash[:success] 
--else
-  -if flash[:alert].present?
-    =flash[:alert]
+
   =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'

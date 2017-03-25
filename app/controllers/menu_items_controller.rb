@@ -12,7 +12,14 @@ class MenuItemsController < ApplicationController
   end	
 
   def index
-    @menu_items = @terminal.menu_items.page params[:page]
+    if params[:search_item].present?
+      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(7)
+      if @menu_items.empty?
+        flash[:notice] = "Meu Item is not present."
+      end
+    else 
+      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(7)
+    end
   end
 
   def new
@@ -69,7 +76,7 @@ class MenuItemsController < ApplicationController
   end
 
   def menu_items_params
-    params.require(:menu_item).permit(:name, :price, :veg, :available, :terminal_id, active_days: [])
+    params.require(:menu_item).permit(:name, :price, :veg, :available, :terminal_id, :description, active_days: [])
   end
 
 end

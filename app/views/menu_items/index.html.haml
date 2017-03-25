@@ -25,7 +25,6 @@
               %th Type
               %th Avaibility
               %th Status
-              %th Actions
           %tbody
             - @menu_items.each_with_index do |menu_item, index|
               %tr
@@ -44,9 +43,7 @@
                     -else
                       .text-center
                         %button.btn.btn-danger{:type => "button"}
-                          %span.glyphicon.glyphicon-remove-circle>
-                %td
-                  = link_to 'Delete', company_terminal_menu_item_path(@current_company, @terminal, menu_item), method: :delete, data:{ confirm: 'Are you sure?' }                    
+                          %span.glyphicon.glyphicon-remove-circle>          
       .text-center          
         = paginate @menu_items
 

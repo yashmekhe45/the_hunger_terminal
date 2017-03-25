@@ -6,7 +6,7 @@ class MobileNoValidator < ActiveModel::Validator
     end
     # Regex specifies that mobile number must starts with +91
     if (record[:mobile_number].match(/\A[0-9]{10}\z/)) == nil
-      record.errors[:mobile_number] << 'Please enter valid mobile number!'
+      record.errors[:mobile_number] << ' Enter valid mobile no.!'
     end
   end
 end

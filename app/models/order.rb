@@ -6,9 +6,7 @@ class Order < ApplicationRecord
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
-  # validate :can_be_updated?, on: :update
-  
-  
+  # validate :can_be_updated?, on: :update  
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
@@ -47,7 +45,7 @@ class Order < ApplicationRecord
                     joins(:user).
                     pluck('users.email AS email')
     @employees.each do |emp|
-      OrderMailer.send_mail_to_employees(emp).deliver_now
+      OrderMailer.send_mail_to_employees(emp).deliver_later
     end
   end
 
@@ -67,13 +65,14 @@ class Order < ApplicationRecord
     end
 
     def can_be_created?
-      current_time = Time.now
-      start_time = Time.parse "12 AM"
-      end_time = Time.parse "11 PM"
+      # byebug
+      p current_time = Time.zone.now
+      start_time = Time.zone.parse "12 AM"
+      end_time = Time.zone.parse "11 AM"
       day = current_time.wday
       if day%7 != 0 and day%7 != 6
         if !current_time.between?(start_time, end_time)
-          errors.add(:base,"order cannot be created after 11 AM")
+          errors.add(:base,"order cannot be created or updated after 11 AM")
         end
       else
         errors.add(:base,"order cannot be created on saturday and sunday")

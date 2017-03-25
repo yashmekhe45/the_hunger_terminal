@@ -5,7 +5,9 @@
       %button.close{"data-dismiss" => "modal", :type => "button"} ×
       %h4.modal-title 
     .modal-body
-      .table-responsive
+      - if !@order_details.any?
+        %p No orders at this point of time
+      - else
         %table.table-hover
           %tbody
             %tr

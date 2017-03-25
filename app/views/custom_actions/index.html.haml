@@ -1,3 +1,4 @@
+%h3.text-center Today's Orders
 #indexcontainer
   .table-responsive
     %table.table-hover.table-bordered
@@ -9,7 +10,7 @@
           %th.text-center OrderPrice
           %th.text-center Status
 
-        -@res.each_with_index do |terminal,i|
+        - @res.each_with_index do |terminal,i|
           %tr  
           %td.text-center= i+1
           %td.text-center= link_to terminal.name, custom_actions_order_detail_path(:terminal_id => terminal.id),remote: true

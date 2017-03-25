@@ -52,7 +52,7 @@ class UsersController < ApplicationController
         redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
       end
     else
-      flash[:error]= @user.errors.messages
+      flash.now[:error]= @user.errors.messages
       if(@user.role == "company_admin")
         render :edit_company_admin
       else
@@ -64,49 +64,51 @@ class UsersController < ApplicationController
 
 
   def import
-    valid_header =  ["name","email","mobile_number"]
-    $INVALID_USER_CSV = nil
-    @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "+919999999999",is_active: false, 
-      company_id: 1111,role: "employee", password: "dummy123")
-    if params[:file].content_type == 'text/csv'
-      users_csv = File.open(params[:file].path)
-      users_data = CSV.parse(users_csv,headers:true)
-      if users_data.headers == valid_header
-        users_data.each do |user_row|
-         
-          next if user_row.to_a == valid_header
-          user_hash = user_row.to_h 
-          if !user_hash.empty?
-            user = @company.employees.build(name: user_hash["name"],email: user_hash["email"], 
-              mobile_number: user_hash["mobile_number"],is_active: true, role: "employee",
-              password: Devise.friendly_token.first(8))
-            if user.valid?
-              user.save
-            else
-              CSV.open($INVALID_USER_CSV="public/#{@company.name}-invalid-records-#{Date.today}.csv","a+") do |csv|
-                user_row << user.errors.messages
-                csv << user_row
+    if !params[:file]
+      flash[:error] = "Please select a CSV file."
+      redirect_to company_users_path(params[:company_id])
+    else
+      valid_header =  ["name","email","mobile_number"]
+      $INVALID_USER_CSV = nil
+      @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "+919999999999",is_active: false, 
+        company_id: 1111,role: "employee", password: "dummy123")
+      if params[:file].content_type == 'text/csv'
+        users_csv = File.open(params[:file].path)
+        users_data = CSV.parse(users_csv,headers:true)
+        if users_data.headers == valid_header
+          users_data.each do |user_row|
+           
+            next if user_row.to_a == valid_header
+            user_hash = user_row.to_h 
+            if !user_hash.empty?
+              user = @company.employees.build(name: user_hash["name"],email: user_hash["email"], 
+                mobile_number: user_hash["mobile_number"],is_active: true, role: "employee",
+                password: Devise.friendly_token.first(8))
+              if user.valid?
+                user.save
+              else
+                CSV.open($INVALID_USER_CSV="public/#{@company.name}-invalid-records-#{Date.today}.csv","a+") do |csv|
+                  user_row << user.errors.messages
+                  csv << user_row
+                end
+                @check_user = user
               end
-              @check_user = user
             end
           end
-        end
-        if @check_user.valid?
-          flash.now[:success] = "all users added through csv data"
-          redirect_to company_users_path(params[:company_id])
+          if @check_user.valid?
+            flash.now[:success] = "all users added through csv data"
+            redirect_to company_users_path(params[:company_id])
+          else
+            flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
+          end
         else
-          flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
+          flash.now[:error] = "invalid headers in your csv."
         end
       else
-        flash.now[:error] = "invalid headers in your csv."
+        flash.now[:error] = "invalid type of file please upload csv with valid headers"
       end
-    else
-      flash.now[:error] = "invalid type of file please upload csv with valid headers"
     end
   end
-
-  
-
 
   def search
     search_value = params[:search_value].downcase
@@ -126,7 +128,11 @@ class UsersController < ApplicationController
   end
 
   def download
-    send_file("#{Rails.root}/#{$INVALID_USER_CSV}")
+    if "#{Rails.root}/#{$INVALID_USER_CSV}"
+      send_file("#{Rails.root}/#{$INVALID_USER_CSV}")
+    else
+      flash[:error] = "No invalid record"
+    end
   end
 
 

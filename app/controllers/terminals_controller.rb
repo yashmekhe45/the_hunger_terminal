@@ -105,7 +105,8 @@ class TerminalsController < ApplicationController
   def import
   end
  
-  def valid_csv    if params[:terminal][:file].content_type == "text/csv"
+  def valid_csv    
+    if params[:terminal][:file].content_type == "text/csv"
       csv_file = File.open(params[:terminal][:file].path)
       menu_items = CSV.parse( csv_file, headers: true )
       if menu_items.headers == ["name","price","veg","active_days","description"]

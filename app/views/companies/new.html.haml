@@ -14,10 +14,10 @@
               .col-md-6
                 = f.input :landline, :label => false, input_html: { maxlength: 10 }, :placeholder => "Landline" 
             .form-group
-              .col-md-9
+              .col-md-6
                 = f.input :email, :label => false, :placeholder => "Email"
-              .col-md-3  
-                = f.input :subsidy, :label => false, :placeholer => "50.0"
+              .col-md-6  
+                = f.input :subsidy, :label => false, :placeholder => "subsidy amount"
             .location
               %h5 Company Location Details:
               = f.simple_fields_for :address do |a|

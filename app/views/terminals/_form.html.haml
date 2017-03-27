@@ -1,10 +1,10 @@
-= f.input :name, required: true
-= f.input :landline, required: true, input_html: { maxlength: 10 }
-= f.input :email
-= f.input :min_order_amount, required: true
+= f.input :name, required: true, placeholder: 'kfc'
+= f.input :landline, required: true, input_html: { maxlength: 10 }, placeholder: '2013654783'
+= f.input :email, placeholder: 'kfc@gmail.com'
+= f.input :min_order_amount, required: true, placeholder: '30'
 = f.input :active, required:true, as: :boolean
 = f.file_field :image
 = f.label :remote_image_url, "Upload logo of terminal"
-= f.input :file, as: :file, hint: 'Select csv file with proper headers'
+= f.input :file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
 = f.button :submit, class: "btn btn-success"
 

@@ -10,7 +10,7 @@
         = f.input :price, required: true,required: true
         = f.input :description 
         = f.input :veg,requred: true,as: :radio_buttons
-        = f.collection_check_boxes :active_days, [["Monday", 'Monday'] ,["Tuesaday", 'Tuesaday'],["Wednsday",'Wednsday'],["Thursday",'Thursday'],["Friday",'Friday']], :first, :last, :include_hidden => false
+        = f.collection_check_boxes :active_days, [["Monday", 'Monday'] ,["Tuesday", 'Tuesday'],["Wednsday",'Wednsday'],["Thursday",'Thursday'],["Friday",'Friday']], :first, :last, :include_hidden => false
         = f.input :available, required: true, as: :boolean
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

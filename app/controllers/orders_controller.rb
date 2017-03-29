@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   
   def index
-    @orders = current_user.orders 
+    @orders = current_user.orders
   end
 
   def load_terminal
@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to @order
+      redirect_to order_path(current_user.id)
     else
       flash[:error] = @order.errors.messages
       redirect_to vendors_path
@@ -43,7 +43,8 @@ class OrdersController < ApplicationController
   end
   
   def show
-    @order = Order.find(params[:id])
+    
+    @order = current_user.orders.find_by(date: Date.today)
   end
 
   def destroy

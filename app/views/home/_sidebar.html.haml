@@ -3,7 +3,6 @@
     %a{:href => "/companies/#{current_user.company_id}/users"}
       %span.glyphicon.glyphicon-user.gly
       .name Employee
-  
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
       %span.glyphicon.glyphicon-list.gly
@@ -16,7 +15,6 @@
         %a#menu{:href => orders_path} My Order
       %li
         %a#menu{:href => admin_dashboard_index_path} Today's Orders
-   
   %div.icon   
     %a{:href => "#"}
       %span.glyphicon.glyphicon-file.gly
@@ -25,3 +23,4 @@
     %a{:href => "/companies/#{current_user.company_id}/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
       .name#termin Terminal
+  

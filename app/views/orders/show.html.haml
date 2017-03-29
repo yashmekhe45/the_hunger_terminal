@@ -32,17 +32,17 @@
         .col-sm-4
           .detail
             %h4 
-              %strong Date: 
+              %strong.date Date: 
               %span #{@order.date}
             %h4 
               %strong Subtotal: 
-              ₹#{@order.total_cost}  
+              %span₹#{@order.total_cost}  
             %h4  
               %strong Discount: 
-              ₹#{@order.discount}
+              %span₹#{@order.discount}
             %h4
-              %strong Total:
-              ₹#{@order.total_cost-@order.discount}          
+              %strong.total Total:
+              %span₹#{@order.total_cost-@order.discount}          
       %a.card-link= link_to 'Edit Order',edit_order_path(@order,:terminal_id => @order.terminal.id),class:"btn btn-info"
       %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
 

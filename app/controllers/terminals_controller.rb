@@ -22,6 +22,7 @@ class TerminalsController < ApplicationController
   end
 
   def index
+    puts current_user.inspect
     if params[:search].present?
       search_type = params[:search]
       @terminals = @current_company.terminals.where(["name LIKE ?", "%#{params[:search]}%"]).page(params[:page]).per(7)

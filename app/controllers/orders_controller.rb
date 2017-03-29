@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  
   def index
-    @orders = current_user.orders 
+    @orders = current_user.orders
   end
 
   def load_terminal
@@ -11,31 +11,47 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new  
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]) 
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+    
+  end
+  def edit
+    @order = Order.find(params[:id])
+    @terminal_id = params[:terminal_id]
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+  end
+
+  def update
+    @order = Order.find(params[:id])
+    @order.order_details = OrderDetail.where(params[:order_id])
+    @order.order_details.clear
+    if @order.update_attributes(order_params)
+      redirect_to @order
+    else
+      render 'edit'
+    end
   end
 
   def create
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to @order
+      redirect_to order_path(current_user.id)
     else
-      if @order.errors.full_messages.include?("User has already been taken")
-        flash[:error] = "Only one order is allowed per day"
-      else
-        flash[:error] = @order.errors.full_messages.join(",")
-      end 
+      flash[:error] = @order.errors.messages
       redirect_to vendors_path
     end
   end
   
   def show
-    @order = Order.find(params[:id])
+    
+    @order = current_user.orders.find_by(date: Date.today)
   end
+
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
     redirect_to vendors_path
+
   end
   private
 
@@ -46,7 +62,7 @@ class OrdersController < ApplicationController
   end
 
   def load_order_detail
-    # @order.date = Date.today
+    @order.date = Date.today
     @order.company_id = current_user.company.id
   end
 

@@ -7,7 +7,8 @@
         %h4.modal-title New Menu Item 
       .modal-body
         = f.input :name, required: true
-        = f.input :price, required: true
+        = f.input :price, required: true,required: true
+        = f.input :description 
         = f.input :veg,requred: true,as: :radio_buttons
         = f.collection_check_boxes :active_days, [["Monday", 'Monday'] ,["Tuesaday", 'Tuesaday'],["Wednsday",'Wednsday'],["Thursday",'Thursday'],["Friday",'Friday']], :first, :last
         = f.input :available, required: true, as: :boolean

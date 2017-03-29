@@ -14,7 +14,7 @@
               .row
                 .col-sm-12
                   %h4.product-name.nomargin= menu_item.name
-                  %h6.vendor-name= menu_item.terminal.name
+                  %h6.vendor-name= menu_item.description
                   %span.hide.menu_item_id= menu_item.id
             %td
               %span ₹
@@ -26,7 +26,7 @@
               %span.sub-total{"data-th" => "Subtotal"} 0.00
 
   .col-md-5
-    = nested_form_for @order do |f|
+    = simple_form_for @order, url: order_path(@order), html: { method: :patch, class: 'form-horizontal' } do |f|
       .panel.panel-info
         .panel-heading
           .panel-title

@@ -3,19 +3,22 @@ class Order < ApplicationRecord
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
+
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
   # validate :can_be_updated?, on: :update  
+
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order
 
-  after_initialize :set_date
+  # after_initialize :set_date
   before_validation :set_discount
 
-  accepts_nested_attributes_for :order_details
+
+  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   def self.daily_orders(t_id,c_id)
     self.
@@ -65,7 +68,6 @@ class Order < ApplicationRecord
     end
 
     def can_be_created?
-      # byebug
       p current_time = Time.zone.now
       start_time = Time.zone.parse "12 AM"
       end_time = Time.zone.parse "11 AM"
@@ -79,9 +81,9 @@ class Order < ApplicationRecord
       end
     end
 
-    def set_date
-      self.date = Date.today
-    end
+    # def set_date
+    #   self.date = Date.today
+    # end
 
     def is_empty?
       if self.order_details.any? == false
@@ -95,5 +97,7 @@ class Order < ApplicationRecord
       self.discount = [a, (a*b)/100].min
       self.status = 'pending'
     end 
+
+
 end
  

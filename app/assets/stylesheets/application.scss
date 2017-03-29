@@ -29,6 +29,7 @@ body {
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weight: 400;
+  margin-top: 5%;
   margin-bottom: 5%;
 }
 
@@ -146,7 +147,7 @@ a.name{
 #termin{
   padding-left: 6px;
 }
- .dropdown{
+ .dropdown.icon{
  padding-top: 13px;
  }
 
@@ -174,3 +175,4 @@ a.name{
 .order-show{
   background-color: whitesmoke;
 }
+

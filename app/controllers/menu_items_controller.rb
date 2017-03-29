@@ -1,6 +1,6 @@
 class MenuItemsController < ApplicationController
   
-  load_and_authorize_resource  param_method: :menu_item_param
+  load_and_authorize_resource  param_method: :menu_item_params
 
   before_action :authenticate_user!  
   before_action :load_company
@@ -47,7 +47,7 @@ class MenuItemsController < ApplicationController
       flash[:success] = "Menu Item updated"
       redirect_to company_terminal_menu_items_path and return
     else
-      render 'create'
+      flash[:error] = "can't update menu_item"
     end
   end
 
@@ -56,7 +56,31 @@ class MenuItemsController < ApplicationController
     flash[:success] = 'Menu Item Deleted successfully'
     redirect_to company_terminal_path(@current_company,@terminal)
   end
+
+  def import
+    unless params[:file].nil?
+      valid_csv
+    end
+    redirect_to company_terminal_menu_items_path(@current_company,@terminal)
+  end
   
+  def valid_csv    
+    if params[:file].content_type == "text/csv"
+      csv_file = File.open(params[:file].path)
+      menu_items = CSV.parse( csv_file, headers: true )
+      if menu_items.headers == ["name","price","veg","description","active_days"]
+        ImportCsvWorkerJob.perform_now(@current_company.id, @terminal.id, menu_items) 
+        # if !$INVALID_MENU_CSV.nil?
+        #   redirect_to import_company_terminal_path(@current_company,@terminal)
+        # end
+      else
+        flash[:error] = "Invalid headers with name,price,veg,active_days,description" and return    
+      end  
+    else
+      flash[:error] = "Invalid type of file" and return
+    end 
+  end
+
   private
 
   def load_company

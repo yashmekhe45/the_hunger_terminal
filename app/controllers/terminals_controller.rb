@@ -101,16 +101,13 @@ class TerminalsController < ApplicationController
   #     redirect_to company_terminals_path
   #   end        
   # end 
-
-  def import
-  end
  
   def valid_csv    
     if params[:terminal][:file].content_type == "text/csv"
       csv_file = File.open(params[:terminal][:file].path)
       menu_items = CSV.parse( csv_file, headers: true )
-      if menu_items.headers == ["name","price","veg","active_days","description"]
-        ImportCsvWorker.perform_async(@current_company.id, @terminal.id, menu_items) 
+      if menu_items.headers == ["name","price","veg","description","active_days"]
+        ImportCsvWorkerJob.perform_now(@current_company.id, @terminal.id, menu_items) 
         # if !$INVALID_MENU_CSV.nil?
         #   redirect_to import_company_terminal_path(@current_company,@terminal)
         # end

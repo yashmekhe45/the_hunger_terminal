@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
   end
 
   def load_order_detail
-    # @order.date = Date.today
+    @order.date = Date.today
     @order.company_id = current_user.company.id
   end
 

@@ -14,6 +14,8 @@
         %a#menu{:href => vendors_path} Place Order
       %li
         %a#menu{:href => orders_path} My Order
+      %li
+        %a#menu{:href => admin_dashboard_index_path} Today's Orders
    
   %div.icon   
     %a{:href => "#"}
@@ -22,4 +24,4 @@
   %div.icon    
     %a{:href => "/companies/#{current_user.company_id}/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
-      .name#termin Terminal     
+      .name#termin Terminal

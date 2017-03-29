@@ -14,6 +14,22 @@ class OrdersController < ApplicationController
     @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
     
   end
+  def edit
+    @order = Order.find(params[:id])
+    @terminal_id = params[:terminal_id]
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+  end
+
+  def update
+    @order = Order.find(params[:id])
+    @order.order_details = OrderDetail.where(params[:order_id])
+    @order.order_details.clear
+    if @order.update_attributes(order_params)
+      redirect_to @order
+    else
+      render 'edit'
+    end
+  end
 
   def create
     @order = Order.new(order_params)
@@ -29,6 +45,7 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
   end
+
   def destroy
     @order = Order.find(params[:id])
     @order.destroy

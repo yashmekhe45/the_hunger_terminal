@@ -1,0 +1,12 @@
+%p Hello, #{@terminal.email}!!!
+%p Please confirm with the following order!!!
+.table-responsive
+  %table.table.table-condensed
+    %thead
+      %th.text-center Menu Item
+      %th.text-center Quantity
+    %tbody
+      - @orders.each do |order|
+        %tr
+          %td.text-center #{order.menu}
+          %td.text-center #{order.quantity}

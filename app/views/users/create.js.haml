@@ -1,0 +1,5 @@
+- if @user.errors.empty?
+  window.location = "/companies/#{@company.id.to_s}/users"
+- else
+  $("#user").html("#{escape_javascript(render 'user')}")
+  $("#user").modal('show')

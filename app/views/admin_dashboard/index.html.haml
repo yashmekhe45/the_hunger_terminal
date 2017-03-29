@@ -1,4 +1,6 @@
+
 #indexcontainer
+  %h3.text-center Vendor List
   .table-responsive
     %table.table-hover.table-bordered
       %tbody
@@ -9,13 +11,13 @@
           %th.text-center OrderPrice
           %th.text-center Status
 
-        -@res.each_with_index do |terminal,i|
+        - @res.each_with_index do |terminal,i|
           %tr  
           %td.text-center= i+1
-          %td.text-center= link_to terminal.name, custom_actions_order_detail_path(:terminal_id => terminal.id),remote: true
+          %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true
           %td.text-center ₹ #{terminal.min_order_amount}
           %td.text-center ₹ #{terminal.total}
-          %td.text-center= link_to "Confirm", custom_actions_confirm_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
+          %td.text-center= link_to "Confirm", admin_dashboard_confirm_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
 #myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 #myConfirmModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 

@@ -18,5 +18,7 @@ module TheHungerTerminal
       end if File.exists?(env_file)
     end
     config.active_record.time_zone_aware_types = [:datetime, :time]
+    config.active_job.queue_adapter = :sidekiq
+    config.time_zone = 'Kolkata'
   end
 end

@@ -10,9 +10,8 @@
   %body
     - if user_signed_in?  
       =render  "home/sidebar"
-      =render "home/navbar"
-    -else
-      =render "home/navbar"
+
+    =render "home/navbar"
     = yield  
   - unless flash.empty?
     %script

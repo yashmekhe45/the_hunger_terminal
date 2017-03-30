@@ -14,6 +14,10 @@ $(document).ready ->
     vendor_name   = product.find(".vendor-name").text()
     product.find(".sub-total").text(quantity * price)
     menu_item_id = product.find('.menu_item_id').text()
+    console.log(menu_item_id)
+    order_detail_id = product.find('.order_detail_id').text()
+    console.log(order_detail_id)
+
    
     
 
@@ -25,8 +29,7 @@ $(document).ready ->
     order_detail.quantity = quantity
     order_detail.menu_item_id = menu_item_id
     order_detail.price = price
-    
-
+    order_detail.detail_id = order_detail_id
 
     selected_item = $('.order-details').find('*[data-menu-item-id="'+  menu_item_id + '"]')
     if selected_item.length

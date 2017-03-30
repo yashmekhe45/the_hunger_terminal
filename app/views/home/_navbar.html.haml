@@ -27,7 +27,8 @@
                 %a{:href => orders_path} My Orders
               %li
                 -if current_user.orders.find_by(date: Date.today)
-                  %a{:href => order_path(current_user.id)} Today's Order          
+                  - order_id = current_user.orders.find_by(date: Date.today).id
+                  %a{:href => order_path(order_id)} Today's Order          
         %li
           - if !user_signed_in?
             = link_to new_user_session_path do

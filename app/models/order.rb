@@ -6,7 +6,7 @@ class Order < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
-  validate :can_be_created?, :is_empty?, on: :create
+  # validate :can_be_created?, :is_empty?, on: :create
   # validate :can_be_updated?, on: :update  
 
   belongs_to :user

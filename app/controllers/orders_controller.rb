@@ -17,13 +17,14 @@ class OrdersController < ApplicationController
   def edit
     @order = Order.find(params[:id])
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+    
   end
 
   def update
     @order = Order.find(params[:id])
-    @order.order_details = OrderDetail.where(params[:order_id])
-    @order.order_details.clear
+    p order_params
+    # @order.order_details = OrderDetail.where(params[:order_id])
+    # @order.order_details.clear
     if @order.update_attributes(order_params)
       redirect_to @order
     else
@@ -35,7 +36,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to order_path(current_user.id)
+      redirect_to @order
     else
       flash[:error] = @order.errors.messages
       redirect_to vendors_path
@@ -43,9 +44,9 @@ class OrdersController < ApplicationController
   end
   
   def show
-    
-    @order = current_user.orders.find_by(date: Date.today)
+     @order = Order.find(params[:id])
   end
+
 
   def destroy
     @order = Order.find(params[:id])
@@ -57,7 +58,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :total_cost,:terminal_id, order_details_attributes:[:menu_item_id, :quantity]
+      :total_cost,:terminal_id, order_details_attributes:[:menu_item_id, :quantity, :id]
     ).merge(user_id: current_user.id)
   end
 

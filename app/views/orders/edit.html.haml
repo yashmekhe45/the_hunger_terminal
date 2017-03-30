@@ -8,22 +8,24 @@
           %th{:style => "width:8%"} Quantity
           %th.text-center{:style => "width:32%"} Subtotal
       %tbody
-        - @menu_items.each do |menu_item|
-          %tr{:id => "#{menu_item.id}"} 
+        - @order.order_details.each do |order_detail|
+          %tr{:id => "#{order_detail.menu_item.id}"} 
             %td{"data-th" => "Product"}
               .row
                 .col-sm-12
-                  %h4.product-name.nomargin= menu_item.name
-                  %h6.vendor-name= menu_item.description
-                  %span.hide.menu_item_id= menu_item.id
+                  %h4.product-name.nomargin= order_detail.menu_item.name
+                  %h6.vendor-name= order_detail.menu_item.description
+                  %span.hide.menu_item_id= order_detail.menu_item.id
+                  %span.hide.order_detail_id= order_detail.id
             %td
               %span ₹
-              %span.price{"data-th" => "Price"}= menu_item.price
+              %span.price{"data-th" => "Price"}= order_detail.menu_item.price
             %td{"data-th" => "Quantity"}
-              %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
+              %input.form-control.text-center.item-qty{:type => "number", :value => order_detail.quantity, :min => 0}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0.00
+              %span.sub-total{"data-th" => "Subtotal"} #{order_detail.quantity * order_detail.menu_item.price }
+
 
   .col-md-5
     = simple_form_for @order, url: order_path(@order), html: { method: :patch, class: 'form-horizontal' } do |f|
@@ -62,6 +64,7 @@
           {{product_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
+        %input.hide{:type => "text", :value => "{{detail_id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
       %h4
       %h4
         %small
@@ -78,3 +81,4 @@
       %button.btn.btn-link.btn-xs.delete{:type => "button"}
         %span.glyphicon.glyphicon-trash
   {{/.}}
+

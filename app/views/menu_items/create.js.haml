@@ -1,5 +1,5 @@
 - if @menu_item.errors.empty?
-  window.location = "/companies/#{@current_company.id.to_s}/terminals/#{@terminal.id.to_s}"
+  window.location = "/companies/#{@current_company.id.to_s}/terminals/#{@terminal.id.to_s}/menu_items"
 - else
   $("#menu_item").html("#{escape_javascript(render 'form')}")
   $("#menu_item").modal('show')

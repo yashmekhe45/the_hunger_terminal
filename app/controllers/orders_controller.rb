@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
-  
+
+  load_and_authorize_resource  param_method: :order_params
+ 
   def index
     @orders = current_user.orders
   end

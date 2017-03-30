@@ -1,6 +1,8 @@
 .container
+  %h1 Edit Vendor Details
   .row
-    .col-md-4
-      %h2 Edit Terminal
+    .col-md-3
+    .col-md-6
       = simple_form_for @terminal, url: company_terminal_path(@terminal), html: { method: :patch, class: 'form-horizontal' } do |f|
         = render 'form', f: f
+    .col-md-3

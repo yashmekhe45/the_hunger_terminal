@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
- 
+
+  # load_and_authorize_resource  param_method: :compnay_params 
   before_action :load_company, only: [:update, :show, :destroy,:edit]
   skip_before_action :authenticate_user!, :only => [:new, :create]
 
@@ -47,7 +48,7 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :landline, :email, 
+    params.require(:company).permit(:name, :landline, :email, :subsidy,
       address_attributes: [:house_no, :pincode, :locality, :city, :state],
       employees_attributes: [:name, :email, :mobile_number, :password, :password_confirmation])
   end

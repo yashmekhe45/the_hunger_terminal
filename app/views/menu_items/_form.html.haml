@@ -6,11 +6,15 @@
           %span{"aria-hidden" => "true"} ×
         %h4.modal-title New Menu Item 
       .modal-body
-        = f.input :name, required: true
-        = f.input :price, required: true,required: true
+        .form-group
+          .col-md-6
+            = f.input :name, required: true
+          .col-md-6
+            = f.input :price, required: true
         = f.input :description 
         = f.input :veg,requred: true,as: :radio_buttons
-        = f.collection_check_boxes :active_days, [["Monday", 'Monday'] ,["Tuesaday", 'Tuesaday'],["Wednsday",'Wednsday'],["Thursday",'Thursday'],["Friday",'Friday']], :first, :last
+        / = f.input :active_days, as: :check_boxes, collection: active_days_collection, :item_wrapper_class => 'inline', include_hidden: false
+        = f.collection_check_boxes :active_days, [["Monday", 'Monday'], ["Tuesday", 'Tuesday'], ["Wednsday",'Wednsday'], ["Thursday",'Thursday'], ["Friday",'Friday']], :first, :last, :include_hidden => false  
         = f.input :available, required: true, as: :boolean
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

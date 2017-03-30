@@ -1,42 +1,50 @@
 .container
-  #searchcontainer 
-    =link_to "Active terminal", selection_path(params[:company_id]),class:"btn btn-info"
-    %a.btn.btn-info{:href => "/companies/#{current_user.company_id}/terminals/new"} New Terminal
-    .col-sm-6.col-sm-offset-3
-      %form{action:company_terminals_path(params[:company_id])}
-        .input-group.stylish-input-group
-          %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-          %span.input-group-addon
-            %button{type:"submit"}
-              %span.glyphicon.glyphicon-search  
-  #indexcontainer
-    .table-responsive
-      %table.table-hover.table-bordered
-        %tbody
-          %tr
-            %th.text-center Sr No.
-            %th.text-center Name
-            %th.text-center Landline
-            %th.text-center Edit Terminal
-            %th.text-center Delete Terminal
-            %th.text-center Status
-          - @terminals.each_with_index do |object,i|
+  .row 
+    #searchcontainer
+      .col-md-2
+      .col-md-7
+        %form{action:company_terminals_path}
+          .input-group.stylish-input-group
+            %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+            %span.input-group-addon{align:"center"}
+              %button{type:"submit"}
+                %span.glyphicon.glyphicon-search 
+      .col-md-3   
+        .pull-left
+          = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
+    .col-md-12
+      .table-responsive
+        %table.table-hover.table-bordered{:align => "center"}
+          %tbody
             %tr
-            %td.text-center= i+1
-            %td.text-center= link_to object.name, company_terminal_path(params[:company_id],object.id)
-            %td.text-center= object.landline
-            %td.text-center= link_to "Edit", edit_company_terminal_path(params[:company_id],object.id), class:"btn btn-info"
-            %td.text-center= link_to "Delete", company_terminal_path(params[:company_id],object.id),method: :delete,data: {confirm: 'Are  you sure to delete'}, class:"btn btn-dangers" 
-            %td
-              =link_to company_terminal_path(params[:company_id],object.id,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
-                -if object.active
-                  .text-center
-                    %button.btn.btn-success{:type=> "button"}
-                      %span.glyphicon.glyphicon-ok-circle>
-                -else
-                  .text-center
-                    %button.btn.btn-danger{:type=> "button"}
-                      %span.glyphicon.glyphicon-remove-circle>        
+              %th.text-center Sr No.
+              %th.text-center Name
+              %th.text-center Landline
+              %th.text-center Status
+              %th.text-center Change State
+              %th.text-center Actions
+            - @terminals.each_with_index do |object,i|
+              %tr
+              %td.text-center= i+1
+              %td.text-center= link_to object.name, company_terminal_menu_items_path(params[:company_id],object.id)
               
-  .text-center
-    = paginate @terminals 
+              %td.text-center= object.landline
+              %td.text-center= object.active ? "active" : "inactive" 
+              
+              %td
+                = link_to "Edit", edit_company_terminal_path(params[:company_id],object.id)
+          
+
+              %td
+                =link_to company_terminal_path(params[:company_id],object.id,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
+                  -if object.active
+                    .text-center
+                      %button.btn.btn-success{:type=> "button"}
+                        %span.glyphicon.glyphicon-ok-circle>
+                  -else
+                    .text-center
+                      %button.btn.btn-danger{:type=> "button"}
+                        %span.glyphicon.glyphicon-remove-circle>        
+                
+    .text-center
+      = paginate @terminals 

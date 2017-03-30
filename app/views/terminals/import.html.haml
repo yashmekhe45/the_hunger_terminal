@@ -1,13 +1,2 @@
-
-.container
-  %br
-  %br
-  %br
-  %br
-  -if @menu_item_errors.valid?
-    -if flash[:success].present?
-      =flash[:success] 
-  -else
-    -if flash[:alert].present?
-      =flash[:alert]
-  =link_to 'Download your invalid record csv',terminals_download_path, class: 'btn btn-primary'
+.congtainer
+  =link_to 'Download your invalid record csv',download_company_terminal_path(@current_company,@terminal), class: 'btn btn-primary'

@@ -6,6 +6,7 @@ class Terminal < ApplicationRecord
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 10 }
   validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format."
+ 
   has_many :menu_items, dependent: :destroy
   has_many :orders
   belongs_to :company
@@ -32,4 +33,5 @@ class Terminal < ApplicationRecord
       select('terminals.name,terminals.min_order_amount,terminals.id,
        sum(total_cost) AS total')
   end
+
 end

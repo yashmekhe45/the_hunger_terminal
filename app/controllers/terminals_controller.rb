@@ -27,6 +27,7 @@ class TerminalsController < ApplicationController
   end
 
   def index
+    puts current_user.inspect
     if params[:search].present?
       @terminals = @current_company.terminals.where(["LOWER(name) LIKE ?", "%#{params[:search].downcase}%"]).page(params[:page]).per(7)
       if @terminals.empty?
@@ -38,7 +39,6 @@ class TerminalsController < ApplicationController
   end
 
   def edit
-    # render :new
   end
 
   def show
@@ -53,6 +53,7 @@ class TerminalsController < ApplicationController
       if params[:terminal][:file].nil?
         redirect_to company_terminals_path and return
       else
+        flash[:error] = @terminal.errors.messages
         render :edit and return
       end
     end

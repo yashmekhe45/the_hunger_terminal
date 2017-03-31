@@ -8,6 +8,7 @@ class Order < ApplicationRecord
   validate :can_be_created?, :is_empty?, on: :create
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
+
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
@@ -16,7 +17,8 @@ class Order < ApplicationRecord
   # after_initialize :set_date
   before_validation :set_discount
 
-  accepts_nested_attributes_for :order_details
+
+  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   def self.daily_orders(t_id,c_id)
     self.
@@ -67,7 +69,6 @@ class Order < ApplicationRecord
     end
 
     def can_be_created?
-      # byebug
       current_time = Time.zone.now.strftime('%H:%M:%S')
       start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
       # self.company.start_ordering_at

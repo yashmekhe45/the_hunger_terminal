@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:mhfs/devise-async.git
+  remote: git://github.com/mhfs/devise-async.git
   revision: 177f6363a002f7ff28f1d289c8cab7ad8d9cb8c5
   branch: devise-4.x
   specs:
@@ -240,9 +240,9 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    uglifier (3.1.9)
+    uglifier (3.1.10)
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -284,6 +284,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.1)
   rails_12factor
+  redis (~> 3.0)
   rmagick
   sass-rails (~> 5.0)
   sidekiq

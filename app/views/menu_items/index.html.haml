@@ -1,8 +1,12 @@
 .container
   .row
     #searchcontainer 
-      .col-md-2
-      .col-md-7
+      .col-md-3
+        .pull-left
+          = form_tag import_company_terminal_menu_items_path, multipart: true do
+            = file_field_tag :file , accept: '.csv '
+            = submit_tag "Import"
+      .col-md-6
         %form{action:company_terminal_menu_items_path}
           .input-group.stylish-input-group
             %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
@@ -12,39 +16,39 @@
       .col-md-3  
         .pull-left
           = link_to 'New Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
-    .col-md-2
-    .col-md-9
-
-      .table-responsive  
-        %table.table-hover.table-bordered{:align=>"center"}
-          %thead
-            %tr
-              %th #
-              %th Name
-              %th Price
-              %th Type
-              %th Avaibility
-              %th Status
-          %tbody
-            - @menu_items.each_with_index do |menu_item, index|
+    .row
+      .col-md-3
+      .col-md-6
+        .table-responsive  
+          %table.table-hover.table-bordered{:align=>"center"}
+            %thead
               %tr
-                %td= index+1
-                %td
-                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_company_terminal_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
-                %td= "#{menu_item.price}/-"
-                %td= menu_item.veg ? "Veg" : "Non Veg"
-                %td= menu_item.available ? "Available" : "Not Available"
-                %td
-                  =link_to company_terminal_menu_item_path(params[:company_id],@terminal.id,menu_item.id,'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' }, class: 'activate', id: 'activate' do
-                    -if menu_item.available
-                      .text-center
-                        %button.btn.btn-success{:type => "button"}
-                          %span.glyphicon.glyphicon-ok-circle>
-                    -else
-                      .text-center
-                        %button.btn.btn-danger{:type => "button"}
-                          %span.glyphicon.glyphicon-remove-circle>          
-      .text-center          
-        = paginate @menu_items
+                %th #
+                %th Name
+                %th Price
+                %th Type
+                %th Avaibility
+                %th Status
+            %tbody
+              - @menu_items.each_with_index do |menu_item, index|
+                %tr
+                  %td= index+1
+                  %td
+                    %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_company_terminal_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
+                  %td= "#{menu_item.price}/-"
+                  %td= menu_item.veg ? "Veg" : "Non Veg"
+                  %td= menu_item.available ? "Available" : "Not Available"
+                  %td
+                    =link_to company_terminal_menu_item_path(params[:company_id],@terminal.id,menu_item.id,'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
+                      -if menu_item.available
+                        .text-center
+                          %button.btn.btn-success{:type => "button"}
+                            %span.glyphicon.glyphicon-ok-circle>
+                      -else
+                        .text-center
+                          %button.btn.btn-danger{:type => "button"}
+                            %span.glyphicon.glyphicon-remove-circle>          
+        .text-center          
+          = paginate @menu_items
 
 #menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}

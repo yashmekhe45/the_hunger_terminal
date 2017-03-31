@@ -19,11 +19,13 @@ class AdminDashboardController < ApplicationController
 
   def place_orders
     authorize! :place_orders, :order_management
-    if SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
-      flash[:notice] = "emails sent successfully"
-    else
-      flash[:error] = "error in sending mails"
-    end
+    SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
+    flash[:notice] = "emails sent successfully"
+    # if SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
+    #   flash[:notice] = "emails sent successfully"
+    # else
+    #   flash[:error] = "error in sending mails"
+    # end
   end
 
   private

@@ -13,7 +13,7 @@ class AdminDashboardController < ApplicationController
 
   def confirm
     @orders = Order.menu_details(params[:terminal_id],current_user.company_id)
-    authorize :confirm, :order_management
+    authorize! :confirm, :order_management
   end
 
   def place_orders
@@ -21,6 +21,6 @@ class AdminDashboardController < ApplicationController
     flash[:notice] = "email sent successfully"
     Order.update_status(params[:terminal_id], current_user.company_id)
     redirect_to admin_dashboard_index_path
-    authorize :place_orders, :order_management
+    authorize! :place_orders, :order_management
   end
 end

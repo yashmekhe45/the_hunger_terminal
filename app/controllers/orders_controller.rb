@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   load_and_authorize_resource  param_method: :order_params
  
   def index
-    @orders = current_user.orders
+    @orders = current_user.orders.where(date: params[:from]..params[:to]).order(date: :desc)
   end
 
   def load_terminal
@@ -13,9 +13,10 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new  
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
-    
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
+
   end
+
   def edit
     @order = Order.find(params[:id])
     @terminal_id = params[:terminal_id]

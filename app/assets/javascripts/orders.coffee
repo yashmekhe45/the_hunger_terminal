@@ -14,9 +14,8 @@ $(document).ready ->
     vendor_name   = product.find(".vendor-name").text()
     product.find(".sub-total").text(quantity * price)
     menu_item_id = product.find('.menu_item_id').text()
-    console.log(menu_item_id)
     order_detail_id = product.find('.order_detail_id').text()
-    console.log(order_detail_id)
+    
 
    
     

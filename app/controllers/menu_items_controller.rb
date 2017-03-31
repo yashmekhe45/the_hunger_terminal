@@ -15,12 +15,12 @@ class MenuItemsController < ApplicationController
 
   def index
     if params[:search_item].present?
-      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(7)
+      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(6)
       if @menu_items.empty?
         flash[:notice] = "Meu Item is not present."
       end
     else 
-      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(7)
+      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
     end
   end
 
@@ -39,7 +39,6 @@ class MenuItemsController < ApplicationController
   end
 
   def edit
-    render 'new'
   end
 
   def update
@@ -48,6 +47,7 @@ class MenuItemsController < ApplicationController
       redirect_to company_terminal_menu_items_path and return
     else
       flash[:error] = "can't update menu_item"
+      render :edit and return
     end
   end
 

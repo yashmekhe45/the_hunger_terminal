@@ -2,17 +2,32 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-th, td {
-  padding: 15px;
+.container.center.Absolute-Center.is-Responsive{
+  padding :1%;
+  margin-top: -2%;
+  height: 100%;
 }
-.container
+
+.panel.panel-success{
+  height: 100%;
+}
+
+.panel-body{
+  padding: 0px;  
+  position: relative;
+  height: 100%;
+  top: 0px;
+  bottom: 0px;
+}
+
+/*.container
 {
-  margin-left: 40px;
-  margin-right: 60px;
-}
+  margin-left: 10%;
+  margin-right: 10%;
+}*/
 .table
 {
-  width:60%;
+  width: 80%;
   background-color: white;
 }
 h1, h2

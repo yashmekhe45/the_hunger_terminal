@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
 
   # load_and_authorize_resource  param_method: :compnay_params 
-  before_action :load_company, only: [:update, :show, :destroy,:edit]
+  before_action :load_company, only: [:update, :show, :destroy, :edit]
   skip_before_action :authenticate_user!, :only => [:new, :create]
 
   def new

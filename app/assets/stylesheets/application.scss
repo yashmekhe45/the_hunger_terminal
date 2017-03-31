@@ -29,8 +29,9 @@ body {
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weight: 400;
-  margin-top: 5%;
+  margin-top: 7%;
   margin-bottom: 5%;
+  height: 100%
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -176,3 +177,6 @@ a.name{
   background-color: whitesmoke;
 }
 
+.modal-title.menu_item{
+  margin-left: 35%;
+}

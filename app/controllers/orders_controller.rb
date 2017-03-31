@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to order_path(current_user.id)
+      redirect_to @order
     else
       flash[:error] = @order.errors.messages
       redirect_to vendors_path
@@ -45,8 +45,7 @@ class OrdersController < ApplicationController
   end
   
   def show
-    
-    @order = current_user.orders.find_by(date: Date.today)
+    @order = current_user.orders.find(params[:id])
   end
 
   def destroy

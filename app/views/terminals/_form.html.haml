@@ -4,8 +4,8 @@
 = f.input :min_order_amount, required: true, placeholder: '30'
 = f.input :active, required:true, as: :boolean
 = f.file_field :image, onchange: "validateFiles(this);", |
-  data: {max_file_size: 1.megabytes }                    |
-= f.label :remote_image_url, "Upload logo of terminal"
-= f.input :file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
-= f.button :submit, class: "btn btn-success"
+  data: { max_file_size: 1.megabytes }                    |
+= f.label :remote_image_url, "Upload logo of vendor"
+= f.input :CSV_menu_file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
+= f.button :submit, class: "btn btn-success new terimnal"
 

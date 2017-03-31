@@ -17,7 +17,7 @@ class TerminalsController < ApplicationController
     @terminal = @current_company.terminals.build terminal_params
     if @terminal.save
       flash[:success] = "terminal created successfully" 
-      unless params[:terminal][:file].nil?
+      unless params[:terminal][:CSV_menu_file].nil?
         valid_csv
       end
       redirect_to company_terminal_menu_items_path(@current_company,@terminal) and return
@@ -29,12 +29,12 @@ class TerminalsController < ApplicationController
   def index
     puts current_user.inspect
     if params[:search].present?
-      @terminals = @current_company.terminals.where(["LOWER(name) LIKE ?", "%#{params[:search].downcase}%"]).page(params[:page]).per(7)
+      @terminals = @current_company.terminals.where(["LOWER(name) LIKE :search OR landline LIKE :search", search: "%#{params[:search].downcase}%"]).page(params[:page]).per(6)
       if @terminals.empty?
         flash[:notice] = "terminal not present."
       end
     else
-      @terminals = @current_company.terminals.order(:name).page(params[:page]).per(7)
+      @terminals = @current_company.terminals.order(:name).page(params[:page]).per(6)
     end
   end
 
@@ -50,12 +50,10 @@ class TerminalsController < ApplicationController
   def update
     if @terminal.update_attributes(terminal_params)
       flash[:success] = "terminal updated"
-      if params[:terminal][:file].nil?
-        redirect_to company_terminals_path and return
-      else
-        flash[:error] = @terminal.errors.messages
-        render :edit and return
-      end
+      redirect_to company_terminals_path and return
+    else
+      flash[:error] = @terminal.errors.messages
+      render :edit and return
     end
   end
 
@@ -104,8 +102,8 @@ class TerminalsController < ApplicationController
   # end 
  
   def valid_csv    
-    if params[:terminal][:file].content_type == "text/csv"
-      csv_file = File.open(params[:terminal][:file].path)
+    if params[:terminal][:CSV_menu_file].content_type == "text/csv"
+      csv_file = File.open(params[:terminal][:CSV_menu_file].path)
       menu_items = CSV.parse( csv_file, headers: true )
       if menu_items.headers == ["name","price","veg","description","active_days"]
         ImportCsvWorkerJob.perform_now(@current_company.id, @terminal.id, menu_items) 

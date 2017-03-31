@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get 'admin_dashboard/order_detail'
   get 'admin_dashboard/confirm'
   get 'admin_dashboard/place_orders'
+  get 'reports/index'
   root to: 'home#index'
   
   get 'companies/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'

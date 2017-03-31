@@ -48,6 +48,7 @@ class MenuItemsController < ApplicationController
       redirect_to company_terminal_menu_items_path and return
     else
       flash[:error] = "can't update menu_item"
+      # render :edit and return
     end
   end
 

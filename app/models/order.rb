@@ -40,7 +40,7 @@ class Order < ApplicationRecord
   def self.update_status(order_details)
     # @orders = Order.where('orders.date' => Date.today, 
     #   'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
-    order_ids = order_details.pluck(:id)
+    order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "placed")
     @employees =  orders.
@@ -68,13 +68,15 @@ class Order < ApplicationRecord
 
     def can_be_created?
       # byebug
-      current_time = Time.zone.now
-      start_time = self.company.start_ordering_at
-      end_time = self.company.end_ordering_at
-      day = current_time.wday
+      current_time = Time.zone.now.strftime('%H:%M:%S')
+      start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
+      # self.company.start_ordering_at
+      end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
+      # self.company.end_ordering_at
+      day = Date.today.wday
       if day%7 != 0 and day%7 != 6
-        if !current_time.between?(start_time, end_time)
-          errors.add(:base,"order cannot be created or updated after 11 AM")
+        if !(current_time >= start_time and current_time <= end_time)
+          errors.add(:base,"order cannot be created or updated after #{end_time}")
         end
       else
         errors.add(:base,"order cannot be created on saturday and sunday")

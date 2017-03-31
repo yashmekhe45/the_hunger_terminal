@@ -1,5 +1,6 @@
 %p Hello, #{@terminal.email}!!!
-%p Please confirm with the following order!!!
+%p 
+= @message
 .table-responsive
   %table.table.table-condensed
     %thead
@@ -8,5 +9,5 @@
     %tbody
       - @orders.each do |order|
         %tr
-          %td.text-center #{order.menu}
-          %td.text-center #{order.quantity}
+          %td.text-center #{order["menu"]}
+          %td.text-center #{order["quantity"]}

@@ -13,6 +13,7 @@
           %a{:href => root_path}
             Home
             %span.sr-only (current)
+    
         %li
           %a{:href => "#"} About
         -if user_signed_in? && current_user.role == "employee"        

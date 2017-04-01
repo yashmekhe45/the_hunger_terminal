@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
   resources :companies do
+    get 'get_order_details', :on => :member
+    patch 'set_order_details', :on => :member
     resources :users do
       get 'search', :on => :collection
       get 'download', :on => :collection
@@ -34,11 +36,17 @@ Rails.application.routes.draw do
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'
-  get 'admin_dashboard/confirm'
+  get 'admin_dashboard/forward_orders'
   get 'admin_dashboard/place_orders'
+  get 'admin_dashboard/confirm_orders'
+  
+  # get 'companie/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'
+  # get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
+
   get 'reports/index'
   root to: 'home#index'
   
   get 'companies/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'
   get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
+
 end

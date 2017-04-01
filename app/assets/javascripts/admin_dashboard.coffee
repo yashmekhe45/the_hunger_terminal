@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 confirmation = ->
-  $("#myConfirmModal").on 'click', '.btn-info', (e) ->
+  $("#myForwardOrdersModal").on 'click', '.btn-info', (e) ->
     debugger;
     element = $(this)
     $.ajax({
@@ -13,7 +13,7 @@ confirmation = ->
           message: $("#message").val()
       }
       success: (e)->
-        $("#myConfirmModal").modal('hide');
+        $("#myForwardOrdersModal").modal('hide');
         window.location.reload()
     });
 $(document).on('turbolinks:load', confirmation)

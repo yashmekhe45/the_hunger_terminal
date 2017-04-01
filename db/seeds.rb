@@ -1,5 +1,5 @@
 
-company1 = Company.find_or_initialize_by(name: "Dummy software", landline: "0235192322")
+company1 = Company.find_or_initialize_by(name: "Dummy software", landline: "0235192322",email: "dummysoftware@gmail.com")
 company1.start_ordering_at = Time.zone.parse "12 AM"
 company1.end_ordering_at = Time.zone.parse "11 AM"
 company1.review_ordering_at = Time.zone.parse "11:30 AM"

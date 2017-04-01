@@ -1,11 +1,12 @@
 class MenuItemsController < ApplicationController
   
-  load_and_authorize_resource
+ 
 
   before_action :authenticate_user!  
   before_action :load_company
   before_action :load_terminal
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
+  load_and_authorize_resource
 
   def menu_index
   	@company = Company.find(params[:company_id])

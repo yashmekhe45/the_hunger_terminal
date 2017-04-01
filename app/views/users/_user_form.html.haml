@@ -10,5 +10,5 @@
         = f.input :email, required: true
         = f.input :mobile_number ,requred: true
       .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
-        %button.btn.btn-primary{:type => "submit"} Add 
+        %button.btn.btn-default{"data-dismiss" => "modal",'data-disable-with' => "Processing...", :type => "button"} Close
+        %button.btn.btn-primary{'data-disable-with' => "...", :type => "submit"} Add 

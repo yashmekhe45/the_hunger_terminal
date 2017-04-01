@@ -17,20 +17,20 @@ class UsersController < ApplicationController
   def create
     @user = @company.employees.build(:name => user_params[:name],
      :email => user_params[:email], :mobile_number => user_params[:mobile_number],
-      :is_active =>true, :role => "employee",:password=> Devise.friendly_token.first(8))
+      :is_active =>false, :role => "employee",:password=> Devise.friendly_token.first(8))
 
     if @user.valid?
       @user.save
+      flash[:success] = "Employee record added!!"
       # redirect_to company_users_path
     else
-      p @user.errors
-      flash[:error]=  @user.errors.messages
+      flash.now[:error]=  @user.errors.messages
       render :new 
     end
   end
 
   def index
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    @users = @company.employees.where(role: "employee", is_active: true).order(:created_at).page(params[:page]).per(4)
     if @users.empty?
       flash.now[:error] = "Sorry, No record is found"
       render "index"
@@ -110,15 +110,15 @@ class UsersController < ApplicationController
     end
   end
 
+
   def search
     search_value = params[:search_value].downcase
    
     if search_value
-      @users = @company.employees.where(role: "employee").where("lower(name) like ? or
+      @users = @company.employees.where(role: "employee", is_active: true).where("lower(name) like ? or
        lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
-       order('created_at').page(params[:page]).per(2)
+       order('created_at').page(params[:page]).per(5)
       if @users.empty?
-        p "No record found"
         flash[:error] = "No record found"
         redirect_to company_users_path(params[:company_id])
       end
@@ -136,11 +136,12 @@ class UsersController < ApplicationController
   end
 
 
-  private
-
   def user_params
     params.require(:user).permit(:id,:name,:email,:is_active,:mobile_number, :password)
   end
+
+  
+  private
 
   def load_user
     @company = Company.find(params[:company_id])

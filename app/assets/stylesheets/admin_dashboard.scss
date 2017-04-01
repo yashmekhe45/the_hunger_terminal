@@ -1,15 +1,3 @@
 // Place all the styles related to the custom_actions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.modal{
-    display: block !important; /* I added this to see the modal, you don't need this */
-}
-
-/* Important part */
-.modal-dialog{
-    overflow-y: initial !important
-}
-.modal-body{
-    height: 250px;
-    overflow-y: auto;
-}

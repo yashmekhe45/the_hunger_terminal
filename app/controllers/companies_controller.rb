@@ -15,6 +15,7 @@ class CompaniesController < ApplicationController
       redirect_to new_user_session_path
       flash[:notice] = "You will receive an email with instructions for how to confirm your email address in a few minutes."
     else
+      flash[:errors] = @company.errors.messages
       render :'new'
     end
   end
@@ -35,7 +36,6 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company.destroy
-
     redirect_to companies_path
   end
 
@@ -47,18 +47,18 @@ class CompaniesController < ApplicationController
   end
 
   def set_order_details
+    
     subsidy = params[:subsidy_val]
     start_ordering_at = Time.zone.parse params[:start_ordering_at_val]
     review_ordering_at = Time.zone.parse params[:review_ordering_at_val]
     end_ordering_at = Time.zone.parse params[:end_ordering_at_val]
     if @company.update(subsidy: subsidy, start_ordering_at: start_ordering_at, review_ordering_at:
       review_ordering_at, end_ordering_at: end_ordering_at)
+      flash[:success] = "Order details successfully updated"
       redirect_to company_terminals_path(params[:id])
-
    else
-    
-      flash.now[:error] = @company.errors.messages
-      render :set_order_details
+      render :get_order_details
+      flash[:error] = @company.errors.messages
    end
 
   end

@@ -49,6 +49,12 @@ class Order < ApplicationRecord
     end
   end
 
+  def self.confirm_all_placed_orders(t_id, c_id)
+    @orders = Order.where('orders.date' => Date.today,
+      'orders.terminal_id' => t_id, 'orders.company_id' => c_id, 'orders.status' => 'placed').
+      update_all(:status => "confirmed")
+  end
+
   # def self.find_employees(t_id,c_id)
   #   self.
   #     joins(:user).

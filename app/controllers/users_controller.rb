@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @company.employees.where(role: "employee", is_active: true).order(:created_at).page(params[:page]).per(4)
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
     if @users.empty?
       flash.now[:error] = "Sorry, No record is found"
       render "index"
@@ -117,7 +117,7 @@ class UsersController < ApplicationController
     search_value = params[:search_value].downcase
    
     if search_value
-      @users = @company.employees.where(role: "employee", is_active: true).where("lower(name) like ? or
+      @users = @company.employees.where(role: "employee").where("lower(name) like ? or
        lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
        order('created_at').page(params[:page]).per(5)
       if @users.empty?

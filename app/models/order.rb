@@ -75,13 +75,13 @@ class Order < ApplicationRecord
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
       # self.company.end_ordering_at
       day = Date.today.wday
-      if day%7 != 0 and day%7 != 6
-        if !(current_time >= start_time and current_time <= end_time)
-          errors.add(:base,"order cannot be created or updated after #{end_time}")
-        end
-      else
-        errors.add(:base,"order cannot be created on saturday and sunday")
+      # if day%7 != 0 and day%7 != 6
+      if !(current_time >= start_time and current_time <= end_time)
+        errors.add(:base,"order cannot be created or updated after #{end_time}")
       end
+      # else
+      #   errors.add(:base,"order cannot be created on saturday and sunday")
+      # end
     end
 
     # def set_date

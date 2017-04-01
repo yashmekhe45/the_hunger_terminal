@@ -36,7 +36,7 @@ gem 'cancan'
 gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
 gem 'sidekiq'
-
+gem 'bootstrap-datepicker-rails'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

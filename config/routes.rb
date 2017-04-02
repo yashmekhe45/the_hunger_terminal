@@ -23,13 +23,14 @@ Rails.application.routes.draw do
     resources :terminals do
       resources :menu_items do
         collection { post :import }
-      end
-    end
+      # member { get :download }
+      end 
+    end  
   end  
 
   resources :companies
   
-  get 'terminals/download' => 'terminals#download'
+  # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
 
 
@@ -38,9 +39,14 @@ Rails.application.routes.draw do
   get 'admin_dashboard/forward_orders'
   get 'admin_dashboard/place_orders'
   get 'admin_dashboard/confirm_orders'
-  root to: 'home#index'
   
   # get 'companie/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'
   # get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
+
+  get 'reports/index'
+  root to: 'home#index'
+  
+  get 'companies/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'
+  get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 
 end

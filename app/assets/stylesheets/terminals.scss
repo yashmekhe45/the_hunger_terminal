@@ -10,9 +10,9 @@ td{
   font-size: large;
 }
 
-#indexcontainer
+.indexcontainer
 {
-  margin-left: 30px;
+  margin-left: 100px;
 }
 
 #formcontainer
@@ -23,13 +23,11 @@ td{
 #searchcontainer
 {
   width:auto;
-  margin-left: 12%;
 }
 
 .table-responsive
 {
-  margin: 20px;
-  padding-left: 10%;
+  margin-top: 5%;
 }
 
 %table.table-hover

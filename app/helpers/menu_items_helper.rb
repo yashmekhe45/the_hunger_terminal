@@ -3,4 +3,8 @@ module MenuItemsHelper
     print "object.available = ",object.available
     !object.available
   end
+
+  # def active_days_collection
+  #   [['Monday', :Monday], ['Tuesday', :Tuesday], ['Wednesday', :Wednesday], ['Thursday', :Thursday], ['Friday',:Friday]]
+  # end
 end

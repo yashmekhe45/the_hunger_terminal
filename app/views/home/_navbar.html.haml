@@ -7,7 +7,7 @@
         %span.icon-bar
         %span.icon-bar
       %a#logo.navbar-brand{:href => root_path} The Hunger Terminal
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse    
       %ul.nav.navbar-nav.navbar-right
         %li.active
           %a{:href => root_path}
@@ -16,6 +16,20 @@
     
         %li
           %a{:href => "#"} About
+        -if user_signed_in? && current_user.role == "employee"        
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              Order
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{:href => vendors_path} Place Order
+              %li
+                %a{:href => orders_path} My Orders
+              %li
+                -if current_user.orders.find_by(date: Date.today)
+                  - order_id = current_user.orders.find_by(date: Date.today).id
+                  %a{:href => order_path(order_id)} Today's Order          
         %li
           - if !user_signed_in?
             = link_to new_user_session_path do
@@ -25,3 +39,6 @@
             = link_to destroy_user_session_path, method: :delete do
               %span.glyphicon.glyphicon-log-out
               Logout
+        
+       
+      

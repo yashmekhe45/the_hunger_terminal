@@ -6,16 +6,19 @@ class Order < ApplicationRecord
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
   validate :can_be_created?, :is_empty?, on: :create
+  # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
+
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order
 
-  after_initialize :set_date
+  # after_initialize :set_date
   before_validation :set_discount
 
-  accepts_nested_attributes_for :order_details
+
+  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   def self.daily_orders(t_id,c_id)
     self.
@@ -36,12 +39,13 @@ class Order < ApplicationRecord
       select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
   end
 
-  def self.update_status(t_id,c_id)
-    @orders = Order.where('orders.date' => Date.today, 
-      'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
-    Order.where('orders.date' => Date.today,
-      'orders.terminal_id' => t_id, 'orders.company_id' => c_id).update_all(:status => "placed")
-    @employees =  @orders.
+  def self.update_status(order_details)
+    # @orders = Order.where('orders.date' => Date.today, 
+    #   'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
+    order_ids = order_details.pluck(:id).uniq
+    orders = Order.where(:id => order_ids)
+    orders.update_all(:status => "placed")
+    @employees =  orders.
                     joins(:user).
                     pluck('users.email AS email')
     @employees.each do |emp|
@@ -71,23 +75,24 @@ class Order < ApplicationRecord
     end
 
     def can_be_created?
-      # byebug
-      p current_time = Time.zone.now
-      start_time = Time.zone.parse "12 AM"
-      end_time = Time.zone.parse "11 AM"
-      day = current_time.wday
+      current_time = Time.zone.now.strftime('%H:%M:%S')
+      start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
+      # self.company.start_ordering_at
+      end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
+      # self.company.end_ordering_at
+      day = Date.today.wday
       if day%7 != 0 and day%7 != 6
-        if !current_time.between?(start_time, end_time)
-          errors.add(:base,"order cannot be created or updated after 11 AM")
+        if !(current_time >= start_time and current_time <= end_time)
+          errors.add(:base,"order cannot be created or updated after #{end_time}")
         end
       else
         errors.add(:base,"order cannot be created on saturday and sunday")
       end
     end
 
-    def set_date
-      self.date = Date.today
-    end
+    # def set_date
+    #   self.date = Date.today
+    # end
 
     def is_empty?
       if self.order_details.any? == false

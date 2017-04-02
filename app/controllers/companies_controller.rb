@@ -1,4 +1,5 @@
 class CompaniesController < ApplicationController
+
  
   before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
   skip_before_action :authenticate_user!, :only => [:new, :create]

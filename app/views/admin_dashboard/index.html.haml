@@ -1,7 +1,6 @@
-
-#indexcontainer
-  %h3.text-center Vendor List
-  .table-responsive
+.container.center
+  %h3.text-center Vendors List
+  %center
     %table.table-hover.table-bordered
       %tbody
         %tr
@@ -15,7 +14,7 @@
         - @res.each_with_index do |terminal,i|
           %tr  
           %td.text-center= i+1
-          %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true
+          %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, class: "btn btn-info",:title => 'see list of orders', :rel => 'tooltip'
           %td.text-center ₹ #{terminal.min_order_amount}
           %td.text-center ₹ #{terminal.total}
           %td.text-center= link_to "Forward Orders", admin_dashboard_forward_orders_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
@@ -23,27 +22,3 @@
 #myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 #myForwardOrdersModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 
-/ #myModal.modal.fade{:role => "dialog"}
-/   .modal-dialog
-/     / Modal content
-/     .modal-content
-/       .modal-header
-/         %button.close{"data-dismiss" => "modal", :type => "button"} ×
-/         %h4.modal-title 
-/       .modal-body
-/         .table-responsive
-/           %table.table-hover
-/             %tbody
-/               %tr
-/                 %th.text-center Sr No.
-/                 %th.text-center Name
-/                 %th.text-center Landline
-/               -@order_details.each do |order_detail|
-/                 %tr  
-/                 / %td.text-center= i+1
-/                 %td.text-center= order_detail.menu
-/                 %td.text-center= order_detail.quantity
-/       .modal-footer
-/         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
-
-/           

@@ -36,9 +36,9 @@ gem 'cancan'
 gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
 gem 'sidekiq'
-
+gem 'bootstrap-datepicker-rails'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
@@ -63,10 +63,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
-gem 'devise-async', git: 'git@github.com:mhfs/devise-async.git', branch: 'devise-4.x'
+gem 'devise-async', git: 'https://github.com/mhfs/devise-async.git', branch: 'devise-4.x'
 gem 'cancancan'
 gem 'faker'
-gem 'sidekiq'
 
 group :test do 
   gem 'codeclimate-test-reporter', '< 1.0.0'

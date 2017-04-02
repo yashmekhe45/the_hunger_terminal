@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require toastr
+ *= require bootstrap-datepicker3
  *= require_tree
 */
 @import "bootstrap-sprockets";
@@ -147,7 +148,7 @@ a.name{
 #termin{
   padding-left: 6px;
 }
- .dropdown{
+ .dropdown.icon{
  padding-top: 13px;
  }
 
@@ -175,3 +176,4 @@ a.name{
 .order-show{
   background-color: whitesmoke;
 }
+

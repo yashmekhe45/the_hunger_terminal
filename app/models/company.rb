@@ -11,11 +11,10 @@ class Company < ApplicationRecord
   validates_format_of :email,:with => Devise.email_regexp
   validates :subsidy, inclusion: { in: 0..100, message: "value must be between 0 to 100" }
   # validates :start_ordering_at, :review_ordering_at, :end_ordering_at, :subsidy,  presence: 
-  # true, on: :update
 
   has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
-  has_many :terminals
+  has_many :terminals, dependent: :destroy
   has_many :orders, dependent: :destroy
 
   accepts_nested_attributes_for :address, :employees

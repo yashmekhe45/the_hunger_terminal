@@ -9,7 +9,7 @@
   height: 70%;
   background-size: 100% 100%;
   padding-top: 5%;
-  //padding-bottom: 2%;
+  padding-bottom: 0%;
   font-family: 'Open Sans',sans-serif;
   font-weight: 300;
 }
@@ -44,9 +44,9 @@ h2 {
   padding-left: 60px;
 }
 
-.container.bg-3
+.container-fluid.bg-3
 {
-  padding-left: 0%
+  padding-top: 2%;
 }
 
 .container.home

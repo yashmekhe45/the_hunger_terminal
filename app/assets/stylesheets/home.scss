@@ -39,12 +39,15 @@ h2 {
   color: #777;
 }
 
-/*
+
 .container{
   padding-left: 60px;
 }
-*/
 
+.container.bg-3
+{
+  padding-left: 0%
+}
 
 .container.home
 {

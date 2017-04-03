@@ -116,17 +116,16 @@ class UsersController < ApplicationController
   def search
     search_value = params[:search_value].downcase
    
-    if search_value
+    
       @users = @company.employees.where(role: "employee").where("lower(name) like ? or
        lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
        order('created_at').page(params[:page]).per(5)
       if @users.empty?
         flash[:error] = "No record found"
-        redirect_to company_users_path(params[:company_id])
+        # redirect_to company_users_path(params[:company_id])
       end
     else
       render "index"
-    end
   end
 
   def download

@@ -13,8 +13,11 @@
             %td{"data-th" => "Product"}
               .row
                 .col-sm-12
-                  %h4.product-name.nomargin= menu_item.name
-                  %h6.vendor-name= menu_item.description
+                  - if menu_item.veg == true
+                    %h4.product-name.nomargin.veg= menu_item.name
+                  - else
+                    %h4.product-name.nomargin.non-veg= menu_item.name 
+                  %h6.vendor-name= menu_item.terminal.name
                   %span.hide.menu_item_id= menu_item.id
             %td
               %span ₹
@@ -23,7 +26,7 @@
               %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0.00
+              %span.sub-total{"data-th" => "Subtotal"} 0.0
 
   .col-md-5
     = nested_form_for @order do |f|
@@ -44,7 +47,7 @@
             .col-xs-8
               %h4.text-right
                 Total
-                %strong#total $0.00
+                %strong#total 0.00
               %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
               %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
             .col-xs-4
@@ -59,7 +62,7 @@
     .col-xs-4
       %h4.product-name
         %strong
-          {{product_name}}
+          {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
       %h4
@@ -71,7 +74,7 @@
       .col-xs-6
         %input.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
       .col-xs-6.text-right
-        %h6
+        %h6 
           %strong.total
             {{total}}
     .col-xs-2

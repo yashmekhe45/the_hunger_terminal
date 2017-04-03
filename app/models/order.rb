@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   validates :status, inclusion: {in: ORDER_STATUS}
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
-  validate :is_empty?, on: :create
+  validate :can_be_created?, :is_empty?, on: :create
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
 

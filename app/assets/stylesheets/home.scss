@@ -39,12 +39,21 @@ h2 {
   color: #777;
 }
 
+/*
 .container{
   padding-left: 60px;
 }
+*/
+
 
 .container.home
 {
   padding-left: 10px;
   padding-right: 12px;
+}
+
+.container.instructions
+{
+  padding-top: 4%;
+  padding-bottom: 3%;
 }

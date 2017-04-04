@@ -16,8 +16,9 @@ class Ability
       can :manage, MenuItem
       can :index, :order_management
       can :order_detail, :order_management
-      can :confirm, :order_management
+      can :forward_orders, :order_management
       can :place_orders, :order_management
+      can :confirm_orders, :order_management
     end
 
     #

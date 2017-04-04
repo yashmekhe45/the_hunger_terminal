@@ -55,7 +55,8 @@
                     %br              
                 .form-group
                   .col-md-6
-                    = f.submit 'Sign up', class: "btn btn-primary"
+                    = f.submit 'Sign up', class: "btn btn-primary sign_up_button", 'data-disable-with': "Processing..."
                   .col-md-6
-                    = link_to "Back", root_path, :class=> "btn btn-success"
+                    = link_to "Back", root_path, :class=> "btn btn-success", 'data-disable-with': '...'
+
                 

@@ -51,4 +51,13 @@ class User < ApplicationRecord
     end
   end
 
+  def self.employee_report(c_id)
+    self.
+      joins(:orders).
+      where('company_id'=> c_id).
+      group('users.id').
+      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
+      order('users.id')
+  end
+
 end

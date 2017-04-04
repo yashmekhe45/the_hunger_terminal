@@ -81,6 +81,13 @@ class MenuItemsController < ApplicationController
     end 
   end
 
+  def download_csv
+    send_file(
+    "#{Rails.root}/public/menu.csv",
+    type: "application/csv"
+  )
+  end
+
   private
 
   def load_company

@@ -5,7 +5,8 @@
         .pull-left
           = form_tag import_company_terminal_menu_items_path, multipart: true do
             = file_field_tag :file , accept: '.csv '
-            = submit_tag "Import"
+            = submit_tag "Import CSV"
+          = link_to 'Sample Menu CSV ', menu_items_download_csv_path
       .col-md-6
         %form{action:company_terminal_menu_items_path}
           .input-group.stylish-input-group

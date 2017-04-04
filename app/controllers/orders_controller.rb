@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new  
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id])
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where(available: true)
     
   end
   def edit

@@ -9,11 +9,14 @@
           %th.text-center{:style => "width:32%"} Subtotal
       %tbody
         - @order.order_details.each do |order_detail|
-          %tr{:id => "#{order_detail.menu_item.id}"} 
+          %tr{:id => "#{order_detail.menu_item_id}"} 
             %td{"data-th" => "Product"}
               .row
                 .col-sm-12
-                  %h4.product-name.nomargin= order_detail.menu_item.name
+                  - if order_detail.menu_item.veg == true
+                    %h4.product-name.nomargin.veg= order_detail.menu_item.name
+                  -else
+                    %h4.product-name.nomargin.non-veg= order_detail.menu_item.name
                   %h6.vendor-name= order_detail.menu_item.description
                   %span.hide.menu_item_id= order_detail.menu_item.id
                   %span.hide.order_detail_id= order_detail.id
@@ -62,7 +65,7 @@
       %h4.product-name
         %strong
           {{menu_item_name}}
-        %input.hide{:type => "text", :value => "{{detail_id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+        %input.hide{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
       %h4
       %h4
         %small

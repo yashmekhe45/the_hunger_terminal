@@ -23,7 +23,7 @@ $(document).ready ->
     order_detail.quantity = quantity
     order_detail.menu_item_id = menu_item_id
     order_detail.price = price
-    order_detail.detail_id = order_detail_id
+    order_detail.id = order_detail_id
     render_menu_item_detail(order_detail)
 
   $(document).on 'click', '.delete', ->

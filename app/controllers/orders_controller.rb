@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
  
-  def index
+  def order_history
     @orders = current_user.orders.where(date: params[:from]..params[:to]).order(date: :desc)
   end
 
@@ -10,17 +10,19 @@ class OrdersController < ApplicationController
     @terminals = Terminal.where(active: true, company: current_user.company)
   end
 
-  def new
-    @order = Order.new  
-    @terminal_id = params[:terminal_id]
+  def new 
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new
+    # @terminal_id = params[:terminal_id]
     @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
 
   end
 
   def edit
-    @order = Order.find(params[:id])
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.find(params[:id])
     @terminal_id = params[:terminal_id]
-    
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
   end
 
   def update
@@ -28,17 +30,18 @@ class OrdersController < ApplicationController
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params)
-      redirect_to @order
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       render 'edit'
     end
   end
 
   def create
-    @order = Order.new(order_params)
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to @order
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       flash[:error] = @order.errors.messages
       redirect_to vendors_path

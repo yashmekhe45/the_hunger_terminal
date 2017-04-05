@@ -29,7 +29,7 @@
               %span.sub-total{"data-th" => "Subtotal"} 0.0
 
   .col-md-5
-    = nested_form_for @order do |f|
+    = form_tag terminal_orders_path do |f|
       .panel.panel-info
         .panel-heading
           .panel-title
@@ -49,7 +49,7 @@
                 Total
                 %strong#total 0.00
               %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
-              %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
+              / %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
             .col-xs-4
               %button.btn.btn-success.btn-block{:type => "submit"}
                 Place Order

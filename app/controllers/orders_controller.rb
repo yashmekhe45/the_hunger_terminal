@@ -49,6 +49,7 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
+    p order_params
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params)

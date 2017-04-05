@@ -1,11 +1,8 @@
 
 -if flash[:error].present?
   = flash[:error]
-%br
-%br
-%br
 
-%h1.text-center{:style=>"color:white"} EMPLOYEES
+%h1.text-center EMPLOYEES
 /Search Bar#################################
 .container
   .row
@@ -16,16 +13,15 @@
           = file_field_tag :file , accept: '.csv '
           = submit_tag "Import"
       .col-md-3.col-sm-3
-        = link_to 'New Employee', new_company_user_path(@company), class: "btn btn-success", remote: true , "data-target" => "#user", "data-toggle" => "modal"
+        = link_to 'New Employee', new_company_user_path(@company), class: "btn btn-success", remote: true, "data-target" => "#user_form", "data-toggle" => "modal"
       .col-md-3.col-sm-3
 
-    .col-md-3.col-sm-3
+    .col-md-6.col-sm-6
       = form_tag({controller: "users", action:"search"}, method: "get") do
-        = label_tag(:search_value, "Search for:")
         = text_field_tag(:search_value)
         = submit_tag("Search")
-      =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"
-    .col-md-3.col-sm-3
+        =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"
+    .col-md-1.col-sm-1
 %br
 %br
 %br
@@ -50,11 +46,6 @@
             ACTION
       %tr
         =render "common_index" ,object: @user, as: 'user'
-
-
-
-
-
-
 .text-center
   = paginate @users
+#user_form.modal.fade{"aria-labPelledby" => "User", :role => "dialog", :tabindex => "-1"}

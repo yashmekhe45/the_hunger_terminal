@@ -10,15 +10,20 @@
       - else
         %table.table-hover
           %tbody
-            %tr
+            %tr.well
               %th.text-center Employee
               %th.text-center Item
               %th.text-center Quantity
+            - employee = "nil"
             -@order_details.each do |order_detail|
-              %tr  
-              %td.text-center= order_detail.emp_name
+              %tr.well 
+              - if employee == order_detail.emp_name 
+                %td.text-center
+              - else
+                %td.text-center= order_detail.emp_name
               %td.text-center= order_detail.menu
               %td.text-center= order_detail.quantity
+              - employee = order_detail.emp_name
     .modal-footer
       %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
 

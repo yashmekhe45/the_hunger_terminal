@@ -1,8 +1,9 @@
--if flash[:success].present?
-  =flash[:success]
--else
+.container
+  / %br
+  / =link_to 'Back',company_users_path(@company.id), class: 'btn btn-success'
   =link_to 'Download your invalid record csv',download_company_users_path(@company.id), class: 'btn btn-primary'
-  -if flash[:notice].present?
-    =flash[:notice]
+  -if flash.now[:notice].present?
+    =flash.now[:notice]
   -else
-    =flash[:error]
+    =flash.now[:error]
+  =link_to 'Back',company_users_path(@company.id), class: 'btn btn-success'

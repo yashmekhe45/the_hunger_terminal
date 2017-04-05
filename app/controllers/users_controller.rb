@@ -21,10 +21,10 @@ class UsersController < ApplicationController
 
     if @user.valid?
       @user.save
+      flash[:success] = "Employee record added!!"
       # redirect_to company_users_path
     else
-      p @user.errors
-      flash[:error]=  @user.errors.messages
+      flash.now[:error]=  @user.errors.messages
       render :new 
     end
   end
@@ -38,7 +38,6 @@ class UsersController < ApplicationController
   end
   
   def update
-    p params
     page = 1
     if !params[:page]
       params[:page] = page
@@ -49,6 +48,7 @@ class UsersController < ApplicationController
         redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
       #Employess will be activated/deactivated by Company admin
       else
+        flash[:success] = "Updated!!"
         redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
       end
     else
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     else
       valid_header =  ["name","email","mobile_number"]
       $INVALID_USER_CSV = nil
-      @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "+919999999999",is_active: false, 
+      @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "9999999999",is_active: false, 
         company_id: 1111,role: "employee", password: "dummy123")
       if params[:file].content_type == 'text/csv'
         users_csv = File.open(params[:file].path)
@@ -96,13 +96,14 @@ class UsersController < ApplicationController
             end
           end
           if @check_user.valid?
-            flash.now[:success] = "all users added through csv data"
+            flash[:success] = "all users added through csv data"
             redirect_to company_users_path(params[:company_id])
           else
             flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
           end
         else
-          flash.now[:error] = "invalid headers in your csv."
+          flash[:error] = "invalid headers in your csv."
+          redirect_to company_users_path(params[:company_id])
         end
       else
         flash.now[:error] = "invalid type of file please upload csv with valid headers"
@@ -110,15 +111,16 @@ class UsersController < ApplicationController
     end
   end
 
+
+
   def search
     search_value = params[:search_value].downcase
    
     if search_value
       @users = @company.employees.where(role: "employee").where("lower(name) like ? or
        lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
-       order('created_at').page(params[:page]).per(2)
+       order('created_at').page(params[:page]).per(5)
       if @users.empty?
-        p "No record found"
         flash[:error] = "No record found"
         redirect_to company_users_path(params[:company_id])
       end
@@ -132,15 +134,17 @@ class UsersController < ApplicationController
       send_file("#{Rails.root}/#{$INVALID_USER_CSV}")
     else
       flash[:error] = "No invalid record"
+      redirect_to company_users_path(@company.id)
     end
   end
 
 
-  private
-
   def user_params
     params.require(:user).permit(:id,:name,:email,:is_active,:mobile_number, :password)
   end
+
+  
+  private
 
   def load_user
     @company = Company.find(params[:company_id])

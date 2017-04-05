@@ -14,7 +14,7 @@
         = f.input :description 
         = f.input :veg,requred: true,as: :radio_buttons
         / = f.input :active_days, as: :check_boxes, collection: active_days_collection, :item_wrapper_class => 'inline', include_hidden: false
-        = f.collection_check_boxes :active_days, [[1, 'Monday'], [2, 'Tuesday'], [3,'Wednsday'], [4,'Thursday'], [5,'Friday']], :first, :last, :include_hidden => false  
+        = f.collection_check_boxes :active_days, [[1, 'Monday'], [2, 'Tuesday'], [3,'Wednsday'], [4,'Thursday'], [5,'Friday'],[6,'Saturday'],[0,'Sunday']], :first, :last, :include_hidden => false  
         = f.input :available, required: true, as: :boolean
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

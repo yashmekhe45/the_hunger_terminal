@@ -3,12 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 th, td {
-  padding: 10px;
+  padding: 12px;
 }
 
 td{
   font-size: large;
 }
+
 
 .indexcontainer
 {
@@ -20,24 +21,24 @@ td{
   margin: 80px
 }
 
-#searchcontainer
+.searchcontainer
 {
   width:auto;
 }
 
 .table-responsive
 {
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
-%table.table-hover
+.table-hover.table-bordered
 {
-  width: auto; 
+  width: 80%;
 }
 
-#imaginary_container{
-    margin-top: 20px;
-}
+/*#imaginary_container{
+  margin-top: 20px;
+}*/
 
 .stylish-input-group .input-group-addon{
     background: white !important; 
@@ -53,11 +54,11 @@ td{
     border:0;
     background:transparent;
 }
-%a.button.btn.btn-info
+/*%a.button.btn.btn-info
 {
   margin-top: 20px; 
   margin-left: 50px;
-}
+}*/
 Name.required:after {
   content:" *";
 }

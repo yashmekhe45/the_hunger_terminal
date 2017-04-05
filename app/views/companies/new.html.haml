@@ -5,8 +5,7 @@
       .panel.panel-success
         .panel-heading
           .panel-title 
-            %h5 Company Sign Up Form
-
+            .h5.strong Company Sign Up Form
         .panel-body
           = simple_nested_form_for(@company) do |f|
             .form-group
@@ -46,7 +45,6 @@
                 .form-group
                   .col-md-6
                     = u.input :mobile_number, :label => false, input_html: { maxlength: 10 }, :placeholder => "Mobile_No"
-                .form-group
                   .col-md-6
                     = u.input :email, :label => false, :placeholder => "Email"
                 .form-group
@@ -54,8 +52,7 @@
                     = u.input :password, :label => false, :placeholder => "Password",  class: 'form-control'
                   .col-md-6
                     = u.password_field :password_confirmation, class: 'form-control', :placeholder => "Confirm Password"
-                    %br 
-                    %br            
+                    %br              
                 .form-group
                   .col-md-6
                     = f.submit 'Sign up', class: "btn btn-primary sign_up_button", 'data-disable-with': "Processing..."

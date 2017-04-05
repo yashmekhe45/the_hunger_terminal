@@ -10,12 +10,12 @@
         %h1 Welcome to the Hunger Terminal
         -if !user_signed_in?
           %h2 Want to be a part of this application??
-          %h2
-            %span.glyphicon.glyphicon-chevron-down
+          %span.glyphicon.glyphicon-chevron-down
+          %br
           = link_to "Sign up now!", new_company_path, class: "btn btn-primary"
-    .container-fluid.bg-3.text-center
+    .container.text-center
       %h4{:style => "text-align:center;"} Get Your food at your doorstep
-      %br/
+      %br/  
       %button.btn.btn-success{"data-target" => "#steps", "data-toggle" => "collapse", :type => "button"} See How
       
       #steps.collapse
@@ -38,26 +38,24 @@
               .login-image= image_tag("enjoy_food.png",width:"55px",height:"34px")
               .description Food is prepared and delivered to your door
               
-    .container-fluid.bg-3.text-center
-      .row
-        %h4 Our Associates 
-      .container.home
-        .row
-          .col-md-2
-            .thumbnail
-              = image_tag("foodpandalogo.jpg", class: "img-responsive",width:"80%", height:"100%")
-          .col-md-2
-            .thumbnail
-              = image_tag("dominos.png", class: "img-responsive",width:"80%", height:"100%")
-          .col-md-2
-            .thumbnail
-              = image_tag("swiggy.png", class: "img-responsive",width:"80%", height:"100%")
-          .col-md-2
-            .thumbnail
-              = image_tag("rollsmania1.png", class: "img-responsive",width:"80%", height:"100%")
-          .col-md-2
-            .thumbnail
-              = image_tag("venkys.png", class: "img-responsive", width:"80%", height:"100%")
-          .col-md-2
-            .thumbnail
-              = image_tag("Faasos_Logo.jpg", class: "img-responsive", width:"80",height: "100%")
+    .container.bg-3.text-center
+      %h4 Our Associates 
+    .row
+      .col-md-2
+        .thumbnail
+          = image_tag("foodpandalogo.jpg", class: "img-responsive",width:"80%", height:"100%")
+      .col-md-2
+        .thumbnail
+          = image_tag("dominos.png", class: "img-responsive",width:"80%", height:"100%")
+      .col-md-2
+        .thumbnail
+          = image_tag("swiggy.png", class: "img-responsive",width:"80%", height:"100%")
+      .col-md-2
+        .thumbnail
+          = image_tag("rollsmania1.png", class: "img-responsive",width:"80%", height:"100%")
+      .col-md-2
+        .thumbnail
+          = image_tag("venkys.png", class: "img-responsive", width:"80%", height:"100%")
+      .col-md-2
+        .thumbnail
+          = image_tag("Faasos_Logo.jpg", class: "img-responsive", width:"80",height: "100%")

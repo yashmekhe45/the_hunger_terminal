@@ -19,7 +19,7 @@ class Order < ApplicationRecord
   before_validation :set_discount
 
 
-  # accepts_nested_attributes_for :order_details, allow_destroy: true
+  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   def self.daily_orders(t_id,c_id)
     self.

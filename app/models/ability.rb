@@ -6,8 +6,14 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     if user.role == "employee"
-      can :manage, Order
+      can :create, Order
+      can :edit, Order
+      can :delete, Order
+      can :load_terminal, Order
+      can :show, Order
+      can :index, Order
     end
+
     if user.role == "company_admin"
       can :manage, Order
       can :manage, Terminal

@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
- 
+  before_action :require_permission, only: [:show, :edit, :update]
+
   def index
     @orders = current_user.orders.where(date: params[:from]..params[:to]).order(date: :desc)
   end
@@ -71,6 +72,13 @@ class OrdersController < ApplicationController
     def load_order_detail
       @order.date = Date.today
       @order.company_id = current_user.company.id
+    end
+
+    def require_permission
+      if current_user != Order.find(params[:id]).user
+        flash[:error] = "You are not authorized to access it!!"
+        redirect_to root_path
+      end
     end
 
 end

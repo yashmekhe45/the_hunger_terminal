@@ -12,9 +12,9 @@
     
       %li
         %a#menu{:href => vendors_path} Place Order
-      -if current_user.orders.find_by(date: Date.today)  
+      -if current_user.orders.find_by(date: Time.zone.today)  
         %li
-          - order_id = current_user.orders.find_by(date: Date.today).id
+          - order_id = current_user.orders.find_by(date: Time.zone.today).id
           %a#menu{:href => order_path(order_id)} Today's Order
       %li
         %a#menu{:href => orders_path} Order history

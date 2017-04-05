@@ -5,7 +5,7 @@ class Company < ApplicationRecord
   # validates :start_ordering_at, :review_ordering_at, :end_ordering_at,  presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
-  validates :landline, length: {is: 10}
+  validates :landline, length: {is: 11}
   validates :name, :address, presence: true
   validate :create_company_admin, on: :create
   validates_format_of :email,:with => Devise.email_regexp

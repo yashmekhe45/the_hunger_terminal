@@ -48,7 +48,7 @@ class UsersController < ApplicationController
         redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
       #Employess will be activated/deactivated by Company admin
       else
-        flash[:success] = "Updated!!"
+        flash[:success] = "Status changed successfully!!"
         redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
       end
     else
@@ -115,13 +115,12 @@ class UsersController < ApplicationController
 
   def search
     search_value = params[:search_value].downcase
-   
-    
+  
       @users = @company.employees.where(role: "employee").where("lower(name) like ? or
        lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
        order('created_at').page(params[:page]).per(5)
       if @users.empty?
-        flash[:error] = "No record found"
+        flash.now[:error] = "No record found"
         # redirect_to company_users_path(params[:company_id])
       end
     else

@@ -46,7 +46,7 @@
             .col-xs-8
               %h4.text-right
                 Total
-                %strong#total $0.00
+                %strong#total ₹0.00
               %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
               %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
             .col-xs-4
@@ -61,8 +61,8 @@
     .col-xs-4
       %h4.product-name
         %strong
-          {{product_name}}
-        %input.hide{:type => "text", :value => "{{detail_id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+          {{menu_item_name}}
+        %input.hide{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
       %h4
       %h4
         %small
@@ -80,3 +80,7 @@
         %span.glyphicon.glyphicon-trash
   {{/.}}
 
+
+%script{:type => 'text/javascript'}
+  order_details = #{raw @order.order_details.to_json};
+  load_orders_data(order_details)

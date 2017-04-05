@@ -1,11 +1,12 @@
 class Terminal < ApplicationRecord
   
   validates_with LandlineValidator
-  validates_presence_of :email, message: "Emailid cant be blank"
+  # validates_presence_of :email, message: "Emailid cant be blank"
   validates :name, :landline ,presence: true
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 10 }
-  validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format."
+  validates :min_order_amount, numericality: { greater_than: 0 }
+  # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format."
  
   has_many :menu_items, dependent: :destroy
   has_many :orders

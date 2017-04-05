@@ -21,9 +21,9 @@
           / toastr.remove()
           / toastr.options.closeButton = true;
           / toastr.options.closeDuration = 300;
-          / toastr.options.timeOut = 30;
+          / toastr.options.timeOut = 3000;
           / toastr.options.extendedTimeOut = 300;
-          / toastr.clear();
+          toastr.cancel();
     = yield    
   %footer.container-fluid.text-center
     %p © the hunger terminal

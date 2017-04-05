@@ -2,11 +2,11 @@
   %div.icon
     %a{:href => "/companies/#{current_user.company_id}/users"}
       %span.glyphicon.glyphicon-user.gly
-      .name Employee
+      .name.text-center Employee
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
       %span.glyphicon.glyphicon-list.gly
-      Order
+      .name.text-center Order
       %span.caret
     %ul.dropdown-menu
     
@@ -23,7 +23,7 @@
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
       %span.glyphicon.glyphicon-file.gly
-      Report
+      .name.text-center Report
       %span.caret
     %ul.dropdown-menu
       %li
@@ -33,5 +33,5 @@
   %div.icon    
     %a{:href => "/companies/#{current_user.company_id}/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
-      .name#termin Terminal
+      .name#termin.text-center Terminal
   

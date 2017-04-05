@@ -4,11 +4,11 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} 
-        %h4.modal-title New Employee 
+        %h4.text-center.modal-title New Employee 
       .modal-body
-        = f.input :name, required: true
-        = f.input :email, required: true
-        = f.input :mobile_number ,requred: true, input_html: { maxlength: 10 }
+        = f.input :name, required: true, placeholder: "Enter your name..."
+        = f.input :email, required: true, placeholder: "Enter your email.."
+        = f.input :mobile_number ,requred: true, placeholder: "Enter your mobile number.."
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal",'data-disable-with' => "Please wait...", :type => "button"} Close
         %button.btn.btn-primary{'data-disable-with' => "...", :type => "submit"} Add 

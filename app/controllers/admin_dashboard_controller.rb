@@ -1,6 +1,6 @@
 class AdminDashboardController < ApplicationController
 
-  before_action :load_details, only: [:place_orders]
+  before_action :load_details, only: [:place_orders, :forward_orders, :confirm_orders]
 
   def index
     authorize! :index, :order_management
@@ -15,11 +15,14 @@ class AdminDashboardController < ApplicationController
   def forward_orders
     authorize! :forward_orders, :order_management
     @orders = Order.menu_details(params[:terminal_id],current_user.company_id)
+    if @orders.any?
+      Order.update_status(@order_details)
+    end
   end  
 
   def place_orders
     authorize! :place_orders, :order_management
-    SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
+    SendOrderMailJob.perform_now(params[:terminal_id], @orders, params[:message])
     flash[:notice] = "emails sent successfully"
     # if SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
     #   flash[:notice] = "emails sent successfully"
@@ -28,10 +31,9 @@ class AdminDashboardController < ApplicationController
     # end
   end
 
-
   def confirm_orders
     authorize! :confirm_orders, :order_management
-    Order.confirm_all_placed_orders(params[:terminal_id], current_user.company_id)
+    Order.confirm_all_placed_orders(params[:terminal_id], current_user.company_id, @order_details)
     flash[:notice] = "all orders confirmed"
   end 
 

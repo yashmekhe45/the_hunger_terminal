@@ -6,7 +6,7 @@
       %h4.modal-title 
     .modal-body
       - if !@orders.any?
-        %p No orders at this point of time
+        %p today's orders have been already forawrded to terminals
       - else
         = label_tag :message, "Type your message:"
         %br

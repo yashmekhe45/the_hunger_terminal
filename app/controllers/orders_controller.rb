@@ -49,7 +49,6 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-    p order_params
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params)
@@ -75,7 +74,7 @@ class OrdersController < ApplicationController
     end
 
     def load_order_detail
-      @order.date = Date.today
+      @order.date = Time.zone.today
       @order.company_id = current_user.company.id
     end
 

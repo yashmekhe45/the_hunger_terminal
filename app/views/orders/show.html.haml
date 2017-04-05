@@ -42,9 +42,11 @@
               %span₹#{@order.discount}
             %h4
               %strong.total Total:
-              %span₹#{@order.total_cost-@order.discount}          
-      %a.card-link= link_to 'Edit Order',edit_order_path(@order,:terminal_id => @order.terminal.id),class:"btn btn-info"
-      %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
+              %span₹#{@order.total_cost-@order.discount} 
+      - if can? :edit, @order         
+        %a.card-link= link_to 'Edit Order',edit_order_path(@order,:terminal_id => @order.terminal.id),class:"btn btn-info"
+      - if can? :delete, @order
+        %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
 
 
 

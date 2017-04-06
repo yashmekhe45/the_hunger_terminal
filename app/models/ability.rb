@@ -8,7 +8,7 @@ class Ability
     if user.role == "employee"
       can :create, Order
       can :edit, Order
-      can :delete, Order
+      can :destroy, Order
       can :load_terminal, Order
       can :show, Order
       can :index, Order

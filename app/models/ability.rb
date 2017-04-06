@@ -7,7 +7,9 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role == "employee"
       can :manage, Order
+      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
     end
+
     if user.role == "company_admin"
       can :manage, Order
       can :manage, Terminal

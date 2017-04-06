@@ -4,10 +4,9 @@ class Terminal < ApplicationRecord
   # validates_presence_of :email, message: "Emailid cant be blank"
   validates :name, :landline ,presence: true
   validates :landline ,uniqueness: { scope: :company_id }
-  validates :landline ,length: { is: 10 }
-  validates :min_order_amount, numericality: { greater_than: 0 }
-  # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format."
- 
+  validates :landline ,length: { is: 11 }
+  validates :min_order_amount, numericality: { greater_than_or_equal_to: 0 }
+  # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
   has_many :orders
   belongs_to :company
@@ -29,10 +28,10 @@ class Terminal < ApplicationRecord
   def self.daily_terminals(c_id)
     self.
       joins(:orders).
-      where('orders.date' => Date.today,'orders.company_id' => c_id).
+      where('orders.date' => Time.zone.today,'orders.company_id' => c_id).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
        sum(total_cost) AS total')
   end
-
+1
 end

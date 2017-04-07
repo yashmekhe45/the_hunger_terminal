@@ -29,8 +29,8 @@
       // format: 'dd-mm-yyyy'
       format: 'yyyy-mm-dd',
       todayBtn: "linked",
-      orientation: "bottom right",
-      todayHighlight: true,
+      orientation: "bottom auto",
+      todayHighlight: true
       // startDate: "0d"
     });
     $("#bton").click(function(event) {

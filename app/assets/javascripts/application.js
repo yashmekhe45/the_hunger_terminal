@@ -24,13 +24,14 @@
 //= require_tree .
 
   $(document).on('turbolinks:load',function(){
-    $('.from').datepicker({
+    $('.from, .to').datepicker({
       autoclose: true,
-      format: 'yyyy-mm-dd'
-    });
-    $('.to').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
+      // format: 'dd-mm-yyyy'
+      format: 'yyyy-mm-dd',
+      todayBtn: "linked",
+      orientation: "bottom right",
+      todayHighlight: true,
+      // startDate: "0d"
     });
     $("#bton").click(function(event) {
       event.preventDefault();

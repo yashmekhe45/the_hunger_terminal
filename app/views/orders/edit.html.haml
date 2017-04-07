@@ -28,12 +28,30 @@
             %td.text-center
               %span ₹
               %span.sub-total{"data-th" => "Subtotal"} #{order_detail.quantity * order_detail.menu_item.price }
-
+        / - @menu_items.each do |menu_item|
+        /   %tr{:id => "#{menu_item.id}"} 
+        /     %td{"data-th" => "Product"}
+        /       .row
+        /         .col-sm-12
+        /           - if menu_item.veg == true
+        /             %h4.product-name.nomargin.veg= menu_item.name
+        /           - else
+        /             %h4.product-name.nomargin.non-veg= menu_item.name 
+        /           %h6.vendor-name= menu_item.terminal.name
+        /           %span.hide.menu_item_id= menu_item.id
+        /     %td
+        /       %span ₹
+        /       %span.price{"data-th" => "Price"}= menu_item.price
+        /     %td{"data-th" => "Quantity"}
+        /       %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
+        /     %td.text-center
+        /       %span ₹
+        /       %span.sub-total{"data-th" => "Subtotal"} 0.0
 
   .col-md-5
-    = simple_form_for @order, url: order_path(@order), html: { method: :patch, class: 'form-horizontal' } do |f|
+    = simple_form_for @order, url: terminal_order_path(@order,:terminal_id => @terminal.id), html: { method: :patch, class: 'form-horizontal' } do |f|
       .panel.panel-info
-        .panel-heading
+        .panel-heading  
           .panel-title
             .row
               .col-xs-6
@@ -65,7 +83,7 @@
       %h4.product-name
         %strong
           {{menu_item_name}}
-        %input.hide{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+        %input.hide#order_detail_id{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
       %h4
       %h4
         %small
@@ -79,11 +97,13 @@
           %strong.total
             {{total}}
     .col-xs-2
-      %button.btn.btn-link.btn-xs.delete{:type => "button"}
-        %span.glyphicon.glyphicon-trash
-  {{/.}}
+      / %button.btn.btn-link.btn-xs.delete{:type => "button"}
+      /   %span.glyphicon.glyphicon-trash
+      %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
+  {{/.}} 
 
 
 %script{:type => 'text/javascript'}
   order_details = #{raw @order.order_details.to_json};
   load_orders_data(order_details)
+

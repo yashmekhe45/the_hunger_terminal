@@ -25,11 +25,12 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new(order_params)
     load_order_detail
     if @order.save
-      flash[:success] = "your order has been placed successfully. You will receive an email confirmation shortly."
-      redirect_to @order
+      flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       if @order.errors.full_messages.include?("User has already been taken")
         flash[:error] = "Only one order is allowed per day"
@@ -57,6 +58,7 @@ class OrdersController < ApplicationController
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params) 
+      flash[:notice] = "Your order has been updated successfully"
       redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       render 'edit'
@@ -64,25 +66,10 @@ class OrdersController < ApplicationController
   end
 
 
-  def create
-    @terminal = Terminal.find(params[:terminal_id])
-    @order = @terminal.orders.new(order_params)
-    load_order_detail
-    if @order.save
-      redirect_to terminal_order_path(params[:terminal_id],@order)
-    else
-      if @order.errors.full_messages.include?("User has already been taken")
-        flash[:error] = "Only one order is allowed per day"
-      else
-        flash[:error] = @order.errors.full_messages.join(",")
-      end 
-      redirect_to vendors_path
-    end
-  end
-
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
+    flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
   end  
 

@@ -15,8 +15,8 @@
                 .col-sm-12
                   - if order_detail.menu_item.veg == true
                     %h4.product-name.nomargin.veg= order_detail.menu_item.name
-                  - else
-                    %h4.product-name.nomargin.non-veg= order_detail.menu_item.name 
+                  -else
+                    %h4.product-name.nomargin.non-veg= order_detail.menu_item.name
                   %h6.vendor-name= order_detail.menu_item.description
                   %span.hide.menu_item_id= order_detail.menu_item.id
                   %span.hide.order_detail_id= order_detail.id
@@ -83,7 +83,7 @@
       %h4.product-name
         %strong
           {{menu_item_name}}
-        %input.hide{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+        %input.hide#order_detail_id{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
       %h4
       %h4
         %small
@@ -97,11 +97,13 @@
           %strong.total
             {{total}}
     .col-xs-2
-      %button.btn.btn-link.btn-xs.delete{:type => "button"}
-        %span.glyphicon.glyphicon-trash
-  {{/.}}
+      / %button.btn.btn-link.btn-xs.delete{:type => "button"}
+      /   %span.glyphicon.glyphicon-trash
+      %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
+  {{/.}} 
 
 
 %script{:type => 'text/javascript'}
   order_details = #{raw @order.order_details.to_json};
   load_orders_data(order_details)
+

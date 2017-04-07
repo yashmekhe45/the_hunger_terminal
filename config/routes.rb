@@ -2,11 +2,13 @@ Rails.application.routes.draw do
   
   resources :terminals do
     resources :orders
-  end  
+  end
+
+  resources :order_details, only: :destroy
 
   get 'home/index'
   get 'order/vendors' => 'orders#load_terminal' ,:as => 'vendors'
-  get 'order/MyOrder' => 'orders#order_history' ,:as => 'orders'
+  get 'order/myOrder' => 'orders#order_history' ,:as => 'orders'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users, :skip => [:registration],  controllers: { confirmations: 'confirmation' }
   as :user do
@@ -14,6 +16,8 @@ Rails.application.routes.draw do
     patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
   resources :companies do
+    get 'get_order_details', :on => :member
+    patch 'set_order_details', :on => :member
     resources :users do
       get 'search', :on => :collection
       get 'download', :on => :collection
@@ -38,10 +42,12 @@ Rails.application.routes.draw do
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'
-  get 'admin_dashboard/confirm'
+  get 'admin_dashboard/forward_orders'
   get 'admin_dashboard/place_orders'
+  get 'admin_dashboard/confirm_orders'
+  # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
+
   get 'reports/index'
   root to: 'home#index'
   
- 
 end

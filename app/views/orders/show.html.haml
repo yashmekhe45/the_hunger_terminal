@@ -1,64 +1,50 @@
-.container
-  .alert.alert-success 
-    %strong Thank You!
-    You will receive an email confirmation shortly at #{@order.user.email}
-  %hr
-  .card
-    .card-block
-      %h4.card-title Today's Order
-      .row
-        .col-sm-8
-          %table.table.order-show
-            %thead
-              %tr
-                %th Product
-                %th Vendor
-                %th UnitPrice
-                %th Quantity
-                %th.text-center Subtotal
-            %tbody
-              - @order.order_details.each do |order_detail|
+-if can? :show, @order
+  .container
+    .alert.alert-success 
+      %strong Thank You!
+      You will receive an email confirmation shortly at #{@order.user.email}
+    %hr
+    .card
+      .card-block
+        %h4.card-title Today's Order
+        .row
+          .col-sm-8
+            %table.table.order-show
+              %thead
                 %tr
-                  %td= order_detail.menu_item_name  
-                  %td= @order.terminal.name 
-                  %td
-                    %span ₹
-                    %span.price= order_detail.price
-                  %td.text-center= order_detail.quantity
-                  %td.text-center
-                    %span ₹
-                    %span.sub-total= order_detail.price * order_detail.quantity
+                  %th Product
+                  %th Vendor
+                  %th UnitPrice
+                  %th Quantity
+                  %th.text-center Subtotal
+              %tbody
+                - @order.order_details.each do |order_detail|
+                  %tr
+                    %td= order_detail.menu_item_name  
+                    %td= @order.terminal.name 
+                    %td
+                      %span ₹
+                      %span.price= order_detail.price
+                    %td.text-center= order_detail.quantity
+                    %td.text-center
+                      %span ₹
+                      %span.sub-total= order_detail.price * order_detail.quantity
 
-        .col-sm-4
-          .detail
-            %h4 
-              %strong.date Date: 
-              %span #{@order.date}
-            %h4 
-              %strong Subtotal: 
-              %span₹#{@order.total_cost}  
-            %h4  
-              %strong Discount: 
-              %span₹#{@order.discount}
-            %h4
-              %strong.total Total:
-              %span₹#{@order.total_cost-@order.discount}  
-    - if can? :edit, @order
-      %a.card-link= link_to 'Edit Order',edit_terminal_order_path(@order,:terminal_id => @order.terminal.id),class:"btn btn-info"
-    - if can? :delete, @order
-      %a.card-link= link_to 'Delete Order',terminal_order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
+          .col-sm-4
+            .detail
+              %h4 
+                %strong.date Date: 
+                %span #{@order.date}
+              %h4 
+                %strong Subtotal: 
+                %span₹#{@order.total_cost}  
+              %h4  
+                %strong Discount: 
+                %span₹#{@order.discount}
+              %h4
+                %strong.total Total:
+                %span₹#{@order.total_cost-@order.discount}  
+      - if can? :edit, @order
+        %a.card-link= link_to 'Edit Order',edit_terminal_order_path(@order,:terminal_id => @order.terminal.id),class: "btn btn-info"
+      - if can? :delete, @order
+        %a.card-link= link_to 'Delete Order',terminal_order_path(@order,:terminal_id => @order.terminal.id),method: :delete, data: {confirm: 'Are you sure?'},class: "btn btn-danger"

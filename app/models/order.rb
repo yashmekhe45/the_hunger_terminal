@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   validates :status, inclusion: {in: ORDER_STATUS}
   # validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
+  # validate :can_be_created?, :is_empty?, on: :create
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
 
@@ -22,7 +23,7 @@ class Order < ApplicationRecord
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).
-      where('orders.date' => Date.today,'orders.terminal_id' => t_id, 
+      where('orders.date' => Time.zone.today,'orders.terminal_id' => t_id, 
         'orders.company_id' => c_id).
       select('orders.id','users.name AS emp_name',
         'order_details.menu_item_name AS menu,quantity').
@@ -33,14 +34,14 @@ class Order < ApplicationRecord
   def self.menu_details(t_id,c_id)
     self.
       joins(:order_details).
-      where('orders.date'=> Date.today,'orders.terminal_id' => t_id,
+      where('orders.date'=> Time.zone.today,'orders.terminal_id' => t_id,
         'orders.company_id'=> c_id,'orders.status' => ['pending','review','placed']).
       group('order_details.menu_item_name').
       select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
   end
 
   def self.update_status(order_details)
-    # @orders = Order.where('orders.date' => Date.today, 
+    # @orders = Order.where('orders.date' => Time.zone.today, 
     #   'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
@@ -62,7 +63,7 @@ class Order < ApplicationRecord
   # def self.find_employees(t_id,c_id)
   #   self.
   #     joins(:user).
-  #     where('orders.date' => Date.today, 'orders.terminal_id' => t_id,
+  #     where('orders.date' => Time.zone.today, 'orders.terminal_id' => t_id,
   #      'orders.company_id' => c_id).
   #     select('users.email as email')
   # end
@@ -71,7 +72,7 @@ class Order < ApplicationRecord
 
     # needs to be evaluated
     def valid_date?
-      errors.add(:date, "can't be in the past") if !date.blank? and date < Date.today
+      errors.add(:date, "can't be in the past") if !date.blank? and date < Time.zone.today
     end
 
     def can_be_created?
@@ -80,7 +81,7 @@ class Order < ApplicationRecord
       # self.company.start_ordering_at
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
       # self.company.end_ordering_at
-      day = Date.today.wday
+      day = Time.zone.today.wday
       # if day%7 != 0 and day%7 != 6
       if !(current_time >= start_time and current_time <= end_time)
         errors.add(:base,"order cannot be created or updated after #{end_time}")
@@ -91,7 +92,7 @@ class Order < ApplicationRecord
     end
 
     # def set_date
-    #   self.date = Date.today
+    #   self.date = Time.zone.today
     # end
 
     def is_empty?

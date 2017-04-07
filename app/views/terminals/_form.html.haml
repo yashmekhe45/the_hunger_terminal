@@ -1,11 +1,34 @@
 = f.input :name, required: true, placeholder: 'kfc'
-= f.input :landline, required: true, input_html: { maxlength: 10 }, placeholder: '2013654783'
+= f.input :landline, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'
 = f.input :email, placeholder: 'kfc@gmail.com'
 = f.input :min_order_amount, required: true, placeholder: '30'
 = f.input :active, required:true, as: :boolean
 = f.file_field :image, onchange: "validateFiles(this);", |
-  data: {max_file_size: 1.megabytes }                    |
-= f.label :remote_image_url, "Upload logo of terminal"
-= f.input :file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
-= f.button :submit, class: "btn btn-success"
+  data: { max_file_size: 1.megabytes }                    |
+= f.label :remote_image_url, "Upload logo of vendor"
+= f.input :CSV_menu_file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
+= f.button :submit, class: "btn btn-success new terimnal"
 
+/ .panel.panel-success
+/   .panel-heading
+/     .panel-title 
+/       .h5.strong New Terminal Form
+/   .panel-body
+/     .form-group
+/       .col-md-6
+/         = f.input :name, :label => false, :placeholder => "Name"
+/       .col-md-6
+/         = f.input :landline, :label => false, input_html: { maxlength: 11 }, :placeholder => "Landline" 
+/     .form-group
+/       .col-md-6
+/         = f.input :email, :label => false, :placeholder => "kfc@gmal.com"
+/       .col-md-6  
+/         = f.input :min_order_amount, :label => false, :placeholder => "100"
+/     .form-froup
+/       .col-md-6
+/         = f.file_field :image, onchange: "validateFiles(this);", |
+/           data: { max_file_size: 1.megabytes }                    |
+/         = f.label :remote_image_url, "Upload logo of vendor"
+/       .col-md-6
+/         = f.input :CSV_menu_file, as: :file
+/     = f.button :submit, class: "btn btn-success new terimnal"  

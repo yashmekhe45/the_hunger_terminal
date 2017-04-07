@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
-
+  get "menu_items/download_csv"
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'

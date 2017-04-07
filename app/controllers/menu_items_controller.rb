@@ -16,12 +16,12 @@ class MenuItemsController < ApplicationController
 
   def index
     if params[:search_item].present?
-      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(7)
+      @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(6)
       if @menu_items.empty?
         flash[:notice] = "Meu Item is not present."
       end
     else 
-      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(7)
+      @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
     end
   end
 
@@ -40,7 +40,6 @@ class MenuItemsController < ApplicationController
   end
 
   def edit
-    render 'new'
   end
 
   def update
@@ -49,7 +48,7 @@ class MenuItemsController < ApplicationController
       redirect_to company_terminal_menu_items_path and return
     else
       flash[:error] = "can't update menu_item"
-      # render :edit and return
+      render :edit and return
     end
   end
 
@@ -81,6 +80,13 @@ class MenuItemsController < ApplicationController
     else
       flash[:error] = "Invalid type of file" and return
     end 
+  end
+
+  def download_csv
+    send_file(
+    "#{Rails.root}/public/menu.csv",
+    type: "application/csv"
+  )
   end
 
   private

@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
+      flash[:success] = "your order has been placed successfully. You will receive an email confirmation shortly."
       redirect_to @order
     else
       if @order.errors.full_messages.include?("User has already been taken")

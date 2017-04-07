@@ -6,8 +6,12 @@
       %h4.modal-title 
     .modal-body
       - if !@orders.any?
-        %p No orders at this point of time
+        %p today's orders have been already forawrded to terminals
       - else
+        = label_tag :message, "Type your message:"
+        %br
+        = text_area_tag :message, @message, :size =>"60x5"
+        %br
         .table-responsive
           %table.table-hover
             %tbody
@@ -21,11 +25,7 @@
                 %td.text-center= order.menu
                 %td.text-center= order.quantity
     .modal-footer
-      - if @orders.any?
-        = link_to "Place_orders", admin_dashboard_place_orders_path(:terminal_id =>params[:terminal_id]), class: "btn btn-info"
-      - else
-        / .tooltip-wrapper{"data-title" => "You cannot place empty order"}
-        /   %button.btn.btn-default{:disabled => "disabled"} Place Orders
-        %button.btn.btn-info{:type => "button",:disabled => "disabled"} Place Orders
-        / %button.btn.btn-default{:type => "button"} Place Orders, custom_actions
+      %a.button{ :disabled => !@orders.any?, class: "btn btn-info", data: { terminal_id: params[:terminal_id] } }Place Orders
+      / = button_to "Place_orders", admin_dashboard_place_orders_path(:terminal_id =>params[:terminal_id]), :disabled => !@orders.any?, class: "btn btn-info"
+      / = button_to "Close", data-dismiss: "modal"
       %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

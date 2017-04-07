@@ -6,7 +6,7 @@ class TerminalsController < ApplicationController
   
   before_action :authenticate_user!  
   before_action :load_company
-  before_action :load_terminal, only: [:show, :edit, :update, :destroy, :import]
+  before_action :load_terminal, only: [:show, :edit, :update, :destroy]
 
   def new
     @terminal = @current_company.terminals.build
@@ -24,14 +24,16 @@ class TerminalsController < ApplicationController
     else
       render :new and return
     end
+    render :new
   end
 
   def index
     puts current_user.inspect
     if params[:search].present?
-      @terminals = @current_company.terminals.where(["LOWER(name) LIKE ?", "%#{params[:search].downcase}%"]).page(params[:page]).per(7)
+      search_type = params[:search]
+      @terminals = @current_company.terminals.where(["LOWER(name) LIKE :search OR landline LIKE :search", search: "%#{params[:search].downcase}%"]).page(params[:page]).per(6)
       if @terminals.empty?
-        flash[:notice] = "terminal not present."
+        flash[:notice] = "Vendor not present."
       end
     else
       @terminals = @current_company.terminals.order(:name).page(params[:page]).per(7)
@@ -42,6 +44,7 @@ class TerminalsController < ApplicationController
   end
 
   def show
+
     if params[:id] == "download"
       invalid_menus_download
     end
@@ -51,8 +54,9 @@ class TerminalsController < ApplicationController
     if @terminal.update_attributes(terminal_params)
       flash[:success] = "terminal updated"
       if params[:terminal][:file].nil?
-        redirect_to company_terminals_path and return
+        redirect_to company_terminals_path
       else
+
         flash[:error] = @terminal.errors.messages
         render :edit and return
       end
@@ -61,47 +65,8 @@ class TerminalsController < ApplicationController
 
   def destroy
     @terminal.destroy
-    redirect_to company_terminals_path and return
-  end
-
-  # def import
-  #   @company = Company.find(params[:company_id])
-  #   @terminal = @company.terminals.find(object_id)
-  #   @menu_item_errors = MenuItem.new(name:"cxkvbivbad",price:2424,veg:true,terminal_id:@terminal.id)
-  #   $INVALID_RECORD_CSV = nil
-  #   csv_file = File.open(params[:terminal][:file].path)
-  #   if params[:terminal][:file].content_type == "text/csv"  
-  #     menu_items = CSV.parse(csv_file, headers: true)
-  #     if menu_items.headers == ["name","price","veg"]
-  #       menu_items.each do |row|
-  #         next if row.to_a == ["name","price","veg"]
-  #         @menu_item = @terminal.menu_items.build(row.to_h)
-  #         if @menu_item.valid?
-  #           @menu_item.save
-  #         else
-  #           CSV.open($INVALID_RECORD_CSV="public/#{@terminal.name}-invalid_records-#{Date.today}.csv", "a+") do |csv|
-  #             row << @menu_item.errors.messages.to_a
-  #             csv << row
-  #           end
-  #           @menu_item_errors = @menu_item
-  #         end
-  #       end
-  #       if @menu_item_errors.valid?
-  #         flash[:success] = "all menu items added using csv file"
-  #         redirect_to company_terminal_path(@terminal.id)
-  #       else
-  #         flash[:alert] = "You have invalid some records.Correct it and upload again." 
-  #         redirect_to company_terminal_path(@terminal.id)
-  #       end     
-  #     else
-  #       flash[:error] = "You have invlaid csv please upload csv with valid headers."
-  #       redirect_to company_terminals_path
-  #     end
-  #   else
-  #     flash[:alert] = "Invalid type of file.Please upload csv file"
-  #     redirect_to company_terminals_path
-  #   end        
-  # end 
+    redirect_to company_terminals_path
+  end 
  
   def valid_csv    
     if params[:terminal][:file].content_type == "text/csv"
@@ -146,3 +111,4 @@ class TerminalsController < ApplicationController
     end
   end  
 end
+  

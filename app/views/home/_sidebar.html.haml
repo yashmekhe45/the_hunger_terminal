@@ -9,12 +9,17 @@
       Order
       %span.caret
     %ul.dropdown-menu
+    
       %li
         %a#menu{:href => vendors_path} Place Order
+      -if current_user.orders.find_by(date: Date.today)  
+        %li
+          - order_id = current_user.orders.find_by(date: Date.today).id
+          %a#menu{:href => orders_path(order_id)} Today's Order
       %li
-        %a#menu{:href => orders_path} My Order
+        %a#menu{:href => orders_path} Order history
       %li
-        %a#menu{:href => admin_dashboard_index_path} Today's Orders
+        %a#menu{:href => admin_dashboard_index_path} Emp Orders
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
       %span.glyphicon.glyphicon-file.gly

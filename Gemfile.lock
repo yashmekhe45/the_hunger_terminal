@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mhfs/devise-async.git
+  remote: https://github.com/mhfs/devise-async.git
   revision: 177f6363a002f7ff28f1d289c8cab7ad8d9cb8c5
   branch: devise-4.x
   specs:

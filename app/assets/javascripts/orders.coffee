@@ -27,6 +27,7 @@ $(document).ready ->
     render_menu_item_detail(order_detail)
 
   $(document).on 'click', '.delete', ->
+
     $(this).parent().parent().remove()
     text=$(this).parent().parent().attr('data-menu-item-id')
     $("table").find("#"+text).find('.sub-total').text(' 0.00')
@@ -43,7 +44,6 @@ $(document).ready ->
 
   
 @load_orders_data = (order_details) ->
-  console.log(order_details)
   $.each order_details, (i, order_detail) ->
     render_menu_item_detail(order_detail)
 
@@ -70,4 +70,3 @@ render_menu_item_detail = (order_detail) ->
 
   $('#total').text(sum)
   $('#order_total_cost').val(sum)
-  # $('#order_terminal').text(vendor_name)

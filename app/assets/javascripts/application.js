@@ -25,7 +25,9 @@
 
   $(document).on('turbolinks:load',function(){
     $('.from').datepicker({
-      autoclose: true,
+      todayBtn: "linked",
+      autoclose: true,  
+      orientation: "bottom right",
       format: 'yyyy-mm-dd'
     });
     $('.to').datepicker({
@@ -35,7 +37,8 @@
     $("#bton").click(function(event) {
       event.preventDefault();
       params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})
-      window.location.href = '/orders' + '?' + params
+      window.location.href = '/order/myOrder' + '?' + params
+      
     });
   });
 

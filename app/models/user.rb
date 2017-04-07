@@ -4,8 +4,6 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
-
-
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
   validates :mobile_number, length: {is: 10}

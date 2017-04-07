@@ -7,6 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role == "employee"
       can :manage, Order
+      cannot [:edit, :delete], Order, status: ['placed','confirmed'] 
     end
     if user.role == "company_admin"
       can :manage, Order
@@ -16,8 +17,9 @@ class Ability
       can :manage, MenuItem
       can :index, :order_management
       can :order_detail, :order_management
-      can :confirm, :order_management
+      can :forward_orders, :order_management
       can :place_orders, :order_management
+      can :confirm_orders, :order_management
     end
 
     #

@@ -4,7 +4,10 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
-        %h3.modal-title.menu_item New Menu Item
+        -if current_page?(action: 'new')
+          %h3.modal-title.menu_item New Menu Item
+        -else
+          %h3.modal-title.menu_item Edit #{@menu_item.name} Details
         .form-group
           .col-md-8
             = f.input :name, required: true

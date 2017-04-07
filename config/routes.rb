@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   # get 'company/:company_id/menus' => 'menu_items#menu_index' , :as => 'menus'
 
   get 'reports/index'
+  get 'reports/individual_employee'
   root to: 'home#index'
   
   get 'companies/:company_id/terminals' => 'admin_dashboard#selected_terminals' , :as => 'selection'

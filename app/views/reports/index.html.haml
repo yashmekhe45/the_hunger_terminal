@@ -1,5 +1,7 @@
 .indexcontainer
   %h3.text-center Employee's Reports
+  = link_to 'Todays Orders', reports_index_path(todays_orders: "Todays orders"), class: "btn btn-info"
+  = link_to 'Last Month Orders', reports_index_path(last_month_orders: "last months orders"), class: "btn btn-info"
   .table-responsive
     %table.table-hover.table-bordered
       %tbody
@@ -15,7 +17,7 @@
           %tr  
           %td.text-center= i+1
           %td.text-center= user.id
-          %td.text-center= user.name  
+          %td.text-center= link_to user.name, reports_individual_employee_path(user_id: user.id) 
           %td.text-center ₹ #{user.total}
           %td.text-center ₹ #{user.subsidy}
           %td.text-center ₹ #{user.total - user.subsidy}

@@ -13,6 +13,7 @@ class Ability
 
     if user.role == "company_admin"
       can :manage, Order
+      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
       can :manage, Terminal
       can :manage, User
       can :manage, MenuItem

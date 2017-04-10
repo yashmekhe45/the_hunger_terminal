@@ -70,7 +70,7 @@ class User < ApplicationRecord
       order('users.id')
   end
 
-  def self.employee_last_month_report(c_id,month_back_date)
+  def self.employee_last_month_report(c_id, month_back_date)
     self.
       joins(:orders).
       where('company_id'=> c_id).
@@ -79,5 +79,12 @@ class User < ApplicationRecord
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
       order('users.id')
-  end  
+  end
+
+  def employee_individual_report(c_id, user_id)
+    self.joins(:orders).
+    where('company_id' => c_id).
+    wh
+  end
+
 end

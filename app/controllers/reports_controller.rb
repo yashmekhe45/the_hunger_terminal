@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 	end
 
   def individual_employee
-    @orders = Order.employee_individual_report(current_user.company_id,params[:user_id])
+    @orders = User.employee_individual_report(current_user.company_id,params[:user_id])
   end
 
 end

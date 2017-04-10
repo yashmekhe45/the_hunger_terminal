@@ -3,7 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable
+  
+  devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
@@ -82,8 +84,8 @@ class User < ApplicationRecord
   end
 
   def employee_individual_report(c_id, user_id)
-    self.joins(:orders).
-    where('company_id' => c_id).
+      # self.joins(:orders).
+      # where('company_id' => c_id).
   end
 
 end

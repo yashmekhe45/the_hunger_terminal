@@ -8,7 +8,7 @@ class OrderDetail < ApplicationRecord
   belongs_to :menu_item
   belongs_to :order, inverse_of: :order_details
 
-  after_initialize :assign_menu_item_details, if: :menu_item
+  before_validation :assign_menu_item_details, if: :menu_item
 
   def assign_menu_item_details
     self.menu_item_name = menu_item.name

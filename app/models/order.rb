@@ -19,8 +19,7 @@ class Order < ApplicationRecord
   before_validation :set_discount
 
 
-  accepts_nested_attributes_for :order_details, allow_destroy: true
-
+  accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).

@@ -84,7 +84,6 @@ class User < ApplicationRecord
   def employee_individual_report(c_id, user_id)
     self.joins(:orders).
     where('company_id' => c_id).
-    wh
   end
 
 end

@@ -13,7 +13,6 @@
           %a{:href => root_path}
             Home
             %span.sr-only (current)
-    
         -if user_signed_in? && current_user.role == "employee"        
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
@@ -22,10 +21,11 @@
             %ul.dropdown-menu
               %li
                 %a{:href => vendors_path} Place Order
-              -if current_user.orders.find_by(date: Date.today)
+              -if current_user.orders.find_by(date: Time.zone.today)
                 %li
-                  - order_id = current_user.orders.find_by(date: Date.today).id
-                  %a{:href => order_path(order_id)} Today's Order
+                  - order_id = current_user.orders.find_by(date: Time.zone.today).id
+                  - terminal_id = current_user.orders.find_by(date: Time.zone.today).terminal.id
+                  %a{:href => terminal_order_path(terminal_id,order_id)} Today's Order          
               %li
                 %a{:href => orders_path} Order history          
         %li
@@ -37,6 +37,4 @@
             = link_to destroy_user_session_path, method: :delete do
               %span.glyphicon.glyphicon-log-out
               Logout
-        
-       
-      
+              

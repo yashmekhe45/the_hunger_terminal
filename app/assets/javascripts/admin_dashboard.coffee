@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 confirmation = ->
   $("#myForwardOrdersModal").on 'click', '.btn-info', (e) ->
-    debugger;
     element = $(this)
     $.ajax({
       type: "GET"

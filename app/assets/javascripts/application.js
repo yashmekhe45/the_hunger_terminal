@@ -24,18 +24,20 @@
 //= require_tree .
 
   $(document).on('turbolinks:load',function(){
-    $('.from').datepicker({
+    $('.from, .to').datepicker({
       autoclose: true,
-      format: 'yyyy-mm-dd'
-    });
-    $('.to').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
+      // format: 'dd-mm-yyyy'
+      format: 'yyyy-mm-dd',
+      todayBtn: "linked",
+      orientation: "bottom auto",
+      todayHighlight: true
+      // startDate: "0d"
     });
     $("#bton").click(function(event) {
       event.preventDefault();
       params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})
-      window.location.href = '/orders' + '?' + params
+      window.location.href = '/order/myOrder' + '?' + params
+      
     });
   });
 

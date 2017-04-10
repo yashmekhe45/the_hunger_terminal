@@ -1,8 +1,8 @@
 class CompaniesController < ApplicationController
 
- 
-  before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
   skip_before_action :authenticate_user!, :only => [:new, :create]
+  before_action :require_permission, only: [:show, :edit, :update, :delete]
+  before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
 
   def new
     @company = Company.new
@@ -22,6 +22,7 @@ class CompaniesController < ApplicationController
   end
 
   def update
+    authorize! :update, @company
     if !params[:page]
       params[:page] = 1
     end
@@ -36,11 +37,13 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
+    authorize! :delete, @company
     @company.destroy
     redirect_to companies_path
   end
 
   def index
+    authorize! :company, @company
     @companies = Company.all.order('created_at').page(params[:page]).per(5)
   end 
 
@@ -76,6 +79,13 @@ class CompaniesController < ApplicationController
 
   def load_company
     @company = Company.find(params[:id])
+  end
+
+  def require_permission
+    if current_user != Company.find(params[:id]).employees.find_by(role: "company_admin")
+      flash[:error] = "You are not authorized to access it!!"
+      redirect_to vendors_path
+    end
   end
 
 end

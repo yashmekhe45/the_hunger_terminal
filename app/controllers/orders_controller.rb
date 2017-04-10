@@ -1,26 +1,34 @@
 class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
- 
-  def index
-    @orders = current_user.orders.where(date: params[:from]..params[:to]).order(date: :desc)
+  before_action :require_permission, only: [:show, :edit, :update, :delete]
+  
+  def order_history
+    @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
+    @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
+    @orders = current_user.orders.where(date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
+    if @orders.empty?
+      flash[:error] = "No order is present for this period!"
+    end
   end
 
   def load_terminal
     @terminals = Terminal.where(active: true, company: current_user.company)
   end
 
-  def new
-    @order = Order.new  
-    @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).order(created_at: :desc)
+  def new 
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
   end
 
   def create
-    @order = Order.new(order_params)
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new(order_params)
     load_order_detail
     if @order.save
-      redirect_to @order
+      flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       if @order.errors.full_messages.include?("User has already been taken")
         flash[:error] = "Only one order is allowed per day"
@@ -32,45 +40,55 @@ class OrdersController < ApplicationController
   end
 
   def show
-     @order = Order.find(params[:id])
+    @order = Order.find(params[:id])
   end
 
 
   def edit
-    @order = Order.find(params[:id])
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.find(params[:id])
     @terminal_id = params[:terminal_id]
+    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
   end
 
   def update
     @order = Order.find(params[:id])
-    p order_params
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
-    if @order.update_attributes(order_params)
-      redirect_to @order
+    if @order.update_attributes(order_params) 
+      flash[:notice] = "Your order has been updated successfully"
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       render 'edit'
     end
   end
 
+
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
+    flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
+  end  
 
-  end
-  
   private
 
     def order_params
       params.require(:order).permit(
-        :total_cost,:terminal_id, order_details_attributes:[:menu_item_id, :quantity, :id]
+        :total_cost,:terminal_id,:id, order_details_attributes:[:menu_item_id, :quantity, :id]
       ).merge(user_id: current_user.id)
     end
 
     def load_order_detail
-      @order.date = Date.today
+      @order.date = Time.zone.today
       @order.company_id = current_user.company.id
+    end
+
+    def require_permission
+      if current_user != Order.find(params[:id]).user
+        flash[:error] = "You are not authorized to access it!!"
+        redirect_to root_path
+      end
     end
 
 end

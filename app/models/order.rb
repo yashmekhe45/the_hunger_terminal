@@ -17,34 +17,40 @@ class Order < ApplicationRecord
   # after_initialize :set_date
   before_validation :set_discount
 
-
-  accepts_nested_attributes_for :order_details, allow_destroy: true
+  accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).
-      where('orders.date' => Date.today,'orders.terminal_id' => t_id, 'orders.company_id' => c_id,
-        'orders.status' => ['pending','review']).
+      where('orders.date' => Time.zone.today,'orders.terminal_id' => t_id, 
+        'orders.company_id' => c_id).
       select('orders.id','users.name AS emp_name',
         'order_details.menu_item_name AS menu,quantity').
       order("users.name ASC")
+      # 'orders.status' => ['pending','review','placed']
   end
 
   def self.menu_details(t_id,c_id)
     self.
       joins(:order_details).
-      where('orders.date'=> Date.today,'orders.terminal_id' => t_id,
-        'orders.company_id'=> c_id,'orders.status' => ['pending','review']).
+      where('orders.date'=> Time.zone.today,'orders.terminal_id' => t_id,
+        'orders.company_id'=> c_id,'orders.status' => ['pending','review','placed']).
       group('order_details.menu_item_name').
       select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
   end
 
   def self.update_status(order_details)
-    # @orders = Order.where('orders.date' => Date.today, 
+    # @orders = Order.where('orders.date' => Time.zone.today, 
     #   'orders.terminal_id' => t_id, 'orders.company_id' => c_id)
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "placed")
+  end
+
+  def self.confirm_all_placed_orders(t_id, c_id, order_details)
+    order_ids = order_details.pluck(:id).uniq
+    orders = Order.where(:id => order_ids)
+    orders.update_all(:status => "confirmed")
     @employees =  orders.
                     joins(:user).
                     pluck('users.email AS email')
@@ -53,16 +59,10 @@ class Order < ApplicationRecord
     end
   end
 
-  def self.confirm_all_placed_orders(t_id, c_id)
-    @orders = Order.where('orders.date' => Date.today,
-      'orders.terminal_id' => t_id, 'orders.company_id' => c_id, 'orders.status' => 'placed').
-      update_all(:status => "confirmed")
-  end
-
   # def self.find_employees(t_id,c_id)
   #   self.
   #     joins(:user).
-  #     where('orders.date' => Date.today, 'orders.terminal_id' => t_id,
+  #     where('orders.date' => Time.zone.today, 'orders.terminal_id' => t_id,
   #      'orders.company_id' => c_id).
   #     select('users.email as email')
   # end
@@ -71,7 +71,7 @@ class Order < ApplicationRecord
 
     # needs to be evaluated
     def valid_date?
-      errors.add(:date, "can't be in the past") if !date.blank? and date < Date.today
+      errors.add(:date, "can't be in the past") if !date.blank? and date < Time.zone.today
     end
 
     def can_be_created?
@@ -80,7 +80,7 @@ class Order < ApplicationRecord
       # self.company.start_ordering_at
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
       # self.company.end_ordering_at
-      day = Date.today.wday
+      day = Time.zone.today.wday
       # if day%7 != 0 and day%7 != 6
       if !(current_time >= start_time and current_time <= end_time)
         errors.add(:base,"order cannot be created or updated after #{end_time}")
@@ -91,7 +91,7 @@ class Order < ApplicationRecord
     end
 
     # def set_date
-    #   self.date = Date.today
+    #   self.date = Time.zone.today
     # end
 
     def is_empty?

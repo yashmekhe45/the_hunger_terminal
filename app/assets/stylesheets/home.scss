@@ -49,24 +49,19 @@ h2 {
   color: #777;
 }
 
-.container-fluid.bg-3.text-center{
+.container.bg-3{
   padding-top: 2%;
 }
+
 
 .h4.text-center.home{
   padding-bottom: 15px;
 }
 
 
-/*.container{
+.container{
   padding-left: 60px;
-}*/
-
-.container-fluid.bg-3
-{
-  padding-top: 2%;
 }
-
 
 .container.home
 {
@@ -85,6 +80,6 @@ h2 {
   padding-bottom: 15px;
 }
 
-span.caret{
-  margin-left: 48%;
+span.caret{}
+  padding-left: 0%;
 }

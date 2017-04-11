@@ -59,6 +59,20 @@ class Order < ApplicationRecord
     end
   end
 
+  def self.send_reminders
+    day = Time.zone.today.wday
+    if day%7 != 0 and day%7 != 6 
+      companies = Company.all
+      companies.each do |c|
+        if c.name == "Dummy software"
+          users = self.where(date: Time.zone.today, company_id: c.id).pluck(:user_id)
+          send_reminder_to = c.employees.where("id NOT IN (?) and is_active = ?", users, true).pluck(:email)
+          OrderMailer.send_place_order_reminder(send_reminder_to).deliver_later
+        end
+      end
+    end
+  end
+
   # def self.find_employees(t_id,c_id)
   #   self.
   #     joins(:user).

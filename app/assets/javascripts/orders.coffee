@@ -41,6 +41,11 @@ $(document).ready ->
 
     $('#total').text(sum)
     $('#order_total_cost').val(sum)
+    if sum == 0
+      $('.place_order').prop("disabled", true);
+    else
+      $('.place_order').prop("disabled", false);
+      
 
   
 @load_orders_data = (order_details) ->
@@ -70,3 +75,8 @@ render_menu_item_detail = (order_detail) ->
 
   $('#total').text(sum)
   $('#order_total_cost').val(sum)
+  if sum == 0
+    $('.place_order').prop("disabled" , true);
+  else
+    $('.place_order').prop("disabled" , false);
+    

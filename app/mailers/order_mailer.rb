@@ -14,4 +14,8 @@ class OrderMailer < ApplicationMailer
     mail(to: employee, subject: 'status of order')
   end
 
+  def send_place_order_reminder(employees)
+    mail(to: employees, subject: 'place order soon')
+  end
+
 end

@@ -216,20 +216,19 @@ function validateFiles(inputFile) {
                     debug: false,
 
                     showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
-                    showDuration: 300,
+                    showDuration: 50,
                     showEasing: 'swing', //swing and linear are built into jQuery
                     onShown: undefined,
                     hideMethod: 'fadeOut',
-                    hideDuration: 1000,
+                    hideDuration: 200,
                     hideEasing: 'swing',
                     onHidden: undefined,
-                    closeMethod: false,
-                    closeDuration: false,
+                    closeMethod: true,
+                    closeDuration: 300,
                     closeEasing: false,
                     closeOnHover: true,
-                    closeButton: true,
 
-                    extendedTimeOut: 2000,
+                    extendedTimeOut: 500,
                     iconClasses: {
                         error: 'toast-error',
                         info: 'toast-info',
@@ -238,7 +237,7 @@ function validateFiles(inputFile) {
                     },
                     iconClass: 'toast-info',
                     positionClass: 'toast-top-right',
-                    timeOut: 2000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+                    timeOut: 1200, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     escapeHtml: false,

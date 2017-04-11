@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  devise :timeoutable, :timeout_in => 3.days
+devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
@@ -83,9 +83,13 @@ class User < ApplicationRecord
       order('users.id')
   end
 
-  def employee_individual_report(c_id, user_id)
-      # self.joins(:orders).
-      # where('company_id' => c_id).
+  def self.employee_individual_report(c_id, user_id)
+      self.joins(:orders).
+      where('orders.company_id' => c_id).
+      where('orders.user_id' => user_id).
+      where('orders.created_at' => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).
+      where('orders.status' => 'confirmed').
+      select('users.name,users.id,orders.created_at,orders.id,orders.total_cost,orders.discount')
   end
 
 end

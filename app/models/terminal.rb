@@ -33,5 +33,13 @@ class Terminal < ApplicationRecord
       select('terminals.name,terminals.min_order_amount,terminals.id,
        sum(total_cost) AS total')
   end
-1
+
+  def self.all_terminals_last_month_reports(c_id)
+    self.
+      joins(:orders).
+      where('orders.company_id'=> c_id).
+      group('terminals.id').
+      select('terminals.name,sum(total_cost) AS total')
+  end  
+
 end

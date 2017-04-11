@@ -42,4 +42,9 @@ class ReportsController < ApplicationController
       end
     end
   end
+
+  def all_terminals_last_month_reports
+    @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)
+  end
+
 end

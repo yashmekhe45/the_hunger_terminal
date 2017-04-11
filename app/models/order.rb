@@ -1,10 +1,10 @@
 class Order < ApplicationRecord
 
-  # validate :can_be_created?, :is_empty?, on: :create
+  validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
-  # validates :user_id, uniqueness: { scope: :date }
+  validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
   # validate :can_be_created?, :is_empty?, on: :create
   # :can_be_created?, 
@@ -13,13 +13,13 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
-  has_many :order_details, dependent: :destroy, inverse_of: :order
+  has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
 
   # after_initialize :set_date
   before_validation :set_discount
 
 
-  accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
+  accepts_nested_attributes_for :order_details, allow_destroy: true
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).

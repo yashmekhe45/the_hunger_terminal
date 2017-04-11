@@ -37,13 +37,23 @@ $(document).ready ->
     $.each arr, (key, value) ->
       num=parseInt($(value).text())
       sum += num
-
+    if (75 < .75*sum) 
+      $('#discount').text(75)
+      $('#grand_total').text(sum-75)
+    else
+      $('#discount').text(.75*sum)
+      $('#grand_total').text(sum-.75*sum)
     $('#total').text(sum)
     $('#order_total_cost').val(sum)
+    if sum == 0
+      $('.place_order').prop("disabled", true);
+      $('i').show()
+    else
+      $('.place_order').prop("disabled", false); 
+      $('i').hide()
 
   
 @load_orders_data = (order_details) ->
-  console.log(order_details)
   $.each order_details, (i, order_detail) ->
     render_menu_item_detail(order_detail)
 
@@ -53,21 +63,48 @@ render_menu_item_detail = (order_detail) ->
   if selected_item.length
     selected_item.find('#order_detail_qty').val(order_detail.quantity)
     selected_item.find('.total').text(order_detail.quantity*order_detail.price)
+    order_detail = check_for_order_detail_quantity(order_detail)
+    template = $("#order_detail_template").html()
+    od       = Mustache.render(template, order_detail)
+    selected_item.replaceWith(od)
+    $(".order-details").find(".row[data-menu-item-id=#{order_detail.menu_item_id}]").hide() if order_detail.quantity == 0
   else
     template = $("#order_detail_template").html()
     order_detail.total = order_detail.quantity * order_detail.price
     od       = Mustache.render(template, order_detail)
     $('.order-details').append(od) 
 
-  if order_detail.quantity == 0
-    $(".order-details").find(".row[data-menu-item-id=#{parseInt(order_detail.menu_item_id)}]").remove()
- 
+
   sum = 0
   arr = $('.total')
   $.each arr, (key, value) ->
     num=parseInt($(value).text())
     sum += num
-
+  if (75 < .75*sum) 
+    $('#discount').text(75)
+    $('#grand_total').text(sum-75)
+  else
+    $('#discount').text(.75*sum)
+    $('#grand_total').text(sum-.75*sum)
   $('#total').text(sum)
   $('#order_total_cost').val(sum)
+  if sum == 0
+    $('.place_order').prop("disabled", true);
+    $('i').show()
+  else
+    $('.place_order').prop("disabled", false);  
+    $('i').hide()
   # $('#order_terminal').text(vendor_name)
+  
+
+check_for_order_detail_quantity = (order_detail) ->
+  if order_detail.quantity == 0
+    order_detail_id = $(".order-details").find(".row[data-menu-item-id=#{parseInt(order_detail.menu_item_id)}]").find("#order_detail_id").val()  
+    if order_detail_id == ""
+      $(".order-details").find(".row[data-menu-item-id=#{parseInt(order_detail.menu_item_id)}]").remove()
+    else
+      order_detail.destroy_order_detail_id = true
+      $(".order-details").find(".row[data-menu-item-id=#{order_detail.menu_item_id}]").hide()
+  else
+    $(".order-details").find(".row[data-menu-item-id=#{parseInt(order_detail.menu_item_id)}]").show()
+  order_detail 

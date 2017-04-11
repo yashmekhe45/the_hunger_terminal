@@ -12,17 +12,30 @@
 }
 
 .date{
-  padding-left:39px;
+   padding-left:39px;
 }
 
 .total{
-  padding-left: 41px;
+   padding-left: 41px;
 }
 
 .veg{
-  color: green;
+	color: green;
 }
 
 .non-veg{
-  color: red;
+	color:red;
+}
+
+.place_order{
+	margin-top: 10px;
+}
+
+#place_order{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.bag{
+	margin-right: 5px;
 }

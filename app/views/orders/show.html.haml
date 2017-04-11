@@ -1,4 +1,3 @@
-
 -if can? :show, @order
   .container
     .alert.alert-success 
@@ -30,6 +29,7 @@
                     %td.text-center
                       %span ₹
                       %span.sub-total= order_detail.price * order_detail.quantity
+
           .col-sm-4
             .detail
               %h4 
@@ -43,21 +43,8 @@
                 %span₹#{@order.discount}
               %h4
                 %strong.total Total:
-                %span₹#{@order.total_cost-@order.discount} 
-      - if can? :edit, @order         
-        %a.card-link= link_to 'Edit Order',edit_order_path(@order,:terminal_id => @order.terminal.id),class:"btn btn-info"
+                %span₹#{@order.total_cost-@order.discount}  
+      - if can? :edit, @order
+        %a.card-link= link_to 'Edit Order',edit_terminal_order_path(@order,:terminal_id => @order.terminal.id),class: "btn btn-info"
       - if can? :delete, @order
-        %a.card-link= link_to 'Delete Order',order_path(@order),method: :delete, data: {confirm: 'Are you sure?'},class:"btn btn-danger"
-
-
-
-  
-
-
-
-
-
-
-
-
-
+        %a.card-link= link_to 'Delete Order',terminal_order_path(@order,:terminal_id => @order.terminal.id),method: :delete, data: {confirm: 'Are you sure?'},class: "btn btn-danger"

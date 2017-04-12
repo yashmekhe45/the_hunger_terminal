@@ -14,6 +14,7 @@ class AdminDashboardController < ApplicationController
 
   def forward_orders
     authorize! :forward_orders, :order_management
+    @terminal = Terminal.find(params[:terminal_id])
     @orders = Order.menu_details(params[:terminal_id],current_user.company_id)
     if @orders.any?
       Order.update_status(@order_details)

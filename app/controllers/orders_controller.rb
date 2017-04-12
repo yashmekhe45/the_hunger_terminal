@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   before_action :require_permission, only: [:show, :edit, :update, :delete]
 
   def order_history
-
     @from_date = params[:from] || 7.days.ago.strftime('%y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%y-%m-%d')
     @orders = current_user.orders.where(date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
@@ -24,8 +23,25 @@ class OrdersController < ApplicationController
     @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
   end
 
+  def create
+    @terminal = Terminal.find(params[:terminal_id])
+    @order = @terminal.orders.new(order_params)
+    load_order_detail
+    if @order.save
+      flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."
+      redirect_to terminal_order_path(params[:terminal_id],@order)
+    else
+      if @order.errors.full_messages.include?("User has already been taken")
+        flash[:error] = "Only one order is allowed per day"
+      else
+        flash[:error] = @order.errors.full_messages.join(",")
+      end 
+      redirect_to vendors_path
+    end
+  end
+
   def show
-     @order = Order.find(params[:id])
+    @order = Order.find(params[:id])
   end
 
 
@@ -46,6 +62,7 @@ class OrdersController < ApplicationController
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params) 
+      flash[:notice] = "Your order has been updated successfully"
       redirect_to terminal_order_path(params[:terminal_id],@order)
     else
       render 'edit'
@@ -53,25 +70,10 @@ class OrdersController < ApplicationController
   end
 
 
-  def create
-    @terminal = Terminal.find(params[:terminal_id])
-    @order = @terminal.orders.new(order_params)
-    load_order_detail
-    if @order.save
-      redirect_to terminal_order_path(params[:terminal_id],@order)
-    else
-      if @order.errors.full_messages.include?("User has already been taken")
-        flash[:error] = "Only one order is allowed per day"
-      else
-        flash[:error] = @order.errors.full_messages.join(",")
-      end 
-      redirect_to vendors_path
-    end
-  end
-
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
+    flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
   end  
 

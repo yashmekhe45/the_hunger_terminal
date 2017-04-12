@@ -27,26 +27,27 @@
               %input.form-control.text-center.item-qty{:type => "number", :value => order_detail.quantity, :min => 0}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} #{order_detail.quantity * order_detail.menu_item.price }
-        / - @menu_items.each do |menu_item|
-        /   %tr{:id => "#{menu_item.id}"} 
-        /     %td{"data-th" => "Product"}
-        /       .row
-        /         .col-sm-12
-        /           - if menu_item.veg == true
-        /             %h4.product-name.nomargin.veg= menu_item.name
-        /           - else
-        /             %h4.product-name.nomargin.non-veg= menu_item.name 
-        /           %h6.vendor-name= menu_item.terminal.name
-        /           %span.hide.menu_item_id= menu_item.id
-        /     %td
-        /       %span ₹
-        /       %span.price{"data-th" => "Price"}= menu_item.price
-        /     %td{"data-th" => "Quantity"}
-        /       %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
-        /     %td.text-center
-        /       %span ₹
-        /       %span.sub-total{"data-th" => "Subtotal"} 0.0
+              %span.sub-total{"data-th" => "Subtotal"} 0.0
+      -if !@menu_items.nil?        
+        - @menu_items.each do |menu_item|
+          %tr{:id => "#{menu_item.id}"} 
+            %td{"data-th" => "Product"}
+              .row
+                .col-sm-12
+                  - if menu_item.veg == true
+                    %h4.product-name.nomargin.veg= menu_item.name
+                  - else
+                    %h4.product-name.nomargin.non-veg= menu_item.name 
+                  %h6.vendor-name= menu_item.description
+                  %span.hide.menu_item_id= menu_item.id
+            %td
+              %span ₹
+              %span.price{"data-th" => "Price"}= menu_item.price
+            %td{"data-th" => "Quantity"}
+              %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
+            %td.text-center
+              %span ₹
+              %span.sub-total{"data-th" => "Subtotal"} 0.0
 
   .col-md-5
     = simple_form_for @order, url: terminal_order_path(@order,:terminal_id => @terminal.id), html: { method: :patch, class: 'form-horizontal' } do |f|
@@ -60,30 +61,43 @@
                   Food Cart
         .panel-body
           .order-details
-          
+            %i "There is no sincere love Than the love for food"
           #order_details
         .panel-footer
-          .row.text-center
-            .col-xs-8
-              %h4.text-right
-                Total
-                %strong#total ₹0.00
-              %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
-              %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
-            .col-xs-4
-              %button.btn.btn-success.btn-block.place_order{:type => "submit"}
-                Place Order
+          / .row.text-center
+          /   .col-xs-8
+          %h4.text-right
+            %span.bag Total
+            %strong ₹
+            %strong#total 0.00
+          %h4.text-right
+            %span.bag Discount
+            %strong ₹
+            %strong#discount 0.00 
+          %h4.text-right
+            %span.bag Grand Total
+            %strong ₹
+            %strong#grand_total 0.00   
+          %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
+          %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
+        .col-xs-12#place_order
+          %button.btn.btn-success.btn-block.place_order{:type => "submit"}
+            Place Order
               
 
 
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }
+    %input.hide#order_detail_id{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+    {{#destroy_order_detail_id}}
+    %input.hide{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][_destroy]"}
+    {{/destroy_order_detail_id}}
     .col-xs-4
       %h4.product-name
         %strong
           {{menu_item_name}}
-        %input.hide#order_detail_id{:type => "text", :value => "{{id}}",name: "order[order_details_attributes]{{menu_item_id}}][id]"}
+        %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
       %h4
       %h4
         %small

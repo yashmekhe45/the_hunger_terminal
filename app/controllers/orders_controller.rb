@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
-  
+
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
@@ -46,9 +46,14 @@ class OrdersController < ApplicationController
 
   def edit
     @terminal = Terminal.find(params[:terminal_id])
-    @order = @terminal.orders.find(params[:id])
+    @order = @terminal.orders.find(params[:id]) 
+    oder_menus = @order.order_details.pluck(:menu_item_id)
+    terminal_menus = @terminal.menu_items.pluck(:id)
+    unique_item =  terminal_menus-oder_menus
     @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
+    if !unique_item.empty?
+      @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
+    end
   end
 
   def update
@@ -75,7 +80,7 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(
-        :total_cost,:terminal_id,:id, order_details_attributes:[:menu_item_id, :quantity, :id]
+        :total_cost,:terminal_id,:id, order_details_attributes:[:menu_item_id, :quantity, :id,:_destroy]
       ).merge(user_id: current_user.id)
     end
 

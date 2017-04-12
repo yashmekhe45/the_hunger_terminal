@@ -12,7 +12,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
-  has_many :order_details, dependent: :destroy, inverse_of: :order
+  has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
 
   # after_initialize :set_date
   before_validation :set_discount

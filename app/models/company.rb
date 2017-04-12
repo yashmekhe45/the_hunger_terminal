@@ -20,8 +20,29 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
-  
+
+  def send_reminders
+    unless weekend? 
+      users = orders.where(date: Time.zone.today).pluck(:user_id)
+      recipients = active_employees.where.not(id: users).pluck(:email)
+      end_time = end_ordering_at.strftime('%I:%M %p')
+
+      OrderMailer.send_place_order_reminder(recipients, end_time).deliver_now
+    end
+  end
+
   private 
+
+    def weekend?
+      # find the weekday and check for sunday(0) and saturday(6)
+      day = Time.zone.today.wday    
+      (day % 7).in?([0, 6])
+    end
+
+    def active_employees
+      self.employees.where(is_active: true)
+    end
+
     def remove_space
       #squish method is not for nil classes
       if(self.name == nil)

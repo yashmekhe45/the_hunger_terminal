@@ -3,23 +3,10 @@
     %a{:href => "/companies/#{current_user.company_id}/users"}
       %span.glyphicon.glyphicon-user.gly
       .name Employee
-  %li.dropdown.icon
-    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
-      %span.glyphicon.glyphicon-list.gly
-      Order
-      %span.caret
-    %ul.dropdown-menu
-    
-      %li
-        %a#menu{:href => vendors_path} Place Order
-      -if current_user.orders.find_by(date: Time.zone.today)  
-        %li
-          - order_id = current_user.orders.find_by(date: Time.zone.today).id
-          %a#menu{:href => orders_path} Today's Order
-      %li
-        %a#menu{:href => orders_path} Order history
-      %li
-        %a#menu{:href => admin_dashboard_index_path} Emp Orders
+  %div.icon
+    %a{:href => admin_dashboard_index_path}
+      %span.glyphicon.glyphicon-th-list
+      .name Today's Orders  
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
       %span.glyphicon.glyphicon-file.gly

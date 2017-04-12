@@ -2,10 +2,10 @@ class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
-
+  
   def order_history
-    @from_date = params[:from] || 7.days.ago.strftime('%y-%m-%d')
-    @to_date = params[:to] || Date.today.strftime('%y-%m-%d')
+    @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
+    @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
     @orders = current_user.orders.where(date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
     if @orders.empty?
       flash[:error] = "No order is present for this period!"

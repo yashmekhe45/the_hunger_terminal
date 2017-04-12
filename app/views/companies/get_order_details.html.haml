@@ -1,56 +1,32 @@
-.container
+
+.container.center.Absolute-Center.is-Responsive
   .row
-    .col-md-12.col-sm-12
-      = form_tag({controller: "companies", action:"set_order_details"}, method: "patch") do
-        .form-group
-          = label_tag(:search_value, "Subsidy")
-          = text_field_tag(:subsidy_val)
-        .form-group
-          = label_tag(:search_value, "Start Time")
-          = text_field_tag(:start_ordering_at_val)
-        .form-group
-          = label_tag(:search_value, "Review Time ")
-          = text_field_tag(:review_ordering_at_val)
-        .form-group
-          = label_tag(:search_value, "End Time")
-          = text_field_tag(:end_ordering_at_val)
-        .form-group
-          = submit_tag("Submit")
-%br
-%br
+    .col-md-3
+    .col-md-6
+      .panel.panel-success
+        .panel-heading
+          .panel-title 
+            %h5 Company Order Details
 
-/ .container.center.Absolute-Center.is-Responsive
-/   .row
-/     .col-md-3
-/     .col-md-6
-/       .panel.panel-success
-/         .panel-heading
-/           .panel-title 
-/             %h5 Company Order Details
+        .panel-body#companyId{data: {company_id: @company.id}}
+          = simple_form_for @company , url: company_path(@company.id), method: "PATCH" do |f|
+            .form-group
+              .col-md-1.col-sm-1
+              .col-md-3.col-sm-3
+                = f.input :subsidy,input_html: { :input_type => "number",:min => 0, :max => 100, id: "subsidy" }
+              .col-md-2.col-sm-2
+              .col-md-6.col-sm-6.start_ordering_at
+                = f.input :start_ordering_at, input_html: {id: "start_ordering_at"} 
 
-/         .panel-body
-/           = simple_form_for @company, url: set_order_details_company_path do |f|
-/             .form-group
-/               .col-md-1.col-sm-1
-/               .col-md-3.col-sm-3
-/                 = f.input :subsidy
-/               .col-md-2.col-sm-2
-/               .col-md-6.col-sm-6
-/                 = f.input :start_ordering_at 
+            .form-group
+              .col-md-6.col-sm-6
+                = f.input :end_ordering_at, id: "end_ordering_at"
+              .col-md-6.col-sm-6
+                = f.input :review_ordering_at, id: "review_ordering_at"
 
-/             .form-group
-/               .col-md-6.col-sm-6
-/                 = f.input :end_ordering_at
-/               .col-md-6.col-sm-6
-/                 = f.input :review_ordering_at
             
-/             .form-group
-/               .col-md-6
-/                 = f.submit 'submit', class: "btn btn-primary"
-/               .col-md-6
-/                 = link_to "Back", root_path, :class=> "btn btn-success"
-
-
-
-
-                
+            .form-group
+              .col-md-6
+                = f.submit 'submit', class: "btn btn-primary", id: "submit_order_details"
+              .col-md-6
+                = link_to "Back", root_path, :class=> "btn btn-success"

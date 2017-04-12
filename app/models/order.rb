@@ -13,13 +13,13 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
-  has_many :order_details, dependent: :destroy, inverse_of: :order
+  has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
 
   # after_initialize :set_date
   before_validation :set_discount
 
 
-  accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
+  accepts_nested_attributes_for :order_details, allow_destroy: true
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).

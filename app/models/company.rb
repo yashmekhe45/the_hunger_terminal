@@ -26,8 +26,9 @@ class Company < ApplicationRecord
       users = orders.where(date: Time.zone.today).pluck(:user_id)
       recipients = active_employees.where.not(id: users).pluck(:email)
       end_time = end_ordering_at.strftime('%I:%M %p')
-
-      OrderMailer.send_place_order_reminder(recipients, end_time).deliver_now
+      recipients.each do |recipient|
+        OrderMailer.send_place_order_reminder(recipient, end_time).deliver_now
+      end
     end
   end
 

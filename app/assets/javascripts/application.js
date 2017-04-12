@@ -16,6 +16,8 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
+//= require moment
+//= require bootstrap-datetimepicker
 
 //= require jquery_ujs
 //= require turbolinks
@@ -24,15 +26,14 @@
 //= require_tree .
 
   $(document).on('turbolinks:load',function(){
-    $('.from').datepicker({
-      todayBtn: "linked",
-      autoclose: true,  
-      orientation: "bottom right",
-      format: 'yyyy-mm-dd'
-    });
-    $('.to').datepicker({
+    $('.from, .to').datepicker({
       autoclose: true,
-      format: 'yyyy-mm-dd'
+      // format: 'dd-mm-yyyy'
+      format: 'yyyy-mm-dd',
+      todayBtn: "linked",
+      orientation: "bottom auto",
+      todayHighlight: true
+      // startDate: "0d"
     });
     $("#bton").click(function(event) {
       event.preventDefault();
@@ -41,6 +42,11 @@
       
     });
   });
+
+
+
+
+
 
 
 

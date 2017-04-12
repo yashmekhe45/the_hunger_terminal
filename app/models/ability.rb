@@ -8,19 +8,21 @@ class Ability
     if user.role == "employee"
       can :manage, Order
       cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
+      cannot [:show,:update,:delete], Company 
     end
 
     if user.role == "company_admin"
       can :manage, Order
       can :manage, Terminal
       can :manage, User
-      can :create, Company
       can :manage, MenuItem
       can :index, :order_management
       can :order_detail, :order_management
       can :forward_orders, :order_management
       can :place_orders, :order_management
       can :confirm_orders, :order_management
+      can [:read, :update, :get_order_details], Company
+      cannot [:index, :delete], Company
     end
 
     #

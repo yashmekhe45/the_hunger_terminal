@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
 
   skip_before_action :authenticate_user!, :only => [:new, :create]
-  before_action :require_permission, only: [:show, :edit, :update, :delete]
+  before_action :require_permission, only: [:show, :edit, :update, :delete, :get_order_details]
   before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
 
   def new
@@ -23,16 +23,12 @@ class CompaniesController < ApplicationController
 
   def update
     authorize! :update, @company
-    if !params[:page]
-      params[:page] = 1
-    end
     @company = Company.find(params[:id])
- 
-   if @company.update(company_params)
-      redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
+   if @company.update_attributes(company_params)
+      flash[:success] = "updated successfully!!"
+      redirect_to root_path
    else
       flash[:error] = @company.errors.messages
-      render :edit
    end
   end
 
@@ -48,23 +44,6 @@ class CompaniesController < ApplicationController
   end 
 
   def get_order_details
-  end
-
-  def set_order_details
-    
-    subsidy = params[:subsidy_val]
-    start_ordering_at = Time.zone.parse params[:start_ordering_at_val]
-    review_ordering_at = Time.zone.parse params[:review_ordering_at_val]
-    end_ordering_at = Time.zone.parse params[:end_ordering_at_val]
-    if @company.update(subsidy: subsidy, start_ordering_at: start_ordering_at, review_ordering_at:
-      review_ordering_at, end_ordering_at: end_ordering_at)
-      flash[:success] = "Order details successfully updated"
-      redirect_to company_terminals_path(params[:id])
-   else
-      render :get_order_details
-      flash[:error] = @company.errors.messages
-   end
-
   end
 
   

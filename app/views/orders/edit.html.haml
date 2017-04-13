@@ -24,7 +24,7 @@
               %span ₹
               %span.price{"data-th" => "Price"}= order_detail.menu_item.price
             %td{"data-th" => "Quantity"}
-              %input.form-control.text-center.item-qty{:type => "number", :value => order_detail.quantity, :min => 0}/
+              %input.form-control.text-center.item-qty{:type => "number",:value => order_detail.quantity, :min => 0}/
             %td.text-center
               %span ₹
               %span.sub-total{"data-th" => "Subtotal"} 0.0
@@ -105,7 +105,10 @@
 
     .col-xs-6
       .col-xs-6
-        %input.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %h6
+          %strong
+            {{quantity}}
       .col-xs-6.text-right
         %h6
           %strong.total

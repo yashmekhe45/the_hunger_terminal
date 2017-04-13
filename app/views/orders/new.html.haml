@@ -80,7 +80,10 @@
 
     .col-xs-6
       .col-xs-6
-        %input.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %h6   
+          %strong
+            {{quantity}}
       .col-xs-6.text-right
         %h6   
           %strong.total

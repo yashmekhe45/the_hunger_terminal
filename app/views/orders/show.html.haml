@@ -1,27 +1,22 @@
 -if can? :show, @order
   .container
-    .alert.alert-success 
-      %strong Thank You!
-      You will receive an email confirmation shortly at #{@order.user.email}
     %hr
     .card
       .card-block
         %h4.card-title Today's Order
         .row
-          .col-sm-8
+          .col-sm-6
             %table.table.order-show
               %thead
                 %tr
                   %th Product
-                  %th Vendor
                   %th UnitPrice
                   %th Quantity
-                  %th.text-center Subtotal
+                  %th Subtotal
               %tbody
                 - @order.order_details.each do |order_detail|
                   %tr
                     %td= order_detail.menu_item_name  
-                    %td= @order.terminal.name 
                     %td
                       %span ₹
                       %span.price= order_detail.price
@@ -29,7 +24,7 @@
                     %td.text-center
                       %span ₹
                       %span.sub-total= order_detail.price * order_detail.quantity
-
+          .col-sm-2
           .col-sm-4
             .detail
               %h4 

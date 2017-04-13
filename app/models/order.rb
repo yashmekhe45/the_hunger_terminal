@@ -18,8 +18,8 @@ class Order < ApplicationRecord
   # after_initialize :set_date
   before_validation :set_discount
 
-
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
+
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).
@@ -59,15 +59,7 @@ class Order < ApplicationRecord
       OrderMailer.send_mail_to_employees(emp).deliver_later
     end
   end
-
-  # def self.find_employees(t_id,c_id)
-  #   self.
-  #     joins(:user).
-  #     where('orders.date' => Time.zone.today, 'orders.terminal_id' => t_id,
-  #      'orders.company_id' => c_id).
-  #     select('users.email as email')
-  # end
-
+  
   private
 
     # needs to be evaluated

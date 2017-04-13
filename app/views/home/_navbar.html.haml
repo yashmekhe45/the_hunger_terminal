@@ -13,15 +13,20 @@
           %a{:href => root_path}
             Home
             %span.sr-only (current)
-        -if user_signed_in? && current_user.role == "employee"        
+        %li
+          -if user_signed_in? && current_user.role == "company_admin" 
+            %a{:href => get_order_details_company_path(current_user.company_id)}
+              Set Order details 
+            %span.sr-only (current)
+        -if user_signed_in?    
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Order
+              My Order
               %span.caret
             %ul.dropdown-menu
               %li
                 %a{:href => vendors_path} Place Order
-              -if current_user.orders.find_by(date: Time.zone.today)
+              -if user_signed_in? && current_user.orders.find_by(date: Time.zone.today)
                 %li
                   - order_id = current_user.orders.find_by(date: Time.zone.today).id
                   - terminal_id = current_user.orders.find_by(date: Time.zone.today).terminal.id

@@ -95,6 +95,15 @@ footer {
   width:100%;
 } 
 
+.backlink
+{
+  position:fixed;
+  left:0px;
+  bottom:20px;
+  width:100%;
+  left: -500px;
+}
+
 .Absolute-Center.is-Responsive {
   padding: 5%;
 }
@@ -184,6 +193,11 @@ a.name{
 
 .modal-title.menu_item{
   margin-left: 35%;
+}
+
+#backButton
+{
+  float: bottom;
 }
 
 .toast-title {

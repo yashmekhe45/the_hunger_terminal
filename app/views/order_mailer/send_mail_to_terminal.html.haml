@@ -1,14 +1,24 @@
-%p Hello, #{@terminal.name}!!!
-%p 
+%p Hello #{@terminal.name},
 = @message
 .table-responsive
-  %table.table.table-condensed
-    %thead
-      %th.text-center Menu Item
-      %th.text-center Quantity
-    %tbody
+  %table.table-hover
+    %tr
+      %td
+        %strong Menu Item
+      %td
+        %strong Quantity
+    %tr
       - @orders.each do |order|
         %tr
           %td.text-center #{order["menu"]}
           %td.text-center #{order["quantity"]}
-%p Please Deliver to:
+%br
+%table
+  %tr 
+    %strong Please Deliver to:
+  %tr #{@company.name},
+  %tr #{@company.address.house_no} #{@company.address.locality},
+  %tr #{@company.address.city} #{@company.address.pincode},
+  %tr #{@company.address.state}
+  %tr  
+    %strong ph. no: #{@company.landline}

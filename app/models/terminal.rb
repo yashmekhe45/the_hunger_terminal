@@ -33,5 +33,4 @@ class Terminal < ApplicationRecord
       select('terminals.name,terminals.min_order_amount,terminals.id,
        sum(total_cost) AS total')
   end
-1
 end

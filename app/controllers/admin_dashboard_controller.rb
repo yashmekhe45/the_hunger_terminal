@@ -9,13 +9,13 @@ class AdminDashboardController < ApplicationController
 
   def order_detail
     authorize! :order_detail, :order_management
-  	@order_details = Order.daily_orders(params[:terminal_id],current_user.company_id)  
+  	@order_details = Order.daily_orders(params[:terminal_id], current_user.company_id)  
   end
 
   def forward_orders
     authorize! :forward_orders, :order_management
     @terminal = Terminal.find(params[:terminal_id])
-    @orders = Order.menu_details(params[:terminal_id],current_user.company_id)
+    @orders = Order.menu_details(params[:terminal_id], current_user.company_id)
     if @orders.any?
       Order.update_status(@order_details)
     end
@@ -23,8 +23,8 @@ class AdminDashboardController < ApplicationController
 
   def place_orders
     authorize! :place_orders, :order_management
-    SendOrderMailJob.perform_now(params[:terminal_id], @orders, params[:message])
-    flash[:notice] = "emails sent successfully"
+    SendOrderMailJob.perform_now(params[:terminal_id], @orders, params[:message], current_user.company_id)
+    flash[:notice] = "email sent successfully"
     # if SendOrderMailJob.perform_now(params[:terminal_id], @orders, @order_details, params[:message])
     #   flash[:notice] = "emails sent successfully"
     # else

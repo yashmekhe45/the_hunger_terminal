@@ -1,13 +1,14 @@
 class Order < ApplicationRecord
 
-  # validate :can_be_created?, :is_empty?, on: :create
+  validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
   # validates :user_id, uniqueness: { scope: :date }
-  validate :valid_date?
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
+  validates :user_id, uniqueness: { scope: :date }
+  validate :valid_date? 
 
   belongs_to :user
   belongs_to :company
@@ -42,9 +43,9 @@ class Order < ApplicationRecord
     self.
       joins(:order_details).
       where('orders.date'=> Time.zone.today,'orders.terminal_id' => t_id,
-        'orders.company_id'=> c_id,'orders.status' => ['pending','review','placed']).
+        'orders.company_id'=> c_id, 'orders.status' => ['pending', 'review', 'placed']).
       group('order_details.menu_item_name').
-      select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
+      select('order_details.menu_item_name AS menu, sum(quantity) AS quantity')
   end
 
   def self.update_status(order_details)

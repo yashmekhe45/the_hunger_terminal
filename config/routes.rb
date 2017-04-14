@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   get 'reports/monthly_all_employees'
   get "reports/download_pdf" => "reports#download_pdf"
   get 'reports/all_terminals_last_month_reports'
+  get 'reports/all_terminals_daily_report'
   root to: 'home#index'
   
 end

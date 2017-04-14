@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
 
-  validate :can_be_created?, :is_empty?, on: :create
+  # validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
@@ -28,6 +28,14 @@ class Order < ApplicationRecord
         'order_details.menu_item_name AS menu,quantity').
       order("users.name ASC")
       # 'orders.status' => ['pending','review','placed']
+  end
+
+  def self.all_terminals_daily_report(c_id)
+    self.
+      joins(:terminal, :order_details).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => 'confirmed').
+      group('orders.terminal_id','terminals.id','order_details.menu_item_name').
+      select('terminals.name, sum(orders.total_cost) AS total, order_details.menu_item_name, sum(order_details.quantity) AS quantity')
   end
 
   def self.menu_details(t_id,c_id)

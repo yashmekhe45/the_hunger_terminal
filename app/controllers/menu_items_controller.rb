@@ -37,6 +37,7 @@ class MenuItemsController < ApplicationController
 
   def create
     @menu_item = @terminal.menu_items.create(menu_item_params)
+    flash[:success] = 'New Menu Item Added'
   end
 
   def edit

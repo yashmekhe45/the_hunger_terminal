@@ -47,4 +47,10 @@ class ReportsController < ApplicationController
     @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)
   end
 
+  def all_terminals_daily_report
+    @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
+    @todays_terminals = Terminal.daily_terminals(current_user.company_id)
+  #   @terminals =  Order.all_terminals_daily_report(current_user.company_id)
+  end
+
 end

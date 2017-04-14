@@ -42,4 +42,21 @@ class Terminal < ApplicationRecord
       select('terminals.name,sum(total_cost) AS total, count(terminal_id) AS no_of_orders')
   end  
 
+  # def self.all_terminals_todays_orders_report(c_id)
+  #   self.
+  #     joins(:orders).
+  #     where('orders.company_id' => c_id,'terminals.company_id' => c_id).
+  #     group('terminals.id').
+  #     select('terminals.name, sum(total_cost) AS total')
+  # end
+
+  def self.all_terminals_todays_order_details(c_id)
+    self.
+      joins(:orders => :order_details).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => 'confirmed').
+      group('terminals.id','order_details.menu_item_name').
+      select('terminals.name, order_details.menu_item_name, sum(order_details.quantity) AS quantity, sum(order_details.quantity * order_details.price) AS total').
+      order('terminals.name')
+  end
+
 end

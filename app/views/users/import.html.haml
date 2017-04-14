@@ -1,9 +1,7 @@
 .container
-  / %br
-  / =link_to 'Back',company_users_path(@company.id), class: 'btn btn-success'
-  =link_to 'Download your invalid record csv',download_company_users_path(@company.id), class: 'btn btn-primary'
+  =link_to 'Download invalid records',download_invalid_csv_company_users_path(@company.id), class: 'btn btn-primary'
+  %br
   -if flash.now[:notice].present?
     =flash.now[:notice]
   -else
     =flash.now[:error]
-  =link_to 'Back',company_users_path(@company.id), class: 'btn btn-success'

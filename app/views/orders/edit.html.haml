@@ -83,8 +83,6 @@
         .col-xs-12#place_order
           %button.btn.btn-success.btn-block.place_order{:type => "submit"}
             Place Order
-              
-
 
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
@@ -111,9 +109,9 @@
           %strong.total
             {{total}}
     .col-xs-2
-      / %button.btn.btn-link.btn-xs.delete{:type => "button"}
-      /   %span.glyphicon.glyphicon-trash
-      %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
+      %button.btn.btn-link.btn-xs.delete{:type => "button"}
+        %span.glyphicon.glyphicon-trash
+      / %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
   {{/.}} 
 
 

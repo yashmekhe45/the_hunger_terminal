@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
-
+  
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')

@@ -16,6 +16,7 @@
 */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-datetimepicker";
 @import "terminals";
 @import "companies";
 @import "home";
@@ -159,6 +160,12 @@ a.name{
 } 
  
 
+#setOrderDetails
+{
+  top:-14px;
+  color: white;
+  cursor: pointer;
+}
 
 /*.btn-primary{
   width: -moz-available;
@@ -380,3 +387,5 @@ button.toast-close-button {
     width: 25em;
   }
 }
+
+

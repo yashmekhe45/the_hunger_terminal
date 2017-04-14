@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   end  
   resources :companies do
     get 'get_order_details', :on => :member
-    patch 'set_order_details', :on => :member
     resources :users do
       get 'search', :on => :collection
       get 'download', :on => :collection

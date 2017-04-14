@@ -18,7 +18,7 @@
       = form_tag({controller: "users", action:"search"}, method: "get") do
         = text_field_tag(:search_value)
         = submit_tag("Search"), :class => "btn btn-primary"
-        =link_to  "RESET",company_users_path(@company.id), :class=> "btn btn-primary"
+        =link_to  "RESET",company_users_path(@company.id), :class=> "btn", :id =>"resetButton"
     .col-md-1.col-sm-1
 %br
 %br

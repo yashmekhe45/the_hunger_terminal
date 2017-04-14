@@ -22,7 +22,7 @@ class Ability
       can :forward_orders, :order_management
       can :place_orders, :order_management
       can :confirm_orders, :order_management
-      can [:read, :update], Company
+      can [:read, :update, :get_order_details], Company
       cannot [:index, :delete], Company
     end
 

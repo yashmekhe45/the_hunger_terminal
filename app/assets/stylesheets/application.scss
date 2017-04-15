@@ -97,11 +97,16 @@ footer {
 
 .backlink
 {
-  position:fixed;
+  /*position:fixed;*/
   left:0px;
   bottom:20px;
   width:100%;
   left: -500px;
+}
+
+.glyphicon.glyphicon-backward
+{
+  font-size: 25px;
 }
 
 .Absolute-Center.is-Responsive {

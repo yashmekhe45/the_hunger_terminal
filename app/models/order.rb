@@ -1,10 +1,10 @@
 class Order < ApplicationRecord
 
-  validate :can_be_created?, :is_empty?, on: :create
+  # validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
-  validates :user_id, uniqueness: { scope: :date }
+  # validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?
   # validate :can_be_created?, :is_empty?, on: :create
   # :can_be_created?, 
@@ -18,8 +18,8 @@ class Order < ApplicationRecord
   # after_initialize :set_date
   before_validation :set_discount
 
+  accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
-  accepts_nested_attributes_for :order_details, allow_destroy: true
   def self.daily_orders(t_id,c_id)
     self.
       joins(:user,:order_details).
@@ -57,15 +57,6 @@ class Order < ApplicationRecord
                     pluck('users.email AS email')
     @employees.each do |emp|
       OrderMailer.send_mail_to_employees(emp).deliver_later
-    end
-  end
-
-  def self.send_reminders(company)
-    day = Time.zone.today.wday
-    if day%7 != 0 and day%7 != 6 
-      users = self.where(date: Time.zone.today, company_id: company.id).pluck(:user_id)
-      send_reminder_to = company.employees.where.not(id: users).where(is_active: true).pluck(:email)
-      OrderMailer.send_place_order_reminder(send_reminder_to).deliver_later
     end
   end
   

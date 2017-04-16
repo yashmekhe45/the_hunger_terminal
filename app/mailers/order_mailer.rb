@@ -10,8 +10,9 @@ class OrderMailer < ApplicationMailer
   end
 
   def send_mail_to_employees(employee)
-    @employee = employee
-    mail(to: employee, subject: 'status of order')
+    email = employee[0]
+    @name = employee[1]
+    mail(to: email, subject: 'status of order')
   end
 
   def send_place_order_reminder(employee, end_time)

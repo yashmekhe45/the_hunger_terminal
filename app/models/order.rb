@@ -51,9 +51,9 @@ class Order < ApplicationRecord
     orders.update_all(:status => "confirmed")
     @employees =  orders.
                     joins(:user).
-                    pluck('users.email AS email')
-    @employees.each do |emp|
-      OrderMailer.send_mail_to_employees(emp).deliver_later
+                    pluck('users.email AS email, users.name AS name')
+    @employees.each do |employee|
+      OrderMailer.send_mail_to_employees(employee).deliver_later
     end
   end
   

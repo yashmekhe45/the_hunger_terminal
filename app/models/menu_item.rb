@@ -1,6 +1,6 @@
 class MenuItem < ApplicationRecord
 
-  validates :name,:price, :active_days, :available, presence: true
+  validates :name,:price, :active_days, presence: true
   validates :price, numericality: { greater_than: 0 } 
   validates :veg, inclusion: { in: [false, true] }
   validates :name, uniqueness: { scope: :terminal_id , case_sensitive: false}

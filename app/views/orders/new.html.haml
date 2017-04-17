@@ -1,5 +1,5 @@
 .container
-  .col-md-7
+  .col-md-7.col-sm-7
     %table#cart.table.table-hover.table-condensed
       %thead
         %tr
@@ -23,10 +23,10 @@
               %span ₹
               %span.price{"data-th" => "Price"}= menu_item.price
             %td{"data-th" => "Quantity"}
-              %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
+              %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0, :max => 100}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0.0
+              %span.sub-total{"data-th" => "Subtotal"} 0
 
   .col-md-5
     = form_tag terminal_orders_path do |f|
@@ -46,17 +46,17 @@
           / .row.text-center
           /   .col-xs-8
           %h4.text-right
-            %span.bag Bag Total
+            %span.bag Bag Total :
             %strong ₹
-            %strong#total 0.00
+            %strong#total 0
           %h4.text-right
-            %span.bag Bag Discount
+            %span.bag Bag Discount :
             %strong ₹
-            %strong#discount 0.00  
+            %strong#discount 0
           %h4.text-right
-            %span.bag Total Payable
+            %span.bag Total Payable :
             %strong ₹
-            %strong#grand_total 0.00    
+            %strong#grand_total 0
           %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
           / %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
         .col-xs-12#place_order
@@ -81,14 +81,15 @@
     .col-xs-6
       .col-xs-6
         %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
-        %h6   
+        %h6  
           %strong
             {{quantity}}
       .col-xs-6.text-right
-        %h6   
+        %h6  
+          %strong₹ 
           %strong.total
             {{total}}
     .col-xs-2
-      %button.btn.btn-link.btn-xs.delete_new{:type => "button"}
-        %span.glyphicon.glyphicon-trash
+      %button.btn.btn-link.btn-s.delete_new{:type => "button"}
+        %span.glyphicon.glyphicon-remove
   {{/.}}

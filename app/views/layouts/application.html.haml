@@ -25,7 +25,9 @@
           / toastr.options.timeOut = 30;
           / toastr.options.extendedTimeOut = 300;
           / toastr.clear();
-    = yield    
+    = yield 
+    -if user_signed_in? && request.original_url != root_url
+      =render "layouts/backlink"
   %footer.container-fluid.text-center
     %p © the hunger terminal
 

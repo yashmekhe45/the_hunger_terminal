@@ -18,12 +18,14 @@ Rails.application.routes.draw do
   resources :companies do
     get 'get_order_details', :on => :member
     resources :users do
-      get 'search', :on => :collection
-      get 'download', :on => :collection
-      collection { post :import }
+      collection do
+        get 'search'
+        get 'download_invalid_csv'
+        post 'import'
+      end
     end
-
   end
+
   resources :companies do
     resources :terminals do
       resources :menu_items do
@@ -38,6 +40,7 @@ Rails.application.routes.draw do
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
   get "menu_items/download_csv"
+  get 'users/download_sample_csv'
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'

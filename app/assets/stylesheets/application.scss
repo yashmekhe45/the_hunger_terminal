@@ -95,6 +95,20 @@ footer {
   width:100%;
 } 
 
+.backlink
+{
+  /*position:fixed;*/
+  left:0px;
+  bottom:20px;
+  width:100%;
+  left: -500px;
+}
+
+.glyphicon.glyphicon-backward
+{
+  font-size: 25px;
+}
+
 .Absolute-Center.is-Responsive {
   padding: 5%;
 }
@@ -185,6 +199,11 @@ a.name{
 
 .modal-title.menu_item{
   margin-left: 35%;
+}
+
+#backButton
+{
+  float: bottom;
 }
 
 .toast-title {

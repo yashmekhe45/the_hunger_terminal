@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :role, inclusion: {in: USER_ROLES}
   validates :is_active, inclusion: {in: [true, false, 't','f', 'true','false']}, :unless => :is_super_admin?
   validates :mobile_number, uniqueness: { scope: :company_id}
+  validates :email, uniqueness: {scope: :company_id}
 
   belongs_to :company
   has_many :orders, dependent: :destroy

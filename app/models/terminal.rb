@@ -9,6 +9,7 @@ class Terminal < ApplicationRecord
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
   has_many :orders
+  has_many :terminal_reports
   belongs_to :company
 
   mount_uploader :image, ImageUploader
@@ -35,11 +36,31 @@ class Terminal < ApplicationRecord
   end
 
   def self.all_terminals_last_month_reports(c_id)
+
     self.
-      joins(:orders).
-      where('orders.company_id' => c_id).
+      joins(:terminal_reports).
+      where('terminals.company_id' => c_id).
       group('terminals.id').
-      select('terminals.name,sum(total_cost) AS total, count(terminal_id) AS no_of_orders')
+      select('terminals.name,terminals.id,sum(terminal_reports.current_amount) AS total,
+        sum(terminal_reports.payment_made) AS total_paid')
+    # # self.
+    # #   joins(:orders, :terminal_reports).
+    # #   where('orders.company_id'=>c_id,'terminals.company_id'=> c_id, 'orders.status'=>'confirmed').
+    # #   group('terminals.id','terminal_reports.name').
+    # #   select('terminals.name', 'terminals.id', 'sum(orders.total_cost) AS total', 'count(orders.terminal_id) AS no_of_orders', 'sum(terminal_reports.payment_made) AS paid')
+    # a = self.
+    #   joins(:orders).
+    #   where('orders.company_id' => c_id, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
+    #   group('terminals.id').
+    #   select('terminals.name, terminals.id, sum(orders.total_cost) AS total, count(orders.terminal_id) AS no_of_orders').
+    #   order('terminals.id')
+    
+    # g = self.joins(:terminal_reports).
+    #   where('terminals.company_id' => c_id).
+    #   group('terminals.id').
+    #   select('terminals.id, sum(terminal_reports.payment_made) AS paid').
+    #   order('terminals.id')    
+    #   byebug
   end  
 
   # def self.all_terminals_todays_orders_report(c_id)
@@ -53,10 +74,41 @@ class Terminal < ApplicationRecord
   def self.all_terminals_todays_order_details(c_id)
     self.
       joins(:orders => :order_details).
-      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => 'confirmed').
+      where('orders.date' => Time.zone.today, 'terminals.company_id'=>c_id, 'orders.company_id' => c_id, 'orders.status' => 'confirmed').
       group('terminals.id','order_details.menu_item_name').
       select('terminals.name, order_details.menu_item_name, sum(order_details.quantity) AS quantity, sum(order_details.quantity * order_details.price) AS total').
       order('terminals.name')
+  end
+
+  def self.update_current_amount_of_terminal(t_id, c_id, todays_order_total)
+    @company = Company.find(c_id)
+    @terminal = @company.terminals.find(t_id)
+    @terminal.current_amount = @terminal.current_amount + todays_order_total.to_f
+    @terminal.payable = @terminal.current_amount - @terminal.payment_made
+    @terminal.save!
+  end
+
+  def self.update_post_payment_details_of_terminal(t_id, c_id)
+    @company =  Company.find c_id
+    @terminal = @company.terminals.find t_id
+    @terminal.payable = @terminal.payable - @terminal.payment_made
+    if @terminal.payable <= 0
+      @terminal.current_amount = 0
+      @terminal.payment_made = -@terminal.payable
+    else
+      @terminal.current_amount = 0
+      @terminal.payment_made = 0 
+    end
+    @terminal.save  
+  end
+
+  def self.save_last_payment_made_to_terminal(t_id, c_id)
+    @company = Company.find c_id
+    @terminal = @company.terminals.find t_id
+    @terminal_last_payment = @terminal.terminal_reports.build(name: @terminal.name, 
+      current_amount: @terminal.current_amount, payment_made: @terminal.payment_made,
+      payable: @terminal.payable)
+    @terminal_last_payment.save
   end
 
 end

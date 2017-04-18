@@ -53,4 +53,7 @@ class ReportsController < ApplicationController
   #   @terminals =  Order.all_terminals_daily_report(current_user.company_id)
   end
 
+  def individual_terminal_last_month_report
+    @terminal_reports = TerminalReport.all.where(terminal_id:params[:terminal_id].to_i)
+  end
 end

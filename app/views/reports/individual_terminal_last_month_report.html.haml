@@ -1,0 +1,18 @@
+.indexcontainer
+  / %h3.text-center #{@orders.name}
+  .table-responsive
+    %table.table-hover.table-bordered
+      %tbody
+        %tr
+          %th.text-center Sr No.
+          %th.text-center Payment Date
+          %th.text-center Current Amount
+          %th.text-center Payment Made 
+          %th.text-center Payble
+        - @terminal_reports.each_with_index do |terminal_report,i|
+          %tr  
+          %td.text-center= i+1 
+          %td.text-center= terminal_report.created_at
+          %td.text-center= terminal_report.current_amount
+          %td.text-center= "₹ #{terminal_report.payment_made}"
+          %td.text-center= "₹ #{terminal_report.payable}"

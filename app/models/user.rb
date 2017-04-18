@@ -56,7 +56,7 @@ devise :timeoutable, :timeout_in => 3.days
   def self.employee_report(c_id)
     self.
       joins(:orders).
-      where('company_id'=> c_id).
+      where('company_id'=> c_id,'orders.status' => 'confirmed').
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
       order('users.id')

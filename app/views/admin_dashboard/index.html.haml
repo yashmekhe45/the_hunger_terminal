@@ -18,7 +18,7 @@
           %td.text-center ₹ #{terminal.min_order_amount}
           %td.text-center ₹ #{terminal.total}
           %td.text-center= link_to "Forward Orders", admin_dashboard_forward_orders_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
-          %td.text-center= link_to "Confirm Orders", admin_dashboard_confirm_orders_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
+          %td.text-center= link_to "Confirm Orders", admin_dashboard_confirm_orders_path(:terminal_id => terminal.id,:todays_order_total => terminal.total),remote: true, class:"btn btn-info"
 #myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 #myForwardOrdersModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 

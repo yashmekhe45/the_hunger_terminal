@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
 
-  validate :can_be_created?, :is_empty?, on: :create
+  # validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}

@@ -19,11 +19,20 @@
               = f.input :name, label: false, required: true, placeholder: 'kfc'
             .col-md-6  
               = f.input :landline, label:false, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'  
-          .form-group
-            .col-md-6    
+          -if current_page?(action: 'new')
+            .form-group
+              .col-md-6    
+                = f.input :payment_made, label:false, class: "number", placeholder: 'advance,ex.1000'
+              .col-md-6  
+                = f.input :min_order_amount, label:false, required: true, placeholder: 'min order amount,ex.200'
+            .form-group
               = f.input :email, label:false, placeholder: 'kfc@gmail.com'
-            .col-md-6  
-              = f.input :min_order_amount, label:false, required: true, placeholder: '200'
+          -else
+            .form-group
+              .col-md-6
+                = f.input :email, label: false, placeholder: 'kfc@gmail.com'
+              .col-md-6  
+                = f.input :min_order_amount, label:false, required: true, placeholder: 'min order amount,ex.200'
           .csvfileupload.text-center
             = f.input :CSV_menu_file, as: :file
             = link_to 'Sample Menu CSV', menu_items_download_csv_path

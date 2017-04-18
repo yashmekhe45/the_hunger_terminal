@@ -1,6 +1,7 @@
 class AdminDashboardController < ApplicationController
 
   before_action :load_details, only: [:place_orders, :forward_orders, :confirm_orders]
+  before_action :authenticate_user!
 
   def index
     authorize! :index, :order_management
@@ -21,6 +22,15 @@ class AdminDashboardController < ApplicationController
     end
   end  
 
+  def payment
+    @company = Company.find(current_user.company_id)
+    @terminals = @company.terminals.all.order(:name)
+  end
+
+  def pay
+    @terminal = Terminal.find params[:terminal_id]
+  end
+
   def place_orders
     authorize! :place_orders, :order_management
     SendOrderMailJob.perform_now(params[:terminal_id], @orders, params[:message], current_user.company_id)
@@ -34,6 +44,7 @@ class AdminDashboardController < ApplicationController
 
   def confirm_orders
     authorize! :confirm_orders, :order_management
+    Terminal.update_current_amount_of_terminal(params[:terminal_id], current_user.company_id, params[:todays_order_total])
     Order.confirm_all_placed_orders(params[:terminal_id], current_user.company_id, @order_details)
     flash[:notice] = "all orders confirmed"
   end 

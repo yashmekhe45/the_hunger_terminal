@@ -1,5 +1,6 @@
 -if can? :show, @order
-  .container
+  .container 
+    %i "You Tell Us What You Eat, We Tell You Who You Are "
     %hr
     .card
       .card-block
@@ -37,7 +38,7 @@
                 %strong Discount: 
                 %span₹#{@order.discount}
               %h4
-                %strong.total Total:
+                %strong.order_total Total:
                 %span₹#{@order.total_cost-@order.discount}  
       - if can? :edit, @order
         %a.card-link= link_to 'Edit Order',edit_terminal_order_path(@order,:terminal_id => @order.terminal.id),class: "btn btn-info"

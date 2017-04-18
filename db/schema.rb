@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322104724) do
+ActiveRecord::Schema.define(version: 20170418093700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20170322104724) do
     t.boolean  "active",           default: true
     t.string   "image"
     t.float    "min_order_amount"
+    t.string   "tax"
     t.index ["company_id"], name: "index_terminals_on_company_id", using: :btree
   end
 

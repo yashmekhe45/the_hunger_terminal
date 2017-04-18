@@ -1,5 +1,7 @@
 .container
   .col-md-7.col-sm-7
+    %span.hide.subsidy=@subsidy
+    %span.hide.tax=@terminal.tax
     %table#cart.table.table-hover.table-condensed
       %thead
         %tr
@@ -50,8 +52,12 @@
             %strong ₹
             %strong#total 0
           %h4.text-right
-            %span.bag Bag Discount :
+            %span.bag Bag Tax :
             %strong ₹
+            %strong#tax 0  
+          %h4.text-right
+            %span.bag Bag Discount :
+            %strong - ₹ 
             %strong#discount 0
           %h4.text-right
             %span.bag Total Payable :
@@ -73,10 +79,10 @@
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
-      %h4
-      %h4
-        %small
-          {{vendor_name}}
+      / %h4
+      / %h4
+      /   %small
+      /     {{vendor_name}}
 
     .col-xs-6
       .col-xs-6
@@ -93,3 +99,8 @@
       %button.btn.btn-link.btn-s.delete_new{:type => "button"}
         %span.glyphicon.glyphicon-remove
   {{/.}}
+
+%script{:type => 'text/javascript'}
+  subsidy = #{@subsidy};
+  tax = #{@terminal.tax}
+  

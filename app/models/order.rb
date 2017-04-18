@@ -1,14 +1,11 @@
 class Order < ApplicationRecord
 
-  # validate :can_be_created?, :is_empty?, on: :create
+  validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
-  # validates :user_id, uniqueness: { scope: :date }
-  validate :valid_date?
-  # validate :can_be_created?, :is_empty?, on: :create
-  # :can_be_created?, 
-  # validate :can_be_updated?, on: :update  
+  validates :user_id, uniqueness: { scope: :date }
+  validate :valid_date? 
 
   belongs_to :user
   belongs_to :company
@@ -20,24 +17,24 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
-  def self.daily_orders(t_id,c_id)
+  def self.daily_orders(terminal_id, company_id)
     self.
       joins(:user,:order_details).
-      where('orders.date' => Time.zone.today,'orders.terminal_id' => t_id, 
-        'orders.company_id' => c_id).
+      where('orders.date' => Time.zone.today,'orders.terminal_id' => terminal_id, 
+        'orders.company_id' => company_id).
       select('orders.id','users.name AS emp_name',
-        'order_details.menu_item_name AS menu,quantity').
+        'order_details.menu_item_name AS menu, quantity').
       order("users.name ASC")
       # 'orders.status' => ['pending','review','placed']
   end
 
-  def self.menu_details(t_id,c_id)
+  def self.menu_details(terminal_id, company_id)
     self.
       joins(:order_details).
-      where('orders.date'=> Time.zone.today,'orders.terminal_id' => t_id,
-        'orders.company_id'=> c_id,'orders.status' => ['pending','review','placed']).
+      where('orders.date'=> Time.zone.today,'orders.terminal_id' => terminal_id,
+        'orders.company_id'=> company_id, 'orders.status' => ['pending', 'review']).
       group('order_details.menu_item_name').
-      select('order_details.menu_item_name AS menu,sum(quantity) AS quantity')
+      select('order_details.menu_item_name AS menu, sum(quantity) AS quantity')
   end
 
   def self.update_status(order_details)
@@ -48,16 +45,20 @@ class Order < ApplicationRecord
     orders.update_all(:status => "placed")
   end
 
-  def self.confirm_all_placed_orders(t_id, c_id, order_details)
+  def self.confirm_all_placed_orders(terminal_id, company_id, order_details)
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "confirmed")
     @employees =  orders.
                     joins(:user).
-                    pluck('users.email AS email')
-    @employees.each do |emp|
-      OrderMailer.send_mail_to_employees(emp).deliver_later
+                    pluck('users.email AS email, users.name AS name')
+    @employees.each do |employee|
+      OrderMailer.send_mail_to_employees(employee).deliver_later
     end
+  end
+
+  def self.get_all_orders_status(terminal_id)
+    where(date: Time.zone.today, terminal_id: terminal_id).pluck(:status)
   end
   
   private

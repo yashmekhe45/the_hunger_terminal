@@ -1,7 +1,10 @@
-%p Hello #{@employee}
-%p This is just for the reminder that you can place order only upto #{@end_time}
+%p Hello #{@name},
+%p 
+  This is just for the reminder that you can place order only upto 
+  %b #{@end_time}
 %p So, place your order as soon as possible and enjoy your lunch!!!
+%p You can sign in to your accout through the link below to quickly place your order:
+%p= link_to 'Sign In', new_user_session_url
 %p Have a great day!!!
-%br
-%p regards,
+%p Regards,
 %p The Hunger Terminal  

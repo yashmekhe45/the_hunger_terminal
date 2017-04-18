@@ -10,7 +10,8 @@
       - else
         - if @terminal.email.blank?
           %table.table-bordered
-            %th This terminal don't have an email id. You can contact him with this number:
+            %tr
+              %td This terminal don't have an email id. Click on place order button to change the status of all orders to placed and contact the terminal with this number:
             %tr
               %td #{@terminal.landline}  
         - else
@@ -28,11 +29,11 @@
               - @orders.each do |order|
                 %tr  
                 / %td.text-center= order_detail.emp_name
-                %td.text-center= order.menu
-                %td.text-center= order.quantity
+                %td.text-center= order["menu"]
+                %td.text-center= order["quantity"]
     .modal-footer
-      - unless @terminal.email.blank?
-        %a.button{ class: "btn btn-info", data: { terminal_id: params[:terminal_id], disable_with: "orders placed" } }Place Orders
+      / - unless @terminal.email.blank?
+      %a.button{ class: "btn btn-info", id: "placeOrder", data: { terminal_id: params[:terminal_id] } }Place Orders
       / = button_to "Place_orders", admin_dashboard_place_orders_path(:terminal_id =>params[:terminal_id]), :disabled => !@orders.any?, class: "btn btn-info"
       / = button_to "Close", data-dismiss: "modal"
       %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

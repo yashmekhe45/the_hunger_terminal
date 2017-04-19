@@ -29,7 +29,7 @@ class Terminal < ApplicationRecord
   def self.daily_terminals(c_id)
     self.
       joins(:orders).
-      where('orders.date' => Time.zone.today,'orders.company_id' => c_id).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending']).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
       sum(total_cost) AS total')
@@ -63,13 +63,13 @@ class Terminal < ApplicationRecord
     #   byebug
   end  
 
-  # def self.all_terminals_todays_orders_report(c_id)
-  #   self.
-  #     joins(:orders).
-  #     where('orders.company_id' => c_id,'terminals.company_id' => c_id).
-  #     group('terminals.id').
-  #     select('terminals.name, sum(total_cost) AS total')
-  # end
+  def self.all_terminals_todays_orders_report(c_id)
+    self.
+      joins(:orders).
+      where('orders.company_id' => c_id, 'orders.date' => Time.zone.today, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
+      group('terminals.id').
+      select('terminals.name, sum(orders.total_cost) AS total')
+  end
 
   def self.all_terminals_todays_order_details(c_id)
     self.
@@ -107,7 +107,7 @@ class Terminal < ApplicationRecord
     @terminal = @company.terminals.find t_id
     @terminal_last_payment = @terminal.terminal_reports.build(name: @terminal.name, 
       current_amount: @terminal.current_amount, payment_made: @terminal.payment_made,
-      payable: @terminal.payable)
+      payable: @terminal.payable-@terminal.payment_made)
     @terminal_last_payment.save
   end
 

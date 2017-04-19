@@ -25,6 +25,7 @@ class Ability
       can :confirm_orders, :order_management
       can [:read, :update, :get_order_details], Company
       cannot [:index, :delete], Company
+      can :manage, Report
     end
 
     #

@@ -1,5 +1,7 @@
 .container
   .col-md-7
+    %span.hide.subsidy=@subsidy
+    %span.hide.tax=@terminal.tax
     %table#cart.table.table-hover.table-condensed
       %thead
         %tr
@@ -48,7 +50,7 @@
             %td.text-center
               %span ₹
               %span.sub-total{"data-th" => "Subtotal"} 0
-
+      
   .col-md-5
     = simple_form_for @order, url: terminal_order_path(@order,:terminal_id => @terminal.id), html: { method: :patch, class: 'form-horizontal' } do |f|
       .panel.panel-info
@@ -67,15 +69,19 @@
           / .row.text-center
           /   .col-xs-8
           %h4.text-right
-            %span.bag Bag Total
+            %span.bag Bag Total :
             %strong ₹
             %strong#total 0
           %h4.text-right
-            %span.bag.discount Bag Discount
+            %span.bag Bag Tax :
             %strong ₹
+            %strong#tax 0
+          %h4.text-right
+            %span.bag.discount Bag Discount :
+            %strong - ₹
             %strong#discount 0
           %h4.text-right
-            %span.bag Total Payable
+            %span.bag Total Payable :
             %strong ₹
             %strong#grand_total 0
           %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
@@ -120,6 +126,9 @@
 
 
 %script{:type => 'text/javascript'}
+  subsidy = #{@subsidy};
+  tax = #{@terminal.tax}
   order_details = #{raw @order.order_details.to_json};
-  load_orders_data(order_details)
+  load_orders_data(order_details) 
+
 

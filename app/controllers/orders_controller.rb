@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
 
   def new 
     @terminal = Terminal.find(params[:terminal_id])
+    @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
     @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
   end
@@ -46,6 +47,7 @@ class OrdersController < ApplicationController
 
   def edit
     @terminal = Terminal.find(params[:terminal_id])
+    @subsidy = current_user.company.subsidy
     @order = @terminal.orders.find(params[:id]) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)

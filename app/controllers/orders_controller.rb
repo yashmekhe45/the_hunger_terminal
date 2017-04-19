@@ -21,10 +21,11 @@ class OrdersController < ApplicationController
     @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
     # @terminal_id = params[:terminal_id]
-    @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
+    @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
+    @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
   end
 
-  def create
+  def create                                                                                                                           
     @terminal = Terminal.find(params[:terminal_id])
     @order = @terminal.orders.new(order_params)
     load_order_detail

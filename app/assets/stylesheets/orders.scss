@@ -59,3 +59,16 @@ input[type=number]::-webkit-outer-spin-button {
 {
   font-style: italic;
 }
+
+.show{
+	@media (max-width: 768px) { 
+  	margin-left:-40px;
+  }
+}
+
+.container.load{
+	@media (max-width: 768px) { 
+    margin-left:-40px;
+    margin-top: 15%;
+  }
+}

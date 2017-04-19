@@ -2,6 +2,7 @@
 = f.input :landline, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'
 = f.input :email, placeholder: 'kfc@gmail.com'
 = f.input :min_order_amount, required: true, placeholder: '30'
+= f.input :tax, required: true, placeholder: '10'
 = f.input :active, required:true, as: :boolean
 = f.file_field :image, onchange: "validateFiles(this);", |
   data: { max_file_size: 1.megabytes }                    |

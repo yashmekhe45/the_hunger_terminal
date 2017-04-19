@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
- 
+  
   $(document).on "change", ".item-qty",->
 
     quantity = parseInt($(this).val())
@@ -14,6 +14,7 @@ $(document).ready ->
     product.find(".sub-total").text(quantity * price)
     menu_item_id = product.find('.menu_item_id').text()
     order_detail_id = product.find('.order_detail_id').text()
+
     
     order_detail = {}
     order_detail.menu_item_name = product_name
@@ -109,15 +110,17 @@ find_total = (selected_item) ->
     arr = $('.total')
     $.each arr, (key, value) ->
       num=parseInt($(value).text())
-      sum += num  
-    if (75 < .75*sum) 
-      $('#discount').text(75)
-      $('#grand_total').text(sum-75)
+      sum += num 
+    tax1 = Math.round((tax/100)*sum)  
+    $('#tax').text(tax1)   
+    if (subsidy < (subsidy/100)*sum) 
+      $('#discount').text(subsidy)
+      $('#grand_total').text(sum+tax1-subsidy)
     else
-      $('#discount').text(.75*sum)  
-      $('#grand_total').text(sum-.75*sum)
+      $('#discount').text((subsidy/100)*sum)  
+      $('#grand_total').text(sum+tax1-(subsidy/100)*sum)
     $('#total').text(sum)
-    $('#order_total_cost').val(sum)
+    $('#order_total_cost').val(sum+tax1)
     if sum == 0
       $('.place_order').prop("disabled", true);
       $('i').show()

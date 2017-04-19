@@ -88,7 +88,7 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_params
-    params.require(:terminal).permit(:name,:landline, :active, :email, :min_order_amount, :company_id, :image)
+    params.require(:terminal).permit(:name,:landline, :tax, :active, :email, :min_order_amount, :company_id, :image)
   end
 
   def load_company

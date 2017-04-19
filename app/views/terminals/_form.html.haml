@@ -1,14 +1,45 @@
-= f.input :name, required: true, placeholder: 'kfc'
-= f.input :landline, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'
-= f.input :email, placeholder: 'kfc@gmail.com'
-= f.input :min_order_amount, required: true, placeholder: '30'
-= f.input :tax, required: true, placeholder: '10'
-= f.input :active, required:true, as: :boolean
-= f.file_field :image, onchange: "validateFiles(this);", |
-  data: { max_file_size: 1.megabytes }                    |
-= f.label :remote_image_url, "Upload logo of vendor"
-= f.input :CSV_menu_file, as: :file, hint: 'Select csv file with proper headers name,price,veg,active_days,description'
-= f.button :submit, class: "btn btn-success new terimnal"
+.container.Absolute-Center.is-Responsive.terminal
+  .row
+    .col-md-3
+    .col-md-6  
+      .panel.panel-success
+        .panel-heading
+          .panel-title 
+            -if current_page?(action: 'new')
+              .h3.text-center.strong Add New Vendor
+            -else
+              .h3.text-center.strong Edit Details of #{@terminal.name}
+        .panel-body.terminal    
+          .logoupload.text-center
+            = f.file_field :image, onchange: "validateFiles(this);", |
+              data: { max_file_size: 1.megabytes }                    |
+            = f.label :remote_image_url, "Upload logo of vendor"
+          .form-group
+            .col-md-6  
+              = f.input :name, label: false, required: true, placeholder: 'kfc'
+            .col-md-6  
+              = f.input :landline, label:false, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'  
+          -if current_page?(action: 'new')
+            .form-group
+              .col-md-6    
+                = f.input :payment_made, label:false, class: "number", placeholder: 'advance,ex.1000'
+              .col-md-6  
+                = f.input :min_order_amount, label:false, required: true, placeholder: 'min order amount,ex.200'
+            .form-group
+              = f.input :email, label:false, placeholder: 'kfc@gmail.com'
+          -else
+            .form-group
+              .col-md-6
+                = f.input :email, label: false, placeholder: 'kfc@gmail.com'
+              .col-md-6  
+                = f.input :min_order_amount, label:false, required: true, placeholder: 'min order amount,ex.200'
+          = f.input :tax, required: true, placeholder: '10'      
+          .csvfileupload.text-center
+            = f.input :CSV_menu_file, as: :file
+            = link_to 'Sample Menu CSV', menu_items_download_csv_path
+          .submit.text-center
+            = f.button :submit, class: "btn btn-success"
+
 
 / .panel.panel-success
 /   .panel-heading

@@ -20,7 +20,6 @@ class OrdersController < ApplicationController
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
-    # @terminal_id = params[:terminal_id]
     @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true)
   end
 
@@ -60,7 +59,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find(params[:id])   
+    @order = Order.find(params[:id])
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params) 

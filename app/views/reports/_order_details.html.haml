@@ -1,0 +1,22 @@
+.modal-dialog{:role => "document"}
+  .modal-content
+    .modal-header
+      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+        %span{"aria-hidden" => "true"} ×
+      %h3.modal-title.text-center Order Details
+      .table-responsive
+        %table.table-hover.table-bordered{:align => "center"}
+          %tbody
+            %tr
+              %th.text-center Sr No.
+              %th.text-center Menu Item
+              %th.text-center Quantity
+              %th.text-center Unit Price 
+            - @order_details.each_with_index do |order_detail,i|
+              %tr  
+              %td.text-center= i+1 
+              %td.text-center= order_detail.menu_item_name
+              %td.text-center= order_detail.quantity
+              %td.text-center= order_detail.price
+    .modal-footer
+      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close 

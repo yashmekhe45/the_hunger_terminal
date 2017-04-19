@@ -2,23 +2,54 @@
   %div.icon
     %a{:href => "/companies/#{current_user.company_id}/users"}
       %span.glyphicon.glyphicon-user.gly
-      .name Employee
+      .name.text-center Employee
+  
   %div.icon
     %a{:href => admin_dashboard_index_path}
       %span.glyphicon.glyphicon-th-list
-      .name Today's Orders  
+      .name.text-center Today's Orders  
+  
+  / %div.icon
+  /   %a{:href => reports_index_path}
+  /     %span.glyphicon.glyphicon-file.gly
+  /     .name.text-center Empolyees Report
+  
+  / %div.icon
+  /   %a{:href => reports_all_terminals_daily_report_path}
+  /     %span.glyphicon.glyphicon-cutlery.gly
+  /     .name.text-center Terminals Report
+
   %li.dropdown.icon
     %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
       %span.glyphicon.glyphicon-file.gly
-      Report
+      .name.text-center Employees Report
       %span.caret
     %ul.dropdown-menu
       %li
-        %a#menu{:href => reports_index_path} Employee
+        %a#menu{ :href => reports_employees_todays_orders_path } Todays Report
       %li
-        %a#menu{:href => '#'} Terminal  
+        %a#menu{ :href => reports_monthly_all_employees_path } Monthly Report
+      %li
+        %a#menu{ :href => reports_index_path } Current Balance
+
+  %li.dropdown.icon
+    %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
+      %span.glyphicon.glyphicon-file.gly
+      .name.text-center Terminals Report
+      %span.caret
+    %ul.dropdown-menu
+      %li
+        %a#menu{ :href => reports_all_terminals_daily_report_path } Todays Report
+      %li
+        %a#menu{ :href => reports_all_terminals_last_month_reports_path } Monthly Report
+      %li
+        %a#menu{ :href => admin_dashboard_payment_path } Running Balance
   %div.icon    
     %a{:href => "/companies/#{current_user.company_id}/terminals"}
       %span.glyphicon.glyphicon-cutlery.gly
-      .name#termin Terminal
+      .name.text-center Terminal
   
+  %div.icon
+    %a{ :href => admin_dashboard_payment_path }
+      %span.i.fa.fa-inr{:style => "font-size:3r0px;color:#337ab7;align:center"}
+      .name.text-center Payment

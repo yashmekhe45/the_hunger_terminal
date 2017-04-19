@@ -3,8 +3,10 @@ class MenuItemsController < ApplicationController
   load_and_authorize_resource  param_method: :menu_item_params
 
   before_action :authenticate_user!  
+
   before_action :load_company, except: [:download_csv]
   before_action :load_terminal, except: [:download_csv]
+
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
   load_and_authorize_resource
 
@@ -37,6 +39,7 @@ class MenuItemsController < ApplicationController
 
   def create
     @menu_item = @terminal.menu_items.create(menu_item_params)
+    flash[:success] = 'New Menu Item Added'
   end
 
   def edit

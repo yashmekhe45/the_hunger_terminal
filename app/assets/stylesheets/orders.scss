@@ -48,15 +48,15 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {  
 
    opacity: 1;
-
 }
+
 #cart{
   @media (max-width: 768px) { 
   	margin-top:15%;
   }
+}
+#vendorName{
 
-#vendorName
-{
   font-style: italic;
 }
 

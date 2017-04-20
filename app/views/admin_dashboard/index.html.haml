@@ -1,7 +1,7 @@
 .container.center
   %h3.text-center Vendors List
   %center
-    %table.table-hover.table-bordered
+    %table.table-responsive.table-hover.table-bordered
       %tbody
         %tr
           %th.text-center Sr No.
@@ -12,13 +12,15 @@
           %th.text-center Confirm
 
         - @res.each_with_index do |terminal,i|
+          - placed = @placed[i]
+          - confirmed = @confirmed[i]
           %tr  
           %td.text-center= i+1
-          %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, class: "btn btn-info",:title => 'see list of orders', :rel => 'tooltip'
+          %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, class: "btn btn-info", :title => 'see list of orders', :rel => 'tooltip'
           %td.text-center ₹ #{terminal.min_order_amount}
           %td.text-center ₹ #{terminal.total}
-          %td.text-center= link_to "Forward Orders", admin_dashboard_forward_orders_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
-          %td.text-center= link_to "Confirm Orders", admin_dashboard_confirm_orders_path(:terminal_id => terminal.id),remote: true, class:"btn btn-info"
-#myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
+          %td.text-center= link_to "Forward Orders", (placed or confirmed) ? '#' :admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: "btn btn-info", id: "forwardButton"
+          %td.text-center= link_to "Confirm Orders", confirmed ? '#' :admin_dashboard_confirm_orders_path(:terminal_id => terminal.id), :disabled => confirmed, class: "btn btn-info"
+#myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog", :tabeindex =>"-1" }
 #myForwardOrdersModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 

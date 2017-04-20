@@ -15,7 +15,7 @@
    padding-left:39px;
 }
 
-.total{
+.order_total{
    padding-left: 41px;
 }
 
@@ -44,7 +44,30 @@
 	margin-right: 5px;
 }
 
-#vendorName
-{
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+}
+
+#cart{
+  @media (max-width: 768px) { 
+  	margin-top:15%;
+  }
+}
+#vendorName{
   font-style: italic;
+}
+
+.show{
+	@media (max-width: 768px) { 
+  	margin-left:-40px;
+  }
+}
+
+.container.load{
+	@media (max-width: 768px) { 
+    margin-left:-40px;
+    margin-top: 15%;
+  }
 }

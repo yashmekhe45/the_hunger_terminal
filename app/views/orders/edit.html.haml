@@ -1,5 +1,6 @@
 .container
-  .col-md-7
+  %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
+  .col-md-7.col-sm-7
     %table#cart.table.table-hover.table-condensed
       %thead
         %tr
@@ -24,10 +25,10 @@
               %span ₹
               %span.price{"data-th" => "Price"}= order_detail.menu_item.price
             %td{"data-th" => "Quantity"}
-              %input.form-control.text-center.item-qty{:type => "number", :value => order_detail.quantity, :min => 0}/
+              %input.form-control.text-center.item-qty{:type => "number",:value => order_detail.quantity, :min => 0}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0.0
+              %span.sub-total{"data-th" => "Subtotal"} 0
       -if !@menu_items.nil?        
         - @menu_items.each do |menu_item|
           %tr{:id => "#{menu_item.id}"} 
@@ -47,8 +48,8 @@
               %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0}/
             %td.text-center
               %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0.0
-
+              %span.sub-total{"data-th" => "Subtotal"} 0
+      
   .col-md-5
     = simple_form_for @order, url: terminal_order_path(@order,:terminal_id => @terminal.id), html: { method: :patch, class: 'form-horizontal' } do |f|
       .panel.panel-info
@@ -67,17 +68,21 @@
           / .row.text-center
           /   .col-xs-8
           %h4.text-right
-            %span.bag Total
+            %span.bag Bag Total :
             %strong ₹
-            %strong#total 0.00
+            %strong#total 0
           %h4.text-right
-            %span.bag Discount
+            %span.bag Bag Tax :
             %strong ₹
-            %strong#discount 0.00 
+            %strong#tax 0
           %h4.text-right
-            %span.bag Grand Total
+            %span.bag.discount Bag Discount :
+            %strong - ₹
+            %strong#discount 0
+          %h4.text-right
+            %span.bag Total Payable :
             %strong ₹
-            %strong#grand_total 0.00   
+            %strong#grand_total 0
           %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
           %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
         .col-xs-12#place_order
@@ -96,26 +101,33 @@
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
-      %h4
-      %h4
-        %small
-          {{vendor_name}}
+      / %h4
+      / %h4
+      /   %small
+      /     {{vendor_name}}
 
     .col-xs-6
       .col-xs-6
-        %input.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
+        %h6
+          %strong
+            {{quantity}}
       .col-xs-6.text-right
         %h6
+          %strong₹
           %strong.total
             {{total}}
     .col-xs-2
-      %button.btn.btn-link.btn-xs.delete{:type => "button"}
-        %span.glyphicon.glyphicon-trash
+      %button.btn.btn-link.btn-s.delete{:type => "button"}
+        %span.glyphicon.glyphicon-remove
       / %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
   {{/.}} 
 
 
 %script{:type => 'text/javascript'}
+  subsidy = #{@subsidy};
+  tax = #{@terminal.tax}
   order_details = #{raw @order.order_details.to_json};
-  load_orders_data(order_details)
+  load_orders_data(order_details) 
+
 

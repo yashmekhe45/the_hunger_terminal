@@ -3,7 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable
+  
+devise :timeoutable, :timeout_in => 3.days
+
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true
   validates :mobile_number, length: {is: 10}
@@ -54,10 +57,40 @@ class User < ApplicationRecord
   def self.employee_report(c_id)
     self.
       joins(:orders).
-      where('company_id'=> c_id).
+      where('company_id'=> c_id,'orders.status' => 'confirmed').
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
       order('users.id')
+  end
+
+  def self.employees_todays_orders_report(c_id)
+    self.
+      joins(:orders).
+      where('company_id'=> c_id).
+      where('orders.created_at >=?',Time.now.beginning_of_day).
+      where('orders.status'=>'confirmed').
+      select('users.name, users.id, orders.total_cost AS total, orders.discount AS subsidy').
+      order('users.id')
+  end
+
+  def self.employee_last_month_report(c_id, month_back_date)
+    self.
+      joins(:orders).
+      where('company_id'=> c_id).
+      where('orders.created_at' => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).
+      where('orders.status'=>'confirmed').
+      group('users.id').
+      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
+      order('users.id')
+  end
+
+  def self.employee_individual_report(c_id, user_id)
+      self.joins(:orders).
+      where('orders.company_id' => c_id).
+      where('orders.user_id' => user_id).
+      where('orders.created_at' => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).
+      where('orders.status' => 'confirmed').
+      select('users.name,users.id,orders.created_at,orders.id,orders.total_cost,orders.discount')
   end
 
 end

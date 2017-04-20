@@ -2,9 +2,10 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{name: "viewport",content: "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"}
     %title TheHungerTerminal
     = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   %body
@@ -21,9 +22,8 @@
           / toastr.remove()
           / toastr.options.closeButton = true;
           / toastr.options.closeDuration = 300;
-          / toastr.options.timeOut = 30;
+          / toastr.options.timeOut = 3000;
           / toastr.options.extendedTimeOut = 300;
-          / toastr.clear();
     = yield 
     -if user_signed_in? && request.original_url != root_url
       =render "layouts/backlink"

@@ -1,58 +1,27 @@
 .container
   %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
-  %ul.nav.nav-tabs
-    %li.active
-      %a{"data-toggle" => "tab", :href => "#veg"} Veg
-    %li
-      %a{"data-toggle" => "tab", :href => "#nonveg"} Nonveg
-  .tab-content.col-md-7.col-sm-7
-    .tab-pane.fade.in.active#veg
+  - if @nonveg.any? == false
+    .col-md-7.col-sm-7
       = render "menu", obj: @veg
-    .tab-pane.fade#nonveg
-      = render "menu", obj: @nonveg
+  - elsif @veg.any? == false
+    .col-md-7.col-sm-7
+      = render "menu", obj: @nonveg        
+  - else  
+    %ul.nav.nav-tabs
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#veg"} Veg
+      %li
+        %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+    .tab-content.col-md-7.col-sm-7
+      .tab-pane.fade.in.active#veg
+        = render "menu", obj: @veg
+      .tab-pane.fade#nonveg
+        = render "menu", obj: @nonveg
                
 
   .col-md-5
     = form_tag terminal_orders_path do |f|
-      .panel.panel-info
-        .panel-heading
-          .panel-title
-            .row
-              .col-xs-6
-                %h5
-                  %span.glyphicon.glyphicon-shopping-cart
-                  Food Cart
-        .panel-body
-          .order-details
-            %i "There is no sincere love Than the love for food"
-          #order_details
-        .panel-footer
-          / .row.text-center
-          /   .col-xs-8
-          %h4.text-right
-            %span.bag Bag Total :
-            %strong ₹
-            %strong#total 0
-          %h4.text-right
-            %span.bag Bag Tax :
-            %strong ₹
-            %strong#tax 0  
-          %h4.text-right
-            %span.bag Bag Discount :
-            %strong - ₹ 
-            %strong#discount 0
-          %h4.text-right
-            %span.bag Total Payable :
-            %strong ₹
-            %strong#grand_total 0
-          %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
-          / %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
-        .col-xs-12#place_order
-          %button.btn.btn-success.btn-block.place_order{:type => "submit"}
-            Place Order
-              
-
-
+      = render 'form', f: f
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }

@@ -1,7 +1,6 @@
 .container
-  .col-md-7
-    %span.hide.subsidy=@subsidy
-    %span.hide.tax=@terminal.tax
+  %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
+  .col-md-7.col-sm-7
     %table#cart.table.table-hover.table-condensed
       %thead
         %tr

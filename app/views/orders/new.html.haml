@@ -1,35 +1,16 @@
 .container
   %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
-  .col-md-7.col-sm-7
-    %span.hide.subsidy=@subsidy
-    %span.hide.tax=@terminal.tax
-    %table#cart.table.table-hover.table-condensed
-      %thead
-        %tr
-          %th{:style => "width:45%"} Product
-          %th{:style => "width:15%"} Price
-          %th{:style => "width:8%"} Quantity
-          %th.text-center{:style => "width:32%"} Subtotal
-      %tbody
-        - @menu_items.each do |menu_item|
-          %tr{:id => "#{menu_item.id}"} 
-            %td{"data-th" => "Product"}
-              .row
-                .col-sm-12
-                  - if menu_item.veg == true
-                    %h4.product-name.nomargin.veg= menu_item.name
-                  - else
-                    %h4.product-name.nomargin.non-veg= menu_item.name 
-                  %h6.vendor-name= menu_item.description
-                  %span.hide.menu_item_id= menu_item.id
-            %td
-              %span ₹
-              %span.price{"data-th" => "Price"}= menu_item.price
-            %td{"data-th" => "Quantity"}
-              %input.form-control.text-center.item-qty{:type => "number", :value => "0", :min => 0, :max => 100}/
-            %td.text-center
-              %span ₹
-              %span.sub-total{"data-th" => "Subtotal"} 0
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#veg"} Veg
+    %li
+      %a{"data-toggle" => "tab", :href => "#nonveg"} Nonveg
+  .tab-content.col-md-7.col-sm-7
+    .tab-pane.fade.in.active#veg
+      = render "menu", obj: @veg
+    .tab-pane.fade#nonveg
+      = render "menu", obj: @nonveg
+               
 
   .col-md-5
     = form_tag terminal_orders_path do |f|

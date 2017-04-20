@@ -1,8 +1,7 @@
 -if can? :show, @order
   .container 
-    %i "You Tell Us What You Eat, We Tell You Who You Are "
     %hr
-    .card
+    .card.show
       .card-block
         %h4.card-title Today's Order
         .row
@@ -13,7 +12,7 @@
                   %th Product
                   %th UnitPrice
                   %th Quantity
-                  %th Subtotal
+                  %th ItemPrice
               %tbody
                 - @order.order_details.each do |order_detail|
                   %tr
@@ -32,14 +31,15 @@
                 %strong.date Date: 
                 %span #{@order.date}
               %h4 
-                %strong Subtotal: 
-                %span₹#{@order.total_cost}  
+                %strong Subtotal:
+                %span₹#{@order.total_cost} 
               %h4  
                 %strong Discount: 
                 %span₹#{@order.discount}
               %h4
                 %strong.order_total Total:
                 %span₹#{@order.total_cost-@order.discount}  
+              %h6.order_total (incl. of all taxes)    
       - if can? :edit, @order
         %a.card-link= link_to 'Edit Order',edit_terminal_order_path(@order,:terminal_id => @order.terminal.id),class: "btn btn-info"
       - if can? :delete, @order

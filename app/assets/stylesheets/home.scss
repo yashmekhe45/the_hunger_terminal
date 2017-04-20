@@ -15,11 +15,14 @@
 }
 
 .row.home{
-  margin-left: 7%;
-  margin-right: 0%;
-  position: fixed;
-  bottom: 5%;
+  /*margin-left: 7%;
+  margin-right: 0%;*/
+  margin-left: 6%;
+  margin-right: 2%; 
+  margin-top: 72px;
+  position: relative;
 }
+
 
 .thumbnail {
   //background-color:transparent !important;
@@ -50,6 +53,12 @@ h2 {
   padding-top: 2%;
 }
 
+
+.h4.text-center.home{
+  padding-bottom: 15px;
+}
+
+
 .container{
   padding-left: 60px;
 }
@@ -64,5 +73,13 @@ h2 {
 {
   padding-top: 4%;
   padding-bottom: 3%;
-  padding-left: 0%;
+}
+
+.h4.home{
+  margin-left: 42%;
+  padding-bottom: 15px;
+}
+
+span.caret{
+  margin-left: 48%;
 }

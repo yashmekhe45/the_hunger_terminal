@@ -1,8 +1,2 @@
-.container
-  %h1 Add New Vendor
-  .row
-    .col-md-3
-    .col-md-6  
-      = simple_form_for @terminal, url: company_terminals_path, html: { class: 'form-horizontal' } do |f|
-        = render 'form', f: f
-    .col-md-3    
+= simple_form_for @terminal, url: company_terminals_path do |f|
+  = render 'form', f: f    

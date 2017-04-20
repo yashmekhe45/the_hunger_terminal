@@ -28,7 +28,11 @@ td{
 
 .table-responsive
 {
-  margin-top: 3%;
+  margin-top: 1%;
+}
+
+.h3.text-center.terminal_name{
+  margin-bottom: 2%;
 }
 
 .table-hover.table-bordered
@@ -36,6 +40,45 @@ td{
   width: 80%;
 }
 
+#terminal_image {
+  margin: auto;
+  width: 42%;
+  padding: 10px;
+}
+
+#terminal_CSV_menu_file.file.optional {
+  margin: auto;
+  width: 42%;
+  padding: 10px; 
+}
+
+.csvfileupload.text-center{
+  padding: 10px;
+}
+
+.container.Absolute-Center.is-Responsive.terminal{
+  padding: 0%;
+}
+
+/*.panel-body.terminal{
+  padding: 20px;
+}*/
+/*
+#terminal_landline.form-control.string.required{
+  margin-left: 8px;
+}
+
+#terminal_min_order_amount.form-control.numeric.float.required{
+  margin-left: 8px;
+}*/
+/*
+#terminal_name.form-control.string.required{
+  margin-left: -8px;
+}*/
+/*
+#terminal_email.form-control.string.optional{
+  margin-left: -8px;
+}*/
 /*#imaginary_container{
   margin-top: 20px;
 }*/

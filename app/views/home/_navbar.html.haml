@@ -22,7 +22,7 @@
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
               My Order
-              %span.caret
+              / %span.caret
             %ul.dropdown-menu
               %li
                 %a{:href => vendors_path} Place Order
@@ -42,6 +42,4 @@
             = link_to destroy_user_session_path, method: :delete do
               %span.glyphicon.glyphicon-log-out
               Logout
-        
-       
-      
+              

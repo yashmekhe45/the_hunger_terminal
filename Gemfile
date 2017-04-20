@@ -37,11 +37,14 @@ gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
 gem 'sidekiq'
 gem 'bootstrap-datepicker-rails'
+gem 'prawn'
+gem 'prawn-table'
 #DateTimePicker
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
+gem 'rollbar'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment

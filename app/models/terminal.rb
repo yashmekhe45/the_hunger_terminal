@@ -5,6 +5,7 @@ class Terminal < ApplicationRecord
   validates :name, :landline ,presence: true
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 11 }
+  validates :tax,numericality: { greater_than_or_equal_to: 0 }
   validates :min_order_amount, numericality: { greater_than_or_equal_to: 0 }
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy

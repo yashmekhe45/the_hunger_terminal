@@ -23,8 +23,8 @@ class OrdersController < ApplicationController
     # @terminal_id = params[:terminal_id]
     @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
     @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
-  end
 
+  end
   def create                                                                                                                           
     @terminal = Terminal.find(params[:terminal_id])
     @order = @terminal.orders.new(order_params)
@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find(params[:id])   
+    @order = Order.find(params[:id])
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params) 

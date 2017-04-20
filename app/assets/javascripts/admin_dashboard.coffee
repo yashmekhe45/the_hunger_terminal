@@ -7,6 +7,7 @@ confirmation = ->
     $.ajax({
       type: "GET"
       url: "/admin_dashboard/place_orders"
+      dataType: "script"
       data: {
           terminal_id: $(this).data("terminal-id")
           message: $("#message").val()

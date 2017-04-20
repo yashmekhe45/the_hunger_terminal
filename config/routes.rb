@@ -47,9 +47,19 @@ Rails.application.routes.draw do
   get 'admin_dashboard/forward_orders'
   get 'admin_dashboard/place_orders'
   get 'admin_dashboard/confirm_orders'
+  get 'admin_dashboard/payment'
+  get 'admin_dashboard/pay'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
 
   get 'reports/index'
+  get 'reports/individual_employee'
+  get 'reports/order_details'
+  get 'reports/employees_todays_orders'
+  get 'reports/monthly_all_employees'
+  get "reports/download_pdf" => "reports#download_pdf"
+  get 'reports/all_terminals_last_month_reports'
+  get 'reports/all_terminals_daily_report'
+  get 'reports/individual_terminal_last_month_report'
   root to: 'home#index'
   
 end

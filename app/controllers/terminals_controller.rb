@@ -20,11 +20,15 @@ class TerminalsController < ApplicationController
       unless params[:terminal][:CSV_menu_file].nil?
         valid_csv
       end
+      @terminal.payable = @terminal.current_amount - @terminal.payment_made
+      @terminal.save
+      @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
+        payment_made: @terminal.payment_made, payable: @terminal.payable)
+      @terminal_report.save
       redirect_to company_terminal_menu_items_path(@current_company,@terminal) and return
     else
       render :new and return
     end
-    render :new
   end
 
   def index
@@ -51,8 +55,17 @@ class TerminalsController < ApplicationController
 
   def update
     if @terminal.update_attributes(terminal_params)
-      flash[:success] = "terminal updated"
-      redirect_to company_terminals_path and return
+      respond_to do |format|
+        if request.format.js?
+          flash[:success] = "payment made successfully"
+          Terminal.save_last_payment_made_to_terminal(@terminal.id, current_user.company_id)
+          Terminal.update_post_payment_details_of_terminal(@terminal.id, current_user.company_id)
+        else
+          flash[:success] = "terminal updated successfully"
+        end
+        format.js { render inline: "location.reload();"  }
+        format.html {  redirect_to company_terminals_path and return }
+      end   
     else
       flash[:error] = @terminal.errors.messages
       render :edit and return
@@ -88,7 +101,7 @@ class TerminalsController < ApplicationController
   private
 
   def terminal_params
-    params.require(:terminal).permit(:name,:landline, :tax, :active, :email, :min_order_amount, :company_id, :image)
+    params.require(:terminal).permit(:name,:landline, :active, :email, :min_order_amount, :company_id, :image, :payment_made, :tax)
   end
 
   def load_company

@@ -29,7 +29,7 @@ class Terminal < ApplicationRecord
   def self.daily_terminals(c_id)
     self.
       joins(:orders).
-      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending']).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending', 'confirmed']).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
       sum(total_cost) AS total')

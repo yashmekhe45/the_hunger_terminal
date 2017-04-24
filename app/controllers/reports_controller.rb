@@ -26,6 +26,13 @@ class ReportsController < ApplicationController
   end
   def employees_daily_order_detail
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        kit = PDFKit.new('http://localhost:3000/reports/all_terminals_daily_report', :page_size => 'A3')
+        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+      end
+    end 
   end
   def download_pdf
     require "prawn"

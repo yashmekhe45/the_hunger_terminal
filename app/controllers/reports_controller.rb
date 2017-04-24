@@ -20,7 +20,9 @@ class ReportsController < ApplicationController
   def order_details
     @order_details = OrderDetail.where(order_id:params[:order_id])
   end
-
+  def employees_daily_order_detail
+    @orders = Order.employees_daily_order_detail_report(current_user.company_id)
+  end
   def download_pdf
     require "prawn"
     require "prawn/table"

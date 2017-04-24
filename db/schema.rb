@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
- 
-
 ActiveRecord::Schema.define(version: 20170418093700) do
-
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,12 +101,12 @@ ActiveRecord::Schema.define(version: 20170418093700) do
     t.integer  "company_id"
     t.string   "email"
     t.boolean  "active",           default: true
-    t.float    "min_order_amount"
     t.string   "image"
+    t.float    "min_order_amount"
+    t.string   "tax"
     t.float    "payment_made",     default: 0.0
     t.float    "payable",          default: 0.0
     t.float    "current_amount",   default: 0.0
-    t.string   "tax"
     t.index ["company_id"], name: "index_terminals_on_company_id", using: :btree
   end
 

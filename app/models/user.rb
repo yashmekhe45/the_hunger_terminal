@@ -3,9 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
   
-devise :timeoutable, :timeout_in => 3.days
+  # devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, :email, presence: true

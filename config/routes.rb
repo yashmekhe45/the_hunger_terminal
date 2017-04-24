@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   get 'reports/all_terminals_daily_report'
   get 'reports/individual_terminal_last_month_report'
   get 'reports/employees_daily_order_detail'
+  get 'reports/download_daily_terminal_report'
   root to: 'home#index'
   
 end

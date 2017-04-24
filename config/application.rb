@@ -1,7 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
-
+require 'pdfkit'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -22,5 +22,6 @@ module TheHungerTerminal
     config.active_job.queue_adapter = :inline
     config.time_zone = 'Kolkata'
     # config.active_record.default_timezone = :local
+    config.middleware.use "PDFKit::Middleware", :print_media_type => true
   end
 end

@@ -4,10 +4,10 @@ class Order < ApplicationRecord
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
-  # validates :user_id, uniqueness: { scope: :date }
+  validates :user_id, uniqueness: { scope: :date }
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
-  validates :user_id, uniqueness: { scope: :date }
+  # validates :user_id, uniqueness: { scope: :date }
   validate :valid_date? 
 
   belongs_to :user
@@ -29,6 +29,16 @@ class Order < ApplicationRecord
         'order_details.menu_item_name AS menu, quantity').
       order("users.name ASC")
       # 'orders.status' => ['pending','review','placed']
+  end
+
+  def self.employees_daily_order_detail_report(company_id)
+    self.
+      joins(:user,:order_details,:terminal).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => company_id).
+      group('orders.id,orders.terminal_id,users.name,order_details.menu_item_name,order_details.quantity,terminals.name').
+      select('orders.id','users.name AS emp_name',
+        'order_details.menu_item_name AS menu, quantity,terminals.name AS vendor').
+      order("users.name ASC")
   end
 
   def self.all_terminals_daily_report(c_id)

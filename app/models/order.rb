@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
-  # validates :user_id, uniqueness: { scope: :date }
+  validates :user_id, uniqueness: { scope: :date }
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
   # validates :user_id, uniqueness: { scope: :date }

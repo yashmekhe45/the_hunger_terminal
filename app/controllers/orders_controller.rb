@@ -68,7 +68,8 @@ class OrdersController < ApplicationController
       flash[:notice] = "Your order has been updated successfully"
       redirect_to terminal_order_path(params[:terminal_id],@order)
     else
-      render 'edit'
+      flash[:error] = @order.errors.full_messages.join(",")
+      redirect_to terminal_order_path(params[:terminal_id],@order)
     end
   end
 

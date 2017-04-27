@@ -5,6 +5,7 @@ class Terminal < ApplicationRecord
   validates :name, :landline ,presence: true
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 11 }
+  validates :tax,numericality: { greater_than_or_equal_to: 0 }
   validates :min_order_amount, numericality: { greater_than_or_equal_to: 0 }
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
@@ -29,7 +30,7 @@ class Terminal < ApplicationRecord
   def self.daily_terminals(c_id)
     self.
       joins(:orders).
-      where('orders.date' => Time.zone.today,'orders.company_id' => c_id).
+      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending', 'confirmed']).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
       sum(total_cost) AS total')
@@ -63,13 +64,13 @@ class Terminal < ApplicationRecord
     #   byebug
   end  
 
-  # def self.all_terminals_todays_orders_report(c_id)
-  #   self.
-  #     joins(:orders).
-  #     where('orders.company_id' => c_id,'terminals.company_id' => c_id).
-  #     group('terminals.id').
-  #     select('terminals.name, sum(total_cost) AS total')
-  # end
+  def self.all_terminals_todays_orders_report(c_id)
+    self.
+      joins(:orders).
+      where('orders.company_id' => c_id, 'orders.date' => Time.zone.today, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
+      group('terminals.id').
+      select('terminals.name, sum(orders.total_cost) AS total')
+  end
 
   def self.all_terminals_todays_order_details(c_id)
     self.
@@ -107,7 +108,7 @@ class Terminal < ApplicationRecord
     @terminal = @company.terminals.find t_id
     @terminal_last_payment = @terminal.terminal_reports.build(name: @terminal.name, 
       current_amount: @terminal.current_amount, payment_made: @terminal.payment_made,
-      payable: @terminal.payable)
+      payable: @terminal.payable-@terminal.payment_made)
     @terminal_last_payment.save
   end
 

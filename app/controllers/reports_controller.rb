@@ -1,6 +1,10 @@
 
 class ReportsController < ApplicationController
 
+  # before_filter :login_required, :only => [:index, :employee_report, :monthly_all_employees, :individual_employee, :all_terminals_last_month_reports]
+  # before_action :load_company, only: [:all_terminals_daily_report]
+
+
 	def index
       @users = User.employee_report(current_user.company_id)
 	end
@@ -20,7 +24,16 @@ class ReportsController < ApplicationController
   def order_details
     @order_details = OrderDetail.where(order_id:params[:order_id])
   end
-
+  def employees_daily_order_detail
+    @orders = Order.employees_daily_order_detail_report(current_user.company_id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        kit = PDFKit.new('http://localhost:3000/reports/all_terminals_daily_report', :page_size => 'A3')
+        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+      end
+    end 
+  end
   def download_pdf
     require "prawn"
     require "prawn/table"
@@ -49,11 +62,34 @@ class ReportsController < ApplicationController
 
   def all_terminals_daily_report
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
-    @todays_terminals = Terminal.daily_terminals(current_user.company_id)
+    @todays_terminals = Terminal.all_terminals_todays_orders_report(current_user.company_id)
+     # html = render :layout => false 
+    respond_to do |format|
+      format.html
+      format.pdf do
+        kit = PDFKit.new('http://localhost:3000/reports/all_terminals_daily_report', :page_size => 'A3')
+        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+      end
+    end 
+   
   #   @terminals =  Order.all_terminals_daily_report(current_user.company_id)
   end
 
   def individual_terminal_last_month_report
     @terminal_reports = TerminalReport.all.where(terminal_id:params[:terminal_id].to_i)
+  end
+
+  def download_daily_terminal_report
+
+  end
+
+  private 
+
+  def load_company
+    @current_company = current_user.company
+    unless @current_company
+      flash[:warning] = 'Company not found'
+      redirect_to root_path and return
+    end
   end
 end

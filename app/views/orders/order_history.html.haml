@@ -3,8 +3,8 @@
   .row
     .col-sm-12
       %span Filter orders by date range : 
-      %input{:type => "text", :placeholder => "From Date", :class => "from", :value => @from_date}/
-      %input{:type => "text", :class => "to", :placeholder => "To Date", :value => @to_date}/
+      %input{:type => "text", :placeholder => "From Date", :class => "from", :value => @from_date, :id =>"fromDate"}/
+      %input{:type => "text", :class => "to", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
       %button.btn.btn-info#bton{:type => "button"}Find
     .card 
 

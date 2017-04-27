@@ -38,7 +38,17 @@
     $("#bton").click(function(event) {
       event.preventDefault();
       params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})
-      window.location.href = '/order/myOrder' + '?' + params
+      if($('#fromDate').val() > $('#toDate').val()) 
+      {
+        alert("From Date must be smaller than To Date")
+        $('#fromDate').focus()
+      }
+      else
+      {
+        window.location.href = '/order/myOrder' + '?' + params
+      }
+
+     
       
     });
   });

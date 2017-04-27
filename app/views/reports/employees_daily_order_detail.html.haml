@@ -1,31 +1,32 @@
-.indexcontainer
-  %h3.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
-  = link_to 'print', reports_employees_daily_order_detail_path(:format => 'pdf' ), class: 'btn btn-info'
-  .table-responsive
-    %table.table-hover.table-bordered
-      %tbody
-        %tr 
-          %th.text-center #
-          %th.text-center Employee
-          %th.text-center Vendor
-          %th.text-center Item 
-          %th.text-center Quantity
-        - employee = "nil"  
-        - i=0
-        - @orders.each do |order|
-          %tr  
-          - if employee == order.emp_name
-            %td.text-center
-            %td.text-center
-            %td.text-center
-          - else
-            %td.text-center= i+1
-            %td.text-center= order.emp_name
-            %td.text-center= order.vendor
-            - i = i+1
-          %td.text-center= order.menu
-          %td.text-center= order.quantity
-          - employee = order.emp_name
+-if !@orders.empty?
+  .indexcontainer
+    %h3.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
+    = link_to 'print', reports_employees_daily_order_detail_path(:format => 'pdf' ), class: 'btn btn-info'
+    .table-responsive
+      %table.table-hover.table-bordered
+        %tbody
+          %tr 
+            %th.text-center #
+            %th.text-center Employee
+            %th.text-center Vendor
+            %th.text-center Item 
+            %th.text-center Quantity
+          - employee = "nil"  
+          - i=0
+          - @orders.each do |order|
+            %tr  
+            - if employee == order.emp_name
+              %td.text-center
+              %td.text-center
+              %td.text-center
+            - else
+              %td.text-center= i+1
+              %td.text-center= order.emp_name
+              %td.text-center= order.vendor
+              - i = i+1
+            %td.text-center= order.menu
+            %td.text-center= order.quantity
+            - employee = order.emp_name
           
 
 

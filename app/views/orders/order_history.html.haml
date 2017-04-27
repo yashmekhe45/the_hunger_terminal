@@ -3,23 +3,25 @@
   .row
     .col-sm-12
       %span Filter orders by date range : 
-      %input{:type => "text", :placeholder => "From Date", :class => "from", :value => @from_date}/
-      %input{:type => "text", :class => "to", :placeholder => "To Date", :value => @to_date}/
+      %input{:type => "text", :placeholder => "From Date", :class => "from", :value => @from_date, :id =>"fromDate"}/
+      %input{:type => "text", :class => "to", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
       %button.btn.btn-info#bton{:type => "button"}Find
     .card 
-      %table.table.table-bordered
-        %thead
-          %tr
-            %th Date
-            %th Total 
-            %th Items(Qty)
-        %tbody
-        -@orders.each do |order|
-          %tr
-            %td= order.date
-            %td= order.total_cost
-            %td
-              - order.order_details.each_with_index do |order_item,index|
-                - indexplusone = index+1
-                %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
-                %br
+
+      -if !@orders.empty?
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th Date
+              %th Total 
+              %th Items(Qty)
+          %tbody
+          -@orders.each do |order|
+            %tr
+              %td= order.date
+              %td= order.total_cost
+              %td
+                - order.order_details.each_with_index do |order_item,index|
+                  - indexplusone = index+1
+                  %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
+                  %br

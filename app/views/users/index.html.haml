@@ -23,24 +23,25 @@
 %br
 %br
 
-.container
-  %table.table.table-fixed#employeesTable{:border =>1,:align=>"center"}
-    %tbody
-      %tr
-        %th 
-          .text-center
-            NAME
-        %th
-          .text-center
-            EMAIL ID 
-        %th 
-          .text-center
-            STATUS
-        %th 
-          .text-center
-            CHANGE STATUS
-      %tr
-        =render "common_index" ,object: @user, as: 'user'
+-if !@users.empty?
+  .container
+    %table.table.table-fixed#employeesTable{:border =>1,:align=>"center"}
+      %tbody
+        %tr
+          %th 
+            .text-center
+              NAME
+          %th
+            .text-center
+              EMAIL ID 
+          %th 
+            .text-center
+              STATUS
+          %th 
+            .text-center
+              CHANGE STATUS
+        %tr
+          =render "common_index" ,object: @user, as: 'user'
 
 .text-center
   = paginate @users

@@ -6,15 +6,18 @@ class ReportsController < ApplicationController
 
 
 	def index
-      @users = User.employee_report(current_user.company_id)
+    @users = User.employee_report(current_user.company_id)
+    generate_no_record_found_error(@users)
 	end
 
   def employees_todays_orders
     @users =  User.employees_todays_orders_report(current_user.company_id)
+    generate_no_record_found_error(@users)
   end
 
   def monthly_all_employees
     @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)
+    generate_no_record_found_error(@users)
   end
 
   def individual_employee
@@ -26,6 +29,7 @@ class ReportsController < ApplicationController
   end
   def employees_daily_order_detail
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
+    generate_no_record_found_error(@orders)
     respond_to do |format|
       format.html
       format.pdf do
@@ -58,12 +62,14 @@ class ReportsController < ApplicationController
 
   def all_terminals_last_month_reports
     @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)
+    generate_no_record_found_error(@terminals)
   end
 
   def all_terminals_daily_report
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
     @todays_terminals = Terminal.all_terminals_todays_orders_report(current_user.company_id)
      # html = render :layout => false 
+    generate_no_record_found_error(@terminals)
     respond_to do |format|
       format.html
       format.pdf do
@@ -90,6 +96,12 @@ class ReportsController < ApplicationController
     unless @current_company
       flash[:warning] = 'Company not found'
       redirect_to root_path and return
+    end
+  end
+
+  def generate_no_record_found_error(records)
+    if records.empty?
+      flash[:error] = "No record found"
     end
   end
 end

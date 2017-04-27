@@ -8,6 +8,7 @@ class AdminDashboardController < ApplicationController
     authorize! :index, :order_management
     @res = Terminal.daily_terminals(current_user.company_id)
     # the overall status of all orders of each terminal
+    generate_no_record_found_error(@res)
     @placed = []
     @confirmed = []
     @res.each do |terminal|
@@ -70,6 +71,12 @@ class AdminDashboardController < ApplicationController
 
     def load_terminal
       @terminal = Terminal.find(params[:terminal_id])
+    end
+
+    def generate_no_record_found_error(records)
+      if records.empty?
+        flash[:error] = "No record found"
+      end
     end
 
 end

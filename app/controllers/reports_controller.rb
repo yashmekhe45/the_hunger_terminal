@@ -4,6 +4,8 @@ class ReportsController < ApplicationController
   # before_filter :login_required, :only => [:index, :employee_report, :monthly_all_employees, :individual_employee, :all_terminals_last_month_reports]
   # before_action :load_company, only: [:all_terminals_daily_report]
 
+  # add_breadcrumb "Home", :root_path
+  # add_breadcrumb "Reports", :reports_index_path
 
 	def index
     @users = User.employee_report(current_user.company_id)
@@ -27,6 +29,7 @@ class ReportsController < ApplicationController
   def order_details
     @order_details = OrderDetail.where(order_id:params[:order_id])
   end
+
   def employees_daily_order_detail
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
     generate_no_record_found_error(@orders)

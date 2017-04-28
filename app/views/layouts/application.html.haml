@@ -16,7 +16,7 @@
       =render "home/navbar"
     -unless request.original_url == root_url
       .container
-        %ol.breadcrumb
+        %ol
           = render_breadcrumbs
     - unless flash.empty?
       %script

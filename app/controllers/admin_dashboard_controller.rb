@@ -4,6 +4,9 @@ class AdminDashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :load_terminal, only: [:place_orders, :forward_orders]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Employees' Orders", :admin_dashboard_index_path
+
   def index
     authorize! :index, :order_management
     @res = Terminal.daily_terminals(current_user.company_id)

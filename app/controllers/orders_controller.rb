@@ -3,6 +3,11 @@ class OrdersController < ApplicationController
   load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   
+  add_breadcrumb "home", :root_path
+  add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
+  add_breadcrumb "My Order History", :orders_path, only: [:order_history]
+  add_breadcrumb "Today's Order", :terminal_order_path, only: [:show, :edit, :update]
+
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
@@ -23,8 +28,9 @@ class OrdersController < ApplicationController
     # @terminal_id = params[:terminal_id]
     @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
     @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
-
+    add_breadcrumb @terminal.name, new_terminal_order_path
   end
+
   def create                                                                                                                           
     @terminal = Terminal.find(params[:terminal_id])
     @order = @terminal.orders.new(order_params)
@@ -58,6 +64,7 @@ class OrdersController < ApplicationController
     if !unique_item.empty?
       @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
     end
+    add_breadcrumb "Edit Order"
   end
 
   def update

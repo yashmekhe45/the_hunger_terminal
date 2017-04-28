@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     if @users.empty?
       flash.now[:error] = "Sorry, No record is found"
       render "index"
-    end 
+    end
   end
   
   def update
@@ -64,51 +64,8 @@ class UsersController < ApplicationController
 
 
   def import
-    if !params[:file]
-      flash[:error] = "Please select a CSV file."
-      redirect_to company_users_path(params[:company_id])
-    else
-      valid_header =  ["name","email","mobile_number"]
-      $INVALID_USER_CSV = nil
-      @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "9999999999",is_active: false, 
-        company_id: 1111,role: "employee", password: "dummy123")
-      if params[:file].content_type == 'text/csv'
-        users_csv = File.open(params[:file].path)
-        users_data = CSV.parse(users_csv,headers:true)
-        if users_data.headers == valid_header
-          users_data.each do |user_row|
-           
-            next if user_row.to_a == valid_header
-            user_hash = user_row.to_h 
-            if !user_hash.empty?
-              user = @company.employees.build(name: user_hash["name"],email: user_hash["email"], 
-                mobile_number: user_hash["mobile_number"],is_active: true, role: "employee",
-                password: Devise.friendly_token.first(8))
-              if user.valid?
-                user.save
-              else
-                CSV.open($INVALID_USER_CSV="public/#{@company.name}-invalid-records-#{Date.today}.csv","a+") do |csv|
-                  user_row << user.errors.messages
-                  csv << user_row
-                end
-                @check_user = user
-              end
-            end
-          end
-          if @check_user.valid?
-            flash[:success] = "all users added through csv data"
-            redirect_to company_users_path(params[:company_id])
-          else
-            flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
-          end
-        else
-          flash[:error] = "invalid headers in your csv."
-          redirect_to company_users_path(params[:company_id])
-        end
-      else
-        flash.now[:error] = "invalid type of file please upload csv with valid headers"
-      end
-    end
+    User.import(params[:file], params[:company_id])
+    redirect_to company_users_path(params[:company_id]), notice: "User records imported"
   end
 
 

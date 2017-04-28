@@ -29,7 +29,9 @@ Rails.application.routes.draw do
   resources :companies do
     resources :terminals do
       resources :menu_items do
-        collection { post :import }
+        collection do 
+          post :import 
+        end
       # member { get :download }
       end 
     end  

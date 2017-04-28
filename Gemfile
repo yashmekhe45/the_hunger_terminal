@@ -48,6 +48,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'redis', '~> 3.0'
 gem 'rollbar'
 gem 'roo'
+gem 'roo-xls'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment

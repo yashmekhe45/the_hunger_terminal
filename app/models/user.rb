@@ -93,4 +93,31 @@ class User < ApplicationRecord
       select('users.name,users.id,orders.created_at,orders.id,orders.total_cost,orders.discount')
   end
 
+  def self.import(file, company_id)
+    # spreadsheet = Roo::Spreadsheet.open(file.path)
+    spreadsheet = open_spreadsheet(file)
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      employee_record = User.find_by(email: row["email"])|| new
+
+      # Mobile number is taking float values from Excel file
+      row["mobile_number"] = row["mobile_number"].to_i
+      employee_record.attributes = row.to_h
+      employee_record.update_attributes("role" => "employee", "is_active" => true, "password" => Devise.friendly_token.first(8), "company_id" => company_id)
+      if employee_record.valid?
+        employee_record.save!
+      end
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when '.csv' then Roo::CSV.new(file.path)
+    when '.xls' then Roo::Excel.new(file.path)
+    when '.xlsx' then Roo::Excelx.new(file.path)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
 end

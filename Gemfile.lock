@@ -58,6 +58,7 @@ GEM
       sass (>= 3.3.4)
     bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     byebug (9.0.6)
     cancan (1.6.10)
@@ -280,6 +281,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3, >= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.47)
+  breadcrumbs_on_rails
   byebug
   cancan
   cancancan

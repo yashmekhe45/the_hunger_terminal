@@ -1,4 +1,4 @@
-require 'csv'
+  require 'csv'
 class TerminalsController < ApplicationController
 
   load_and_authorize_resource param_method: :terminal_params

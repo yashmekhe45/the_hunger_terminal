@@ -1,7 +1,0 @@
-.container
-  =link_to 'Download invalid records',download_invalid_csv_company_users_path(@company.id), class: 'btn btn-primary'
-  %br
-  -if flash.now[:notice].present?
-    =flash.now[:notice]
-  -else
-    =flash.now[:error]

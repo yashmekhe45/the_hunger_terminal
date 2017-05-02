@@ -8,7 +8,7 @@ class Order < ApplicationRecord
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
   # validates :user_id, uniqueness: { scope: :date }
-  validate :valid_date? 
+  validate :valid_date?, on: :create
 
   belongs_to :user
   belongs_to :company

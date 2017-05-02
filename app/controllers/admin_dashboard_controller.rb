@@ -5,7 +5,7 @@ class AdminDashboardController < ApplicationController
   before_action :load_terminal, only: [:place_orders, :forward_orders]
 
   add_breadcrumb "Home", :root_path
-  add_breadcrumb "Employees' Orders", :admin_dashboard_index_path
+  add_breadcrumb "Employees' Orders", :admin_dashboard_index_path, only: [:index]
 
   def index
     authorize! :index, :order_management
@@ -38,6 +38,7 @@ class AdminDashboardController < ApplicationController
   def payment
     @company = Company.find(current_user.company_id)
     @terminals = @company.terminals.all.order(:name)
+    add_breadcrumb "Running balance report"
   end
 
   def pay

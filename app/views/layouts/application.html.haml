@@ -15,7 +15,7 @@
     -else
       =render "home/navbar"
     -unless request.original_url == root_url
-      .container
+      .container#pdf_link
         %ol
           = render_breadcrumbs
     - unless flash.empty?

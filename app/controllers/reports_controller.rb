@@ -4,8 +4,16 @@ class ReportsController < ApplicationController
   # before_filter :login_required, :only => [:index, :employee_report, :monthly_all_employees, :individual_employee, :all_terminals_last_month_reports]
   # before_action :load_company, only: [:all_terminals_daily_report]
 
-  # add_breadcrumb "Home", :root_path
-  # add_breadcrumb "Reports", :reports_index_path
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Employees' Report", :reports_employees_daily_order_detail_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee, :employees_daily_order_detail]
+  add_breadcrumb "Current Balance Report", :reports_index_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee, :employees_daily_order_detail]
+  add_breadcrumb "Individual Employee Report", :reports_individual_employee_path, only: [:individual_employee]
+  add_breadcrumb "Today's Orders' Report", :reports_employees_todays_orders_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee, :employees_daily_order_detail]
+  add_breadcrumb "Monthly Report", :reports_monthly_all_employees_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee, :employees_daily_order_detail]
+
+  add_breadcrumb "Terminals' Report", :reports_all_terminals_daily_report_path, only: [:all_terminals_daily_report, :all_terminals_last_month_reports, :individual_terminal_last_month_report]
+  add_breadcrumb "Monthly Report", :reports_all_terminals_last_month_reports_path, only: [:all_terminals_daily_report, :all_terminals_last_month_reports, :individual_terminal_last_month_report]
+  add_breadcrumb "Individual Terminal Report", :rports_individual_terminal_last_month_report_path, only: [:individual_terminal_last_month_report]
 
 	def index
     @users = User.employee_report(current_user.company_id)
@@ -41,6 +49,7 @@ class ReportsController < ApplicationController
       end
     end 
   end
+
   def download_pdf
     require "prawn"
     require "prawn/table"

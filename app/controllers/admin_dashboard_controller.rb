@@ -65,6 +65,15 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_index_path
   end 
 
+  def destroy
+    order_detail = OrderDetail.find(params[:id])
+    order = Order.find(order_detail.order_id)
+    order_detail.destroy
+    if order.order_details.any? == false
+      order.destroy
+    end
+    redirect_to admin_dashboard_index_path
+  end
 
   private
     def load_details

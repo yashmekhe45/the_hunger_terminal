@@ -10,6 +10,9 @@ class MenuItemsController < ApplicationController
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
   load_and_authorize_resource
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Terminals", :company_terminals_path, only: [:index]
+
   def menu_index
   	@company = Company.find(params[:company_id])
   	@terminals = @company.terminals.where(:available => true).ids
@@ -25,6 +28,7 @@ class MenuItemsController < ApplicationController
     else 
       @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
     end
+    add_breadcrumb @terminal.name+" Menu"
   end
 
   def show

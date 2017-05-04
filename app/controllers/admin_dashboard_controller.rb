@@ -4,6 +4,11 @@ class AdminDashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :load_terminal, only: [:place_orders, :forward_orders]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Vendor wise Orders", :admin_dashboard_index_path, only: [:index, :input_terminal_extra_charges]
+  add_breadcrumb "Employee wise Orders", :reports_employees_daily_order_detail_path, only: [:index, :input_terminal_extra_charges]
+  add_breadcrumb "Add Terminal Extra Chrges", :admin_dashboard_input_terminal_extra_charges_path, only: [:index, :input_terminal_extra_charges]
+
   def index
     authorize! :index, :order_management
     @res = Terminal.daily_terminals(current_user.company_id)
@@ -35,6 +40,7 @@ class AdminDashboardController < ApplicationController
   def payment
     @company = Company.find(current_user.company_id)
     @terminals = @company.terminals.all.order(:name)
+    add_breadcrumb "Running balance report"
   end
 
   def pay
@@ -85,24 +91,32 @@ class AdminDashboardController < ApplicationController
     end
   end
 
+  def destroy
+    order_detail = OrderDetail.find(params[:id])
+    order = Order.find(order_detail.order_id)
+    order_detail.destroy
+    if order.order_details.any? == false
+      order.destroy
+    end
+    redirect_to admin_dashboard_index_path
+  end
+
   private
-    def load_details
-      @order_details = Order.daily_orders(params[:terminal_id], current_user.company_id)
-      @orders = Order.menu_details(params[:terminal_id], current_user.company_id).as_json
+
+  def load_details
+    @order_details = Order.daily_orders(params[:terminal_id], current_user.company_id)
+    @orders = Order.menu_details(params[:terminal_id], current_user.company_id).as_json
+  end
+
+
+  def load_terminal
+    @terminal = Terminal.find(params[:terminal_id])
+  end
+
+  def generate_no_record_found_error(records)
+    if records.empty?
+      flash[:error] = "No record found"
     end
-
-
-    def load_terminal
-      @terminal = Terminal.find(params[:terminal_id])
-    end
-
-    def generate_no_record_found_error(records)
-      if records.empty?
-        flash[:error] = "No record found"
-      end
-    end
-
-
-
+  end
 end
 

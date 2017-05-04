@@ -10,6 +10,18 @@ class UsersController < ApplicationController
 
   respond_to :html, :json
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Employees", :company_users_path, only: [:index, :show, :search]
+  add_breadcrumb "Employee Detail", :company_user_path, only: [:show]
+
+  def index
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    if @users.empty?
+      flash.now[:error] = "Sorry, No record is found"
+      render "index"
+    end 
+  end
+
   def new
     @company = Company.new
     @user = @company.employees.build
@@ -81,8 +93,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
   def search
     search_value = params[:search_value].downcase
     @users = @company.employees.where(role: "employee").where("lower(name) like ? or
@@ -92,7 +102,9 @@ class UsersController < ApplicationController
       flash.now[:error] = "No record found"
       render "index"
       # redirect_to company_users_path(params[:company_id])
-    end
+    else
+      add_breadcrumb "Search Results"
+    end  
   end
 
   def download_invalid_csv

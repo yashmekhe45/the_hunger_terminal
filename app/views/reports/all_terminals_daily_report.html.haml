@@ -1,10 +1,11 @@
 -if !@terminals.empty?  
   .container
-    %h1.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
+    %h3.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
+    %h2.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
     = link_to 'last month report', reports_all_terminals_last_month_reports_path, class: 'btn btn-info' 
     = link_to 'print',  reports_all_terminals_daily_report_path(:format => 'pdf' ), class: 'btn btn-info'
     .table-responsive
-      %table.table-hover.table-bordered{:align => 'center'}
+      %table.table-hover.table-bordered.terminals_report_table
         %tbody
           %tr
             %th.text-center #
@@ -27,10 +28,10 @@
             %td.text-center= terminal.menu_item_name
             %td.text-center= terminal.quantity
             -terminal_name = terminal.name
-    %h1.text-center Total Order From All Terminals
+    %h3.text-center Total Order From All Terminals
     -grand_total = 0        
     .table-responsive
-      %table.table-hover.table-bordered{:align => 'center'}
+      %table.table-hover.table-bordered.terminals_report_table
         %tbody
           %tr
             %th.text-center #
@@ -42,4 +43,4 @@
             %td.text-center= terminal.name
             %td.text-center= terminal.total
             -grand_total = grand_total + terminal.total
-    .h2.text-center Todays Net Total = #{grand_total}/-
+    %h3.text-center Todays Net Total = #{grand_total}/-

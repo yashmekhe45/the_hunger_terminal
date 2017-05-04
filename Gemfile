@@ -13,6 +13,7 @@ gem 'toastr-rails'
 gem 'haml-rails'
 gem "nested_form"
 gem 'kaminari'
+gem 'breadcrumbs_on_rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
@@ -41,6 +42,7 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'pdfkit'
 gem 'wkhtmltopdf-heroku'
+gem 'wkhtmltopdf-binary'
 #DateTimePicker
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'

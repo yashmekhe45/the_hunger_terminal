@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end  
+  
   resources :companies do
     get 'get_order_details', :on => :member
     resources :users do
@@ -49,6 +50,7 @@ Rails.application.routes.draw do
   get 'admin_dashboard/confirm_orders'
   get 'admin_dashboard/payment'
   get 'admin_dashboard/pay'
+  delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
 
   get 'reports/index'

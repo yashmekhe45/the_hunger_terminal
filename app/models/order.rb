@@ -23,10 +23,10 @@ class Order < ApplicationRecord
   def self.daily_orders(terminal_id, company_id)
     self.
       joins(:user,:order_details).
-      where('orders.date' => Time.zone.today,'orders.terminal_id' => terminal_id, 
+      where('orders.date' => Time.zone.today,'orders.terminal_id' => terminal_id,
         'orders.company_id' => company_id).
       select('orders.id','users.name AS emp_name',
-        'order_details.menu_item_name AS menu, quantity').
+        'order_details.menu_item_name AS menu, quantity', 'order_details.id as detail_id', 'orders.status').
       order("users.name ASC")
       # 'orders.status' => ['pending','review','placed']
   end

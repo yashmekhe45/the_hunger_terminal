@@ -8,6 +8,11 @@ class TerminalsController < ApplicationController
   before_action :load_company
   before_action :load_terminal, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Terminals", :company_terminals_path
+  add_breadcrumb "New Terminal", :new_company_terminal_path, only: [:new, :create]
+  add_breadcrumb "Edit Terminal", :edit_company_terminal_path, only: [:edit, :update]
+  
   def new
     @terminal = @current_company.terminals.build
     @terminal.menu_items.build  
@@ -47,7 +52,6 @@ class TerminalsController < ApplicationController
   end
 
   def show
-
     if params[:id] == "download"
       invalid_menus_download
     end

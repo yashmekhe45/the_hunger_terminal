@@ -1,6 +1,7 @@
 -if !@orders.empty?
   .indexcontainer
     %h3.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
+    %h4.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
     = link_to 'print', reports_employees_daily_order_detail_path(:format => 'pdf' ), class: 'btn btn-info'
     .table-responsive
       %table.table-hover.table-bordered

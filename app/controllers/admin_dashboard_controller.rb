@@ -4,6 +4,9 @@ class AdminDashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :load_terminal, only: [:place_orders, :forward_orders]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Employees' Orders", :admin_dashboard_index_path, only: [:index]
+
   def index
     authorize! :index, :order_management
     @res = Terminal.daily_terminals(current_user.company_id)
@@ -35,6 +38,7 @@ class AdminDashboardController < ApplicationController
   def payment
     @company = Company.find(current_user.company_id)
     @terminals = @company.terminals.all.order(:name)
+    add_breadcrumb "Running balance report"
   end
 
   def pay
@@ -61,6 +65,15 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_index_path
   end 
 
+  def destroy
+    order_detail = OrderDetail.find(params[:id])
+    order = Order.find(order_detail.order_id)
+    order_detail.destroy
+    if order.order_details.any? == false
+      order.destroy
+    end
+    redirect_to admin_dashboard_index_path
+  end
 
   private
     def load_details

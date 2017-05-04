@@ -1,5 +1,5 @@
 -if !@terminals.empty?  
-  .indexcontainer
+  .container
     %h1.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
     = link_to 'last month report', reports_all_terminals_last_month_reports_path, class: 'btn btn-info' 
     = link_to 'print',  reports_all_terminals_daily_report_path(:format => 'pdf' ), class: 'btn btn-info'

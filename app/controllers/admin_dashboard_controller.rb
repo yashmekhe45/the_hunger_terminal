@@ -61,6 +61,29 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_index_path
   end 
 
+  def input_terminal_extra_charges
+    @todays_terminals = Terminal.all_terminals_todays_orders_report(current_user.company_id)
+    # byebug
+  end
+
+  def save_terminal_extra_charges
+    company_id = current_user.company_id
+    params["terminal_extra_charges_form"].each do  |terminal_info|
+      terminal_id = terminal_info["terminal_id"].to_i
+      daily_extra_charge = terminal_info["daily_extra_charge"].to_i
+      if TerminalExtraCharge.exists?(terminal_id: terminal_id, company_id: company_id, date: Time.zone.today)
+        flash[:notice] = "Already updated !!"
+        redirect_back(fallback_location: root_path)
+        return
+      elsif TerminalExtraCharge.create!(terminal_id: terminal_id, daily_extra_charge: daily_extra_charge, company_id: company_id, date: Time.zone.today)
+        flash[:success] = "Successfully updated!!"
+      else
+        flash[:error] = "Error occurred!! Please try again!!"
+        redirect_to "input_terminal_extra_charges"
+        return
+      end
+    end
+  end
 
   private
     def load_details
@@ -78,6 +101,8 @@ class AdminDashboardController < ApplicationController
         flash[:error] = "No record found"
       end
     end
+
+
 
 end
 

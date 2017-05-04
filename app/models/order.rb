@@ -31,6 +31,15 @@ class Order < ApplicationRecord
       # 'orders.status' => ['pending','review','placed']
   end
 
+  #complete the below functionality: for getting all the terminal specific today's orders
+  def self.get_terminal_specific_orders(terminal_id,company_id)
+    self.
+      joins(:user).
+      where('orders.date' => Time.zone.today, 'orders.terminal_id' => terminal_id,
+        'orders.company_id' => company_id).
+      select('orders.id', 'orders.total_cost','users.id')
+  end
+
   def self.employees_daily_order_detail_report(company_id)
     self.
       joins(:user,:order_details,:terminal).

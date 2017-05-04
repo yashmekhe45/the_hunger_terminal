@@ -1,4 +1,6 @@
 .container
+  .alert.alert-danger
+    Extra delivery charges may apply!!
   %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
   - if @nonveg.any? == false
     .col-md-7.col-sm-7

@@ -34,11 +34,12 @@ Rails.application.routes.draw do
           post :import
         end
       end
-
-      resources :orders
     end
   end
 
+  resources :terminals do
+    resources :orders
+  end
   
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
@@ -52,6 +53,8 @@ Rails.application.routes.draw do
   get 'admin_dashboard/confirm_orders'
   get 'admin_dashboard/payment'
   get 'admin_dashboard/pay'
+  get 'admin_dashboard/input_terminal_extra_charges'
+  post 'admin_dashboard/save_terminal_extra_charges'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
 
   get 'reports/index'

@@ -17,7 +17,6 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require moment
-//= require bootstrap-datetimepicker
 
 //= require jquery_ujs
 //= require turbolinks
@@ -26,12 +25,12 @@
 //= require_tree .
 
   $(document).on('turbolinks:load',function(){
-    $('.from, .to').datepicker({
+    $('#fromDate').datepicker({
       autoclose: true,
       // format: 'dd-mm-yyyy'
       format: 'yyyy-mm-dd',
       todayBtn: "linked",
-      orientation: "bottom auto",
+      orientation: "bottom",
       todayHighlight: true
       // startDate: "0d"
     });

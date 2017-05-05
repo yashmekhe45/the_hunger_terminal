@@ -11,14 +11,13 @@
  * It is generally better to create a new file per style scope.
  *
  *= require toastr
- *= require bootstrap-datepicker3
  *= require_tree
 */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "bootstrap-datetimepicker";
 @import "terminals";
 @import "companies";
+@import "bootstrap-datepicker";
 @import "home";
 @import "menu_items";
 @import "users";
@@ -30,7 +29,7 @@ body {
   background-size: cover;
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
-  font-weight: 400;
+  font-weigpht: 400;
   margin-top: 7%;
   margin-bottom: 5%;
   height: 100%

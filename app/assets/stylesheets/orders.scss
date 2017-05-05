@@ -27,10 +27,12 @@
   color: red;
 }
 
-.datepicker {
-  top: 183px !important;
+/*.datepicker {
+  .datepicker-dropdown{
+    top: 183px !important;
+  }
 }
-
+*/
 .place_order{
 	margin-top: 10px;
 }
@@ -70,4 +72,10 @@ input[type=number]::-webkit-outer-spin-button {
     margin-left:-40px;
     margin-top: 15%;
   }
+}
+
+.order_history_table
+{
+  margin: 0 auto;
+  border:1px solid;
 }

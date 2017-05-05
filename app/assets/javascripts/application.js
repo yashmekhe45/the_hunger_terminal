@@ -11,11 +11,6 @@
 // about supported directives.
 
 //= require jquery
-//= require bootstrap-sprockets
-//= require bootstrap-datepicker
-//= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require moment
 
 //= require jquery_ujs
@@ -23,17 +18,15 @@
 //= require jquery_nested_form
 //= require toastr
 //= require_tree .
+//= require bootstrap-sprockets
+//= require bootstrap-datepicker
+
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
-      autoclose: true,
-      // format: 'dd-mm-yyyy'
-      format: 'yyyy-mm-dd',
-      todayBtn: "linked",
-      // orientation: "bottom auto",
-      todayHighlight: true
-      // startDate: "0d"
+      format: 'yyyy-mm-dd'
     });
+
     $("#bton").click(function(event) {
       event.preventDefault();
       params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})

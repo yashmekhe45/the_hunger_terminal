@@ -25,12 +25,12 @@
 //= require_tree .
 
   $(document).on('turbolinks:load',function(){
-    $('#fromDate').datepicker({
+    $('#fromDate, #toDate').datepicker({
       autoclose: true,
       // format: 'dd-mm-yyyy'
       format: 'yyyy-mm-dd',
       todayBtn: "linked",
-      orientation: "bottom",
+      // orientation: "bottom auto",
       todayHighlight: true
       // startDate: "0d"
     });
@@ -45,9 +45,7 @@
       else
       {
         window.location.href = '/order/myOrder' + '?' + params
-      }
-
-     
+      } 
       
     });
   });

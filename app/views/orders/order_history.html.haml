@@ -1,5 +1,5 @@
 .container
-  %h3.text-center Order History
+  %h3.text-center My Order History
   .row
     .col-sm-12
       %span Filter orders by date range : 
@@ -21,6 +21,7 @@
               %th Date
               %th Total
               %th Discount 
+              %th Extra Charges 
               %th Payable 
               %th Items(Qty)
           %tbody
@@ -29,7 +30,8 @@
               %td= order.date
               %td= order.total_cost
               %td= order.discount
-              %td= order.total_cost - order.discount
+              %td= order.extra_charges
+              %td= order.total_cost - order.discount + order.extra_charges
               %td
                 - order.order_details.each_with_index do |order_item,index|
                   - indexplusone = index+1

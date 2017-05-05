@@ -26,10 +26,9 @@ class OrdersController < ApplicationController
     @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
     @terminal_id = params[:terminal_id]
-    # @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
-    # @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
     @veg = get_veg_menu_items()
     @nonveg = get_nonveg_menu_items
+    add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
   def create                                                                                                                           

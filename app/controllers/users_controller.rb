@@ -48,6 +48,7 @@ class UsersController < ApplicationController
       flash.now[:error] = "Sorry, No record is found"
       render "index"
     end
+    add_breadcrumb @company.name, company_users_path
   end
   
   def update

@@ -1,31 +1,13 @@
 %h1.text-center EMPLOYEES
-/Search Bar#################################
 .container
-  .row
-    .col-md-6.col-sm-6{:style => "border: 1px solid"}
-      %h4.text-center Add Employee Records
-      .col-md-7.col-sm-7
-        = form_tag import_company_users_path,id: "import_form", multipart: true do
-          = file_field_tag :file , accept: '.csv '
-          = submit_tag "Import", 'data-disable-with': "Please wait.."
-          =link_to "Download Sample CSV",users_download_sample_csv_path
-      .col-md-3.col-sm-3
-        = link_to 'New Employee', new_company_user_path(@company), class: "btn btn-success", remote: true, "data-target" => "#user_form", "data-toggle" => "modal"
-      .col-md-2.col-sm-2
-
-    .col-md-6.col-sm-6
-      = form_tag({controller: "users", action:"search"}, method: "get") do
-        = text_field_tag(:search_value)
-        = submit_tag("Search")
-        =link_to  "RESET",company_users_path(@company.id), :class=> "btn", :id => "resetButton"
-    .col-md-1.col-sm-1
+  =render "add_employees_and_search_bar"
 %br
 %br
 %br
 
 -if !@users.empty?
   .container
-    %table.table.table-fixed#employeesTable{:border =>1,:align=>"center"}
+    %table.table.table-fixed#employees_table
       %tbody
         %tr
           %th 
@@ -45,6 +27,7 @@
 
 .text-center
   = paginate @users
-#user_form.modal.fade{"aria-labPelledby" => "User", :role => "dialog", :tabindex => "-1"}
+#user_form.modal.fade{"aria-labelledby" => "add_single_user_record", :role => "dialog", :tabindex => "-1"}
+#import_employees.modal.fade{"aria-labelledby" => "add_multiple_employee_records", :role => "dialog", :tabindex => "-1"}
 
   

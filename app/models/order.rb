@@ -8,7 +8,7 @@ class Order < ApplicationRecord
   # :can_be_created?, 
   # validate :can_be_updated?, on: :update  
   # validates :user_id, uniqueness: { scope: :date }
-  validate :valid_date? 
+  validate :valid_date?, on: :create
 
   belongs_to :user
   belongs_to :company
@@ -29,6 +29,15 @@ class Order < ApplicationRecord
         'order_details.menu_item_name AS menu, quantity', 'order_details.id as detail_id', 'orders.status').
       order("users.name ASC")
       # 'orders.status' => ['pending','review','placed']
+  end
+
+  #complete the below functionality: for getting all the terminal specific today's orders
+  def self.get_terminal_specific_orders(terminal_id,company_id)
+    self.
+      joins(:user).
+      where('orders.date' => Time.zone.today, 'orders.terminal_id' => terminal_id,
+        'orders.company_id' => company_id).
+      select('orders.id', 'orders.total_cost','users.id')
   end
 
   def self.employees_daily_order_detail_report(company_id)

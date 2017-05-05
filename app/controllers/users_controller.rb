@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   load_and_authorize_resource param_method: :user_params 
 
   before_action :load_user , only:[:show, :edit, :update]
-  before_action :load_company, only: [:index, :import, :search, :new, :create]
+  before_action :load_company, except: [:download_invalid_csv,
+    :download_invalid_xls, :download_invalid_xlsx, :download_sample_file]
 
   respond_to :html, :json
 
@@ -39,7 +40,15 @@ class UsersController < ApplicationController
       flash.now[:error]=  @user.errors.messages
       render :new 
     end
-  end 
+  end
+
+  def index
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    if @users.empty?
+      flash.now[:error] = "Sorry, No record is found"
+      render "index"
+    end
+  end
   
   def update
     page = 1
@@ -68,50 +77,19 @@ class UsersController < ApplicationController
 
 
   def import
+    # User.import(params[:file], params[:company_id])
+    # redirect_to company_users_path(params[:company_id]), notice: "User records imported"
+  end
+
+  def add_multiple_employee_records
+    p params[:file]
     if !params[:file]
-      flash[:error] = "Please select a CSV file."
-      redirect_to company_users_path(params[:company_id])
+      flash[:error] = "Please select a file."
+      # redirect_to company_users_path(params[:company_id])
+      redirect_to import_company_users_path(params[:company_id])
     else
-      valid_header =  ["name","email","mobile_number"]
-      $INVALID_USER_CSV = nil
-      @check_user = User.new(name:"dummy",email: "dummy@dummy.com", mobile_number: "9999999999",is_active: false, 
-        company_id: 1111,role: "employee", password: "dummy123")
-      if params[:file].content_type == 'text/csv'
-        users_csv = File.open(params[:file].path)
-        users_data = CSV.parse(users_csv,headers:true)
-        if users_data.headers == valid_header
-          users_data.each do |user_row|
-           
-            next if user_row.to_a == valid_header
-            user_hash = user_row.to_h 
-            if !user_hash.empty?
-              user = @company.employees.build(name: user_hash["name"],email: user_hash["email"], 
-                mobile_number: user_hash["mobile_number"],is_active: true, role: "employee",
-                password: Devise.friendly_token.first(8))
-              if user.valid?
-                user.save
-              else
-                CSV.open($INVALID_USER_CSV="public/#{@company.name}-invalid-records-#{Date.today}.csv","a+") do |csv|
-                  user_row << user.errors.messages
-                  csv << user_row
-                end
-                @check_user = user
-              end
-            end
-          end
-          if @check_user.valid?
-            flash[:success] = "all users added through csv data"
-            redirect_to company_users_path(params[:company_id])
-          else
-            flash.now[:notice] = "You have some invalid records.Correct it and upload it again"
-          end
-        else
-          flash[:error] = "invalid headers in your csv."
-          redirect_to company_users_path(params[:company_id])
-        end
-      else
-        flash.now[:error] = "invalid type of file please upload csv with valid headers"
-      end
+      User.import(params[:file], params[:company_id])
+      redirect_to company_users_path(params[:company_id]), notice: "User records imported"
     end
   end
 
@@ -138,11 +116,27 @@ class UsersController < ApplicationController
     end
   end
 
-  def download_sample_csv
-    send_file(
-    "#{Rails.root}/public/employees.csv",
-    type: "application/csv"
-  )
+  def download_invalid_xls
+  end
+
+  def download_invalid_xlsx
+  end
+
+  def download_sample_file
+    file_type = params[:file_type]
+
+    case file_type
+    when 'csv' then 
+      send_file("#{Rails.root}/public/employees.csv",
+        type: "application/csv")
+    when 'xls' then 
+      send_file("#{Rails.root}/public/employees.xls",
+        type: "application/xls") 
+    when 'xlsx' then 
+      send_file("#{Rails.root}/public/employees.xlsx",
+        type: "application/xlsx")
+    # else raise "Unknown file type: #{file.original_filename}"
+    end
   end
 
 

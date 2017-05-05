@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418093700) do
+ActiveRecord::Schema.define(version: 20170504102553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(version: 20170418093700) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "terminal_extra_charges", force: :cascade do |t|
+    t.integer  "daily_extra_charge", default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "terminal_id"
+    t.integer  "company_id"
+    t.date     "date"
+    t.index ["company_id"], name: "index_terminal_extra_charges_on_company_id", using: :btree
+    t.index ["terminal_id"], name: "index_terminal_extra_charges_on_terminal_id", using: :btree
+  end
+
   create_table "terminal_reports", force: :cascade do |t|
     t.string   "name"
     t.float    "current_amount"
@@ -143,6 +154,8 @@ ActiveRecord::Schema.define(version: 20170418093700) do
   add_foreign_key "orders", "companies"
   add_foreign_key "orders", "terminals"
   add_foreign_key "orders", "users"
+  add_foreign_key "terminal_extra_charges", "companies"
+  add_foreign_key "terminal_extra_charges", "terminals"
   add_foreign_key "terminal_reports", "terminals"
   add_foreign_key "terminals", "companies"
   add_foreign_key "users", "companies"

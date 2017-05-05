@@ -4,11 +4,18 @@
       %span.glyphicon.glyphicon-user.gly
       .name.text-center Employee
   
-  %div.icon
-    %a{:href => admin_dashboard_index_path}
+  %li.dropdown.icon
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => admin_dashboard_index_path}
       %span.glyphicon.glyphicon-th-list
-      .name.text-center Today's Orders  
-  
+      .name.text-center Today's Orders 
+      %span.caret
+    %ul.dropdown-menu
+      %li
+        %a#menu{href: admin_dashboard_index_path} Vendor wise Orders
+      %li
+        %a#menu{href: reports_employees_daily_order_detail_path }Employee wise Orders
+      %li
+        %a#menu{href: admin_dashboard_input_terminal_extra_charges_path} Add Extra charges
   / %div.icon
   /   %a{:href => reports_index_path}
   /     %span.glyphicon.glyphicon-file.gly
@@ -26,11 +33,9 @@
       %span.caret
     %ul.dropdown-menu
       %li
-        %a#menu{ :href => reports_employees_daily_order_detail_path } Emp. Report
-      %li
         %a#menu{ :href => reports_employees_todays_orders_path } Todays Report
       %li
-        %a#menu{ :href => reports_monthly_all_employees_path } Monthly Report
+        %a#menu{ :href => reports_monthly_all_employees_path } Last Month Report
       %li
         %a#menu{ :href => reports_index_path } Current Balance
 
@@ -43,7 +48,7 @@
       %li
         %a#menu{ :href => reports_all_terminals_daily_report_path } Todays Report
       %li
-        %a#menu{ :href => reports_all_terminals_last_month_reports_path } Monthly Report
+        %a#menu{ :href => reports_all_terminals_last_month_reports_path } Last Month Report
       %li
         %a#menu{ :href => admin_dashboard_payment_path } Running Balance
   %div.icon    

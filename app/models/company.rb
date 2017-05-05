@@ -16,6 +16,7 @@ class Company < ApplicationRecord
   has_many :employees , class_name: "User", dependent: :destroy
   has_many :terminals, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :terminal_extra_charges
 
   accepts_nested_attributes_for :address, :employees
 

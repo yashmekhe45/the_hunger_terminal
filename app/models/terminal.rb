@@ -11,6 +11,7 @@ class Terminal < ApplicationRecord
   has_many :menu_items, dependent: :destroy
   has_many :orders
   has_many :terminal_reports
+  has_many :terminal_extra_charges
   belongs_to :company
 
   mount_uploader :image, ImageUploader
@@ -69,7 +70,7 @@ class Terminal < ApplicationRecord
       joins(:orders).
       where('orders.company_id' => c_id, 'orders.date' => Time.zone.today, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
       group('terminals.id').
-      select('terminals.name, sum(orders.total_cost) AS total')
+      select('terminals.name, terminals.id, sum(orders.total_cost) AS total')
   end
 
   def self.all_terminals_todays_order_details(c_id)

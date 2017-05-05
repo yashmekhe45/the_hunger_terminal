@@ -10,11 +10,6 @@
   border: solid 1px;
 }
 
-h1, h2, h3
-{
-  color: black;
-}
-
 #resetButton
 {
   border: solid;
@@ -26,4 +21,21 @@ h1, h2, h3
   background-color:white;
 }
 
+.employee_import_file
+{
+  color: green;
+  font-style: italic;
+}
+#add_employee_records
+{
+  border: 1px solid;
+  padding: 2px;
+}
 
+#employees_table
+{
+  border:1px solid black;
+  /*align-items: center;*/
+  margin: 0 auto;
+  /*float: auto;*/
+}

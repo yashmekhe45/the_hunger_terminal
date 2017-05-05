@@ -25,10 +25,11 @@ class OrdersController < ApplicationController
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
-    # @terminal_id = params[:terminal_id]
-    @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
-    @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
-    add_breadcrumb @terminal.name, new_terminal_order_path
+    @terminal_id = params[:terminal_id]
+    # @veg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
+    # @nonveg = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
+    @veg = get_veg_menu_items()
+    @nonveg = get_nonveg_menu_items
   end
 
   def create                                                                                                                           
@@ -106,6 +107,14 @@ class OrdersController < ApplicationController
         flash[:error] = "You are not authorized to access it!!"
         redirect_to root_path
       end
+    end
+
+    def get_veg_menu_items
+      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
+    end
+
+    def get_nonveg_menu_items
+      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
     end
 
 end

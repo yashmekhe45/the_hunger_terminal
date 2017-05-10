@@ -1,5 +1,6 @@
 class OrderMailer < ApplicationMailer
-  default from: ENV["GMAIL_USERNAME"]
+  # default from: ENV["GMAIL_USERNAME"]
+  default from: "hunger-terminal@joshsoftware.com"
 
   def send_mail_to_terminal(terminal_id, terminal_orders, message, company_id)
     @terminal = Terminal.find(terminal_id)
@@ -19,7 +20,7 @@ class OrderMailer < ApplicationMailer
     @end_time = end_time
     email = employee[0]
     @name = employee[1]
-    mail(to: email, subject: 'place order soon')
+    mail(to:"kirand@joshsoftware.com", subject: 'place order soon')
   end
 
 end

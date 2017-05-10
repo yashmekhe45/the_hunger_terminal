@@ -18,7 +18,7 @@ class OrderMailer < ApplicationMailer
     @end_time = end_time
     email = employee[0]
     @name = employee[1]
-    mail(to:email, subject: 'place order soon')
+    mail(to:"kiranbdesh1995@gmail.com", subject: 'place order soon')
   end
 
 end

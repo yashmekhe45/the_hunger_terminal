@@ -1,6 +1,7 @@
 class OrderMailer < ApplicationMailer
   # default from: ENV["GMAIL_USERNAME"]
-  default from: "hunger-terminal@joshsoftware.com"
+  # default from: "hunger-terminal@joshsoftware.com"
+  # default to: "kiranbdesh123@gmail.com"
 
   def send_mail_to_terminal(terminal_id, terminal_orders, message, company_id)
     @terminal = Terminal.find(terminal_id)

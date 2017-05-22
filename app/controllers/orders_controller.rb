@@ -56,7 +56,8 @@ class OrdersController < ApplicationController
   def edit
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
-    @order = @terminal.orders.find(params[:id]) 
+    @order = @terminal.orders.find(params[:id])
+    @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus-oder_menus

@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
 
   add_breadcrumb "Terminals' Last Month's Report", :reports_all_terminals_last_month_reports_path, only: [:all_terminals_last_month_reports, :individual_terminal_last_month_report]
 
-  add_breadcrumb "Individual Terminal Report", :rports_individual_terminal_last_month_report_path, only: [:individual_terminal_last_month_report]
+  add_breadcrumb "Individual Terminal Report", :reports_individual_terminal_last_month_report_path, only: [:individual_terminal_last_month_report]
 
   add_breadcrumb "Employee wise Orders", :reports_employees_daily_order_detail_path, only: [:employees_daily_order_detail]
 

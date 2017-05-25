@@ -56,6 +56,9 @@ GEM
       sass (>= 3.3.4)
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
+    bullet (5.5.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
     cancan (1.6.10)
     cancancan (1.16.0)
@@ -268,6 +271,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.10.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.0)
@@ -288,6 +292,7 @@ DEPENDENCIES
   autoprefixer-rails (~> 6.7, >= 6.7.2)
   bootstrap-sass (~> 3.3, >= 3.3.6)
   breadcrumbs_on_rails
+  bullet
   byebug
   cancan
   cancancan

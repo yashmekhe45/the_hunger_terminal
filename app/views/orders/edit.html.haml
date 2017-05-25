@@ -9,7 +9,7 @@
           %th{:style => "width:8%"} Quantity
           %th.text-center{:style => "width:32%"} Subtotal
       %tbody
-        - @order.order_details.each do |order_detail|
+        - @order_details.each do |order_detail|
           %tr{:id => "#{order_detail.menu_item_id}"} 
             %td{"data-th" => "Product"}
               .row

@@ -58,6 +58,7 @@ class User < ApplicationRecord
     self.
       joins(:orders).
       where('company_id'=> c_id,'orders.status' => 'confirmed').
+      where('orders.created_at' => Time.now.beginning_of_month-1.day..Time.now.midnight + 1.day).
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
       order('users.id')
@@ -77,7 +78,7 @@ class User < ApplicationRecord
     self.
       joins(:orders).
       where('company_id'=> c_id).
-      where('orders.created_at' => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).
+      where('orders.created_at' => 1.month.ago.beginning_of_month-1.day..1.month.ago.end_of_month+1.day).
       where('orders.status'=>'confirmed').
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
@@ -88,7 +89,7 @@ class User < ApplicationRecord
       self.joins(:orders).
       where('orders.company_id' => c_id).
       where('orders.user_id' => user_id).
-      where('orders.created_at' => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).
+      where('orders.created_at' => 1.month.ago.beginning_of_month-1.day..1.month.ago.end_of_month+1.day).
       where('orders.status' => 'confirmed').
       select('users.name,users.id,orders.created_at,orders.id,orders.total_cost,orders.discount')
   end

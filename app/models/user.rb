@@ -82,7 +82,7 @@ class User < ApplicationRecord
       where('orders.status'=>'confirmed').
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
-      order('users.id')
+      order('users.name')
   end
 
   def self.employee_individual_report(c_id, user_id)

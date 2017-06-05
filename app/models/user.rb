@@ -78,11 +78,11 @@ class User < ApplicationRecord
     self.
       joins(:orders).
       where('company_id'=> c_id).
-      where('orders.created_at' => 1.month.ago.beginning_of_month-1.day..1.month.ago.end_of_month+1.day).
+      where('orders.created_at' => 1.month.ago.utc.beginning_of_month..1.month.ago.utc.end_of_month).
       where('orders.status'=>'confirmed').
       group('users.id').
-      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
-      order('users.id')
+      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
+      order('users.name')
   end
 
   def self.employee_individual_report(c_id, user_id)

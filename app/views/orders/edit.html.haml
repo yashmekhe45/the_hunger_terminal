@@ -1,5 +1,5 @@
 .container
-  %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}
+  %h3#vendorName #{@terminal.name.titleize}
   .col-md-7.col-sm-7
     %table#cart.table.table-hover.table-condensed
       %thead
@@ -51,7 +51,7 @@
               %span.sub-total{"data-th" => "Subtotal"} 0
       
   .col-md-5
-    = simple_form_for @order, url: terminal_order_path(@order,:terminal_id => @terminal.id), html: { method: :patch, class: 'form-horizontal' } do |f|
+    = simple_form_for @order, url: order_path, html: { method: :patch, class: 'form-horizontal' } do |f|
       = render 'form', f: f
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}

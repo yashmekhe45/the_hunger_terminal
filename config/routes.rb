@@ -13,33 +13,58 @@ Rails.application.routes.draw do
     patch 'users' => 'devise/registrations#update', :as => 'user_registration'
   end 
 
-  resources :companies do
+
+  resources :companies, shallow: true, only: [:new, :create] do
     member do
       get 'get_order_details'
     end
 
-    resources :users do
+    resources :users, except: [:destroy, :edit] do    
       collection do
         get 'search'
         get 'download_invalid_csv'
         post 'add_multiple_employee_records'
         post 'import'
-      end
+      end    
     end
 
-    resources :terminals do
-      resources :menu_items do
+    resources :terminals, except: [:destroy, :show] do
+      resources :orders
+      resources :menu_items, except: [:destroy, :show] do
         collection do
           post :import
         end
       end
+    end  
+  end
+
+  scope '/reports', as: 'reports' do
+    resources :users , only: [] do
+      collection do
+        get 'history', to: 'reports#monthly_all_employees'
+        get 'mtd', to: 'reports#employees_current_month'
+        get 'todays', to: 'reports#employees_daily_order_detail'
+      end
+
+      member do
+        get 'history', to: 'reports#employee_history'
+      end
+    end
+
+    resources :terminals, only: [] do
+      collection do
+        get 'history', to: 'reports#terminals_history'
+        get 'mtd', to: 'reports#terminals_current_month'
+        get 'todays', to: 'reports#terminals_todays'
+      end
+
+      member do
+        get 'history', to: 'reports#terminal_history'
+      end
     end
   end
 
-  resources :terminals do
-    resources :orders
-  end
-  
+
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
   get "menu_items/download_csv"
@@ -56,20 +81,18 @@ Rails.application.routes.draw do
   get 'admin_dashboard/input_terminal_extra_charges'
   post 'admin_dashboard/save_terminal_extra_charges'
 
-  delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
+  # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
-
-  get 'reports/index'
-  get 'reports/individual_employee'
-  get 'reports/order_details'
-  get 'reports/employees_todays_orders'
-  get 'reports/monthly_all_employees'
-  get "reports/download_pdf" => "reports#download_pdf"
-  get 'reports/all_terminals_last_month_reports'
-  get 'reports/all_terminals_daily_report'
-  get 'reports/individual_terminal_last_month_report'
-  get 'reports/employees_daily_order_detail'
-  get 'reports/download_daily_terminal_report'
   
-  
+  # get 'reports/index'
+  # get 'reports/individual_employee'
+  # get 'reports/order_details'
+  # get 'reports/employees_todays_orders'
+  # get 'reports/monthly_all_employees'
+  # get "reports/download_pdf" => "reports#download_pdf"
+  # get 'reports/all_terminals_last_month_reports'
+  # get 'reports/all_terminals_daily_report'
+  # get 'reports/individual_terminal_last_month_report'
+  # get 'reports/employees_daily_order_detail'
+  # get 'reports/download_daily_terminal_report'
 end

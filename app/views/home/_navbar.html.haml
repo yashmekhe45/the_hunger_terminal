@@ -30,7 +30,7 @@
                 %li
                   - order_id = current_user.orders.find_by(date: Time.zone.today).id
                   - terminal_id = current_user.orders.find_by(date: Time.zone.today).terminal.id
-                  %a{:href => terminal_order_path(terminal_id,order_id)} Today's Order          
+                  %a{:href => order_path(order_id)} Today's Order          
               %li
                 %a{:href => orders_path} Order history          
         %li

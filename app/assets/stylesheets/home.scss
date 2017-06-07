@@ -9,7 +9,7 @@
   height: 20%;
   background-size: 100% 100%;
   padding-top: 0%;
-  padding-bottom: 5%;
+  padding-bottom: 0%;
   font-family: 'Open Sans',sans-serif;
   font-weight: 300;
 }
@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
 
-h1 {
+/*h1 {
   //font-size: 2em;
   margin-bottom: 20px;
   text-align: center;
@@ -48,7 +48,7 @@ h2 {
   font-weight: normal;
   color: #777;
 }
-
+*/
 .container.bg-3{
   padding-top: 2%;
 }
@@ -83,3 +83,17 @@ h2 {
 span.caret{
   margin-left: 48%;
 }
+
+#titleOnIndex
+{
+  font-size: 3em;
+}
+
+#seeHow
+{
+  font-style: italic;
+  font-family: fantasy;
+  font-size: x-large;
+  -webkit-text-fill-color: brown;
+}
+

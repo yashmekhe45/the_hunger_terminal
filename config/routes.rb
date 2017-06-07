@@ -14,12 +14,17 @@ Rails.application.routes.draw do
   end 
 
 
-  resources :companies, shallow: true, only: [:new, :create] do
+  resources :companies, shallow: true, only: [:new, :create, :update] do
     member do
       get 'get_order_details'
     end
 
-    resources :users, except: [:destroy, :edit] do    
+    resources :users, except: [:destroy, :edit] do
+      resources :orders, only: [] do 
+        member do
+          get 'details', to: 'reports#order_details'
+        end
+      end    
       collection do
         get 'search'
         get 'download_invalid_csv'
@@ -29,7 +34,7 @@ Rails.application.routes.draw do
     end
 
     resources :terminals, except: [:destroy, :show] do
-      resources :orders
+      resources :orders, except: :index
       resources :menu_items, except: [:destroy, :show] do
         collection do
           post :import
@@ -63,7 +68,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
 
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  

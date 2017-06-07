@@ -9,7 +9,7 @@
             %h5 Company Order Details
 
         .panel-body#companyId{data: {company_id: @company.id}}
-          = simple_form_for @company , url: company_path(@company.id), method: "PATCH" do |f|
+          = simple_form_for @company , url: company_path(@company), method: "PATCH" do |f|
             .form-group
               .col-md-1.col-sm-1
               .col-md-3.col-sm-3

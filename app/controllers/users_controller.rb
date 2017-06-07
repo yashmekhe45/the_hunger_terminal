@@ -65,14 +65,14 @@ class UsersController < ApplicationController
       #Employess will be activated/deactivated by Company admin
       else
         flash[:success] = "Status changed successfully!!"
-        redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
+        redirect_to company_users_path(@company,:page=>params[:page])
       end
     else
       flash.now[:error]= @user.errors.messages
       if(@user.role == "company_admin")
         render :edit_company_admin
       else
-        redirect_to company_users_path(params[:company_id],:page=>params[:page])
+        redirect_to company_users_path(@company,:page=>params[:page])
       end
     end
   end

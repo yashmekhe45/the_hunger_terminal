@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
 
 
   def monthly_all_employees
-    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)
+    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)  
     generate_no_record_found_error(@users)
   end
 
@@ -51,7 +51,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new('http://localhost:3000/reports/all_terminals_daily_report', :page_size => 'A3')
+        kit = PDFKit.new('http://localhost:3000/reports/users/todays', :page_size => 'A3')
         send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
       end
     end 
@@ -87,16 +87,15 @@ class ReportsController < ApplicationController
 
   def terminals_todays
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
+    @todays_terminals = Terminal.all.all_terminals_todays_orders_report(current_user.company_id)
     generate_no_record_found_error(@terminals)
-    # respond_to do |format|
-    #   format.html
-    #   format.pdf do
-    #     kit = PDFKit.new('http://localhost:3000/reports/all_terminals_daily_report', :page_size => 'A3')
-    #     send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
-    #   end
-    # end 
-   
-  #   @terminals =  Order.all_terminals_daily_report(current_user.company_id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        kit = PDFKit.new('http://localhost:3000/reports/terminals/todays', :page_size => 'A3')
+        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+      end
+    end 
   end
 
   def terminal_history

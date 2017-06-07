@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
-  add_breadcrumb "home", :root_path
+  add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
   add_breadcrumb "Today's Order", :terminal_order_path, only: [:show, :edit, :update]
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
-    @orders = current_user.orders.where(date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
+    @orders = current_user.orders.includes(:order_details).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
     if @orders.empty?
       flash[:error] = "No order is present for this period!"
     end
@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     @subsidy = current_user.company.subsidy
     @order = @terminal.orders.new
     @terminal_id = params[:terminal_id]
-    @veg = get_veg_menu_items()
+    @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
@@ -55,9 +55,8 @@ class OrdersController < ApplicationController
 
 
   def edit
-    # @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
-    # @order = @terminal.orders.find(params[:id]) 
+    # @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus-oder_menus

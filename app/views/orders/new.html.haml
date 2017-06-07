@@ -3,23 +3,18 @@
     Extra delivery charges may apply!!
   %h3#vendorName #{@terminal.name.titleize}
   - if @nonveg.any? == false
-    .col-md-7.col-sm-7
+    .col-md-7.col-sm-7      
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#veg"} Veg
+    %li
+      %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+  .tab-content.col-md-7.col-sm-7
+    .tab-pane.fade.in.active#veg
       = render "menu", obj: @veg
-  - elsif @veg.any? == false
-    .col-md-7.col-sm-7
-      = render "menu", obj: @nonveg        
-  - else  
-    %ul.nav.nav-tabs
-      %li.active
-        %a{"data-toggle" => "tab", :href => "#veg"} Veg
-      %li
-        %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
-    .tab-content.col-md-7.col-sm-7
-      .tab-pane.fade.in.active#veg
-        = render "menu", obj: @veg
-      .tab-pane.fade#nonveg
-        = render "menu", obj: @nonveg
-               
+    .tab-pane.fade#nonveg
+      = render "menu", obj: @nonveg
+        
 
   .col-md-5
     = form_tag terminal_orders_path do |f|
@@ -32,10 +27,6 @@
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
-      / %h4
-      / %h4
-      /   %small
-      /     {{vendor_name}}
 
     .col-xs-6
       .col-xs-6

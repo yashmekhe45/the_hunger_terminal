@@ -110,9 +110,9 @@ ActiveRecord::Schema.define(version: 20170505103342) do
     t.string   "landline"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "company_id"
     t.string   "email"
     t.boolean  "active",           default: true
-    t.integer  "company_id"
     t.string   "image"
     t.float    "min_order_amount"
     t.float    "payment_made",     default: 0.0

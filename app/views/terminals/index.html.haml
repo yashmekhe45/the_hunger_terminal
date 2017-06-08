@@ -39,7 +39,7 @@
             
 
                 %td.text-center
-                  =link_to terminal_path(params[:company_id],object.id,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
+                  =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
                     -if object.active
                       .text-center
                         %button.btn.btn-success{:type=> "button"}

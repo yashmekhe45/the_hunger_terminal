@@ -66,9 +66,10 @@ class TerminalsController < ApplicationController
           Terminal.update_post_payment_details_of_terminal(@terminal.id, current_user.company_id)
         else
           flash[:success] = "terminal updated successfully"
+          format.html {  redirect_to company_terminals_path(@current_company) and return }
         end
         format.js { render inline: "location.reload();"  }
-        format.html {  redirect_to company_terminals_path(@current_company) and return }
+        
       end   
     else
       flash[:error] = @terminal.errors.messages

@@ -36,12 +36,12 @@
               %tr
                 %td.text-center= index+1
                 %td.text-center
-                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
+                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_menu_item_path(menu_item, terminal_id: params[:terminal_id]), :title => "eidt menu item details!"} #{menu_item.name}                  
                 %td.text-center= "#{menu_item.price}/-"
                 %td.text-center= menu_item.veg ? "Veg" : "Non Veg"
                 %td.text-center= menu_item.available ? "Available" : "Not Available"
                 %td.text-center
-                  =link_to menu_item_path(menu_item, params[:company_id], @terminal, 'menu_item[available]' => is_available_menu_item?(menu_item), 'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
+                  =link_to menu_item_path(menu_item, terminal_id: params[:terminal_id],'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
                     -if menu_item.available
                       .text-center
                         %button.btn.btn-success{:type => "button"}

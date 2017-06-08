@@ -52,7 +52,7 @@ class MenuItemsController < ApplicationController
   def update
     if @menu_item.update_attributes(menu_item_params)
       flash[:success] = "Menu Item updated"
-      redirect_to company_terminal_menu_items_path and return
+      redirect_to terminal_menu_items_path(@terminal) and return
     else
       flash[:error] = "can't update menu_item"
       render :edit and return

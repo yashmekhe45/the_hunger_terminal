@@ -17,7 +17,7 @@
                 %span.glyphicon.glyphicon-search
       .col-md-3  
         .pull-left
-          = link_to 'Add Menu Item', new_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
+          = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true 
   .row
     .col-md-2
     .col-md-8
@@ -55,3 +55,4 @@
     .col-md-2
 
 #menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}
+#menu_item_new.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}

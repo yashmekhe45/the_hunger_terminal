@@ -69,7 +69,7 @@ class MenuItemsController < ApplicationController
     unless params[:file].nil?
       valid_csv
     end
-    redirect_to company_terminal_menu_items_path(@current_company,@terminal)
+    redirect_to terminal_menu_items_path(@terminal)
   end
   
   def valid_csv    

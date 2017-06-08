@@ -30,13 +30,12 @@
               - @terminals.each_with_index do |object,i|
                 %tr
                 %td.text-center= i+1
-                %td.text-center= link_to object.name, terminal_menu_items_path(params[:company_id],object.id)
-                
+                %td.text-center= link_to object.name, terminal_menu_items_path(object)
                 %td.text-center= object.landline
                 %td.text-center= object.active ? "active" : "inactive" 
                 
                 %td.text-center
-                  = link_to "Edit", edit_terminal_path(params[:company_id],object.id)
+                  = link_to "Edit", edit_terminal_path(object)
             
 
                 %td.text-center

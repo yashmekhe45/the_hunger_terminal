@@ -4,12 +4,12 @@
     .searchcontainer 
       .col-md-3
         .pull-left
-          = form_tag import_company_terminal_menu_items_path, multipart: true do
+          = form_tag import_terminal_menu_items_path, multipart: true do
             = file_field_tag :file , accept: '.csv '
             = submit_tag "Import CSV"
           = link_to 'Sample Menu CSV ', menu_items_download_csv_path
       .col-md-6
-        %form{action:company_terminal_menu_items_path}
+        %form{action:terminal_menu_items_path}
           .input-group.stylish-input-group
             %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
             %span.input-group-addon
@@ -17,7 +17,7 @@
                 %span.glyphicon.glyphicon-search
       .col-md-3  
         .pull-left
-          = link_to 'Add Menu Item', new_company_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
+          = link_to 'Add Menu Item', new_terminal_menu_item_url(@current_company,@terminal), class: "btn btn-success", remote: true 
   .row
     .col-md-2
     .col-md-8
@@ -36,12 +36,12 @@
               %tr
                 %td.text-center= index+1
                 %td.text-center
-                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_company_terminal_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
+                  %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_menu_item_path(@current_company,@terminal,menu_item), :title => "eidt menu item details!"} #{menu_item.name}                  
                 %td.text-center= "#{menu_item.price}/-"
                 %td.text-center= menu_item.veg ? "Veg" : "Non Veg"
                 %td.text-center= menu_item.available ? "Available" : "Not Available"
                 %td.text-center
-                  =link_to company_terminal_menu_item_path(params[:company_id],@terminal.id,menu_item.id,'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
+                  =link_to menu_item_path(params[:company_id],@terminal.id,menu_item,'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
                     -if menu_item.available
                       .text-center
                         %button.btn.btn-success{:type => "button"}

@@ -68,7 +68,7 @@ class TerminalsController < ApplicationController
           flash[:success] = "terminal updated successfully"
         end
         format.js { render inline: "location.reload();"  }
-        format.html {  redirect_to company_terminals_path and return }
+        format.html {  redirect_to company_terminals_path(@current_company) and return }
       end   
     else
       flash[:error] = @terminal.errors.messages

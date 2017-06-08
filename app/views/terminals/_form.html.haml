@@ -5,7 +5,7 @@
       .panel.panel-success
         .panel-heading
           .panel-title 
-            -if !current_page?(action: 'edit')
+            -if params[:action] == 'new'
               .h3.text-center.strong Add New Vendor
             -else
               .h3.text-center.strong Edit Details of #{@terminal.name}
@@ -19,7 +19,7 @@
               = f.input :name, label: false, required: true, placeholder: 'kfc'
             .col-md-6  
               = f.input :landline, label:false, required: true, input_html: { maxlength: 11 }, placeholder: '02013654783'  
-          -if !current_page?(action: 'edit')
+          -if params[:action] == 'new'
             .form-group
               .col-md-6    
                 = f.input :payment_made, label:false, class: "number", placeholder: 'advance,ex.1000'

@@ -30,7 +30,7 @@ class TerminalsController < ApplicationController
       @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
-      redirect_to company_terminal_menu_items_path(@current_company,@terminal) and return
+      redirect_to terminal_menu_items_path(@terminal) and return
     else
       render :new and return
     end

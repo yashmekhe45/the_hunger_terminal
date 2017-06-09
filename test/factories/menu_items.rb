@@ -3,7 +3,7 @@ FactoryGirl.define do
     name { Faker::Name.name }
     veg {Faker::Boolean.boolean}
     price { Faker::Number.positive }
-    available { true }
+    available { Faker::Boolean.boolean }
     active_days { ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']}
   end
 end

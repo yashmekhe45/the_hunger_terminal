@@ -25,9 +25,9 @@ class MenuItemTest < ActiveSupport::TestCase
   end
 
   test "menu item name should be case insensetive" do
-    menuitem = build(:menu_item, :name=>"vada",:veg=>true,:price=>120)
+    menuitem = build(:menu_item, :name=>"vada")
     # menuitem_2 = MenuItem.create(:name=>"VADA",:veg=>true,:price=>150,:terminal_id=>1)
-    menuitem_2 = build(:menu_item, :name=>"VADA", :veg=>true, :price=>130)
+    menuitem_2 = build(:menu_item, :name=>"VADA")
     menuitem.save!
     menuitem_2.valid?
     assert_not_nil menuitem_2.errors[:name]
@@ -39,4 +39,9 @@ class MenuItemTest < ActiveSupport::TestCase
     assert_not_empty menuitem.errors[:active_days]
   end
 
+  test "menu item available must be boolean" do
+    menuitem = build(:menu_item, available: "always")
+    refute menuitem.valid?
+    assert_not_nil menuitem.errors[:available]
+  end
 end

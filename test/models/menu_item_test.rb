@@ -32,4 +32,11 @@ class MenuItemTest < ActiveSupport::TestCase
     menuitem_2.valid?
     assert_not_nil menuitem_2.errors[:name]
   end
+
+  test "active days must present for menu item" do
+    menuitem = build(:menu_item, :active_days => [])
+    refute menuitem.valid?
+    assert_not_empty menuitem.errors[:active_days]
+  end
+
 end

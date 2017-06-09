@@ -4,6 +4,6 @@ FactoryGirl.define do
     veg {Faker::Boolean.boolean}
     price { Faker::Number.positive }
     available { true }
-    active_days { ['Monday']}
+    active_days { ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']}
   end
 end

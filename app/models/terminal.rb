@@ -5,8 +5,7 @@ class Terminal < ApplicationRecord
   validates :name, :landline ,presence: true
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 11 }
-  validates :tax,numericality: { greater_than_or_equal_to: 0 }
-  validates :min_order_amount, numericality: { greater_than_or_equal_to: 0 }
+  validates :tax, :min_order_amount, numericality: { greater_than_or_equal_to: 0 }
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
   has_many :orders
@@ -16,7 +15,7 @@ class Terminal < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  before_validation :remove_space
+  before_validation :remove_space, :active_must_accept_boolean_only
   
   private 
     
@@ -26,6 +25,15 @@ class Terminal < ApplicationRecord
       return
     end
     self.name = name.squish
+  end
+
+  def active_must_accept_boolean_only
+    if [true,false,'t', 'f', 'true','false',1,0].include?(self.active_before_type_cast) 
+      return true
+    else
+      self.errors[:active] << 'This must be true or false.' 
+      return false
+    end
   end
 
   def self.daily_terminals(c_id)

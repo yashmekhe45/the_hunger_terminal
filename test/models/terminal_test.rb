@@ -13,21 +13,23 @@ class TerminalTest < ActiveSupport::TestCase
   end
 
   test "should not duplicate landline" do
-    terminal = Terminal.create(:name=>"rolls mania",:landline=>"022-12365478")
-    duplicate_rec = terminal.dup
+    @terminal = Terminal.new(name:"aaaa", landline: "02036524178", active: true, min_order_amount:300, tax:"10")
+    @terminal.save
+    duplicate_rec = @terminal.dup
     duplicate_rec.valid?
     assert_not_empty duplicate_rec.errors[:landline]
   end
 
-  test "landline no should have length 12" do
-    terminal = Terminal.create(:name=>"kfc",:landline=>"012-1023")
+  test "landline no should have length 11" do
+    terminal = Terminal.create(:name=>"kfc",:landline=>"0121023")
     terminal.valid?
     assert_not_empty terminal.errors[:landline]
   end
 
-  test "landline no should have only [0-9] and dash" do
-    terminal = build(:terminal,:landline => "akshaykakade")
-    terminal.valid?
-    assert_not_empty terminal.errors[:landline]
+
+  test "active should accept only boolean" do
+    @terminal = build(:terminal, :active => "not true")
+    refute @terminal.valid?
+    assert_not_empty @terminal.errors[:active]
   end
 end

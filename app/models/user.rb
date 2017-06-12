@@ -8,13 +8,12 @@ class User < ApplicationRecord
   # devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
-  validates :name, :mobile_number, :role, :email, presence: true
+  validates :name, :mobile_number, :role, presence: true
   validates :mobile_number, length: {is: 10}
   validates_presence_of :company_id , :if => :is_employee? 
   validates :role, inclusion: {in: USER_ROLES}
-  validates :is_active, inclusion: {in: [true, false, 't','f', 'true','false']}, :unless => :is_super_admin?
-  validates :mobile_number, uniqueness: { scope: :company_id}
-  validates :email, uniqueness: {scope: :company_id}
+  validates :mobile_number, uniqueness: { scope: :company_id, message: "user mobile number should be unique in a company"}
+  validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
 
   belongs_to :company
   has_many :orders, dependent: :destroy
@@ -44,8 +43,8 @@ class User < ApplicationRecord
     self.role == "super_admin"
   end
 
+  # This function restricts is_active field to have only boolean values
   def not_a_string
-
     if [true,false,'t', 'f', 'true','false',1,0].include?(self.is_active_before_type_cast) 
       return true
     else

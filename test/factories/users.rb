@@ -6,6 +6,5 @@ FactoryGirl.define do
     mobile_number { Faker::Number.number(10) }
     is_active {true}
     password {Faker::Internet.password}
-    #association :company
   end
 end

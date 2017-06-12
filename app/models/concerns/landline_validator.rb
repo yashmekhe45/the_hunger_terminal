@@ -6,7 +6,7 @@ class LandlineValidator < ActiveModel::Validator
       return
     end
     if (record[:landline].match(/\A0[0-9]{10}\z/)) == nil    
-      record.errors[:landline] << 'Enter valid landline no.'
+      record.errors[:landline] << 'please enter valid landline no.'
     end
   end
 end

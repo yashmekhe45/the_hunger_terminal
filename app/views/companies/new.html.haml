@@ -18,6 +18,11 @@
                 = f.input :email, :label => false, :placeholder => "Email"
               .col-md-6  
                 = f.input :subsidy, :label => false, :placeholder => "subsidy amount",input_html: { :input_type => "number",:min => 0, :max => 100 }
+            .form-group
+              .col-md-6
+                = f.input :start_ordering_at, :label => "Ordering start time", :placeholder => "Name"  
+              .col-md-6
+                = f.input :end_ordering_at, :label => "Ordering end time", :placeholder => "Name" 
             .location
               %h5 Company Location Details:
               = f.simple_fields_for :address do |a|

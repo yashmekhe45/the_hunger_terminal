@@ -35,6 +35,6 @@ module TheHungerTerminal
     config.active_job.queue_adapter = :inline
     config.time_zone = 'Kolkata'
     # config.active_record.default_timezone = :local
-    config.middleware.use "PDFKit::Middleware", :print_media_type => true
+    config.middleware.use PDFKit::Middleware, :print_media_type => true
   end
 end

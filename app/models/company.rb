@@ -1,15 +1,16 @@
 class Company < ApplicationRecord
   
   validates_with LandlineValidator
-  # validates :name, :landline, :email, :address, presence: true
-  # validates :start_ordering_at, :review_ordering_at, :end_ordering_at,  presence: true
+  validates :name, :landline, :email, :subsidy, :address, presence: true
+  validates :start_ordering_at, :end_ordering_at,  presence: true
   validates :name, uniqueness:{case_sensitive: false}
   validates :landline, uniqueness: true
   validates :landline, length: {is: 11}
-  validates :name, :address, presence: true
   validate :create_company_admin, on: :create
   validates_format_of :email,:with => Devise.email_regexp
+  validates :subsidy, numericality: true
   validates :subsidy, inclusion: { in: 0..100, message: "value must be between 0 to 100" }
+  validate :must_have_atleast_one_company_admin
   # validates :start_ordering_at, :review_ordering_at, :end_ordering_at, :subsidy,  presence: true
 
   has_one :address,  as: :location, dependent: :destroy
@@ -21,6 +22,7 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
+  # before_save :create_company_admin
 
   def send_reminders
     unless weekend? 
@@ -32,6 +34,18 @@ class Company < ApplicationRecord
       end
     end
   end
+
+
+  def must_have_atleast_one_company_admin
+    employee = self.employees.first
+    if employee.role != "company_admin"
+      errors.add(:employees, "company admin must be present")
+    end
+  end
+
+  # def is_company_admin?
+  #   self.employees.first.role == "company_admin"
+  # end
 
   private 
 

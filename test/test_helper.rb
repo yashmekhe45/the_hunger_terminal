@@ -2,7 +2,7 @@ ENV["RAILS_ENV"] = "test"
 
 require 'simplecov' 
 require "codeclimate-test-reporter"
-SimpleCov.start 
+SimpleCov.start 'rails'
 CodeClimate::TestReporter.start
 
 
@@ -31,7 +31,7 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   include FactoryGirl::Syntax::Methods
   fixtures :all
-  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.strategy = :transaction
 
   before :each do
     DatabaseCleaner.start

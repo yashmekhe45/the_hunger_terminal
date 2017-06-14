@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates_with MobileNoValidator
   validates :name, :mobile_number, :role, presence: true
   validates :mobile_number, length: {is: 10}
-  validates_presence_of :company_id , :if => :is_employee? 
+  validates_presence_of :company , :if => :is_employee? 
   validates :role, inclusion: {in: USER_ROLES}
   validates :mobile_number, uniqueness: { scope: :company_id, message: "user mobile number should be unique in a company"}
   validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
@@ -25,23 +25,18 @@ class User < ApplicationRecord
   end
 
   def remove_space
-    if(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
-      return
+    unless(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
+      self.name = name.squish
+      self.mobile_number = mobile_number.squish
+      self.email = email.squish
+      self.role = role.squish 
     end
-    self.name = name.squish
-    self.mobile_number = mobile_number.squish
-    self.email = email.squish
-    self.role = role.squish 
   end
 
   def is_employee?
     self.role == "employee"
   end
 
-
-  def is_super_admin?
-    self.role == "super_admin"
-  end
 
   # This function restricts is_active field to have only boolean values
   def not_a_string

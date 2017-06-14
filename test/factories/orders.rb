@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :order do
-    date { Faker::Date.between(Date.today,1.days.from_now) }
+    date { Time.zone.today }
     total_cost { Faker::Number.positive }
     status {"pending"}
-    subsidy { Faker::Number.decimal(2,3) }
+    discount { Faker::Number.decimal(2,3) }
 
     association :user
     association :company

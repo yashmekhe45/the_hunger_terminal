@@ -60,10 +60,10 @@ class Company < ApplicationRecord
 
     def remove_space
       #squish method is not for nil classes
-      if(self.name == nil)
-        return
+      unless self.name == nil
+        self.name = name.squish
       end
-      self.name = name.squish
+
     end
 
     def create_company_admin

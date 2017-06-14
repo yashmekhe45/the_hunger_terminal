@@ -8,13 +8,11 @@ class Address < ApplicationRecord
   before_validation :remove_space
   
   def remove_space
-    if(self.house_no == nil || self.locality == nil || 
-      self.city == nil || self.state == nil)
-      return
+    unless(self.house_no == nil || self.locality == nil || self.city == nil || self.state == nil)
+      self.house_no = house_no.squish
+      self.locality = locality.squish
+      self.city = city.squish
+      self.state = state.squish
     end
-    self.house_no = house_no.squish
-    self.locality = locality.squish
-    self.city = city.squish
-    self.state = state.squish
   end
 end

@@ -1,3 +1,4 @@
+#Test cases for associations will be written after integrating SHOULDA in application
 require "test_helper"
 
 class OrderTest < ActiveSupport::TestCase
@@ -22,70 +23,52 @@ class OrderTest < ActiveSupport::TestCase
   test "total_cost must be numeric" do
     order_obj = build(:order, :total_cost => "abc")
     order_obj.valid?
-    assert_not_empty order_obj.errors[:total_cost]
+    assert order_obj.errors[:total_cost].include?("is not a number")
   end
 
   test "total_cost must be greater than zero" do
     order_obj = build(:order, :total_cost => 0)
     order_obj.valid?
-    assert_not_empty order_obj.errors[:total_cost]
+    assert order_obj.errors[:total_cost].include?("must be greater than 0")
   end
 
   test "date should not be a passed date" do
     order_obj = build(:order, :date => Date.yesterday)
     order_obj.valid?
-    assert_not_empty order_obj.errors[:date]
+    assert order_obj.errors[:date].include?("can't be in the past")
   end
 
-  test "date should be greater or equal to todays date" do
-    order_obj = build(:order, :date => Date.today)
+  test "date should not be a future date" do
+    order_obj = build(:order, :date => Date.tomorrow)
     order_obj.valid?
-    assert_empty order_obj.errors[:date]
+    assert order_obj.errors[:date].include?("can't be in the future")
   end
 
-  test "order should not be created after 11 AM" do
-    some_time = Time.parse "2 PM"
+  test "order should be created between start time  end time" do
+    some_time = Time.parse("10 PM")
     Time.stub(:now, some_time) do
       order_obj = build(:order)  
-      order_obj.save
-      assert order_obj.errors[:base].include?("order cannot be created after 11 AM")
+      order_obj.valid?
+      start_ordering_time = order_obj.company.start_ordering_at.strftime('%H:%M:%S')
+      end_ordering_time = order_obj.company.end_ordering_at.strftime('%H:%M:%S')
+      assert order_obj.errors[:base].include?("order cannot be created or updated before #{start_ordering_time} and after #{end_ordering_time}")
     end
   end
 
-  test "order should be created from 12 AM to 11 AM" do
-    some_time = Time.parse "10 AM"  ## gives time object in IST time zone
-    Time.stub(:now, some_time) do
-      order_obj = build(:order)  
-      order_obj.save
-      assert_not order_obj.errors[:base].include?("order cannot be created after 11 AM")
-    end
-  end
-
-  test "order should belong to user" do
+  test "user should be present for an order" do
     order_obj = build(:order, user: nil)
     order_obj.valid?
     assert_not_empty order_obj.errors[:user]
     assert order_obj.errors[:user].include?("can't be blank")
   end
 
-  test "order should belong to company" do
-    order_obj = build(:order, company: nil)
-    order_obj.valid?
-    assert_not_empty order_obj.errors[:company]
-    assert order_obj.errors[:company].include?("can't be blank")
-  end
-
-  test "order should have atleast one order detail" do
+  test "order should have atleast one menu item" do
     order_obj = build(:order)
     order_obj.order_details=[]
     order_obj.valid?
     assert order_obj.errors[:base].include?("order shold have minimum one menu item")
   end
 
-  test "correct date should be set for the order" do
-    order = Order.new
-    assert_equal order.date, Date.today
-  end
 
   test "order should not be created on sunday" do
     d = Date.today.end_of_week
@@ -93,7 +76,7 @@ class OrderTest < ActiveSupport::TestCase
     Time.stub(:now, some_time) do
       order_obj = build(:order)
       order_obj.valid?
-      assert order_obj.errors[:base].include?("order cannot be created on saturday and sunday")
+      assert order_obj.errors[:base].include?("order cannot be created on saturday or sunday")
     end
   end
 
@@ -103,27 +86,23 @@ class OrderTest < ActiveSupport::TestCase
     Time.stub(:now, some_time) do
       order_obj = build(:order)
       order_obj.valid?
-      assert order_obj.errors[:base].include?("order cannot be created on saturday and sunday")
+      assert order_obj.errors[:base].include?("order cannot be created on saturday or sunday")
     end
   end
 
   test "one user can place only one order per day" do
-    order = create_order
-    order2 = order.dup
-    order2.date = order.date
+    # order = create_order
+    # byebug
+    order1 = build(:order)
+    order1.save!
+    # order1.valid?
+    order2 = build(:order)
+    order2.date = order1.date
+    order2.user_id = order1.user_id
     order2.valid?
     assert order2.errors[:user_id].include?("has already been taken")
   end
 
-  # TODO
-=begin
-  test "total_cost of order should be updated"
-
-  test "order should be saved with valid params"
-
-  test "order should not be deleted after it has been placed to terminal"
-
-  test "order should not be updated after it has been placed to terminal"
-=end
-
+  test "order should have company" do
+  end
 end

@@ -1,14 +1,12 @@
 class Order < ApplicationRecord
 
-  validate :can_be_created?, :is_empty?, on: :create
   validates :date, :total_cost, :user, :company,:status, :terminal, presence: true
+  validate :can_be_created?, :is_empty?, on: :create
   validates :total_cost, numericality: { greater_than: 0 }
   validates :status, inclusion: {in: ORDER_STATUS}
   validates :user_id, uniqueness: { scope: :date }
-  # :can_be_created?, 
-  # validate :can_be_updated?, on: :update  
-  # validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?, on: :create
+  validate :valid_day?, on: :create
 
   belongs_to :user
   belongs_to :company
@@ -96,28 +94,34 @@ class Order < ApplicationRecord
 
     # needs to be evaluated
     def valid_date?
-      errors.add(:date, "can't be in the past") if !date.blank? and date < Time.zone.today
+      # errors.add(:date, "can't be in the past") if !date.blank? and date < Time.zone.today
+      if !date.blank?
+        if date < Time.zone.today
+          errors.add(:date, "can't be in the past")
+        elsif date > Time.zone.today
+          errors.add(:date, "can't be in the future")
+        end    
+      end
+    end
+
+    def valid_day?
+      today =  Time.zone.today
+      sunday = Time.zone.today.end_of_week
+      saturday = Time.zone.today.end_of_week.prev_day
+      if today == sunday || today == saturday
+        errors.add(:base, "order cannot be created on saturday or sunday")
+      end
     end
 
     def can_be_created?
       current_time = Time.zone.now.strftime('%H:%M:%S')
       start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
-      # self.company.start_ordering_at
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
-      # self.company.end_ordering_at
-      day = Time.zone.today.wday
-      # if day%7 != 0 and day%7 != 6
       if !(current_time >= start_time and current_time <= end_time)
-        errors.add(:base,"order cannot be created or updated after #{end_time}")
+        errors.add(:base,"order cannot be created or updated before #{start_time} and after #{end_time}")
       end
-      # else
-      #   errors.add(:base,"order cannot be created on saturday and sunday")
-      # end
     end
 
-    # def set_date
-    #   self.date = Time.zone.today
-    # end
 
     def is_empty?
       if self.order_details.any? == false
@@ -126,9 +130,16 @@ class Order < ApplicationRecord
     end
 
     def set_discount
-      a = self.company.subsidy
-      b = self.total_cost
-      self.discount = [a, (a*b)/100].min
+      if self.company == nil
+        subsidy = 0.0
+      else
+        subsidy = self.company.subsidy
+      end
+      total_cost = self.total_cost
+      if total_cost == nil
+        total_cost = 0.0
+      end
+      self.discount = [subsidy, (subsidy*total_cost)/100].min
       self.status = 'pending'
     end 
 end

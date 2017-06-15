@@ -71,12 +71,12 @@ Rails.application.configure do
   }
 
   config.after_initialize do
-  Bullet.enable = true
-  Bullet.alert = true
-  Bullet.bullet_logger = true
-  Bullet.console = true
-  Bullet.rollbar = true
-  Bullet.add_footer = true
-end
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rollbar = true
+    Bullet.add_footer = true
+  end
 
 end

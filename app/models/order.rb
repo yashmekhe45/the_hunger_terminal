@@ -75,6 +75,7 @@ class Order < ApplicationRecord
   end
 
   def self.confirm_all_placed_orders(terminal_id, company_id, order_details)
+    # byebug
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "confirmed")

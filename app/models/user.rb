@@ -107,6 +107,7 @@ class User < ApplicationRecord
   end
 
   def self.open_spreadsheet(file)
+    p file.original_filename
     case File.extname(file.original_filename)
     when '.csv' then Roo::CSV.new(file.path)
     when '.xls' then Roo::Excel.new(file.path)

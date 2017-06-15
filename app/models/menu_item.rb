@@ -8,6 +8,8 @@ class MenuItem < ApplicationRecord
   has_many :order_details
   belongs_to :terminal
 
+  before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only
+
   # after_save  :order_has_available_menu_item
   # before_validation :is_valid_day?
   
@@ -33,4 +35,21 @@ class MenuItem < ApplicationRecord
     end
   end
 
+  def available_must_accept_boolean_only
+    if [true,false,'t', 'f', 'true','false',1,0].include?(self.available_before_type_cast) 
+      return true
+    else
+      self.errors[:available] << 'This must be true or false.' 
+      return false
+    end
+  end
+
+  def veg_must_accept_boolean_only
+    if [true,false,'t', 'f', 'true','false',1,0].include?(self.veg_before_type_cast) 
+      return true
+    else
+      self.errors[:veg] << 'This must be true or false.' 
+      return false
+    end
+  end
 end

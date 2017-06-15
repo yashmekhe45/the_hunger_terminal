@@ -3,6 +3,8 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
 
   before :each do
+    DatabaseCleaner.start
+    # DatabaseCleaner.clean
     @user = build(:user)
   end
 
@@ -74,8 +76,51 @@ class UserTest < ActiveSupport::TestCase
 
   test "company must be present for an employee" do
     @user.role = "employee"
+    @user.company = nil
     @user.valid?
-    assert @user.errors[:company_id].include?("can't be blank")
+    assert @user.errors[:company].include?("can't be blank")
+  end
+
+  test "employees' running balance report should be generated" do
+    user = create(:user_with_orders)
+    user.orders.each do |order|
+      order = nil
+    end
+    company_id = user.company_id
+    p company_id
+    user2 = build(:user)
+    user2.company_id = company_id
+    user2.save!
+    p user2.errors
+    report = User.employee_report(company_id)
+    assert_equal report, []
+  end
+
+  test "employees' today's report should be generated" do
+  user1 = create(:user) # created an user who don't have order for today
+  company_id = user1.company_id
+  user2 = build(:user)
+  user2.company_id = company_id
+  user2.save!
+  report = User.employees_todays_orders_report(company_id)
+  assert_equal report, []
+  end
+
+  test "employees' last month report should be generated" do
+    user = create(:user) # created an user who don't have any last month report
+    company_id = user.company_id
+    user2 = build(:user)
+    user2.company_id = company_id
+    user2.save!
+    report = User.employee_last_month_report(company_id, Time.now - 1.month)
+    assert_equal report, []
+  end
+
+  test "individual employee's last month report should be generated" do
+    user = create(:user) # created an user who don't have any last month report
+    company_id = user.company_id
+    report = User.employee_last_month_report(company_id, user.id)
+    assert_equal report, []
   end
 
 

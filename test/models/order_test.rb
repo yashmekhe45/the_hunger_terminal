@@ -91,11 +91,9 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "one user can place only one order per day" do
-    # order = create_order
-    # byebug
+
     order1 = build(:order)
     order1.save!
-    # order1.valid?
     order2 = build(:order)
     order2.date = order1.date
     order2.user_id = order1.user_id

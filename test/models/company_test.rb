@@ -112,5 +112,9 @@ class CompanyTest < ActiveSupport::TestCase
     @company.valid?
     assert @company.errors[:employees].include?("company admin must be present")
   end 
+
+  test "reminder mail should be sent on working days" do
+  end
+
 end
 

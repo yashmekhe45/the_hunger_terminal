@@ -15,6 +15,15 @@ class UsersController < ApplicationController
   add_breadcrumb "Employee Detail", :company_user_path, only: [:show]
 
 
+  def index
+    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    if @users.empty?
+      flash.now[:error] = "Sorry, No record is found"
+      render "index"
+    end 
+  end
+
+
   def new
     @company = Company.new
     @user = @company.employees.build
@@ -56,14 +65,14 @@ class UsersController < ApplicationController
       #Employess will be activated/deactivated by Company admin
       else
         flash[:success] = "Status changed successfully!!"
-        redirect_to "#{company_users_path(params[:company_id])}" + "?page=" + "#{params[:page]}"
+        redirect_to company_users_path(@company,:page=>params[:page])
       end
     else
       flash.now[:error]= @user.errors.messages
       if(@user.role == "company_admin")
         render :edit_company_admin
       else
-        redirect_to company_users_path(params[:company_id],:page=>params[:page])
+        redirect_to company_users_path(@company,:page=>params[:page])
       end
     end
   end
@@ -142,11 +151,11 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @company = Company.find(params[:company_id])
+    @company = Company.find(current_user.company_id)
     @user = @company.employees.find(params[:id])
   end
 
   def load_company
-    @company = Company.find(params[:company_id])  
+    @company = Company.find(current_user.company_id)  
   end
 end

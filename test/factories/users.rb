@@ -13,11 +13,9 @@ FactoryGirl.define do
       transient do
         orders_count 1
       end
-
-      after(:create) do |user|
-        create(:order, status: 'confirmed', user: user)
+      after(:create) do |user, evaluator|
+        create_list(:order, evaluator.orders_count, user: user)
       end
     end
-
   end
 end

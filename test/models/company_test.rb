@@ -114,6 +114,10 @@ class CompanyTest < ActiveSupport::TestCase
   end 
 
   test "reminder mail should be sent on working days" do
+    company = create(:company, name: "Josh Software")
+    users = create(:user_with_orders, company: company)
+    company.send_reminders
+    assert_not_empty ActionMailer::Base.deliveries
   end
 
 end

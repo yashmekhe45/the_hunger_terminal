@@ -5,7 +5,7 @@ FactoryGirl.define do
     subsidy {50}
     start_ordering_at { Time.parse "12 AM"}
     review_ordering_at { Time.parse "11:30 AM"}
-    end_ordering_at { Time.parse "18:30 PM"}
+    end_ordering_at { Time.parse "20:59 PM"}
     email { Faker::Internet.email }
 
     after(:build) do |company, evaluator|

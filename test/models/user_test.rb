@@ -1,3 +1,4 @@
+
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
@@ -97,13 +98,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "employees' today's report should be generated" do
-  user1 = create(:user) # created an user who don't have order for today
-  company_id = user1.company_id
-  user2 = build(:user)
-  user2.company_id = company_id
-  user2.save!
-  report = User.employees_todays_orders_report(company_id)
-  assert_equal report, []
+    user1 = create(:user) # created an user who don't have order for today
+    company_id = user1.company_id
+    user2 = build(:user)
+    user2.company_id = company_id
+    user2.save!
+    report = User.employees_todays_orders_report(company_id)
+    assert_equal report, []
   end
 
   test "employees' last month report should be generated" do
@@ -123,5 +124,33 @@ class UserTest < ActiveSupport::TestCase
     assert_equal report, []
   end
 
+  test "employees' record should be imported " do
+    company = create(:company)
+    prev_user_count = User.count
+    #CSV file should be imported
+    file_name = File.new(Rails.root.join("test/fixtures/files/employees.csv"))
+    csv_file = ActionDispatch::Http::UploadedFile.new({
+    :tempfile => file_name, :filename => File.basename(file_name) })
+    csv_file.content_type = "application/csv"
+    csv_import = User.import(csv_file, company.id)
+    now_user_count = User.count
+    assert_equal now_user_count - prev_user_count, 1
+    
+  end
+
+  test "uploaded file should have csv/xls/xlsx type" do
+    file_name = File.new(Rails.root.join("test/fixtures/files/employees.csv"))
+    csv_file = ActionDispatch::Http::UploadedFile.new({
+    :tempfile => file_name, :filename => File.basename(file_name) })
+    csv_file.content_type = "application/csv"
+    assert_nothing_raised { User.open_spreadsheet(csv_file) } 
+  end
+
+  test "invalid file type should not be imported" do
+    file_name = File.new(Rails.root.join("test/fixtures/files/employees.txt"))
+    txt_file = ActionDispatch::Http::UploadedFile.new({
+    :tempfile => file_name, :filename => File.basename(file_name)})
+    assert_raises { User.open_spreadsheet(csv_file) } 
+  end
 
 end

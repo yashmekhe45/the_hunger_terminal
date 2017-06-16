@@ -88,11 +88,9 @@ class UserTest < ActiveSupport::TestCase
       order = nil
     end
     company_id = user.company_id
-    p company_id
     user2 = build(:user)
     user2.company_id = company_id
     user2.save!
-    p user2.errors
     report = User.employee_report(company_id)
     assert_equal report, []
   end

@@ -58,4 +58,8 @@ class MenuItemTest < ActiveSupport::TestCase
     assert_not_nil @menu_item.errors[:veg]
   end
 
+  test "menu item can't be created without terminal_id" do 
+    assert_same true, @menu_item.terminal_id.present?
+  end
+
 end

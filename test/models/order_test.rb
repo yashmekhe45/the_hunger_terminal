@@ -1,4 +1,3 @@
-#Test cases for associations will be written after integrating SHOULDA in application
 require "test_helper"
 
 class OrderTest < ActiveSupport::TestCase
@@ -47,7 +46,7 @@ class OrderTest < ActiveSupport::TestCase
   test "order should be created between start time  end time" do
     some_time = Time.parse("10 PM")
     Time.stub(:now, some_time) do
-      order_obj = build(:order)  
+      order_obj = build(:order) 
       order_obj.valid?
       start_ordering_time = order_obj.company.start_ordering_at.strftime('%H:%M:%S')
       end_ordering_time = order_obj.company.end_ordering_at.strftime('%H:%M:%S')
@@ -91,15 +90,16 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "one user can place only one order per day" do
-
-    order1 = build(:order)
-    order1.save!
+    order1 = create_order
     order2 = build(:order)
     order2.date = order1.date
     order2.user_id = order1.user_id
     order2.valid?
     assert order2.errors[:user_id].include?("has already been taken")
   end
+
+
+  #Test cases for associations will be written after integrating SHOULDA in application
 
   test "order should have company" do
   end

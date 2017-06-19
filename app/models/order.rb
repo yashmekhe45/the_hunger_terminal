@@ -48,15 +48,6 @@ class Order < ApplicationRecord
       order("users.name ASC")
   end
 
-  def self.all_terminals_daily_report(c_id)
-    self.
-      joins(:terminal, :order_details).
-      where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => 'confirmed').
-      group('orders.terminal_id','terminals.id','order_details.menu_item_name').
-      select('terminals.name, sum(orders.total_cost) AS total, order_details.menu_item_name,
-       sum(order_details.quantity) AS quantity')
-  end
-
   def self.menu_details(terminal_id, company_id)
     self.
       joins(:order_details).

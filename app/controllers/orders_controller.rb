@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
 
   load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
+  before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
@@ -37,7 +38,7 @@ class OrdersController < ApplicationController
     load_order_detail
     if @order.save
       flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."
-      redirect_to terminal_order_path(params[:terminal_id],@order)
+      redirect_to order_path(@order)
     else
       if @order.errors.full_messages.include?("User has already been taken")
         flash[:error] = "Only one order is allowed per day"
@@ -49,47 +50,51 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    # @order = Order.find(params[:id])
   end
 
 
   def edit
-    @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
-    @order = @terminal.orders.find(params[:id])
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus-oder_menus
-    @terminal_id = params[:terminal_id]
+    @terminal_id = @terminal.id
     if !unique_item.empty?
-      @menu_items = MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
+      @menu_items = MenuItem.where(terminal_id: @terminal.id).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
     end
     add_breadcrumb "Edit Order"
   end
 
   def update
-    @order = Order.find(params[:id])
+    # @order = Order.find(params[:id])
     # @order.order_details = OrderDetail.where(params[:order_id])
     # @order.order_details.clear
     if @order.update_attributes(order_params) 
       flash[:notice] = "Your order has been updated successfully"
-      redirect_to terminal_order_path(params[:terminal_id],@order)
+      redirect_to order_path(@order)
     else
       flash[:error] = @order.errors.full_messages.join(",")
-      redirect_to terminal_order_path(params[:terminal_id],@order)
+      redirect_to order_path(@order)
+      byebug
     end
   end
 
 
   def destroy
-    @order = Order.find(params[:id])
+    # @order = Order.find(params[:id])
     @order.destroy
     flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
   end  
 
   private
+
+    def load_terminal_and_order
+      @order = Order.find(params[:id])
+      @terminal = Terminal.find(@order.terminal_id) 
+    end
 
     def order_params
       params.require(:order).permit(

@@ -1,7 +1,7 @@
 .container
   .alert.alert-danger
     Extra delivery charges may apply!!
-  %h3#vendorName #{Terminal.find(params[:terminal_id]).name.titleize}      
+  %h3#vendorName #{@terminal.name.titleize}     
   %ul.nav.nav-tabs
     %li.active
       %a{"data-toggle" => "tab", :href => "#veg"} Veg

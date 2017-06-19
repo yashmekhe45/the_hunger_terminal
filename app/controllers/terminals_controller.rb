@@ -30,7 +30,7 @@ class TerminalsController < ApplicationController
       @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
-      redirect_to company_terminal_menu_items_path(@current_company,@terminal) and return
+      redirect_to terminal_menu_items_path(@terminal) and return
     else
       render :new and return
     end
@@ -66,9 +66,10 @@ class TerminalsController < ApplicationController
           Terminal.update_post_payment_details_of_terminal(@terminal.id, current_user.company_id)
         else
           flash[:success] = "terminal updated successfully"
+          format.html {  redirect_to company_terminals_path(@current_company) and return }
         end
         format.js { render inline: "location.reload();"  }
-        format.html {  redirect_to company_terminals_path and return }
+        
       end   
     else
       flash[:error] = @terminal.errors.messages

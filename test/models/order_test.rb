@@ -138,9 +138,6 @@ class OrderTest < ActiveSupport::TestCase
     assert_not_equal result, []
   end
 
-  test "terminals' daily order report should be generated" do
-  end
-
   #Test cases for associations will be written after integrating SHOULDA in application
 
   test "order should have company" do

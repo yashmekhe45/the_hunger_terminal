@@ -44,24 +44,6 @@ class Terminal < ApplicationRecord
       group('terminals.id').
       select('terminals.name,terminals.id,sum(terminal_reports.current_amount) AS total,
         sum(terminal_reports.payment_made) AS total_paid')
-    # # self.
-    # #   joins(:orders, :terminal_reports).
-    # #   where('orders.company_id'=>c_id,'terminals.company_id'=> c_id, 'orders.status'=>'confirmed').
-    # #   group('terminals.id','terminal_reports.name').
-    # #   select('terminals.name', 'terminals.id', 'sum(orders.total_cost) AS total', 'count(orders.terminal_id) AS no_of_orders', 'sum(terminal_reports.payment_made) AS paid')
-    # a = self.
-    #   joins(:orders).
-    #   where('orders.company_id' => c_id, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
-    #   group('terminals.id').
-    #   select('terminals.name, terminals.id, sum(orders.total_cost) AS total, count(orders.terminal_id) AS no_of_orders').
-    #   order('terminals.id')
-    
-    # g = self.joins(:terminal_reports).
-    #   where('terminals.company_id' => c_id).
-    #   group('terminals.id').
-    #   select('terminals.id, sum(terminal_reports.payment_made) AS paid').
-    #   order('terminals.id')    
-    #   byebug
   end  
 
   def self.all_terminals_todays_orders_report(c_id)

@@ -24,7 +24,8 @@
             .text-center
               ACTION
         %tr
-          =render "common_index" ,object: @user, as: 'user'
+          - @users.each do |user|
+            = render 'user_row', user: user
 .text-center
   = paginate @users
 #user_form.modal.fade{"aria-labPelledby" => "User", :role => "dialog", :tabindex => "-1"}

@@ -18,7 +18,6 @@ class TerminalTest < ActiveSupport::TestCase
   end
 
   test "should not duplicate landline" do
-    @terminal = Terminal.new(name:"aaaa", landline: "02036524178", active: true, min_order_amount:300, tax:"10")
     @terminal.save
     duplicate_rec = @terminal.dup
     refute duplicate_rec.valid?
@@ -61,4 +60,52 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal @terminal1.name, "dominoz"
   end
 
+  test "terminal can't be created without company_id" do 
+    assert_same true, @terminal.company_id.present?
+  end
+
+  test "all terminals todays orders" do
+    @terminal.save!
+    @terminal1 = build(:terminal, company_id: @terminal.company_id)
+    @terminal1.save!
+    @terminal2 = build(:terminal, company_id: @terminal.company_id)
+    @terminal2.save!
+    todays_orders = Terminal.all_terminals_todays_orders_report(@terminal.company_id)
+    assert_equal todays_orders, []    
+  end
+
+  test "all_terminals_todays_orders_report" do 
+    @terminal.save!
+    @terminal1 = build(:terminal, company_id: @terminal.company_id)
+    @terminal1.save!
+    @terminal2 = build(:terminal, company_id: @terminal.company_id)
+    @user = build(:user, company_id: @terminal.company_id)
+    @user.save!
+    @terminal2.save!
+    @order = build(:order, company_id: @terminal.company_id, user_id: @user.id, terminal_id: @terminal.id)
+    @order.save
+    todays_orders = Terminal.all_terminals_todays_orders_report(@terminal.company_id)
+    if Time.now.strftime("%A") == "Saturday" or Time.now.strftime("%A") == "Sunday"
+      assert_equal todays_orders, []
+    else
+      assert_same todays_orders.total, @order.total_cost
+    end
+  end
+
+  test "all order for todays terminals" do
+    @terminal.save!
+    @terminal1 = build(:terminal, company_id: @terminal.company_id)
+    todays_orders = Terminal.daily_terminals(@terminal.company_id)
+    assert_equal todays_orders, [] 
+  end
+
+  test "update current_amount of terminal" do
+    @company = build(:company)
+    @company.save!
+    @terminal.company_id = @company.id
+    @terminal.save!
+    current_amount = @terminal.current_amount
+    @terminal1 = Terminal.update_current_amount_of_terminal(@terminal.id, @company.id, 200)
+    assert_equal (@terminal1.current_amount - current_amount).round, 200.to_f
+  end  
 end

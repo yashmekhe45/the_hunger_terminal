@@ -21,28 +21,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-  def update
-    authorize! :update, @company
-    @company = Company.find(params[:id])
-   if @company.update_attributes(company_params)
-      flash[:success] = "updated successfully!!"
-      redirect_to root_path
-   else
-      flash[:error] = @company.errors.messages
-   end
-  end
-
-  def destroy
-    authorize! :delete, @company
-    @company.destroy
-    redirect_to companies_path
-  end
-
-  def index
-    authorize! :company, @company
-    @companies = Company.all.order('created_at').page(params[:page]).per(5)
-  end 
-
   def get_order_details
   end
 

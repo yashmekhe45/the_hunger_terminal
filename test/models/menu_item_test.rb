@@ -2,10 +2,7 @@ require "test_helper"
 class MenuItemTest < ActiveSupport::TestCase
 
   before :each do
-    @terminal = build(:terminal)
-    @terminal.save
-    @dummy_menu_item = build(:menu_item)
-    @menu_item = @terminal.menu_items.build(build(:menu_item).as_json)
+    @menu_item = build(:menu_item)
   end
 
   test "should not save without item name" do
@@ -34,7 +31,7 @@ class MenuItemTest < ActiveSupport::TestCase
 
   test "menu item name should be case insensetive" do
     @menu_item.name = "vada"
-    @menu_item_2 = @terminal.menu_items.build(build(:menu_item, :name=>"VADA").as_json)
+    @menu_item_2 = build(:menu_item, :name=>"VADA", terminal_id: @menu_item.terminal_id)
     @menu_item.save!
     refute @menu_item_2.valid?  
     assert_not_empty @menu_item_2.errors[:name]

@@ -2,7 +2,7 @@ class Terminal < ApplicationRecord
   
   validates_with LandlineValidator
   # validates_presence_of :email, message: "Emailid cant be blank"
-  validates :name, :landline ,presence: true
+  validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id }
   validates :landline ,length: { is: 11 }
   validates :tax, :min_order_amount, :payment_made, :current_amount, numericality: { greater_than_or_equal_to: 0 }
@@ -96,6 +96,7 @@ class Terminal < ApplicationRecord
     @terminal.current_amount = @terminal.current_amount + todays_order_total.to_f
     @terminal.payable = @terminal.current_amount - @terminal.payment_made
     @terminal.save!
+    @terminal
   end
 
   def self.update_post_payment_details_of_terminal(t_id, c_id)

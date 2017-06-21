@@ -36,7 +36,7 @@ class MenuItem < ApplicationRecord
   # end
 
   def available_must_accept_boolean_only
-    if [true,false,'t', 'f', 'true','false',1,0].include?(self.available_before_type_cast) 
+    if [true,false,'t', 'f', 'true','false',"1","0"].include?(self.available_before_type_cast) 
       return true
     else
       self.errors[:available] << 'This must be true or false.' 

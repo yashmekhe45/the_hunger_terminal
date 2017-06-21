@@ -8,6 +8,5 @@ FactoryGirl.define do
     current_amount { Faker::Number.positive }
     active { true }
     tax {"0.0"}
-    min_order_amount {50.0}
   end
 end

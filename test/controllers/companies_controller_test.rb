@@ -8,12 +8,6 @@ class CompaniesControllerTest  < ActionController::TestCase
     @user.update_attribute(:role, "employee")
   end
 
-  # test "should show company" do
-  #   company = build(:company)
-  #   get company_url(company)
-  #   assert_response :success    
-  # end
-
   test " should get new company" do
     get :new
     assert_response :success
@@ -54,5 +48,31 @@ class CompaniesControllerTest  < ActionController::TestCase
     assert_response :success
   end
 
-  
+  test "company should be updated by admin only" do
+    sign_in_admin
+    other_user = create(:user, company: create(:company))
+    other_user.company = @company
+    patch :update, params: {id: @company, company:{ name: @company.name} }, company: {name: Faker::Company.name}
+    assert_redirected_to root_url
+  end
+
+  test "company should not be updated by an employee" do
+    sign_in_employee
+    company_id = @user.company.id
+    company_name = @user.company.name
+    patch :update, params: {id: company_id, company:{name: company_name}}, company: {name: Faker::Company.name}
+    assert_redirected_to vendors_url
+  end
+
+  def sign_in_admin
+    admin = @company.employees.first # Always first employee will be company admin
+    admin.confirm
+    sign_in admin
+  end
+
+  def sign_in_employee
+   @user.confirm
+   sign_in @user
+  end
+
 end

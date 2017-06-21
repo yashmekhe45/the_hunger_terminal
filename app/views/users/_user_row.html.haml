@@ -16,7 +16,7 @@
         = "ACTIVE"
         
   %td
-    =link_to user_path(user,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
+    =link_to user_path(user,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page], "company_id" => user.company.id), method: :patch ,data: { confirm: 'Are you sure?' } do
       -if user.is_active
         .text-center
           %button.btn.btn-success{:type => "button"}

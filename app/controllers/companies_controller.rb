@@ -21,6 +21,18 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def update
+    authorize! :update, @company
+    @company = Company.find(params[:id])
+   if @company.update_attributes(company_params)
+      flash[:success] = "updated successfully!!"
+      redirect_to root_path
+   else
+      flash[:error] = @company.errors.messages
+      render :get_order_details
+   end
+  end
+
   def get_order_details
   end
 
@@ -44,5 +56,4 @@ class CompaniesController < ApplicationController
       redirect_to vendors_path
     end
   end
-
 end

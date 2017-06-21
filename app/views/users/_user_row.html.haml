@@ -1,7 +1,7 @@
 /Form to Activate/ Deactivate Employee details
 %tr
   %td
-    =link_to user_path(user) do
+    =link_to user_path(user,"company_id" => user.company.id) do
       .text-center
         #{user.name}
   %td

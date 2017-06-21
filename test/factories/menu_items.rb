@@ -5,5 +5,7 @@ FactoryGirl.define do
     price { Faker::Number.positive }
     available { Faker::Boolean.boolean }
     active_days { ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']}
+
+    association :terminal
   end
 end

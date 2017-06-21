@@ -1,5 +1,5 @@
 
-company1 = Company.find_or_initialize_by(name: "Dummy software", landline: "0235192322",email: "dummysoftware@gmail.com")
+company1 = Company.find_or_initialize_by(name: "Dummy software", landline: "02351923220",email: "dummysoftware@gmail.com")
 company1.start_ordering_at = Time.zone.parse "12 AM"
 company1.end_ordering_at = Time.zone.parse "11 AM"
 company1.review_ordering_at = Time.zone.parse "11:30 AM"
@@ -26,11 +26,11 @@ def add_menues(terminal,menu_items)
 end
 
 
-terminal1=Terminal.find_or_create_by(name:"Fassos",landline:"9823456123",email:"fassos@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
-terminal2=Terminal.find_or_create_by(name:"Dominos",landline:"9823456712",email:"dominos@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
-terminal3=Terminal.find_or_create_by(name:"Rolls Mania",email:"rollsmania@abc.com",landline:"9923561424",min_order_amount: 500, active: true, company_id: company1.id)
-terminal4=Terminal.find_or_create_by(name:"Food Panda",landline:"9823752123",email:"foodpanda@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
-terminal5=Terminal.find_or_create_by(name:"Eatsome",landline:"9823456124",email:"eatsome@abc.com",min_order_amount: 500, active: true, company_id: company1.id) 
+terminal1=Terminal.find_or_create_by(name:"Fassos",landline:"09823456123",email:"fassos@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
+terminal2=Terminal.find_or_create_by(name:"Dominos",landline:"09823456712",email:"dominos@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
+terminal3=Terminal.find_or_create_by(name:"Rolls Mania",email:"rollsmania@abc.com",landline:"09923561424",min_order_amount: 500, active: true, company_id: company1.id)
+terminal4=Terminal.find_or_create_by(name:"Food Panda",landline:"09823752123",email:"foodpanda@abc.com",min_order_amount: 500, active: true, company_id: company1.id)
+terminal5=Terminal.find_or_create_by(name:"Eatsome",landline:"09823456124",email:"eatsome@abc.com",min_order_amount: 500, active: true, company_id: company1.id) 
 
 menu = [{name:"veg roll",price:40,veg:true,available: true, active_days: '{1,2,3,4,5,6}'},
   {name:"cheese pizza",price:90,veg:true,available: true, active_days: '{1,2,3,4,5,6}'},

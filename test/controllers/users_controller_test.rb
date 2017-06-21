@@ -57,6 +57,7 @@ class UsersControllerTest  < ActionController::TestCase
     assert_raises ActionController::ParameterMissing do
       patch :update, params: {id: @other_user.id, company_id: @company.id,}
     end
+    assert_response :success
   end
 
   test "user status should not be updated by an employee" do
@@ -71,6 +72,27 @@ class UsersControllerTest  < ActionController::TestCase
     sign_in_admin
     get :search, params: {company_id: @company.id, search_value: "dummy"}
     assert_response :success
+  end
+
+  test "valid bulk records should be added" do
+    sign_in_admin
+    file_name = File.new(Rails.root.join("test/fixtures/files/employees.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+    #This CSV file has only one record
+    assert_difference 'User.count' do 
+      post :add_multiple_employee_records, params: {company_id: @company.id, file: csv_file, commit: "Import"}
+    end
+  end
+
+
+  test "invalid bulk records should not be added" do
+    sign_in_admin
+    file_name = File.new(Rails.root.join("test/fixtures/files/invalid_employees.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+    #This CSV file has no record
+    assert_difference 'User.count', 0 do 
+      post :add_multiple_employee_records, params: {company_id: @company.id, file: csv_file, commit: "Import"}
+    end
   end
 
 

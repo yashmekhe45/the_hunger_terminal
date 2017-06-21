@@ -91,6 +91,8 @@ class UserTest < ActiveSupport::TestCase
     user2 = build(:user)
     user2.company_id = company_id
     user2.save!
+    company = Company.find(company_id)
+    company.employees << user2
     report = User.employee_report(company_id)
     assert_equal report, []
   end

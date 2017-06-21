@@ -54,7 +54,6 @@ class UsersController < ApplicationController
       redirect_to company_users_path(@company,:page=>params[:page])
     else
       flash.now[:error]= @user.errors.messages
-      redirect_to company_users_path(@company,:page=>params[:page])
     end
   end
 
@@ -64,7 +63,6 @@ class UsersController < ApplicationController
   end
 
   def add_multiple_employee_records
-    p params[:file]
     if !params[:file]
       flash[:error] = "Please select a file."
       # redirect_to company_users_path(params[:company_id])

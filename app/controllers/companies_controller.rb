@@ -29,19 +29,9 @@ class CompaniesController < ApplicationController
       redirect_to root_path
    else
       flash[:error] = @company.errors.messages
+      render :get_order_details
    end
   end
-
-  def destroy
-    authorize! :delete, @company
-    @company.destroy
-    redirect_to companies_path
-  end
-
-  def index
-    authorize! :company, @company
-    @companies = Company.all.order('created_at').page(params[:page]).per(5)
-  end 
 
   def get_order_details
   end
@@ -66,5 +56,4 @@ class CompaniesController < ApplicationController
       redirect_to vendors_path
     end
   end
-
 end

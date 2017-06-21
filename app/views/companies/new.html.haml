@@ -30,7 +30,7 @@
                   .col-md-6
                     = a.input :house_no, :label => false, :placeholder => "House No"
                   .col-md-6
-                    = a.input :pincode, :label => false, :placeholder => "PIN Code"
+                    = a.input :pincode, :label => false, :placeholder => "PIN Code", input_html: { :input_type => "number",length: 6 }
                 .form-group 
                   .col-md-12   
                     = a.input :locality, :label => false, :placeholder => "Locality"

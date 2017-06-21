@@ -9,9 +9,9 @@ class Terminal < ApplicationRecord
   validates :active, inclusion: {in: [true, false]}
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
-  has_many :orders
-  has_many :terminal_reports
-  has_many :terminal_extra_charges
+  has_many :orders, dependent: :destroy
+  has_many :terminal_reports, dependent: :destroy
+  has_many :terminal_extra_charges, dependent: :destroy
   belongs_to :company
 
   mount_uploader :image, ImageUploader
@@ -53,24 +53,6 @@ class Terminal < ApplicationRecord
       group('terminals.id').
       select('terminals.name,terminals.id,sum(terminal_reports.current_amount) AS total,
         sum(terminal_reports.payment_made) AS total_paid')
-    # # self.
-    # #   joins(:orders, :terminal_reports).
-    # #   where('orders.company_id'=>c_id,'terminals.company_id'=> c_id, 'orders.status'=>'confirmed').
-    # #   group('terminals.id','terminal_reports.name').
-    # #   select('terminals.name', 'terminals.id', 'sum(orders.total_cost) AS total', 'count(orders.terminal_id) AS no_of_orders', 'sum(terminal_reports.payment_made) AS paid')
-    # a = self.
-    #   joins(:orders).
-    #   where('orders.company_id' => c_id, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
-    #   group('terminals.id').
-    #   select('terminals.name, terminals.id, sum(orders.total_cost) AS total, count(orders.terminal_id) AS no_of_orders').
-    #   order('terminals.id')
-    
-    # g = self.joins(:terminal_reports).
-    #   where('terminals.company_id' => c_id).
-    #   group('terminals.id').
-    #   select('terminals.id, sum(terminal_reports.payment_made) AS paid').
-    #   order('terminals.id')    
-    #   byebug
   end  
 
   def self.all_terminals_todays_orders_report(c_id)

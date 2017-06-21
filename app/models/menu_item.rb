@@ -5,7 +5,7 @@ class MenuItem < ApplicationRecord
   validates :veg, inclusion: { in: [false, true] }
   validates :name, uniqueness: { scope: :terminal_id , case_sensitive: false}
   validates :available, inclusion: {in: [true, false]}
-  has_many :order_details
+  has_many :order_details, dependent: :destroy
   belongs_to :terminal
 
   before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only
@@ -37,6 +37,7 @@ class MenuItem < ApplicationRecord
 
   def available_must_accept_boolean_only
     if [true,false,'t', 'f', 'true','false',"1","0"].include?(self.available_before_type_cast) 
+
       return true
     else
       self.errors[:available] << 'This must be true or false.' 

@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
   get "menu_items/download_csv"
-  get 'users/download_sample_file'
+  get '/users/download_sample_file/:file_type' => 'users#download_sample_file', as: :download_sample_file
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'
@@ -88,15 +88,4 @@ Rails.application.routes.draw do
   # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
   
-  # get 'reports/index'
-  # get 'reports/individual_employee'
-  # get 'reports/order_details'
-  # get 'reports/employees_todays_orders'
-  # get 'reports/monthly_all_employees'
-  # get "reports/download_pdf" => "reports#download_pdf"
-  # get 'reports/all_terminals_last_month_reports'
-  # get 'reports/all_terminals_daily_report'
-  # get 'reports/individual_terminal_last_month_report'
-  # get 'reports/employees_daily_order_detail'
-  # get 'reports/download_daily_terminal_report'
 end

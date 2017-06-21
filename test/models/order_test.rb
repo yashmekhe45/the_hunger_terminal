@@ -99,6 +99,45 @@ class OrderTest < ActiveSupport::TestCase
   end
 
 
+  test "pending orders should be placed" do
+    order = create_order
+    result = Order.update_status([order])
+    assert_not_equal result, 0
+  end
+
+  test "all placed orders should be confirmed" do
+    order = create_order
+    terminal_id = order.terminal.id
+    company_id = order.company.id
+    ActionMailer::Base.deliveries = []
+    Order.confirm_all_placed_orders(terminal_id, company_id,[order])
+    assert_not_empty ActionMailer::Base.deliveries
+  end
+
+
+  test "employeewise daily orders should be gained" do
+    order = create_order 
+    terminal_id = order.terminal.id
+    company_id = order.company.id
+    result = Order.daily_orders(terminal_id,company_id)
+    assert_not_equal result, []
+  end
+
+  test "terminal specific orders should be gained" do
+    order = create_order 
+    terminal_id = order.terminal.id
+    company_id = order.company.id
+    result = Order.get_terminal_specific_orders(terminal_id, company_id)
+    assert_not_equal result, [] 
+  end
+
+  test "employees' daily order report should be generated" do
+    order = create_order 
+    company_id = order.company.id
+    result = Order.employees_daily_order_detail_report(company_id)
+    assert_not_equal result, []
+  end
+
   #Test cases for associations will be written after integrating SHOULDA in application
 
   test "order should have company" do

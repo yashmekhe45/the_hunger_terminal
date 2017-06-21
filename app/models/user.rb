@@ -101,7 +101,14 @@ class User < ApplicationRecord
       employee_record.attributes = row.to_h
       employee_record.update_attributes("role" => "employee", "is_active" => true, "password" => Devise.friendly_token.first(8), "company_id" => company_id)
       if employee_record.valid?
-        employee_record.save!
+        if employee_record.new_record?
+          employee_record.save!
+          return 1 # saved to database
+        else
+         return 0 # already exists
+        end
+      else
+        return -1 # invalid record
       end
     end
   end

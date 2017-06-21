@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
  
   get "menu_items/download_csv"
-  get 'users/download_sample_file'
+  get '/users/download_sample_file/:file_type' => 'users#download_sample_file', as: :download_sample_file
 
   get 'admin_dashboard/index'
   get 'admin_dashboard/order_detail'

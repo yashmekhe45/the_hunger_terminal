@@ -44,7 +44,6 @@ class ActiveSupport::TestCase
   after :each do
     DatabaseCleaner.clean
   end
- #after { DatabaseCleaner.clean }
-  # Add more helper methods to be used by all tests here...
-
 end
+
+

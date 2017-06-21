@@ -9,9 +9,9 @@ class Terminal < ApplicationRecord
   validates :active, inclusion: {in: [true, false]}
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
-  has_many :orders
-  has_many :terminal_reports
-  has_many :terminal_extra_charges
+  has_many :orders, dependent: :destroy
+  has_many :terminal_reports, dependent: :destroy
+  has_many :terminal_extra_charges, dependent: :destroy
   belongs_to :company
 
   mount_uploader :image, ImageUploader

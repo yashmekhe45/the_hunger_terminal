@@ -3,7 +3,7 @@ require 'csv'
 class UsersController < ApplicationController
 
   load_and_authorize_resource param_method: :user_params 
-
+  before_action :require_permission, except: [:download_sample_file]
   before_action :load_user , only:[:show, :edit, :update]
   before_action :load_company, except: [:download_invalid_csv,
     :download_invalid_xls, :download_invalid_xlsx, :download_sample_file]
@@ -13,15 +13,6 @@ class UsersController < ApplicationController
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Employees", :company_users_path, only: [:index, :show, :search]
   add_breadcrumb "Employee Detail", :company_user_path, only: [:show]
-
-
-  def index
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
-    if @users.empty?
-      flash.now[:error] = "Sorry, No record is found"
-      render "index"
-    end 
-  end
 
 
   def new
@@ -45,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @company.employees.where(role: "employee").order(:created_at).page(params[:page]).per(4)
+    @users = @company.employees.includes(:company).where(role: "employee").order(:created_at).page(params[:page]).per(4)
     if @users.empty?
       flash.now[:error] = "Sorry, No record is found"
       render "index"
@@ -59,29 +50,17 @@ class UsersController < ApplicationController
       params[:page] = page
     end
     if @user.update(user_params)
-      #Company admin will be updated by Super Admin
-      if (@user.role == "company_admin")
-        redirect_to "#{companies_path}" + "?page=" + "#{params[:page]}"
-      #Employess will be activated/deactivated by Company admin
-      else
-        flash[:success] = "Status changed successfully!!"
-        redirect_to company_users_path(@company,:page=>params[:page])
-      end
+      flash[:success] = "Status changed successfully!!"
+      redirect_to company_users_path(@company,:page=>params[:page])
     else
       flash.now[:error]= @user.errors.messages
-      if(@user.role == "company_admin")
-        render :edit_company_admin
-      else
-        redirect_to company_users_path(@company,:page=>params[:page])
-      end
+      redirect_to company_users_path(@company,:page=>params[:page])
     end
   end
 
 
 
   def import
-    # User.import(params[:file], params[:company_id])
-    # redirect_to company_users_path(params[:company_id]), notice: "User records imported"
   end
 
   def add_multiple_employee_records
@@ -91,14 +70,20 @@ class UsersController < ApplicationController
       # redirect_to company_users_path(params[:company_id])
       redirect_to import_company_users_path(params[:company_id])
     else
-      User.import(params[:file], params[:company_id])
-      redirect_to company_users_path(params[:company_id]), notice: "User records imported"
-    end
+      result = User.import(params[:file], params[:company_id])
+      if result == 1
+        redirect_to company_users_path(params[:company_id]), notice: "User records imported"
+      elsif result == 0
+        redirect_to company_users_path(params[:company_id]), notice: "Record Already exists!"
+      elsif result == -1
+        redirect_to company_users_path(params[:company_id]), notice: "Invalid record!"
+      end
+    end 
   end
 
   def search
     search_value = params[:search_value].downcase
-    @users = @company.employees.where(role: "employee").where("lower(name) like ? or
+    @users = @company.employees.includes(:company).where(role: "employee").where("lower(name) like ? or
      lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
      order('created_at').page(params[:page]).per(5)
     if @users.empty?
@@ -158,4 +143,12 @@ class UsersController < ApplicationController
   def load_company
     @company = Company.find(current_user.company_id)  
   end
+
+  def require_permission
+    if current_user != Company.find(params[:company_id]).employees.find_by(role: "company_admin")
+      flash[:error] = "You are not authorized to access it!!"
+      redirect_to vendors_path
+    end
+  end
+
 end

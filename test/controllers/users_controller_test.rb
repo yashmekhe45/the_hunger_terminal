@@ -1,7 +1,98 @@
 require "test_helper"
 
-describe UsersController do
-  # it "must be a real test" do
-  #   flunk "Need real tests"
-  # end
+class UsersControllerTest  < ActionController::TestCase
+
+  before :each do
+    @company = create :company
+  end
+
+  test "render index for logged-in admin" do
+    get :index, params: {company_id: @company.id }
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not render index for non logged-in admin" do
+    sign_in_admin
+    get :index, params: {company_id: @company.id}
+    assert_response :success
+  end
+
+  test "should get a new user" do 
+    sign_in_admin
+    get :new, params: {company_id: @company.id}, format: 'js', xhr: true
+    assert_response :success  
+  end
+
+  test "should create user" do
+    sign_in_admin
+
+    assert_difference 'User.count' do
+      post :create, params: 
+      {user: { name: "dummy", email: "dummy@dummysoftware.com", mobile_number: "3456789089"}, company_id: @company.id},format: 'js', xhr: true
+    end
+  end
+
+  test "should not create user" do
+    sign_in_admin
+
+    assert_difference 'User.count', 0 do
+      post :create, params: 
+      {user: { name: "", email: "", mobile_number: ""}, company_id: @company.id},format: 'js', xhr: true
+    end
+  end
+
+
+  #While updating user, we are just changing status of user
+  test "user status should be updated by admin only" do
+    sign_in_admin
+    create_other_user
+    patch :update, params: {id: @other_user.id, company_id: @company.id, user: {is_active: 'false'}, page: "1" }
+    assert_redirected_to company_users_path(@company, page: "1")
+  end
+
+  test "should not update user status with no parameter" do
+    sign_in_admin
+    create_other_user
+    assert_raises ActionController::ParameterMissing do
+      patch :update, params: {id: @other_user.id, company_id: @company.id,}
+    end
+  end
+
+  test "user status should not be updated by an employee" do
+    sign_in_employee
+    create_other_user
+    patch :update, params: {id: @other_user.id, company_id: @company.id, user: {is_active: 'false'}, page: "1" }
+    assert_redirected_to vendors_url
+  end
+
+
+  test "user records should be searched" do
+    sign_in_admin
+    get :search, params: {company_id: @company.id, search_value: "dummy"}
+    assert_response :success
+  end
+
+
+  def sign_in_admin
+    admin = @company.employees.first
+    admin.update_attribute(:role, "company_admin")
+    admin.confirm
+    sign_in admin
+  end
+
+  def sign_in_employee
+
+   employee = @company.employees.first
+   employee.update_attribute(:role, "employee")
+   employee.confirm
+   sign_in employee
+  end
+
+  def create_other_user
+    @other_user = create(:user, company: @company)
+    @other_user.update_attribute(:role, "employee")
+    @company.employees << @other_user
+  end
+
 end

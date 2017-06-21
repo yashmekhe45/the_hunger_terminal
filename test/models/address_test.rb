@@ -34,7 +34,7 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "pincode should have 6 digits" do
-    address = build(:address)
+    address = build(:address, pincode: 89)
     address.valid?
     assert address.errors[:pincode].include?("is the wrong length (should be 6 characters)")
   end

@@ -125,6 +125,7 @@ class OrderTest < ActiveSupport::TestCase
 
   test "terminal specific orders should be gained" do
     order = create_order 
+    order.update_attribute(:status, "confirmed")
     terminal_id = order.terminal.id
     company_id = order.company.id
     result = Order.get_terminal_specific_orders(terminal_id, company_id)
@@ -132,7 +133,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "employees' daily order report should be generated" do
-    order = create_order 
+    order = create_order
     company_id = order.company.id
     result = Order.employees_daily_order_detail_report(company_id)
     assert_not_equal result, []

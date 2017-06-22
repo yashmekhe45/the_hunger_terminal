@@ -79,7 +79,7 @@ class AdminDashboardController < ApplicationController
       daily_extra_charge = terminal_info["daily_extra_charge"].to_i
       if TerminalExtraCharge.exists?(terminal_id: terminal_id, company_id: company_id, date: Time.zone.today)
         flash[:notice] = "Already updated !!"
-        redirect_back(fallback_location: root_path)
+        redirect_to admin_dashboard_index_path
         return
       elsif TerminalExtraCharge.create!(terminal_id: terminal_id, daily_extra_charge: daily_extra_charge, company_id: company_id, date: Time.zone.today)
         flash[:success] = "Successfully updated!!"

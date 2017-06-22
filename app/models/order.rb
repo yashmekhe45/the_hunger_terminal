@@ -34,7 +34,7 @@ class Order < ApplicationRecord
     self.
       joins(:user).
       where('orders.date' => Time.zone.today, 'orders.terminal_id' => terminal_id,
-        'orders.company_id' => company_id).
+        'orders.company_id' => company_id, 'orders.status' => 'confirmed').
       select('orders.id', 'orders.total_cost','users.id')
   end
 

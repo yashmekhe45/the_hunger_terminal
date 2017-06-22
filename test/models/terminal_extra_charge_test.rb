@@ -2,6 +2,13 @@ require "test_helper"
 
 class TerminalextraChargeTest < ActiveSupport::TestCase
 
+
+  test "daily extra charge should be a numeric value" do
+    terminal_extra_charge = build(:terminal_extra_charge, daily_extra_charge: "nan")
+    terminal_extra_charge.valid?
+    assert terminal_extra_charge.errors[:daily_extra_charge].include?("is not a number")
+  end
+
   test "employeewise extra charge should be divided" do
     @terminal = create(:terminal)
     @company = @terminal.company

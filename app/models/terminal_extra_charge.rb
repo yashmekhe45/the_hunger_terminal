@@ -1,4 +1,7 @@
 class TerminalExtraCharge < ApplicationRecord
+
+  validates :daily_extra_charge, numericality: true
+
   belongs_to :terminal
   belongs_to :company
 

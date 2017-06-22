@@ -74,21 +74,24 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal todays_orders, []    
   end
 
+  #tested for one order
   test "all_terminals_todays_orders_report" do 
     @terminal.save!
-    @terminal1 = build(:terminal, company_id: @terminal.company_id)
+    company_id = @terminal.company.id
+    @terminal1 = build(:terminal, company_id: company_id)
     @terminal1.save!
-    @terminal2 = build(:terminal, company_id: @terminal.company_id)
-    @user = build(:user, company_id: @terminal.company_id)
+    @terminal2 = build(:terminal, company_id: company_id)
+    @user = build(:user, company_id: company_id)
     @user.save!
     @terminal2.save!
-    @order = build(:order, company_id: @terminal.company_id, user_id: @user.id, terminal_id: @terminal.id)
+    @order = build(:order, company_id: company_id, user_id: @user.id, terminal_id: @terminal.id)
     @order.save
-    todays_orders = Terminal.all_terminals_todays_orders_report(@terminal.company_id)
+    @order.update_attribute(:status, "confirmed")
+    todays_orders = Terminal.all_terminals_todays_orders_report(company_id)
     if Time.now.strftime("%A") == "Saturday" or Time.now.strftime("%A") == "Sunday"
       assert_equal todays_orders, []
     else
-      assert_same todays_orders.total, @order.total_cost
+      assert_same todays_orders[0].total, @order.total_cost
     end
   end
 

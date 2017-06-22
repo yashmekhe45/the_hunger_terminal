@@ -95,6 +95,12 @@ class UsersControllerTest  < ActionController::TestCase
     end
   end
 
+  test "should download sample file" do
+    sign_in_admin
+    get :download_sample_file, params: {file_type: "csv"}
+    assert_response :success
+  end
+
 
   def sign_in_admin
     admin = @company.employees.first

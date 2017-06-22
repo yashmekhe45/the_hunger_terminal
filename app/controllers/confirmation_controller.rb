@@ -1,6 +1,6 @@
 class ConfirmationController < Devise::ConfirmationsController
 
-  skip_before_filter :authenticate_user!
+  skip_before_action :authenticate_user!
 
   def after_confirmation_path_for(resource_name, resource)
     if resource.role == "employee"

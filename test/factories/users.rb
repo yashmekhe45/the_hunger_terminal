@@ -11,7 +11,7 @@ FactoryGirl.define do
 
     factory :user_with_orders do
       transient do
-        orders_count 1
+        orders_count 1 #Only one order is allowed per day
       end
       after(:create) do |user, evaluator|
         create_list(:order, evaluator.orders_count, user: user)

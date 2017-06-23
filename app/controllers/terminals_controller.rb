@@ -48,15 +48,6 @@ class TerminalsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def show
-    if params[:id] == "download"
-      invalid_menus_download
-    end
-  end  
-
   def update
     if @terminal.update_attributes(terminal_params)
       respond_to do |format|
@@ -76,11 +67,6 @@ class TerminalsController < ApplicationController
       render :edit and return
     end
   end
-
-  def destroy
-    @terminal.destroy
-    redirect_to company_terminals_path
-  end 
  
   def valid_csv    
     if params[:terminal][:CSV_menu_file].content_type == "text/csv"

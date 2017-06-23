@@ -6,13 +6,13 @@ class UsersControllerTest  < ActionController::TestCase
     @company = create :company
   end
 
-  test "render index for logged-in admin" do
+  test "should not render index for non logged-in admin"  do
     get :index, params: {company_id: @company.id }
     assert_response :redirect
     assert_redirected_to new_user_session_path
   end
 
-  test "should not render index for non logged-in admin" do
+  test "render index for logged-in admin" do
     sign_in_admin
     get :index, params: {company_id: @company.id}
     assert_response :success

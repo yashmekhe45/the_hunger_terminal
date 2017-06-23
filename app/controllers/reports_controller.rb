@@ -41,10 +41,6 @@ class ReportsController < ApplicationController
     @orders = User.employee_individual_report(current_user.company_id,params[:id])
   end
 
-  def order_details
-    @order_details = OrderDetail.where(order_id:params[:order_id])
-  end
-
   def employees_daily_order_detail
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
     generate_no_record_found_error(@orders)
@@ -110,10 +106,6 @@ class ReportsController < ApplicationController
 
   def load_company
     @company = current_user.company
-    unless @company
-      flash[:warning] = 'Company not found'
-      redirect_to root_path and return
-    end
   end
 
   def generate_no_record_found_error(records)

@@ -13,12 +13,7 @@ class MenuItemsController < ApplicationController
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :company_terminals_path, only: [:index]
 
-  def menu_index
-  	@company = Company.find(params[:company_id])
-  	@terminals = @company.terminals.where(:available => true).ids
-  	@menus = MenuItem.where(:terminal_id => @terminals)
-  end	
-
+  
   def index
     if params[:search_item].present?
       @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(6)
@@ -29,12 +24,6 @@ class MenuItemsController < ApplicationController
       @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
     end
     add_breadcrumb @terminal.name+" Menu"
-  end
-
-  def show
-    # if params[:id] == "import"
-    #   terminals_download_path
-    # end  
   end
 
   def new
@@ -57,12 +46,6 @@ class MenuItemsController < ApplicationController
       flash[:error] = "can't update menu_item"
       render :edit and return
     end
-  end
-
-  def destroy
-    @menu_item.destroy
-    flash[:success] = 'Menu Item Deleted successfully'
-    redirect_to company_terminal_path(@current_company,@terminal)
   end
 
   def import
@@ -100,26 +83,14 @@ class MenuItemsController < ApplicationController
 
   def load_company
     @current_company = current_user.company
-    unless @current_company
-      flash[:warning] = 'Company not found'
-      redirect_to root_path and return
-    end
   end
 
   def load_terminal
     @terminal = @current_company.terminals.find params[:terminal_id]
-    unless @terminal
-      flash[:warning] = 'Terminal not found'
-      redirect_to terminals_path and return
-    end
   end
 
   def load_menu_item
     @menu_item = @terminal.menu_items.find(params[:id])
-    unless @menu_item
-      flash[:warning] = "MenuItem not found"
-      redirect_to terminal_menu_items_path(@terminal) and return
-    end
   end
 
   def menu_item_params

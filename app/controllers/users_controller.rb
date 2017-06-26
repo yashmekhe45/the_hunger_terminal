@@ -94,12 +94,6 @@ class UsersController < ApplicationController
   end
 
   def download_invalid_csv
-    if "#{Rails.root}/#{$INVALID_USER_CSV}"
-      send_file("#{Rails.root}/#{$INVALID_USER_CSV}")
-    else
-      flash[:error] = "No invalid record"
-      redirect_to company_users_path(@company.id)
-    end
   end
 
   def download_invalid_xls

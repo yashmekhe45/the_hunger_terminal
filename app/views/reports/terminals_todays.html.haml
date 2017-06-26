@@ -1,5 +1,6 @@
--if !@terminals.empty?  
-  .container
+
+.container
+  -if !@terminals.empty?  
     %h3.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
     %h2.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
     = link_to 'last month report', history_reports_terminals_path, class: 'btn btn-info' 
@@ -44,3 +45,6 @@
             %td.text-center= terminal.total
             -grand_total = grand_total + terminal.total
     %h3.text-center Todays Net Total = #{grand_total}/-
+  -else
+    .alert.alert-danger
+      No record is found!!

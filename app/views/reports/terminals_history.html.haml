@@ -1,5 +1,5 @@
--if !@terminals.empty?  
-  .container
+.container
+  -if !@terminals.empty?  
     %h3.text-center #{current_user.company.name.capitalize} Vendors's Reports
     .table-responsive
       %table.table-hover.table-bordered.terminals_report_table
@@ -17,3 +17,6 @@
             %td.text-center ₹ #{terminal.total}
             %td.text-center ₹ #{terminal.total_paid}
             / %td.text-center= terminal.no_of_orders
+  -else
+    .alert.alert-danger
+      No record is found!!

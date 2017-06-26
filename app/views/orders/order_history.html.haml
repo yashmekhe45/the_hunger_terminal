@@ -15,6 +15,7 @@
         .alert.alert-danger
           No record is found!!
       -else
+        -grand_total = grand_discount = grand_extra_charges = grand_payable =0
         %table.table.table-hover.table-bordered.order_history_table
           %thead
             %tr
@@ -29,12 +30,27 @@
             %tr
               %td= order.date
               %td= order.total_cost
+              - grand_total += order.total_cost
               %td= order.discount
+              - grand_discount += order.discount
               %td= order.extra_charges
+              -grand_extra_charges += order.extra_charges
               %td= order.total_cost - order.discount + order.extra_charges
+              - grand_payable += order.total_cost - order.discount + order.extra_charges
               %td
                 - order.order_details.each_with_index do |order_item,index|
                   - indexplusone = index+1
                   %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
                   %br
+          - if grand_total != 0
+            %tr
+              %td= 'Aggregate Amount '
+              %td= grand_total
+              %td= grand_discount
+              %td= grand_extra_charges
+              %td= grand_payable
+              %td
+
+
+
              

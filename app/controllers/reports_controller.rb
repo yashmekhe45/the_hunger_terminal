@@ -28,7 +28,6 @@ class ReportsController < ApplicationController
 
 	def employees_current_month
     @users = User.employee_report(current_user.company_id)
-    generate_no_record_found_error(@users)
 	end
 
 
@@ -50,7 +49,6 @@ class ReportsController < ApplicationController
 
   def employees_daily_order_detail
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
-    generate_no_record_found_error(@orders)
     respond_to do |format|
       format.html
       format.pdf do
@@ -84,14 +82,12 @@ class ReportsController < ApplicationController
 
   def terminals_history
     @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)
-    generate_no_record_found_error(@terminals)
   end
 
 
   def terminals_todays
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
     @todays_terminals = Terminal.all.all_terminals_todays_orders_report(current_user.company_id)
-    generate_no_record_found_error(@terminals)
     respond_to do |format|
       format.html
       format.pdf do
@@ -113,11 +109,5 @@ class ReportsController < ApplicationController
 
   def load_company
     @company = current_user.company
-  end
-
-  def generate_no_record_found_error(records)
-    if records.empty?
-      flash[:error] = "No record found"
-    end
   end
 end

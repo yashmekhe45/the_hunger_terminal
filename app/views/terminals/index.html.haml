@@ -47,6 +47,9 @@
                     -else
                       .text-center
                         %button.btn.btn-danger{:type=> "button"}
-                          %span.glyphicon.glyphicon-remove-circle>                          
+                          %span.glyphicon.glyphicon-remove-circle>
+  -else
+    .alert.alert-danger
+      No record is found!!                         
     .text-center
       = paginate @terminals 

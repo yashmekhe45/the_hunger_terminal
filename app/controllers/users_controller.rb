@@ -37,10 +37,6 @@ class UsersController < ApplicationController
 
   def index
     @users = @company.employees.includes(:company).where(role: "employee").order(:created_at).page(params[:page]).per(4)
-    if @users.empty?
-      flash.now[:error] = "Sorry, No record is found"
-      render "index"
-    end
     add_breadcrumb @company.name, company_users_path
   end
   

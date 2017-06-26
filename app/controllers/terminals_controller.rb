@@ -97,18 +97,10 @@ class TerminalsController < ApplicationController
 
   def load_company
     @current_company = current_user.company
-    unless @current_company
-      flash[:warning] = 'Company not found'
-      redirect_to root_path and return
-    end
   end
 
   def load_terminal
     @terminal = @current_company.terminals.find params[:id]
-    unless @terminal
-      flash[:warning] = 'Terminal not found'
-      redirect_to terminals_path and return
-    end
   end  
 end
     

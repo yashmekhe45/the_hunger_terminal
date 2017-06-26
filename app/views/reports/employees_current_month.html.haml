@@ -1,5 +1,5 @@
--if !@users.empty?  
-  .container
+.container
+  -if !@users.empty?  
     %h3.text-center Employee's Reports
     = link_to 'Todays Orders', todays_reports_users_path, class: "btn btn-info"
     = link_to 'Last Month Orders', history_reports_users_path, class: "btn btn-info"
@@ -22,5 +22,8 @@
             %td.text-center ₹ #{user.total}
             %td.text-center ₹ #{user.subsidy}
             %td.text-center ₹ #{user.total - user.subsidy}
+  -else
+    .alert.alert-danger
+      No record is found!!
 
 

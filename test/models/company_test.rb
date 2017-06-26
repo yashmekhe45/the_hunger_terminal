@@ -106,10 +106,7 @@ class CompanyTest < ActiveSupport::TestCase
   end
   test "company admin should be present" do
     @company = create(:company)
-    employee = @company.employees.first
-    employee.role = "employee"
-    employee.save!
-    @company.valid?
+    @company.employees.first.update_attribute(:role, "employee")
     assert @company.errors[:employees].include?("company admin must be present")
   end 
 

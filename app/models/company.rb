@@ -10,7 +10,6 @@ class Company < ApplicationRecord
   validates_format_of :email,:with => Devise.email_regexp
   validates :subsidy, numericality: true
   validates :subsidy, inclusion: { in: 0..100, message: "value must be between 0 to 100" }
-  validate :must_have_atleast_one_company_admin
 
   has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
@@ -21,7 +20,8 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
-  # before_save :create_company_admin
+  before_save :must_have_atleast_one_company_admin
+
 
   def send_reminders
     unless weekend? 
@@ -35,16 +35,8 @@ class Company < ApplicationRecord
   end
 
 
-  def must_have_atleast_one_company_admin
-    employee = self.employees.first
-    if employee.role != "company_admin"
-      errors.add(:employees, "company admin must be present")
-    end
-  end
+ 
 
-  # def is_company_admin?
-  #   self.employees.first.role == "company_admin"
-  # end
 
   private 
 
@@ -67,7 +59,15 @@ class Company < ApplicationRecord
     end
 
     def create_company_admin
+      # byebug
       self.employees.first.role = "company_admin"
       self.employees.first.is_active = true
+    end
+
+    def must_have_atleast_one_company_admin
+      employee = self.employees.find_by(role: "company_admin")
+      if employee == nil
+        errors.add(:employees, "company admin must be present")
+      end
     end
 end

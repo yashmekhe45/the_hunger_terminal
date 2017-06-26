@@ -1,5 +1,5 @@
--if !@orders.empty?
-  .container
+.container
+  -if !@orders.empty?
     %h3.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
     %h4.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
     = link_to 'print', todays_reports_users_path(:format => 'pdf' ), class: 'btn btn-info'
@@ -28,6 +28,9 @@
             %td.text-center= order.menu
             %td.text-center= order.quantity
             - employee = order.emp_name
+  -else
+    .alert.alert-danger
+      No record is found!!
           
 
 

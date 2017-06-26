@@ -1,12 +1,9 @@
 
 class ReportsController < ApplicationController
 
-  # before_filter :login_required, :only => [:index, :employee_report, :monthly_all_employees, :individual_employee, :all_terminals_last_month_reports]
   before_action :load_company
 
   add_breadcrumb "Home", :root_path
-
-  # add_breadcrumb "Current Balance Report", :reports_index_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee]
 
 
   add_breadcrumb "Today's Orders' Report", :todays_orders_company_reports_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee]
@@ -40,7 +37,6 @@ class ReportsController < ApplicationController
         send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
       end
     end 
-    generate_no_record_found_error(@users)
   end
 
   def employee_history
@@ -57,28 +53,6 @@ class ReportsController < ApplicationController
       end
     end 
   end
-
-  # def download_pdf
-  #   require "prawn"
-  #   require "prawn/table"
-  #   @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)
-  #   respond_to do |format|
-  #     format.pdf do
-  #       pdf = Prawn::Document.new
-  #       table_data = Array.new
-  #       table_data << ["Sr No", "Employee Id", "Employee Name", "TotalOrderPrcie", "subsidy", "CTE"]
-  #       @users.each_with_index do |user,i|
-  #           table_data << [i+1, user.id, user.name, user.total, user.subsidy, user.total - user.subsidy]
-  #       end
-
-  #       pdf.text "#{Date.today}", :align => :right
-  #       pdf.text "#{current_user.company.name.capitalize}", :align => :center, :size => 30, style: :bold
-  #       pdf.text "Employee Monthly Report", :align => :center, :size => 20
-  #       pdf.table(table_data, :width => 500, :cell_style => { :inline_format => true }, :position => :center)
-  #       send_data pdf.render, filename: "#{Time.zone.now.strftime("%B%Y")}_#{current_user.company.name}.pdf", type: 'application/pdf', :disposition => 'inline'
-  #     end
-  #   end
-  # end
 
   def terminals_history
     @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)

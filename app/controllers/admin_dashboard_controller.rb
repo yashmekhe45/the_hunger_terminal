@@ -40,7 +40,7 @@ class AdminDashboardController < ApplicationController
   def payment
     @company = Company.find(current_user.company_id)
     @terminals = @company.terminals.all.order(:name)
-    add_breadcrumb "Running balance report"
+    add_breadcrumb "Terminals' Running balance report"
   end
 
   def pay

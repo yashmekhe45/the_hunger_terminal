@@ -11,7 +11,7 @@ class MenuItemsController < ApplicationController
   load_and_authorize_resource
 
   add_breadcrumb "Home", :root_path
-  add_breadcrumb "Terminals", :company_terminals_path, only: [:index]
+  # add_breadcrumb "Terminals", :company_terminals_path, only: [:index]
 
   
   def index

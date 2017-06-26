@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
-  add_breadcrumb "Today's Order", :terminal_order_path, only: [:show, :edit, :update]
+  add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
 
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')

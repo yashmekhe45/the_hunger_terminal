@@ -5,23 +5,20 @@ class ReportsController < ApplicationController
 
   add_breadcrumb "Home", :root_path
 
+  add_breadcrumb " Employee's Current Balance Report", :mtd_reports_users_path, only: [:employees_current_month]
 
-  add_breadcrumb "Today's Orders' Report", :todays_orders_company_reports_path, only: [:index, :employees_todays_orders, :monthly_all_employees, :individual_employee]
-
-  add_breadcrumb " Employee's Current Balance Report", :reports_index_path, only: [:index]
-
-  add_breadcrumb "Individual Employee Report", :reports_individual_employee_path, only: [:individual_employee]
+  add_breadcrumb "Individual Employee Report", :todays_reports_users_path, only: [:individual_employee]
 
 
-  add_breadcrumb "Emplyees' Last Month Report", :reports_monthly_all_employees_path, only: [:monthly_all_employees]
+  add_breadcrumb "Emplyees' Last Month Report", :history_reports_users_path, only: [:monthly_all_employees]
 
-  add_breadcrumb "Terminals' Today's Report", :reports_all_terminals_daily_report_path, only: [:all_terminals_daily_report]
+  add_breadcrumb "Terminals' Today's Report", :todays_reports_terminals_path, only: [:terminals_todays]
 
-  add_breadcrumb "Terminals' Last Month's Report", :reports_all_terminals_last_month_reports_path, only: [:all_terminals_last_month_reports, :individual_terminal_last_month_report]
+  add_breadcrumb "Terminals' Last Month's Report", :history_reports_terminals_path, only: [:terminals_history]
 
-  add_breadcrumb "Individual Terminal Report", :reports_individual_terminal_last_month_report_path, only: [:individual_terminal_last_month_report]
+  add_breadcrumb "Individual Terminal Report", :history_reports_terminal_path, only: [:terminal_history]
 
-  add_breadcrumb "Employee wise Orders", :reports_employees_daily_order_detail_path, only: [:employees_daily_order_detail]
+  add_breadcrumb "Employee wise Today's Orders", :todays_reports_users_path, only: [:employees_daily_order_detail]
 
 	def employees_current_month
     @users = User.employee_report(current_user.company_id)
@@ -73,10 +70,6 @@ class ReportsController < ApplicationController
 
   def terminal_history
     @terminal_reports = TerminalReport.all.where(terminal_id:params[:id].to_i)
-  end
-
-  def download_daily_terminal_report
-
   end
 
   private 

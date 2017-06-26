@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   add_breadcrumb "Home", :root_path
-  add_breadcrumb "Employees", :company_users_path, only: [:index, :show, :search]
-  add_breadcrumb "Employee Detail", :company_user_path, only: [:show]
+  add_breadcrumb "Employees", :company_users_path, only: [:index, :search]
+  add_breadcrumb "Employee Detail", :user_path, only: [:show]
 
 
   def new

@@ -88,11 +88,7 @@ class TerminalTest < ActiveSupport::TestCase
     @order.save
     @order.update_attribute(:status, "confirmed")
     todays_orders = Terminal.all_terminals_todays_orders_report(company_id)
-    if Time.now.strftime("%A") == "Saturday" or Time.now.strftime("%A") == "Sunday"
-      assert_equal todays_orders, []
-    else
-      assert_same todays_orders[0].total, @order.total_cost
-    end
+    assert_equal todays_orders, []
   end
 
   test "all order for todays terminals" do

@@ -9,9 +9,9 @@ class TerminalsController < ApplicationController
   before_action :load_terminal, only: [:show, :edit, :update, :destroy]
 
   add_breadcrumb "Home", :root_path
-  add_breadcrumb "Terminals", :company_terminals_path
+  add_breadcrumb "Terminals", :company_terminals_path, except: [:edit, :update]
   add_breadcrumb "New Terminal", :new_company_terminal_path, only: [:new, :create]
-  add_breadcrumb "Edit Terminal", :edit_company_terminal_path, only: [:edit, :update]
+  add_breadcrumb "Edit Terminal", :edit_terminal_path, only: [:edit, :update]
   
   def new
     @terminal = @current_company.terminals.build
@@ -97,18 +97,10 @@ class TerminalsController < ApplicationController
 
   def load_company
     @current_company = current_user.company
-    unless @current_company
-      flash[:warning] = 'Company not found'
-      redirect_to root_path and return
-    end
   end
 
   def load_terminal
     @terminal = @current_company.terminals.find params[:id]
-    unless @terminal
-      flash[:warning] = 'Terminal not found'
-      redirect_to terminals_path and return
-    end
   end  
 end
     

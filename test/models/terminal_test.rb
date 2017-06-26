@@ -88,7 +88,7 @@ class TerminalTest < ActiveSupport::TestCase
     @order.save
     @order.update_attribute(:status, "confirmed")
     todays_orders = Terminal.all_terminals_todays_orders_report(company_id)
-    assert_equal todays_orders, []
+    assert_not_equal todays_orders, []
   end
 
   test "all order for todays terminals" do

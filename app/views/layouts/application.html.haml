@@ -17,20 +17,15 @@
     -unless request.original_url == root_url
       .container#pdf_link
         %ol
-          / = render_breadcrumbs
+          = render_breadcrumbs
     - unless flash.empty?
       %script
         - flash.each do |f|
           - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
           toastr['#{type}']('#{f[1]}');
-          / toastr.remove()
-          / toastr.options.closeButton = true;
-          / toastr.options.closeDuration = 300;
-          / toastr.options.timeOut = 3000;
-          / toastr.options.extendedTimeOut = 300;
     = yield 
     -if user_signed_in? && request.original_url != root_url
-      / =render "layouts/backlink"
+      =render "layouts/backlink"
   %footer.container-fluid.text-center
     %p © Josh Software Pvt. Ltd. 
 

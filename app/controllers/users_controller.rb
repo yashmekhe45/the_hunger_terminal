@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   add_breadcrumb "Home", :root_path
-  add_breadcrumb "Employees", :company_users_path, only: [:index, :show, :search]
-  add_breadcrumb "Employee Detail", :company_user_path, only: [:show]
+  add_breadcrumb "Employees", :company_users_path, only: [:index, :search]
+  add_breadcrumb "Employee Detail", :user_path, only: [:show]
 
 
   def new
@@ -37,10 +37,6 @@ class UsersController < ApplicationController
 
   def index
     @users = @company.employees.includes(:company).where(role: "employee").order(:created_at).page(params[:page]).per(4)
-    if @users.empty?
-      flash.now[:error] = "Sorry, No record is found"
-      render "index"
-    end
     add_breadcrumb @company.name, company_users_path
   end
   

@@ -85,6 +85,8 @@ Rails.application.routes.draw do
   get 'admin_dashboard/input_terminal_extra_charges'
   post 'admin_dashboard/save_terminal_extra_charges'
 
+  
+
   # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
   

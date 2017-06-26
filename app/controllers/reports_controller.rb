@@ -84,7 +84,6 @@ class ReportsController < ApplicationController
   def terminals_todays
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
     @todays_terminals = Terminal.all.all_terminals_todays_orders_report(current_user.company_id)
-    generate_no_record_found_error(@terminals)
     respond_to do |format|
       format.html
       format.pdf do

@@ -25,16 +25,15 @@ class OrdersController < ApplicationController
   def new 
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
-    @order = @terminal.orders.new
+    @order = Order.new(company_id: current_user.company.id)
     @terminal_id = params[:terminal_id]
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                                                                                                                           
-    @terminal = Terminal.find(params[:terminal_id])
-    @order = @terminal.orders.new(order_params)
+  def create                                                                                                                          
+    @order = Order.new(order_params)
     load_order_detail
     if @order.save
       flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."

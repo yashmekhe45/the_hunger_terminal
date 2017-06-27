@@ -72,7 +72,7 @@ class CompanyTest < ActiveSupport::TestCase
   test "subsidy should not be less than zero" do
     @company.subsidy = -1
     @company.valid?
-    assert @company.errors[:subsidy].include?("value must be between 0 to 100"), "Subidy value is less than zero"
+    assert @company.errors[:subsidy].include?("value must be between 0 to 100"), "Subsidy value is less than zero"
   end
 
   test "subsidy should not be greater than hundred" do

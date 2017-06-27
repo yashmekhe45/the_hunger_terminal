@@ -14,6 +14,7 @@ class Order < ApplicationRecord
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
 
   # after_initialize :set_date
+  
   before_validation :set_discount
 
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
@@ -132,7 +133,6 @@ class Order < ApplicationRecord
         total_cost = 0.0
       end
       self.discount = [subsidy, (subsidy*total_cost)/100].min
-      self.status = 'pending'
     end 
 end
  

@@ -99,13 +99,16 @@ class User < ApplicationRecord
       # Mobile number is taking float values from Excel file
       row["mobile_number"] = row["mobile_number"].to_i
       employee_record.attributes = row.to_h
-      employee_record.update_attributes("role" => "employee", "is_active" => true, "password" => Devise.friendly_token.first(8), "company_id" => company_id)
+      employee_record.role = "employee"
+      employee_record.is_active = true
+      employee_record.password = Devise.friendly_token.first(8)
+      employee_record.company_id = company_id
       if employee_record.valid?
-        if employee_record.new_record?
+        if !employee_record.persisted?
           employee_record.save!
           return 1 # saved to database
         else
-         return 0 # already exists
+          return 0 # already exists
         end
       else
         return -1 # invalid record

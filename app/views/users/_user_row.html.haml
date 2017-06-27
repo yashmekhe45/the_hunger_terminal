@@ -10,13 +10,13 @@
 
   %td{:width => "200px"}
     .text-center
-      -if is_inactive_user?(user) 
+      -if !user.is_active
         = "INACTIVE"
       -else 
         = "ACTIVE"
         
   %td
-    =link_to user_path(user,'user[is_active]' => is_inactive_user?(user),'page'  => params[:page], "company_id" => user.company.id), method: :patch ,data: { confirm: 'Are you sure?' } do
+    =link_to user_path(user,'user[is_active]' => !user.is_active,'page'  => params[:page], "company_id" => user.company.id), method: :patch ,data: { confirm: 'Are you sure?' } do
       -if user.is_active
         .text-center
           %button.btn.btn-success{:type => "button"}

@@ -24,28 +24,8 @@ class User < ApplicationRecord
     super && is_active  
   end
 
-  def remove_space
-    unless(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
-      self.name = name.squish
-      self.mobile_number = mobile_number.squish
-      self.email = email.squish
-      self.role = role.squish 
-    end
-  end
-
   def is_employee?
     self.role == "employee"
-  end
-
-
-  # This function restricts is_active field to have only boolean values
-  def not_a_string
-    if [true,false,'t', 'f', 'true','false',1,0].include?(self.is_active_before_type_cast) 
-      return true
-    else
-      self.errors[:is_active] << 'This must be true or false.' 
-      return false
-    end
   end
 
   def self.employee_report(c_id)
@@ -122,6 +102,28 @@ class User < ApplicationRecord
     when '.xls' then Roo::Excel.new(file.path)
     when '.xlsx' then Roo::Excelx.new(file.path)
     else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
+
+  private
+
+  def remove_space
+    unless(self.name == nil || self.mobile_number == nil|| self.email == nil||self.role == nil)
+      self.name = name.squish
+      self.mobile_number = mobile_number.squish
+      self.email = email.squish
+      self.role = role.squish 
+    end
+  end
+
+  # This function restricts is_active field to have only boolean values
+  def not_a_string
+    if [true,false,'t', 'f', 'true','false',1,0].include?(self.is_active_before_type_cast) 
+      return true
+    else
+      self.errors[:is_active] << 'This must be true or false.' 
+      return false
     end
   end
 

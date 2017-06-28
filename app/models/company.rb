@@ -10,6 +10,7 @@ class Company < ApplicationRecord
   validates_format_of :email,:with => Devise.email_regexp
   validates :subsidy, numericality: true
   validates :subsidy, inclusion: { in: 0..100, message: "value must be between 0 to 100" }
+  validate :must_have_atleast_one_company_admin, on: :update
 
   has_one :address,  as: :location, dependent: :destroy
   has_many :employees , class_name: "User", dependent: :destroy
@@ -20,7 +21,6 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
-  before_save :must_have_atleast_one_company_admin
 
 
   def send_reminders
@@ -33,10 +33,6 @@ class Company < ApplicationRecord
       end
     end
   end
-
-
- 
-
 
   private 
 

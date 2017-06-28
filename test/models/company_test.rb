@@ -104,9 +104,13 @@ class CompanyTest < ActiveSupport::TestCase
     @company.valid?
     assert @company.errors[:subsidy].include?("can't be blank"), "Subsidy should be present" 
   end
+
+  #This callback is called while updating the company
   test "company admin should be present" do
     @company = create(:company)
     @company.employees.first.update_attribute(:role, "employee")
+    @company.subsidy = 10
+    @company.valid?
     assert @company.errors[:employees].include?("company admin must be present")
   end 
 

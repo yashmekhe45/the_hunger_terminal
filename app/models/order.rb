@@ -7,6 +7,7 @@ class Order < ApplicationRecord
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?, on: :create
   validate :valid_day?, on: :create
+  validate :set_discount, on: :create
 
   belongs_to :user
   belongs_to :company
@@ -15,8 +16,6 @@ class Order < ApplicationRecord
 
   # after_initialize :set_date
   
-  before_validation :set_discount
-
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
   def self.daily_orders(terminal_id, company_id)

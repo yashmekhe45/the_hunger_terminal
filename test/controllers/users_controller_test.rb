@@ -84,7 +84,6 @@ class UsersControllerTest  < ActionController::TestCase
     end
   end
 
-
   test "invalid bulk records should not be added" do
     sign_in_admin
     file_name = File.new(Rails.root.join("test/fixtures/files/invalid_employees.csv"))

@@ -25,6 +25,12 @@ class ReportsControllerTest  < ActionController::TestCase
     assert_response :success
   end
 
+  test "employees' last month report pdf should be generated" do
+    sign_in_admin
+    get :monthly_all_employees, format: 'pdf'
+    assert_response :success
+  end
+
 
   test "employees' current month running balance should be generated" do
     sign_in_admin

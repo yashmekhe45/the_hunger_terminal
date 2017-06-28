@@ -8,50 +8,53 @@ class TerminalTest < ActiveSupport::TestCase
   test "should not save terminal without landline" do
     @terminal.landline =  nil
     @terminal.valid?
-    assert_not_empty @terminal.errors[:landline]
+    assert @terminal.errors[:landline].include?("can't be blank")
   end
 
   test "should not save terminal without name" do
     @terminal.name = nil
     @terminal.valid?
-    assert_not_empty @terminal.errors[:name]
+    assert @terminal.errors[:name].include?("can't be blank")
   end
 
-  test "should not duplicate landline" do
+
+  test "terminal landline must be unique in a company" do
     @terminal.save
-    duplicate_rec = @terminal.dup
-    refute duplicate_rec.valid?
-    assert_not_empty duplicate_rec.errors[:landline]
+    @company = @terminal.company
+    @duplicate_terminal = build(:terminal, company: @company, landline: @terminal.landline)
+    @duplicate_terminal.valid?
+    assert @duplicate_terminal.errors[:landline].include?("terminal landline should be unique in a company") 
   end
 
   test "landline no should have length 11" do
     @terminal = Terminal.create(:name=>"kfc",:landline=>"0121023")
     refute @terminal.valid?
-    assert_not_empty @terminal.errors[:landline]
+    assert @terminal.errors[:landline].include?("is the wrong length (should be 11 characters)")
   end
 
-  test "active should accept only boolean" do
-    @terminal.active = "not true"
-    refute @terminal.valid?
-    assert_not_empty @terminal.errors[:active]
+  test "is_active must have a boolean value" do
+    @terminal.active = "dummy"
+    @terminal.valid?
+    assert @terminal.errors[:active].include?("This must be true or false.")
   end
 
-  test "payment made should be positive or zero" do
+  test "payment_made should not be negative" do
     @terminal.payment_made = -100
     refute @terminal.valid?
-    assert_not_empty @terminal.errors[:payment_made]
+    assert @terminal.errors[:payment_made].include?("must be greater than or equal to 0")
   end
 
-  test "current_amount should be positive or zero" do
+
+  test "current_amount should not be negative" do
     @terminal.current_amount = -100
     refute @terminal.valid?
-    assert_not_empty @terminal.errors[:current_amount]
+    assert @terminal.errors[:current_amount].include?("must be greater than or equal to 0")
   end
 
   test "min_order_amount should not negative" do
     @terminal.min_order_amount = -100
     refute @terminal.valid?
-    assert_not_empty @terminal.errors[:min_order_amount]
+     assert @terminal.errors[:min_order_amount].include?("must be greater than or equal to 0")
   end
 
   test "squish spaces on terminal name" do

@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
 
 	def employees_current_month
     @users = User.employee_report(current_user.company_id)
-	end
+  end
 
 
   def monthly_all_employees

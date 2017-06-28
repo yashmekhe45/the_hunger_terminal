@@ -64,7 +64,6 @@ class Order < ApplicationRecord
   end
 
   def self.confirm_all_placed_orders(terminal_id, company_id, order_details)
-    # byebug
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "confirmed")
@@ -82,9 +81,7 @@ class Order < ApplicationRecord
   
   private
 
-    # needs to be evaluated
     def valid_date?
-      # errors.add(:date, "can't be in the past") if !date.blank? and date < Time.zone.today
       if !date.blank?
         if date < Time.zone.today
           errors.add(:date, "can't be in the past")

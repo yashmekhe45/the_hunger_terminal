@@ -13,24 +13,6 @@ class OrderTest < ActiveSupport::TestCase
     assert order_obj.errors[:date].include?("can't be blank")
   end
 
-  test "total_cost must be present" do
-    order_obj = build(:order, :total_cost => nil)
-    order_obj.valid?
-    assert order_obj.errors[:total_cost].include?("can't be blank")
-  end
-
-  test "total_cost must be numeric" do
-    order_obj = build(:order, :total_cost => "abc")
-    order_obj.valid?
-    assert order_obj.errors[:total_cost].include?("is not a number")
-  end
-
-  test "total_cost must be greater than zero" do
-    order_obj = build(:order, :total_cost => 0)
-    order_obj.valid?
-    assert order_obj.errors[:total_cost].include?("must be greater than 0")
-  end
-
   test "date should not be a passed date" do
     order_obj = build(:order, :date => Date.yesterday)
     order_obj.valid?
@@ -54,21 +36,6 @@ class OrderTest < ActiveSupport::TestCase
     end
   end
 
-  test "user should be present for an order" do
-    order_obj = build(:order, user: nil)
-    order_obj.valid?
-    assert_not_empty order_obj.errors[:user]
-    assert order_obj.errors[:user].include?("can't be blank")
-  end
-
-  test "order should have atleast one menu item" do
-    order_obj = build(:order)
-    order_obj.order_details=[]
-    order_obj.valid?
-    assert order_obj.errors[:base].include?("order shold have minimum one menu item")
-  end
-
-
   test "order should not be created on sunday" do
     d = Date.today.end_of_week
     some_time = Time.new(d.year,d.month,d.day,10,0,0)
@@ -87,6 +54,39 @@ class OrderTest < ActiveSupport::TestCase
       order_obj.valid?
       assert order_obj.errors[:base].include?("order cannot be created on saturday or sunday")
     end
+  end
+
+  test "total_cost must be present" do
+    order_obj = build(:order, :total_cost => nil)
+    order_obj.valid?
+    assert order_obj.errors[:total_cost].include?("can't be blank")
+  end
+
+  test "total_cost must be numeric" do
+    order_obj = build(:order, :total_cost => "abc")
+    order_obj.valid?
+    assert order_obj.errors[:total_cost].include?("is not a number")
+  end
+
+  test "total_cost must be greater than zero" do
+    order_obj = build(:order, :total_cost => 0)
+    order_obj.valid?
+    assert order_obj.errors[:total_cost].include?("must be greater than 0")
+  end
+
+  
+  test "user should be present for an order" do
+    order_obj = build(:order, user: nil)
+    order_obj.valid?
+    assert_not_empty order_obj.errors[:user]
+    assert order_obj.errors[:user].include?("can't be blank")
+  end
+
+  test "order should have atleast one menu item" do
+    order_obj = build(:order)
+    order_obj.order_details=[]
+    order_obj.valid?
+    assert order_obj.errors[:base].include?("order shold have minimum one menu item")
   end
 
   test "one user can place only one order per day" do

@@ -5,7 +5,6 @@ class UserTest < ActiveSupport::TestCase
 
   before :each do
     DatabaseCleaner.start
-    # DatabaseCleaner.clean
     @user = build(:user)
   end
 
@@ -21,13 +20,22 @@ class UserTest < ActiveSupport::TestCase
     @user.mobile_number = nil
     @user.valid?
     assert @user.errors[:mobile_number].include?("can't be blank")
-
   end
 
-  test "role must be present" do
-    @user.role = nil
+  test "mobile number should have 10 characters " do
+    @user.mobile_number = "123"
     @user.valid?
-    assert @user.errors[:role].include?("can't be blank")
+    assert @user.errors[:mobile_number].include?("is the wrong length (should be 10 characters)")
+  end 
+
+  test "user mobile number must be unique in a company" do
+    @company = create(:company)
+    @employee = @company.employees.first
+    @duplicate_employee = build(:user)
+    @duplicate_employee.company_id = @company.id
+    @duplicate_employee.mobile_number = @employee.mobile_number
+    @duplicate_employee.valid?
+    assert @duplicate_employee.errors[:mobile_number].include?("user mobile number should be unique in a company") 
   end
 
   test "should have valid indian mobile number" do
@@ -36,11 +44,11 @@ class UserTest < ActiveSupport::TestCase
     assert @user.errors[:mobile_number].include?("Enter valid mobile no.")
   end
 
-  test "mobile number should have 10 characters " do
-    @user.mobile_number = "123"
+  test "role must be present" do
+    @user.role = nil
     @user.valid?
-    assert @user.errors[:mobile_number].include?("is the wrong length (should be 10 characters)")
-  end 
+    assert @user.errors[:role].include?("can't be blank")
+  end
 
   test "role must have value from given array" do
     @user.role = "dummy"
@@ -54,7 +62,6 @@ class UserTest < ActiveSupport::TestCase
     assert @user.errors[:is_active].include?("This must be true or false.")
   end
 
-
   test "user email should be unique in a company" do
     @company = create(:company)
     @employee = @company.employees.first
@@ -63,16 +70,6 @@ class UserTest < ActiveSupport::TestCase
     @duplicate_employee.email = @employee.email
     @duplicate_employee.valid?
     assert @duplicate_employee.errors[:email].include?("user email should be unique in a company")
-  end
-
-  test "user mobile number must be unique in a company" do
-    @company = create(:company)
-    @employee = @company.employees.first
-    @duplicate_employee = build(:user)
-    @duplicate_employee.company_id = @company.id
-    @duplicate_employee.mobile_number = @employee.mobile_number
-    @duplicate_employee.valid?
-    assert @duplicate_employee.errors[:mobile_number].include?("user mobile number should be unique in a company") 
   end
 
   test "company must be present for an employee" do
@@ -134,8 +131,7 @@ class UserTest < ActiveSupport::TestCase
     csv_file.content_type = "application/csv"
     csv_import = User.import(csv_file, company.id)
     now_user_count = User.count
-    assert_equal now_user_count - prev_user_count, 1
-    
+    assert_equal now_user_count - prev_user_count, 1   
   end
 
   test "uploaded file should have csv/xls/xlsx type" do

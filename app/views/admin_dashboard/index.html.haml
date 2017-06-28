@@ -22,6 +22,10 @@
             %td.text-center ₹ #{terminal.total}
             %td.text-center= link_to "Forward Orders", (placed or confirmed) ? '#' :admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: "btn btn-info", id: "forwardButton"
             %td.text-center= link_to "Confirm Orders", confirmed ? '#' :admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => terminal.total), :disabled => confirmed, class: "btn btn-info" 
+-else
+  .container
+    .alert.alert-danger
+      No record is found!!
 #myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog", :tabeindex =>"-1" }
 #myForwardOrdersModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
 

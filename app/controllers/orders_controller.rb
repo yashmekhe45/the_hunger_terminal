@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
-  add_breadcrumb "Today's Order", :terminal_order_path, only: [:show, :edit, :update]
+  add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
 
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
@@ -25,16 +25,15 @@ class OrdersController < ApplicationController
   def new 
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
-    @order = @terminal.orders.new
+    @order = Order.new(company_id: current_user.company.id)
     @terminal_id = params[:terminal_id]
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                                                                                                                           
-    @terminal = Terminal.find(params[:terminal_id])
-    @order = @terminal.orders.new(order_params)
+  def create                                                                                                                          
+    @order = Order.new(order_params)
     load_order_detail
     if @order.save
       flash[:notice] = "your order has been placed successfully. You will receive an email confirmation shortly."
@@ -55,7 +54,7 @@ class OrdersController < ApplicationController
 
 
   def edit
-    @subsidy = current_user.company.subsidy
+    @subsidy = @order.discount
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)

@@ -5,8 +5,8 @@
 %br
 %br
 
--if !@users.empty?
-  .container
+.container
+  -if !@users.empty?
     %table.table.table-fixed#employees_table
       %tbody
         %tr
@@ -25,6 +25,9 @@
         %tr
           - @users.each do |user|
             = render 'user_row', user: user
+  -else
+    .alert.alert-danger
+      No record is found!!
 
 .text-center
   = paginate @users

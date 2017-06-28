@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
 
 
   def edit
-    @subsidy = current_user.company.subsidy
+    @subsidy = @order.discount
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)

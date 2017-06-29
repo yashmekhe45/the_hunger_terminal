@@ -115,6 +115,8 @@ class CompanyTest < ActiveSupport::TestCase
     assert @company.errors[:employees].include?("company admin must be present")
   end 
 
+
+  #This works when we send  mails inline
   test "reminder mail should be sent on working days" do
     company = create(:company, name: "Josh Software")
     users = create(:user_with_orders, company: company)

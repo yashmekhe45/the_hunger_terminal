@@ -149,4 +149,11 @@ class UserTest < ActiveSupport::TestCase
     assert_raises { User.open_spreadsheet(csv_file) } 
   end
 
+
+  test "user should belong to a company" do
+  end
+
+  test "user has many orders" do
+  end
+
 end

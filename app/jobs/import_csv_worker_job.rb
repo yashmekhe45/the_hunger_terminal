@@ -10,7 +10,7 @@ class ImportCsvWorkerJob < ApplicationJob
       next if row.to_a == ["name","price","veg","description","active_days"]
       row["active_days"] = row["active_days"].split(',').map{|day| day.strip}
       @menu_item = @terminal.menu_items.build(row.to_h)
-      @menu_item.save
+      @menu_item.save 
       # if !@menu_item.save 
       #   CSV.open(invalid_records_csv="/home/project/Desktop/#{@terminal.name}-invalid_records-#{Date.today}.csv", "a+") do |csv|
       #     row << @menu_item.errors.messages.to_a

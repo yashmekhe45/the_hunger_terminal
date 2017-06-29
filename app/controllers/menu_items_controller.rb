@@ -31,8 +31,13 @@ class MenuItemsController < ApplicationController
   end
 
   def create
-    @menu_item = @terminal.menu_items.create(menu_item_params)
-    flash[:success] = 'New Menu Item Added'
+    params.dig('menu_item', 'active_days').reject!(&:blank?) if params.dig('menu_item', 'active_days').presence
+    @menu_item = @terminal.menu_items.build(menu_item_params)
+    if @menu_item.save
+      flash[:success] = 'New Menu Item Added'
+    else
+      flash[:error] = @menu_item.errors[:active_days].join(', ')
+    end
   end
 
   def edit

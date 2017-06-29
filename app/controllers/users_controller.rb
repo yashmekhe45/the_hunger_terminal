@@ -81,7 +81,6 @@ class UsersController < ApplicationController
      lower(email) like ?", "%#{search_value}%","%#{search_value}%").all.
      order('created_at').page(params[:page]).per(5)
     if @users.empty?
-      flash.now[:error] = "No record found"
       render "index"
       # redirect_to company_users_path(params[:company_id])
     else

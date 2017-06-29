@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
 
   belongs_to :company
-  has_many :orders, dependent: :destroy
+  has_many :orders
 
   before_validation :not_a_string , :remove_space
 

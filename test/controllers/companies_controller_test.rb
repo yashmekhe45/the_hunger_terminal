@@ -27,6 +27,7 @@ class CompaniesControllerTest  < ActionController::TestCase
         } 
       }
     assert_response :redirect
+    assert_redirected_to new_user_session_path
    end
 
   test "should not create a company" do
@@ -48,12 +49,21 @@ class CompaniesControllerTest  < ActionController::TestCase
     assert_response :success
   end
 
+  #For now, we are updating the values from get_order_details form
   test "company should be updated by admin only" do
     sign_in_admin
     other_user = create(:user, company: create(:company))
     other_user.company = @company
-    patch :update, params: {id: @company, company:{ name: @company.name} }, company: {name: Faker::Company.name}
+    patch :update, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: 50, start_ordering_at: Time.parse("12 AM"), end_ordering_at: Time.parse("12:30 PM")}
     assert_redirected_to root_url
+  end
+
+  test "Ordering Information should not be updated for invalid values" do
+    sign_in_admin
+    get :get_order_details, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: -5, start_ordering_at: Time.parse("12 AM"), end_ordering_at: Time.parse("12:30 PM")}
+
+    assert_response :success
+
   end
 
   test "company should not be updated by an employee" do
@@ -65,7 +75,7 @@ class CompaniesControllerTest  < ActionController::TestCase
   end
 
   def sign_in_admin
-    admin = @company.employees.first # Always first employee will be company admin
+    admin = @company.employees.find_by(role: "company_admin")
     admin.confirm
     sign_in admin
   end

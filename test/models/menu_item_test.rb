@@ -14,9 +14,9 @@ class MenuItemTest < ActiveSupport::TestCase
   test "name should be unique under case insensetive scope" do
     @menu_item.name = "vada"
     @menu_item.save!
-    @menu_item_2 = build(:menu_item, name:"VADA", terminal: @menu_item.terminal)
-    refute @menu_item_2.valid?  
-    assert @menu_item_2.errors[:name].include?("has already been taken")
+    menu_item_2 = build(:menu_item, name:"VADA", terminal: @menu_item.terminal)
+    refute menu_item_2.valid?  
+    assert menu_item_2.errors[:name].include?("has already been taken")
   end
 
  

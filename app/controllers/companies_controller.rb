@@ -21,6 +21,7 @@ class CompaniesController < ApplicationController
     end
   end
 
+  #For now, we are updating the attributes in get_order_details form
   def update
     authorize! :update, @company
     @company = Company.find(params[:id])
@@ -28,7 +29,6 @@ class CompaniesController < ApplicationController
       flash[:success] = "updated successfully!!"
       redirect_to root_path
    else
-      flash[:error] = @company.errors.messages
       render :get_order_details
    end
   end

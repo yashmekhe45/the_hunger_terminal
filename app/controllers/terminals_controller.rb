@@ -23,7 +23,8 @@ class TerminalsController < ApplicationController
     if @terminal.save
       flash[:success] = "terminal created successfully" 
       unless params[:terminal][:CSV_menu_file].nil?
-        valid_csv
+        result = MenuItemsUploadService.new(file: params[:terminal][:CSV_menu_file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
+        flash[:notice] = result[:value]
       end
       @terminal.payable = @terminal.current_amount - @terminal.payment_made
       @terminal.save
@@ -68,27 +69,6 @@ class TerminalsController < ApplicationController
     end
   end
  
-  def valid_csv    
-    if params[:terminal][:CSV_menu_file].content_type == "text/csv"
-      csv_file = File.open(params[:terminal][:CSV_menu_file].path)
-      menu_items = CSV.parse( csv_file, headers: true )
-      if menu_items.headers == ["name","price","veg","description","active_days"]
-        ImportCsvWorkerJob.perform_now(@current_company.id, @terminal.id, menu_items) 
-        # if !$INVALID_MENU_CSV.nil?
-        #   redirect_to import_company_terminal_path(@current_company,@terminal)
-        # end
-      else
-        flash[:error] = "Invalid headers with name,price,veg,active_days,description" and return    
-      end  
-    else
-      flash[:error] = "Invalid type of file" and return
-    end 
-  end
-
-  def download
-    send_file("#{$INVALID_MENU_CSV}")
-  end
-
   private
 
   def terminal_params

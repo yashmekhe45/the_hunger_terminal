@@ -68,7 +68,6 @@ class AdminDashboardController < ApplicationController
 
   def input_terminal_extra_charges
     @todays_terminals = Terminal.all_terminals_todays_orders_report(current_user.company_id)
-    # byebug
   end
 
   def save_terminal_extra_charges

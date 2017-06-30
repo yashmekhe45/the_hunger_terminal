@@ -11,7 +11,6 @@ class MenuItemsController < ApplicationController
   load_and_authorize_resource
 
   add_breadcrumb "Home", :root_path
-  # add_breadcrumb "Terminals", :company_terminals_path, only: [:index]
 
   
   def index
@@ -31,6 +30,7 @@ class MenuItemsController < ApplicationController
   end
 
   def create
+    #Following line is to avoid empty string ([""] ) input
     params.dig('menu_item', 'active_days').reject!(&:blank?) if params.dig('menu_item', 'active_days').presence
     @menu_item = @terminal.menu_items.build(menu_item_params)
     if @menu_item.save
@@ -55,26 +55,10 @@ class MenuItemsController < ApplicationController
 
   def import
     unless params[:file].nil?
-      valid_csv
+      result = MenuItemsUploadService.new(file: params[:file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
+      flash[:notice] = result[:value] 
     end
     redirect_to terminal_menu_items_path(@terminal)
-  end
-  
-  def valid_csv    
-    if params[:file].content_type == "text/csv"
-      csv_file = File.open(params[:file].path)
-      menu_items = CSV.parse( csv_file, headers: true )
-      if menu_items.headers == ["name","price","veg","description","active_days"]
-        ImportCsvWorkerJob.perform_now(@current_company.id, @terminal.id, menu_items) 
-        # if !$INVALID_MENU_CSV.nil?
-        #   redirect_to import_company_terminal_path(@current_company,@terminal)
-        # end
-      else
-        flash[:error] = "Invalid headers with name,price,veg,active_days,description" and return    
-      end  
-    else
-      flash[:error] = "Invalid type of file" and return
-    end 
   end
 
   def download_csv

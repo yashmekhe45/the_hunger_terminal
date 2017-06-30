@@ -51,7 +51,7 @@ class UsersControllerTest  < ActionController::TestCase
     assert_redirected_to company_users_path(@company, page: "1")
   end
 
-  test "should not update user status with no parameter" do
+  test "should not update user status when no parameter is present" do
     sign_in_admin
     create_other_user
     assert_raises ActionController::ParameterMissing do

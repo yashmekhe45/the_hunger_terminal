@@ -59,20 +59,15 @@ class UsersController < ApplicationController
   end
 
   def add_multiple_employee_records
-    if !params[:file]
-      flash[:error] = "Please select a file."
-      # redirect_to company_users_path(params[:company_id])
-      redirect_to import_company_users_path(params[:company_id])
-    else
-      result = User.import(params[:file], params[:company_id])
-      if result == 1
-        redirect_to company_users_path(params[:company_id]), notice: "User records imported"
-      elsif result == 0
-        redirect_to company_users_path(params[:company_id]), notice: "Record Already exists!"
-      elsif result == -1
-        redirect_to company_users_path(params[:company_id]), notice: "Invalid record!"
-      end
-    end 
+    
+    result = User.import(params[:file], params[:company_id])
+    if result == 1
+      redirect_to company_users_path(params[:company_id]), notice: "User records imported"
+    elsif result == 0
+      redirect_to company_users_path(params[:company_id]), notice: "Record Already exists!"
+    elsif result == -1
+      redirect_to company_users_path(params[:company_id]), notice: "Invalid record!"
+    end
   end
 
   def search
@@ -88,15 +83,7 @@ class UsersController < ApplicationController
     end  
   end
 
-  def download_invalid_csv
-  end
-
-  def download_invalid_xls
-  end
-
-  def download_invalid_xlsx
-  end
-
+  
   def download_sample_file
     file_type = params[:file_type]
 

@@ -67,16 +67,12 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # @order = Order.find(params[:id])
-    # @order.order_details = OrderDetail.where(params[:order_id])
-    # @order.order_details.clear
     if @order.update_attributes(order_params) 
       flash[:notice] = "Your order has been updated successfully"
       redirect_to order_path(@order)
     else
       flash[:error] = @order.errors.full_messages.join(",")
       redirect_to order_path(@order)
-      byebug
     end
   end
 

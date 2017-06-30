@@ -28,6 +28,8 @@ class CompaniesController < ApplicationController
    if @company.update_attributes(company_params)
       flash[:success] = "updated successfully!!"
       redirect_to root_path
+   else
+      render :get_order_details
    end
   end
 

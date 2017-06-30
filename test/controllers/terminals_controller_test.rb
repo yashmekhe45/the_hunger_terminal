@@ -25,12 +25,25 @@ class TerminalsControllerTest < ActionController::TestCase
   end
 
 
-  test "should create terminal" do
+  test "should create terminal without uploading menu items" do
     sign_in_admin
 
     assert_difference 'Terminal.count' do
       post :create, params: 
       {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: 0}, company_id: @company.id}
+    end
+  end
+
+
+  test "should create terminal with uploading menu items" do
+    sign_in_admin
+
+    file_name = File.new(Rails.root.join("test/fixtures/files/menu.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+
+    assert_difference 'Terminal.count' do
+      post :create, params: 
+      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: 0, CSV_menu_file: csv_file}, company_id: @company.id}
     end
   end
 

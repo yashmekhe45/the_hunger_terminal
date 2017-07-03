@@ -30,8 +30,6 @@ class MenuItemsController < ApplicationController
   end
 
   def create
-    #Following line is to avoid empty string ([""] ) input
-    params.dig('menu_item', 'active_days').reject!(&:blank?) if params.dig('menu_item', 'active_days').presence
     @menu_item = @terminal.menu_items.build(menu_item_params)
     if @menu_item.save
       flash[:success] = 'New Menu Item Added'

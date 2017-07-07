@@ -4,7 +4,6 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
-  
   # devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
@@ -18,8 +17,9 @@ class User < ApplicationRecord
   belongs_to :company
   has_many :orders
 
-  before_validation :not_a_string , :remove_space
 
+  before_validation :not_a_string , :remove_space
+  
   def active_for_authentication?  
     super && is_active  
   end

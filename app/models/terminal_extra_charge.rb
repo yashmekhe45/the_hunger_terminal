@@ -1,5 +1,6 @@
 class TerminalExtraCharge < ApplicationRecord
 
+  has_secure_token :password_reset_token
   validates :daily_extra_charge, numericality: true
 
   belongs_to :terminal

@@ -68,6 +68,14 @@ class TerminalsController < ApplicationController
       render :edit and return
     end
   end
+
+  def download_invalid_csv 
+
+    terminal = Terminal.find(params[:terminal_id])
+    send_file("#{Rails.root}/public/#{terminal.name}-invalid_records-#{DateTime.now.strftime('%a, %d %b %Y %H:%M:%S')}.csv",
+    type: "application/csv"
+    ) 
+  end
  
   private
 

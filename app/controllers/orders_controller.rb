@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
-  load_and_authorize_resource  param_method: :order_params
+  skip_before_action :authenticate_user!, only: :one_click_order
+  load_and_authorize_resource  param_method: :order_params, except: :one_click_order
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
@@ -13,9 +14,6 @@ class OrdersController < ApplicationController
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
     @orders = current_user.orders.includes(:order_details).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
-    if @orders.empty?
-      flash[:error] = "No order is present for this period!"
-    end
   end
 
   def load_terminal
@@ -32,7 +30,7 @@ class OrdersController < ApplicationController
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                                                                                                                          
+  def create           
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
@@ -83,6 +81,24 @@ class OrdersController < ApplicationController
     flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
   end  
+
+
+  def one_click_order
+    one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id])
+    user_id = one_click_order_obj.user_id
+    old_order = Order.find(params[:order_id])
+    @new_order = Order.new old_order.attributes
+    @new_order.id = nil
+    @new_order.date = Time.zone.today
+    old_order.order_details.each do |order_detail|
+      @new_order_detail = OrderDetail.new(order_detail.attributes)
+      @new_order_detail.id = nil
+      @new_order.order_details << @new_order_detail
+    end
+    @new_order.save if @new_order.valid?
+
+  end
+
 
   private
 

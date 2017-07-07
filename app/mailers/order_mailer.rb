@@ -16,8 +16,18 @@ class OrderMailer < ApplicationMailer
 
   def send_place_order_reminder(employee, end_time)
     @end_time = end_time
+    #employee is an array
     email = employee[0]
     @name = employee[1]
+    employee_id = employee[2]
+
+    @one_click_orders = Array.new
+    #For now, we are sending last three orders for one click ordering
+    @orders =  Order.includes(:order_details).where(user_id: employee_id).last(3)
+    @orders.each do |order|
+      @one_click_orders << OneClickOrder.create(user_id: employee_id, order_id: order.id)
+    end
+
     mail(to:email, subject: 'place order soon')
   end
 

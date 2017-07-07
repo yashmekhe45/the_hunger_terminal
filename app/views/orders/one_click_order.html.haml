@@ -1,0 +1,12 @@
+.container
+  -if @new_order.valid?
+    .alert.alert-success
+      Your order has been placed!!
+  -else
+    -if @new_order.errors.full_messages.include?("User has already been taken")
+      .alert.alert-danger
+        "Only one order is allowed per day"
+    -else
+      .alert.alert-danger
+        @new_order.errors.full_messages.join(",")
+

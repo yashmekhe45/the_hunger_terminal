@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
 
     resources :terminals, except: [:destroy, :show] do
+      get 'download_invalid_csv'
       resources :orders, except: :index
       resources :menu_items, except: [:destroy, :show] do
         collection do
@@ -69,9 +70,10 @@ Rails.application.routes.draw do
     end
   end
 
-  # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
+  
  
   get "menu_items/download_csv"
+  
   get '/users/download_sample_file/:file_type' => 'users#download_sample_file', as: :download_sample_file
 
   get 'admin_dashboard/index'

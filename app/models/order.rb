@@ -13,7 +13,7 @@ class Order < ApplicationRecord
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
-  has_many :one_click_orders
+  has_many :one_click_orders, dependent: :destroy
   
 
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }

@@ -3,8 +3,28 @@
   This is just for the reminder that you can place order only upto 
   %b #{@end_time}
 %p So, place your order as soon as possible and enjoy your lunch!!!
-%p You can sign in to your accout through the link below to quickly place your order:
-%p= link_to 'Place Order',  new_user_session_url
+
+/ One click ordering logic
+%table.table-bordered.orders_in_reminder_mail_table
+  %tr
+    %th Serial No.
+    %th Menu Items
+  - @orders.each_with_index do |order, serial_no|
+    %tr
+      %td= serial_no + 1
+      %td
+        - order.order_details.each_with_index do |order_item,index|
+          - indexplusone = index+1
+          %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
+          %br
+      -user_token = OneClickOrder.where(order_id: order.id).pluck(:token)
+      %td= link_to "Place Order", one_click_order_url(user_token, order.id)
+
+
+/Place order by signing in
+%p You can sign in to your accout through the link below to place your order:
+%p= link_to 'Sign In',  new_user_session_url
+
 %p Have a great day!!!
 %p Regards,
 %p The Hunger Terminal Team

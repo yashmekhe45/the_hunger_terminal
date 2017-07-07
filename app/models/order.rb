@@ -13,7 +13,9 @@ class Order < ApplicationRecord
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
+  has_many :one_click_orders
   
+
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
   def self.daily_orders(terminal_id, company_id)

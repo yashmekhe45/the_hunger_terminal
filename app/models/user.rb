@@ -15,6 +15,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
 
   belongs_to :company
+  has_many :one_click_orders
   has_many :orders
 
 

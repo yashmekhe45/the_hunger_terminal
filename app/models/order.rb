@@ -7,12 +7,13 @@ class Order < ApplicationRecord
   validates :user_id, uniqueness: { scope: :date }
   validate :valid_date?, on: :create
   validate :valid_day?, on: :create
-  validate :set_discount, on: :create
 
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
+
+  before_validation :set_discount
   
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 

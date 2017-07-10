@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+  
   # devise :timeoutable, :timeout_in => 3.days
 
   validates_with MobileNoValidator
@@ -15,12 +16,10 @@ class User < ApplicationRecord
   validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
 
   belongs_to :company
-  has_many :one_click_orders
   has_many :orders
 
-
   before_validation :not_a_string , :remove_space
-  
+
   def active_for_authentication?  
     super && is_active  
   end

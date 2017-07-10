@@ -61,6 +61,7 @@ class UserTest < ActiveSupport::TestCase
     @user.valid?
     assert @user.errors[:is_active].include?("This must be true or false.")
   end
+
   test "user email should be unique in a company" do
     @company = create(:company)
     @employee = @company.employees.first

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170707050533) do
+ActiveRecord::Schema.define(version: 20170627111353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,17 +51,6 @@ ActiveRecord::Schema.define(version: 20170707050533) do
     t.string   "active_days", default: [],                array: true
     t.text     "description"
     t.index ["terminal_id"], name: "index_menu_items_on_terminal_id", using: :btree
-  end
-
-  create_table "one_click_orders", force: :cascade do |t|
-    t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.integer  "order_id"
-    t.index ["order_id"], name: "index_one_click_orders_on_order_id", using: :btree
-    t.index ["token"], name: "index_one_click_orders_on_token", unique: true, using: :btree
-    t.index ["user_id"], name: "index_one_click_orders_on_user_id", using: :btree
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -161,8 +150,6 @@ ActiveRecord::Schema.define(version: 20170707050533) do
   end
 
   add_foreign_key "menu_items", "terminals"
-  add_foreign_key "one_click_orders", "orders"
-  add_foreign_key "one_click_orders", "users"
   add_foreign_key "order_details", "menu_items"
   add_foreign_key "order_details", "orders"
   add_foreign_key "orders", "companies"

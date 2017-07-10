@@ -87,8 +87,6 @@ Rails.application.routes.draw do
   get 'admin_dashboard/input_terminal_extra_charges'
   post 'admin_dashboard/save_terminal_extra_charges'
 
-  get '/OneClickOrder/:token/:order_id' => 'orders#one_click_order', as: :one_click_order
-
   
 
   # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'

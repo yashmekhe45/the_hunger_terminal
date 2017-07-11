@@ -36,7 +36,13 @@ class CompaniesController < ApplicationController
   def get_order_details
   end
 
-  
+  def download_invalid_csv
+    load_company
+    send_file("#{Rails.root}/public/#{@company.name}-invalid_records.csv",
+    type: "application/csv"
+    ) 
+  end
+
   private
 
   def company_params

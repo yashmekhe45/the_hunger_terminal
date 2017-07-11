@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :companies, shallow: true, only: [:new, :create, :update] do
     member do
       get 'get_order_details'
+      get 'download_invalid_csv'
     end
 
     resources :users, except: [:destroy, :edit] do
@@ -27,7 +28,6 @@ Rails.application.routes.draw do
       end    
       collection do
         get 'search'
-        get 'download_invalid_csv'
         post 'add_multiple_employee_records'
         post 'import'
       end    

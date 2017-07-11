@@ -10,34 +10,30 @@ class ImportCsvWorkerJob < ApplicationJob
     @count_menu_items = @terminal.menu_items.count
     p @count_menu_items
 
-    CSV.parse(menu_items.to_s,headers: true) do |row|
+    CSV.open("#{Rails.root}/public/#{@terminal.name}-invalid_records.csv","w") do |csv|
+      CSV.parse(menu_items.to_s,headers: true) do |row|
     
-      next if row.to_a == ["name","price","veg","description","active_days"]
-     
-      active_days = '{' + "#{row['active_days']}" + '}' 
+        next if row.to_a == ["name","price","veg","description","active_days"]
+       
+        active_days = '{' + "#{row['active_days']}" + '}' 
 
-      @menu_item = @terminal.menu_items.find_or_initialize_by(name: row['name'],price: row['price'],veg: row['veg'],description: row['description'],active_days: active_days)
+        @menu_item = @terminal.menu_items.find_or_initialize_by(name: row['name'],price: row['price'],veg: row['veg'],description: row['description'],active_days: active_days)
 
-      if !@menu_item.save 
+        if !@menu_item.save 
 
-        is_valid = false
-        CSV.open("#{Rails.root}/public/#{@terminal.name}-invalid_records-#{DateTime.now.strftime('%a, %d %b %Y %H:%M:%S')}.csv", "a+") do |csv|
-
+          is_valid = false
           @menu_item.errors.to_a.each do |error|
             row << error
           end
-
           csv << row
-        end
-
-      else
-        @menu_item.save
-      end 
-      
+        else
+          @menu_item.save
+        end 
+      end
     end
 
     if is_valid == false
-      message = "Some Records are Invalid!"
+      message = "Some Records are Invalid! Click Invalid Records CSV to download file!!!"
 
     else
       message = "Records Uploaded!"

@@ -63,10 +63,8 @@ class UsersController < ApplicationController
     result = User.import(params[:file], params[:company_id])
     if result == 1
       redirect_to company_users_path(params[:company_id]), notice: "User records imported"
-    elsif result == 0
-      redirect_to company_users_path(params[:company_id]), notice: "Record Already exists!"
-    elsif result == -1
-      redirect_to company_users_path(params[:company_id]), notice: "Invalid record!"
+    else result == 0
+      redirect_to company_users_path(params[:company_id]), notice: "Invalid record! Click Invalid Records to download file!!!"
     end
   end
 

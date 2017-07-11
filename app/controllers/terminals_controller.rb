@@ -25,13 +25,14 @@ class TerminalsController < ApplicationController
       unless params[:terminal][:CSV_menu_file].nil?
         result = MenuItemsUploadService.new(file: params[:terminal][:CSV_menu_file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
         flash[:notice] = result[:value]
+        redirect_to terminal_menu_items_path(@terminal)
       end
       @terminal.payable = @terminal.current_amount - @terminal.payment_made
       @terminal.save
       @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
-      redirect_to terminal_menu_items_path(@terminal) and return
+      
     else
       render :new and return
     end
@@ -72,7 +73,7 @@ class TerminalsController < ApplicationController
   def download_invalid_csv 
 
     terminal = Terminal.find(params[:terminal_id])
-    send_file("#{Rails.root}/public/#{terminal.name}-invalid_records-#{DateTime.now.strftime('%a, %d %b %Y %H:%M:%S')}.csv",
+    send_file("#{Rails.root}/public/#{terminal.name}-invalid_records.csv",
     type: "application/csv"
     ) 
   end

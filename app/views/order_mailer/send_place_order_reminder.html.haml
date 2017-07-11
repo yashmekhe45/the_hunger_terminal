@@ -5,20 +5,22 @@
 %p So, place your order as soon as possible and enjoy your lunch!!!
 
 / One click ordering logic
-%table.table-bordered.orders_in_reminder_mail_table
-  %tr
-    %th Serial No.
-    %th Menu Items
-  - @orders.each_with_index do |order, serial_no|
+
+-unless @orders.empty?
+  %table.table-bordered.orders_in_reminder_mail_table
     %tr
-      %td= serial_no + 1
-      %td
-        - order.order_details.each_with_index do |order_item,index|
-          - indexplusone = index+1
-          %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
-          %br
-      -user_token = OneClickOrder.where(order_id: order.id).pluck(:token)
-      %td= link_to "Place Order", one_click_order_url(user_token, order.id)
+      %th Serial No.
+      %th Menu Items
+    - @orders.each_with_index do |order, serial_no|
+      %tr
+        %td= serial_no + 1
+        %td
+          - order.order_details.each_with_index do |order_item,index|
+            - indexplusone = index+1
+            %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
+            %br
+        -user_token = OneClickOrder.where(order_id: order.id).pluck(:token)
+        %td= link_to "Place Order", one_click_order_url(user_token, order.id)
 
 
 /Place order by signing in

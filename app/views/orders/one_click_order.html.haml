@@ -1,12 +1,15 @@
 .container
-  -if @new_order.valid?
-    .alert.alert-success
-      Your order has been placed!!
-  -else
-    -if @new_order.errors.full_messages.include?("User has already been taken")
-      .alert.alert-danger
-        "Only one order is allowed per day"
+  -if defined? @new_order
+    -if @new_order.valid?
+      .alert.alert-success
+        Your order has been placed!!
     -else
-      .alert.alert-danger
-        @new_order.errors.full_messages.join(",")
-
+      -if @new_order.errors.full_messages.include?("User has already been taken")
+        .alert.alert-danger
+          Only one order is allowed per day!!
+      -else
+        .alert.alert-danger
+          #{@new_order.errors.full_messages.join(",")}
+  -else 
+    .alert.alert-danger
+      This link is inactivated!!

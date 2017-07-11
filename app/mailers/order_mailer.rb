@@ -23,7 +23,7 @@ class OrderMailer < ApplicationMailer
 
     @one_click_orders = Array.new
     #For now, we are sending last three orders for one click ordering
-    @orders =  Order.includes(:order_details).where(user_id: employee_id).last(3)
+    @orders =  Order.includes(:order_details).where(user_id: employee_id, status: "confirmed").last(3)
     @orders.each do |order|
       @one_click_orders << OneClickOrder.create(user_id: employee_id, order_id: order.id)
     end

@@ -1,5 +1,6 @@
-desc "This task sends reminder to users for placing order"
 
+
+desc "This task sends reminder to users for placing order"
 task :place_order_reminder => :environment do
   # this is hardcoded because for now multitenancy is not there and we have to run rake task only for Josh Software... It will be modified afterwards.
   if company = Company.find_by(name: "Josh Software")
@@ -11,3 +12,18 @@ task :place_order_reminder => :environment do
     exit 1
   end
 end
+
+
+
+desc "This task nullifies generated OneClickOrdering token"
+task nullify_oneclickorder_token: :environment do
+  
+  todays_date = Time.now.utc.to_date.strftime("%Y-%m-%d")
+  one_click_orders = OneClickOrder.where("DATE(created_at) = ?", todays_date)
+  one_click_orders.each do |one_click_order|
+    one_click_order.token = nil
+    one_click_order.save
+  end
+
+end
+

@@ -71,6 +71,12 @@ class TerminalsControllerTest < ActionController::TestCase
     assert_redirected_to company_terminals_url(@company)
   end
 
+  test "should download invalid sample csv file" do
+    sign_in_admin
+    # get 
+    get :download_invalid_csv, params: {terminal_id: @terminal.id}
+    assert_response :success
+  end
 
   test "should not update for invalid record" do
     sign_in_admin

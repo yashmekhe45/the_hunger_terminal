@@ -13,7 +13,7 @@ class User < ApplicationRecord
   validates_presence_of :company , :if => :is_employee? 
   validates :role, inclusion: {in: USER_ROLES}
   validates :mobile_number, uniqueness: { scope: :company_id, message: "user mobile number should be unique in a company"}
-  validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
+  
 
   belongs_to :company
   has_many :orders
@@ -69,16 +69,15 @@ class User < ApplicationRecord
   end
 
   def self.import(file, company_id)
-    # byebug
     # spreadsheet = Roo::Spreadsheet.open(file.path)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     is_valid = true
     @company = Company.find(company_id)
     CSV.open("#{Rails.root}/public/#{@company.name}-invalid_records.csv", "w") do |csv|
-      #byebug
+      
       (2..spreadsheet.last_row).each do |i|
-        #byebug
+        
         row = Hash[[header, spreadsheet.row(i)].transpose]
         employee_record = User.find_by(email: row["email"])|| new
 
@@ -90,7 +89,7 @@ class User < ApplicationRecord
         employee_record.password = Devise.friendly_token.first(8)
         employee_record.company_id = company_id
         unless employee_record.valid?
-          # byebug
+         
           is_valid = false
           invalid_record = []
           employee_record.errors.to_a.each do |error|

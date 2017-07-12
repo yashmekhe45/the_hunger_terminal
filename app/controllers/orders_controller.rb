@@ -98,6 +98,7 @@ class OrdersController < ApplicationController
       end
       @new_order.save if @new_order.valid?
     end
+    add_breadcrumb "Log In", new_user_session_path
   end
 
 

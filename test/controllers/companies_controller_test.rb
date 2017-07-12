@@ -66,6 +66,22 @@ class CompaniesControllerTest  < ActionController::TestCase
 
   end
 
+  test "should download invalid sample csv file" do
+    sign_in_admin
+    old_controller = @controller
+    @controller = UsersController.new
+
+    file_name = File.new(Rails.root.join("test/fixtures/files/invalid_employees.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+    post :add_multiple_employee_records, params: {company_id: @company.id, file: csv_file, commit: "Import"}
+    assert_response :redirect
+    assert_redirected_to company_users_url(@company)
+
+    @controller = old_controller
+    get :download_invalid_csv, params: {id: @company.id}
+    assert_response :success
+  end
+
   test "company should not be updated by an employee" do
     sign_in_employee
     company_id = @user.company.id

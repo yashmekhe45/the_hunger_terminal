@@ -1,9 +1,20 @@
 require "test_helper"
 
-describe OneClickOrder do
-  let(:one_click_order) { OneClickOrder.new }
+class OneClickOrderTest < ActiveSupport::TestCase
 
-  it "must be valid" do
-    value(one_click_order).must_be :valid?
+  before :each do
+    @one_click_order_obj = build :one_click_order
+  end
+
+  test "user must be present" do 
+    @one_click_order_obj.user = nil
+    @one_click_order_obj.valid?
+    assert  @one_click_order_obj.errors[:user].include?("can't be blank") 
+  end
+
+  test "order must be present" do 
+    @one_click_order_obj.order = nil
+    @one_click_order_obj.valid?
+    assert  @one_click_order_obj.errors[:order].include?("can't be blank") 
   end
 end

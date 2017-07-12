@@ -84,19 +84,21 @@ class OrdersController < ApplicationController
 
   def one_click_order
     if params[:token]
-      one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id])
-      user_id = one_click_order_obj.user_id
-      old_order = Order.find(params[:order_id])
-      @new_order = Order.new old_order.attributes
-      @new_order.id = nil
-      @new_order.status = "pending"
-      @new_order.date = Time.zone.today
-      old_order.order_details.each do |order_detail|
-        new_order_detail = OrderDetail.new(order_detail.attributes)
-        new_order_detail.id = nil
-        @new_order.order_details << new_order_detail
+      one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id], token: params[:token])
+      if one_click_order_obj
+        user_id = one_click_order_obj.user_id
+        old_order = Order.find(params[:order_id])
+        @new_order = Order.new old_order.attributes
+        @new_order.id = nil
+        @new_order.status = "pending"
+        @new_order.date = Time.zone.today
+        old_order.order_details.each do |order_detail|
+          new_order_detail = OrderDetail.new(order_detail.attributes)
+          new_order_detail.id = nil
+          @new_order.order_details << new_order_detail
+        end
+        @new_order.save if @new_order.valid?
       end
-      @new_order.save if @new_order.valid?
     end
     add_breadcrumb "Log In", new_user_session_path
   end

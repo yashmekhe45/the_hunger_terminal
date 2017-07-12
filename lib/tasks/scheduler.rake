@@ -17,13 +17,9 @@ end
 
 desc "This task nullifies generated OneClickOrdering token"
 task nullify_oneclickorder_token: :environment do
-  
+
   todays_date = Time.now.utc.to_date.strftime("%Y-%m-%d")
   one_click_orders = OneClickOrder.where("DATE(created_at) = ?", todays_date)
-  one_click_orders.each do |one_click_order|
-    one_click_order.token = nil
-    one_click_order.save
-  end
-
+  one_click_orders.update_all(token: nil)
 end
 

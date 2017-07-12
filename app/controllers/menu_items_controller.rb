@@ -54,16 +54,8 @@ class MenuItemsController < ApplicationController
   def import
     unless params[:file].nil?
       result = MenuItemsUploadService.new(file: params[:file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
-        
-      unless result[:value] == "Some Records are Invalid!"
-        flash[:notice] = result[:value] 
-        redirect_to terminal_menu_items_path(@terminal)
-      else 
-        flash[:notice] = result[:value]
-        redirect_to terminal_download_invalid_csv_path(@terminal)
-        return
-      end
-      
+      flash[:notice] = result[:value]
+      redirect_to terminal_menu_items_path(@terminal)     
     end
     
   end

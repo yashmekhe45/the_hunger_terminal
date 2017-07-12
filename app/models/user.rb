@@ -72,28 +72,45 @@ class User < ApplicationRecord
     # spreadsheet = Roo::Spreadsheet.open(file.path)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
-    (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      employee_record = User.find_by(email: row["email"])|| new
+    is_valid = true
+    @company = Company.find(company_id)
+    CSV.open("#{Rails.root}/public/#{@company.name}-invalid_records.csv", "w") do |csv|
+      #byebug
+      (2..spreadsheet.last_row-1).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        employee_record = User.find_by(email: row["email"])|| new
 
-      # Mobile number is taking float values from Excel file
-      row["mobile_number"] = row["mobile_number"].to_i
-      employee_record.attributes = row.to_h
-      employee_record.role = "employee"
-      employee_record.is_active = true
-      employee_record.password = Devise.friendly_token.first(8)
-      employee_record.company_id = company_id
-      if employee_record.valid?
-        if !employee_record.persisted?
-          employee_record.save!
-          return 1 # saved to database
+        # Mobile number is taking float values from Excel file
+        row["mobile_number"] = row["mobile_number"].to_i
+        employee_record.attributes = row.to_h
+        employee_record.role = "employee"
+        employee_record.is_active = true
+        employee_record.password = Devise.friendly_token.first(8)
+        employee_record.company_id = company_id
+        unless employee_record.valid?
+          #byebug
+          is_valid = false
+          invalid_record = []
+          employee_record.errors.to_a.each do |error|
+            invalid_record = row.to_a
+            invalid_record << error
+          end
+          csv << invalid_record
+
+
         else
-          return 0 # already exists
+          if !employee_record.persisted?
+            employee_record.save
+          end
         end
+      end
+      if is_valid == false
+        return 0
       else
-        return -1 # invalid record
+        return 1
       end
     end
+
   end
 
   def self.open_spreadsheet(file)

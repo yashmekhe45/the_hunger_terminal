@@ -13,7 +13,7 @@ class User < ApplicationRecord
   validates_presence_of :company , :if => :is_employee? 
   validates :role, inclusion: {in: USER_ROLES}
   validates :mobile_number, uniqueness: { scope: :company_id, message: "user mobile number should be unique in a company"}
-  validates :email, uniqueness: {scope: :company_id, message: "user email should be unique in a company" }
+  
 
   belongs_to :company
   has_many :orders

@@ -108,12 +108,11 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @company = Company.find(current_user.company_id)
-    @user = @company.employees.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def load_company
-    @company = Company.find(current_user.company_id)  
+    @company = Company.find(params[:company_id])  
   end
 
   def require_permission

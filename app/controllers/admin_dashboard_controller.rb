@@ -37,6 +37,7 @@ class AdminDashboardController < ApplicationController
   end  
 
   def payment
+    authorize! :payment, :payment_management
     @company = Company.find(current_user.company_id)
     @terminals = @company.terminals.all.order(:name)
     add_breadcrumb "Terminals' Running balance report"
@@ -67,6 +68,7 @@ class AdminDashboardController < ApplicationController
   end 
 
   def input_terminal_extra_charges
+    authorize! :input_terminal_extra_charges , :order_management
     @todays_terminals = Terminal.all_terminals_todays_orders_report(current_user.company_id)
   end
 

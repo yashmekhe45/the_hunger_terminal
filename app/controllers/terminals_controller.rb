@@ -1,7 +1,10 @@
   require 'csv'
 class TerminalsController < ApplicationController
 
-  load_and_authorize_resource param_method: :terminal_params
+  load_and_authorize_resource :user
+  load_and_authorize_resource :company
+  load_and_authorize_resource
+  # load_and_authorize_resource param_method: :terminal_params
 
   
   before_action :authenticate_user!  
@@ -85,7 +88,8 @@ class TerminalsController < ApplicationController
   end
 
   def load_company
-    @current_company = current_user.company
+    @current_company = Company.find params[:company_id]
+    
   end
 
   def load_terminal

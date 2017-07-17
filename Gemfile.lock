@@ -60,7 +60,6 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
-    cancan (1.6.10)
     cancancan (1.16.0)
     carrierwave (1.0.0)
       activemodel (>= 4.0.0)
@@ -298,7 +297,6 @@ DEPENDENCIES
   breadcrumbs_on_rails
   bullet
   byebug
-  cancan
   cancancan
   carrierwave (~> 1.0)
   codeclimate-test-reporter (< 1.0.0)

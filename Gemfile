@@ -33,7 +33,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'haml', '~> 4.0', '>= 4.0.7'
-gem 'cancan'
+gem 'cancancan'
 gem 'rmagick'
 gem 'carrierwave', '~> 1.0'
 gem 'sidekiq'

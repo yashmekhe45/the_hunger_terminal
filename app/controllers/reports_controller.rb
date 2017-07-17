@@ -21,11 +21,13 @@ class ReportsController < ApplicationController
   add_breadcrumb "Employee wise Today's Orders", :todays_reports_users_path, only: [:employees_daily_order_detail]
 
 	def employees_current_month
+    authorize! :employees_current_month, :report_management
     @users = User.employee_report(current_user.company_id)
   end
 
 
   def monthly_all_employees
+    authorize! :monthly_all_employees, :report_management 
     @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)  
     respond_to do |format|
       format.html
@@ -41,6 +43,7 @@ class ReportsController < ApplicationController
   end
 
   def employees_daily_order_detail
+    authorize! :employees_daily_order_detail , :report_management
     @orders = Order.employees_daily_order_detail_report(current_user.company_id)
     respond_to do |format|
       format.html
@@ -52,11 +55,13 @@ class ReportsController < ApplicationController
   end
 
   def terminals_history
+    authorize! :terminals_history , :report_management
     @terminals = Terminal.all_terminals_last_month_reports(current_user.company_id)
   end
 
 
   def terminals_todays
+    authorize! :terminals_todays , :report_management
     @terminals = Terminal.all_terminals_todays_order_details(current_user.company_id)
     @todays_terminals = Terminal.all.all_terminals_todays_orders_report(current_user.company_id)
     respond_to do |format|

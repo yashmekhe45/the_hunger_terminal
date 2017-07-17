@@ -34,6 +34,7 @@ class Ability
       can :input_terminal_extra_charges , :order_management
       can :employees_daily_order_detail , :report_management 
       can :employees_current_month, :report_management 
+      can :monthly_all_employees, :report_management 
       can :terminals_history , :report_management 
       can :terminals_todays , :report_management 
       can :payment, :payment_management 

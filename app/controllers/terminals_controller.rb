@@ -8,8 +8,8 @@ class TerminalsController < ApplicationController
 
   
   before_action :authenticate_user!  
-  before_action :load_company
-  before_action :load_terminal, only: [:show, :edit, :update, :destroy]
+  before_action :load_company , except: [:edit ,:update,:download_invalid_csv]
+  before_action :load_terminal, only: [:show, :update, :destroy]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Terminals", :company_terminals_path, except: [:edit, :update]
@@ -28,14 +28,14 @@ class TerminalsController < ApplicationController
       unless params[:terminal][:CSV_menu_file].nil?
         result = MenuItemsUploadService.new(file: params[:terminal][:CSV_menu_file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
         flash[:notice] = result[:value]
-        redirect_to terminal_menu_items_path(@terminal)
+        
       end
       @terminal.payable = @terminal.current_amount - @terminal.payment_made
       @terminal.save
       @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
-      
+      redirect_to terminal_menu_items_path(@terminal)
     else
       render :new and return
     end
@@ -62,7 +62,7 @@ class TerminalsController < ApplicationController
           Terminal.update_post_payment_details_of_terminal(@terminal.id, current_user.company_id)
         else
           flash[:success] = "terminal updated successfully"
-          format.html {  redirect_to company_terminals_path(@current_company) and return }
+          format.html {  redirect_to company_terminals_path(current_user.company_id) and return }
         end
         format.js { render inline: "location.reload();"  }
         
@@ -93,7 +93,7 @@ class TerminalsController < ApplicationController
   end
 
   def load_terminal
-    @terminal = @current_company.terminals.find params[:id]
+    @terminal = Terminal.find params[:id]
   end  
 end
     

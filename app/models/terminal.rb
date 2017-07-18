@@ -22,7 +22,7 @@ class Terminal < ApplicationRecord
     
   def remove_space
     #squish method is not for nil classes
-    unless(self.name == nil)
+    unless(self.name == nil) 
       self.name = name.squish
     end
   end

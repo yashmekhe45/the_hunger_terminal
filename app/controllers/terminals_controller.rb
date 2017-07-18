@@ -45,9 +45,6 @@ class TerminalsController < ApplicationController
     if params[:search].present?
       search_type = params[:search]
       @terminals = @current_company.terminals.where(["LOWER(name) LIKE :search OR landline LIKE :search", search: "%#{params[:search].downcase}%"]).page(params[:page]).per(6)
-      if @terminals.empty?
-        flash[:notice] = "Vendor not present."
-      end
     else
       @terminals = @current_company.terminals.order(:name).page(params[:page]).per(6)
     end

@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
-    @orders = current_user.orders.includes(:order_details).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
+    @orders = current_user.orders.includes(:order_details).includes(:terminal).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
     if @orders.empty?
       flash[:error] = "No order is present for this period!"
     end

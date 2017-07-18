@@ -19,7 +19,6 @@ class Ability
     end
 
     if user.role == "company_admin"
-      #byebug
       can :manage, User, :company_id => user.company_id
       # company_admin won't be allowed to access the company index
       can :manage, Company, :id => user.company_id 

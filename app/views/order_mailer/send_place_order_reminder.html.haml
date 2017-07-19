@@ -2,25 +2,30 @@
 %p 
   This is just for the reminder that you can place order only upto 
   %b #{@end_time}
-%p So, place your order as soon as possible and enjoy your lunch!!!
+%p{style: 'font-size: 15px'} Now, you can order dishes in one single click! We recommend:
 
 / One click ordering logic
 
 -unless @orders.empty?
-  %table.table-bordered.orders_in_reminder_mail_table
+  %table.table-bordered.orders_in_reminder_mail_table{style: 'cellspacing: 20px cellpadding: 20px'}
     %tr
-      %th Serial No.
+      %th Vendor
       %th Menu Items
-    - @orders.each_with_index do |order, serial_no|
+    - @orders.each_with_index do |order, index|
       %tr
-        %td= serial_no + 1
+        
         %td
-          - order.order_details.each_with_index do |order_item,index|
-            - indexplusone = index+1
-            %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
+          -if order.terminal.image?
+            =image_tag attachments["#{index}.jpg"].url, size: 75
+          -else
+            =order.terminal.name
+        %td
+          - order.order_details.each do |order_item|
+            %span #{order_item.menu_item_name}(#{order_item.quantity})
             %br
         -todays_date = Time.now.utc.to_date.strftime("%Y-%m-%d")
         -user_token = OneClickOrder.where(order_id: order.id).where("DATE(created_at) = ?", todays_date).pluck(:token)
+
         %td= link_to "Place Order", one_click_order_url(user_token, order.id)
 
 

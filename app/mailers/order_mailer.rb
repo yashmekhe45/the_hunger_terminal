@@ -24,8 +24,12 @@ class OrderMailer < ApplicationMailer
     @one_click_orders = Array.new
     #For now, we are sending last three orders for one click ordering
     @orders =  Order.includes(:order_details).where(user_id: employee_id, status: "confirmed").last(3)
-    @orders.each do |order|
+    @orders.each_with_index do |order, index|
       @one_click_orders << OneClickOrder.create(user_id: employee_id, order_id: order.id)
+      if order.terminal['image'].present?
+        terminal_image = "#{Rails.root}/app/assets/images/#{order.terminal['image']}"
+        attachments.inline["#{index}.jpg"] = File.read(terminal_image)
+      end
     end
 
     mail(to:email, subject: 'place order soon')

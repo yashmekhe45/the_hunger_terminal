@@ -28,11 +28,13 @@ class OrderMailer < ApplicationMailer
       @one_click_orders << OneClickOrder.create(user_id: employee_id, order_id: order.id)
       if order.terminal['image'].present?
         terminal_image = "#{Rails.root}/app/assets/images/#{order.terminal['image']}"
-        attachments.inline["#{index}.jpg"] = File.read(terminal_image)
+      else
+        terminal_image =  "#{Rails.root}/app/assets/images/hotelplaceholder1.jpg"
       end
+      attachments.inline["#{index}.jpg"] = File.read(terminal_image)
     end
 
-    mail(to:email, subject: 'place order soon')
+    mail(to:email, subject: '[the hunger terminal] Place your order')
   end
 
 end

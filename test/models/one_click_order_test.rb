@@ -17,4 +17,12 @@ class OneClickOrderTest < ActiveSupport::TestCase
     @one_click_order_obj.valid?
     assert  @one_click_order_obj.errors[:order].include?("can't be blank") 
   end
+
+  test "todays tokens should be nullified" do
+    @one_click_order_obj.save
+    OneClickOrder.nullify_todays_tokens
+    @one_click_order_obj = OneClickOrder.first
+    token = @one_click_order_obj.token
+    assert_nil token
+  end
 end

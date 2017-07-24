@@ -1,24 +1,19 @@
 class MenuItemsController < ApplicationController
-  
+
+  load_and_authorize_resource :user
+  load_and_authorize_resource :company
+  load_and_authorize_resource :terminal  
   load_and_authorize_resource  param_method: :menu_item_params
-
-  before_action :authenticate_user!  
-
+ 
   before_action :load_company, except: [:download_csv]
   before_action :load_terminal, except: [:download_csv, :download_invalid_csv]
-
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
-  load_and_authorize_resource
 
   add_breadcrumb "Home", :root_path
-
   
   def index
     if params[:search_item].present?
       @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(6)
-      if @menu_items.empty?
-        flash[:notice] = "Menu Item is not present."
-      end
     else 
       @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
     end
@@ -38,11 +33,8 @@ class MenuItemsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
-    if @menu_item.update_attributes(menu_item_params)
+    if @menu_item.update(menu_item_params)
       flash[:success] = "Menu Item updated"
       redirect_to terminal_menu_items_path(@terminal) and return
     else
@@ -75,11 +67,11 @@ class MenuItemsController < ApplicationController
   end
 
   def load_terminal
-    @terminal = @current_company.terminals.find params[:terminal_id]
+    @terminal = Terminal.find params[:terminal_id]
   end
 
   def load_menu_item
-    @menu_item = @terminal.menu_items.find(params[:id])
+    @menu_item = MenuItem.find(params[:id])
   end
 
   def menu_item_params

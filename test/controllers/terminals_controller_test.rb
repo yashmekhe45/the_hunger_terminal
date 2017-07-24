@@ -30,10 +30,27 @@ class TerminalsControllerTest < ActionController::TestCase
 
     assert_difference 'Terminal.count' do
       post :create, params: 
-      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: 0}, company_id: @company.id}
+      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: "",gstin: ""}, company_id: @company.id}
     end
   end
 
+  test "should create terminal without gstin" do
+    sign_in_admin
+
+    assert_difference 'Terminal.count' do
+      post :create, params: 
+      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: "",gstin: ""}, company_id: @company.id}
+    end
+  end
+
+  test "should create terminal without tax but with proper gstin" do
+    sign_in_admin
+
+    assert_difference 'Terminal.count' do
+      post :create, params: 
+      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: "",gstin: "11ASDEW1245Z1Z6"}, company_id: @company.id}
+    end
+  end
 
   test "should create terminal with uploading menu items" do
     sign_in_admin
@@ -43,7 +60,7 @@ class TerminalsControllerTest < ActionController::TestCase
 
     assert_difference 'Terminal.count' do
       post :create, params: 
-      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: 0, CSV_menu_file: csv_file}, company_id: @company.id}
+      {terminal: { name: "kfc", email: "info@kfc.com", landline: "03456789089", payment_made: 0.0, min_order_amount: 50,tax: "", gstin: "", CSV_menu_file: csv_file}, company_id: @company.id}
     end
   end
 

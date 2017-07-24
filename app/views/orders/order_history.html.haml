@@ -25,6 +25,7 @@
               %th Extra Charges 
               %th Payable 
               %th Items(Qty)
+              %th Vendor
           %tbody
           -@orders.each do |order|
             %tr
@@ -42,6 +43,7 @@
                   - indexplusone = index+1
                   %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
                   %br
+              %td= order.terminal.name
           - if grand_total != 0
             %tr
               %td= 'Aggregate Amount '
@@ -49,6 +51,7 @@
               %td= grand_discount
               %td= grand_extra_charges
               %td= grand_payable
+              %td
               %td
 
 

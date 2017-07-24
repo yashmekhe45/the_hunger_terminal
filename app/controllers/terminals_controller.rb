@@ -2,10 +2,7 @@
 class TerminalsController < ApplicationController
 
   load_and_authorize_resource :user
-  load_and_authorize_resource :company
-  load_and_authorize_resource
-  # load_and_authorize_resource param_method: :terminal_params
-
+  load_and_authorize_resource :company, except: [:new, :create]
   
   before_action :authenticate_user!  
   before_action :load_company , except: [:edit ,:update,:download_invalid_csv]
@@ -36,6 +33,7 @@ class TerminalsController < ApplicationController
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
       redirect_to terminal_menu_items_path(@terminal)
+
     else
       render :new and return
     end
@@ -77,11 +75,15 @@ class TerminalsController < ApplicationController
     type: "application/csv"
     ) 
   end
+
+  def edit
+    @terminal = Terminal.find params[:id]
+  end
  
   private
 
   def terminal_params
-    params.require(:terminal).permit(:name,:landline, :active, :email, :min_order_amount, :company_id, :image, :payment_made, :tax)
+    params.require(:terminal).permit(:name,:landline, :active, :email, :min_order_amount, :company_id, :image, :payment_made, :gstin, :tax)
   end
 
   def load_company

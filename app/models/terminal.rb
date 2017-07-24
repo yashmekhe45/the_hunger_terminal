@@ -4,9 +4,15 @@ class Terminal < ApplicationRecord
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
   validates :landline ,length: { is: 11 }
-  validates :tax, :min_order_amount, :payment_made, :current_amount, numericality: {             greater_than_or_equal_to: 0 }
-  validates :active, inclusion: {in: [true, false]}
+  validates :min_order_amount, :payment_made, :current_amount, numericality: {             greater_than_or_equal_to: 0 }
+  validates :gstin ,length: { is: 15 } , :allow_blank => true
+  validates :gstin ,uniqueness: { scope: :company_id, message: "terminal GSTIN should be unique in a company" }, :allow_blank => true
+  validate :validate_gstin
+  validates_presence_of :gstin, :if => :tax?
+  validates :tax ,numericality: { greater_than_or_equal_to: 0 , less_than_or_equal_to: 100 }, :allow_blank => true
+  validates :active, inclusion: {in: [true, false]}  
   validates_with LandlineValidator
+
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
   has_many :orders
@@ -24,6 +30,15 @@ class Terminal < ApplicationRecord
     #squish method is not for nil classes
     unless(self.name == nil) 
       self.name = name.squish
+    end
+  end
+
+  def validate_gstin 
+    #to validate the gst number of terminal
+    unless self.gstin == ""
+      unless self.gstin =~ /\d\d[A-Z]{5}\d{4}[A-Z]\h[Z]\d/ 
+        self.errors[:gstin] << 'please enter valid GST Identification Number'
+      end
     end
   end
 

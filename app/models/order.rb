@@ -106,7 +106,10 @@ class Order < ApplicationRecord
       current_time = Time.zone.now.strftime('%H:%M:%S')
       start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
+
       if !(current_time >= start_time and current_time <= end_time)
+        start_time = self.company.start_ordering_at.strftime('%I:%M %p')
+        end_time = self.company.end_ordering_at.strftime('%I:%M %p')
         errors.add(:base,"order cannot be created or updated before #{start_time} and after #{end_time}")
       end
     end

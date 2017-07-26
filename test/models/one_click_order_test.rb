@@ -20,9 +20,9 @@ class OneClickOrderTest < ActiveSupport::TestCase
 
   test "todays tokens should be nullified" do
     @one_click_order_obj.save
-    OneClickOrder.nullify_todays_tokens
+    OneClickOrder.nullify_tokens
     @one_click_order_obj = OneClickOrder.first
-    token = @one_click_order_obj.token
-    assert_nil token
+    assert_nil @one_click_order_obj
   end
+
 end

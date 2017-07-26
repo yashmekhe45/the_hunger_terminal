@@ -17,24 +17,30 @@ class OrderMailer < ApplicationMailer
   def send_place_order_reminder(employee, end_time)
     @end_time = end_time
     #employee is an array
-    email = employee[0]
-    @name = employee[1]
-    employee_id = employee[2]
-
-    @one_click_orders = Array.new
-    #For now, we are sending last three orders for one click ordering
-    @orders =  Order.includes(:order_details).where(user_id: employee_id, status: "confirmed").last(3)
-    @orders.each_with_index do |order, index|
-      @one_click_orders << OneClickOrder.create(user_id: employee_id, order_id: order.id)
-      if order.terminal['image'].present?
-        terminal_image = "#{Rails.root}/app/assets/images/#{order.terminal['image']}"
-      else
-        terminal_image =  "#{Rails.root}/app/assets/images/hotelplaceholder1.jpg"
-      end
-      attachments.inline["#{index}.jpg"] = File.read(terminal_image)
-    end
-
+    email = employee.email
+    @name = employee.name
+    @employee_id = employee.id
+    create_one_click_orders
     mail(to:email, subject: '[the hunger terminal] Place your order')
   end
 
+
+  private
+
+  def create_one_click_orders
+    #For now, we are sending last three orders for one click ordering
+    @orders =  Order.includes(:order_details).where(user_id: @employee_id, status: "confirmed").last(3)
+    @one_click_orders = Array.new
+
+    @orders.each_with_index do |order, index|
+      @one_click_orders << OneClickOrder.create(user_id: @employee_id, order_id: order.id)
+      terminal_image = "#{Rails.root}/app/assets/images/" # This path is required to get terminal image
+      if order.terminal['image'].present?
+        terminal_image  << "#{order.terminal['image']}"
+      else
+        terminal_image << "hotelplaceholder1.jpg"
+      end
+      attachments.inline["#{index}.jpg"] = File.read(terminal_image)
+    end
+  end
 end

@@ -16,7 +16,6 @@ class OrderMailer < ApplicationMailer
 
   def send_place_order_reminder(employee, end_time)
     @end_time = end_time
-    #employee is an array
     email = employee.email
     @name = employee.name
     @employee_id = employee.id

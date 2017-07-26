@@ -19,10 +19,9 @@
           - order.order_details.each do |order_item|
             %span #{order_item.menu_item_name}(#{order_item.quantity})
             %br
-          -todays_date = Time.now.utc.to_date.strftime("%Y-%m-%d")
-          -user_token = OneClickOrder.where(order_id: order.id).where("DATE(created_at) = ?", todays_date).pluck(:token)
+          -user_token = @one_click_orders[index].token
           %p= link_to "Place Order", one_click_order_url(user_token, order.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'
-  %b OR Place other order by signing in : 
+  %b OR Place another order by signing in : 
 -else
   %p Place your order by signing in: 
 

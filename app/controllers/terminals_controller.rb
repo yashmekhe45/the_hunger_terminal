@@ -49,7 +49,7 @@ class TerminalsController < ApplicationController
   end
 
   def update
-    if @terminal.update_attributes(terminal_params)
+    if @terminal.update(terminal_params)
       respond_to do |format|
         if request.format.js?
           flash[:success] = "payment made successfully"

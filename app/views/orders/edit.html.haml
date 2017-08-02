@@ -90,7 +90,7 @@
 
 %script{:type => 'text/javascript'}
   subsidy = #{@subsidy};
-  tax = #{@terminal.tax}
+  tax = #{@tax};
   order_details = #{raw @order.order_details.to_json};
   load_orders_data(order_details) 
 

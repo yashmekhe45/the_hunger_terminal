@@ -26,14 +26,14 @@ $(document).ready ->
 
   $(document).on 'click', '.delete_new', ->  
     text=$(this).parent().parent().attr('data-menu-item-id')
-    $("table").find("#"+text).find('.sub-total').text(' 0.00')
+    $("table").find("#"+text).find('.sub-total').text(' 0')
     $("table").find("#"+text).find('.item-qty').val('0')
     $(this).parent().parent().remove()
     find_total($(this).parent().parent())
   
   $(document).on 'click', '.delete', ->
     text=$(this).parent().parent().attr('data-menu-item-id')
-    $("table").find("#"+text).find('.sub-total').text(' 0.00')
+    $("table").find("#"+text).find('.sub-total').text(' 0')
     $("table").find("#"+text).find('.item-qty').val('0')
 
     order_detail_id = $(this).parent().parent().find("#order_detail_id").val() 
@@ -108,13 +108,13 @@ find_total = (selected_item) ->
     arr = $('.total')
     $.each arr, (key, value) ->
       num=parseInt($(value).text())
-      sum += num 
+      sum += num          
     tax1 = Math.round((tax/100)*sum)  
     $('#tax').text(tax1)   
-    if (subsidy < (subsidy/100)*sum) 
+    if (subsidy < (subsidy/100)*sum)      
       $('#discount').text(subsidy)
       $('#grand_total').text(sum+tax1-subsidy)
-    else
+    else     
       $('#discount').text((subsidy/100)*sum)  
       $('#grand_total').text(sum+tax1-(subsidy/100)*sum)
     $('#total').text(sum)

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  load_and_authorize_resource  param_method: :order_params
+  load_and_authorize_resource  
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
@@ -29,6 +29,8 @@ class OrdersController < ApplicationController
     @terminal_id = params[:terminal_id]
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
+    @tax = @terminal.tax
+    @tax = 0 if @tax == ""
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
@@ -55,6 +57,8 @@ class OrdersController < ApplicationController
 
   def edit
     @subsidy = current_user.company.subsidy
+    @tax = @terminal.tax
+    @tax = 0 if @tax == ""
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
@@ -93,7 +97,7 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(
-        :total_cost,:terminal_id,:id, order_details_attributes:[:menu_item_id, :quantity, :id,:_destroy]
+        :total_cost,:terminal_id,order_details_attributes:[:menu_item_id, :quantity]
       ).merge(user_id: current_user.id)
     end
 

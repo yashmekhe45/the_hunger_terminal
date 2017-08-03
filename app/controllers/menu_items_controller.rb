@@ -67,11 +67,11 @@ class MenuItemsController < ApplicationController
   end
 
   def load_terminal
-    @terminal = Terminal.find params[:terminal_id]
+    @terminal = @current_company.terminals.find params[:terminal_id]
   end
 
   def load_menu_item
-    @menu_item = MenuItem.find(params[:id])
+    @menu_item = @terminal.menu_items.find(params[:id])
   end
 
   def menu_item_params

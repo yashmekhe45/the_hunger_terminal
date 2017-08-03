@@ -3,7 +3,7 @@ class Terminal < ApplicationRecord
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
   validates :landline ,length: { is: 11 }
-  validates :min_order_amount, :payment_made, :current_amount, numericality: {             greater_than_or_equal_to: 0 }
+  validates :min_order_amount, :payment_made, :current_amount, numericality: {greater_than_or_equal_to: 0 }
   validates :gstin ,length: { is: 15 } , :allow_blank => true
   validates :gstin ,uniqueness: { scope: :company_id, message: "terminal GSTIN should be unique in a company" }, :allow_blank => true
   validate :validate_gstin
@@ -27,7 +27,7 @@ class Terminal < ApplicationRecord
     
   def remove_space
     #squish method is not for nil classes
-    unless(self.name == nil) 
+    unless(self.name == nil)
       self.name = name.squish
     end
   end

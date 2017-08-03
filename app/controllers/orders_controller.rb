@@ -29,8 +29,7 @@ class OrdersController < ApplicationController
     @terminal_id = params[:terminal_id]
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
-    @tax = @terminal.tax
-    @tax = 0 if @tax == ""
+    @tax = @terminal.tax.to_i
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
@@ -50,15 +49,9 @@ class OrdersController < ApplicationController
     end
   end
 
-  def show
-    # @order = Order.find(params[:id])
-  end
-
-
   def edit
     @subsidy = current_user.company.subsidy
-    @tax = @terminal.tax
-    @tax = 0 if @tax == ""
+    @tax = @terminal.tax.to_i
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)

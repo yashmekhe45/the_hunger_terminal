@@ -49,7 +49,7 @@ class TerminalsController < ApplicationController
   end
 
   def update
-    if @terminal.update(terminal_params)
+    if @terminal.update_attributes(terminal_params)
       respond_to do |format|
         if request.format.js?
           flash[:success] = "payment made successfully"
@@ -60,10 +60,8 @@ class TerminalsController < ApplicationController
           format.html {  redirect_to company_terminals_path(current_user.company_id) and return }
         end
         format.js { render inline: "location.reload();"  }
-        
       end   
     else
-      flash[:error] = @terminal.errors.messages
       render :edit and return
     end
   end

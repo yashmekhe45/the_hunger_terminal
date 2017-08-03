@@ -1,5 +1,6 @@
 class MenuItemsController < ApplicationController
 
+  # for loading and authorizing associated models
   load_and_authorize_resource :user
   load_and_authorize_resource :company
   load_and_authorize_resource :terminal  
@@ -34,7 +35,7 @@ class MenuItemsController < ApplicationController
   end
 
   def update
-    if @menu_item.update(menu_item_params)
+    if @menu_item.update_attributes(menu_item_params)
       flash[:success] = "Menu Item updated"
       redirect_to terminal_menu_items_path(@terminal) and return
     else

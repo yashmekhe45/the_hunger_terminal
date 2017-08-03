@@ -34,11 +34,8 @@ class Terminal < ApplicationRecord
 
   def validate_gstin 
     #to validate the gst number of terminal
-    unless self.gstin == ""
-      unless self.gstin =~ /\d\d[A-Z]{5}\d{4}[A-Z]\h[Z]\d/ 
-        self.errors[:gstin] << 'please enter valid GST Identification Number'
-      end
-    end
+    return if(self.gstin == "")
+    self.errors.add(:gstin, "please enter valid GST Identification Number") unless self.gstin =~ /\d\d[A-Z]{5}\d{4}[A-Z]\h[Z]\d/
   end
 
   def active_must_accept_boolean_only

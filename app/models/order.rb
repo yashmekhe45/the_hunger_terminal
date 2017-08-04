@@ -9,6 +9,9 @@ class Order < ApplicationRecord
   validate :valid_day?, on: :create
   validate :set_discount, on: :create
 
+
+  scope :confirmed, -> { where(status: 'confirmed') }
+
   belongs_to :user
   belongs_to :company
   belongs_to :terminal

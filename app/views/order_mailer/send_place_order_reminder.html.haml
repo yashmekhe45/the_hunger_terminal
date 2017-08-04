@@ -1,4 +1,4 @@
-%p Hello #{@name},
+%p Hello #{@employee_name},
 %p 
   This is just for the reminder that you can place order only upto 
   %b #{@end_time}
@@ -14,7 +14,7 @@
       %tr
         
         %td{style: 'padding: 2px; border: 1px solid #ddd;'}
-          =image_tag attachments["#{index}.jpg"].url, width: 75, height: 70
+          =image_tag attachments["#{order.id}.jpg"].url, width: 75, height: 70
         %td{style: 'padding: 10px;  border: 1px solid #ddd;'}
           - order.order_details.each do |order_item|
             %span #{order_item.menu_item_name}(#{order_item.quantity})

@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
-  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Home", :root_path, except: [:one_click_order]
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
   add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
@@ -86,21 +86,17 @@ class OrdersController < ApplicationController
     if params[:token]
       one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id], token: params[:token])
       if one_click_order_obj
-        user_id = one_click_order_obj.user_id
         old_order = Order.find(params[:order_id])
-        @new_order = Order.new old_order.attributes
-        @new_order.id = nil
+        @new_order = old_order.dup
         @new_order.status = "pending"
         @new_order.date = Time.zone.today
         old_order.order_details.each do |order_detail|
-          new_order_detail = OrderDetail.new(order_detail.attributes)
-          new_order_detail.id = nil
+          new_order_detail = order_detail.dup
           @new_order.order_details << new_order_detail
         end
-        @new_order.save if @new_order.valid?
+        @new_order.save 
       end
     end
-    add_breadcrumb "Log In", new_user_session_path
   end
 
 

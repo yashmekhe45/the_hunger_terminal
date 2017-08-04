@@ -5,41 +5,40 @@ class OrderMailer < ApplicationMailer
     @company = Company.find(company_id)
     @orders = terminal_orders
     @message = message
-    mail(to: @terminal.email, subject: 'orders for today')
+    mail(to: @terminal.email, subject: 'Orders for today')
   end
 
   def send_mail_to_employees(employee)
     email = employee[0]
     @name = employee[1]
-    mail(to: email, subject: 'status of order')
+    mail(to: email, subject: 'Status of Order')
   end
 
   def send_place_order_reminder(employee, end_time)
     @end_time = end_time
+    @employee_name = employee.name
     email = employee.email
-    @name = employee.name
-    @employee_id = employee.id
-    create_one_click_orders
-    mail(to:email, subject: '[the hunger terminal] Place your order')
+    create_one_click_orders(employee.id)
+    mail(to:email, subject: '[The Hunger Terminal] Place your order')
   end
 
 
   private
 
-  def create_one_click_orders
+  def create_one_click_orders(employee_id)
     #For now, we are sending last three orders for one click ordering
-    @orders =  Order.includes(:order_details).where(user_id: @employee_id, status: "confirmed").last(3)
-    @one_click_orders = Array.new
+    user = User.find(employee_id)
+    @orders =  user.orders.includes(:order_details).confirmed.last(3)
+    @one_click_orders = []
 
-    @orders.each_with_index do |order, index|
-      @one_click_orders << OneClickOrder.create(user_id: @employee_id, order_id: order.id)
-      terminal_image = "#{Rails.root}/app/assets/images/" # This path is required to get terminal image
+    @orders.each do |order|
+      @one_click_orders << order.one_click_orders.create(user_id: user.id) 
+      terminal_image = "hotelplaceholder1.jpg"
       if order.terminal['image'].present?
-        terminal_image  << "#{order.terminal['image']}"
-      else
-        terminal_image << "hotelplaceholder1.jpg"
+        terminal_image  = "#{order.terminal['image']}"  
       end
-      attachments.inline["#{index}.jpg"] = File.read(terminal_image)
+      image_url = "#{Rails.root}/app/assets/images/" + "#{terminal_image}"
+      attachments.inline["#{order.id}.jpg"] = File.read(image_url)
     end
   end
 end

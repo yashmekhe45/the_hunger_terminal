@@ -61,15 +61,7 @@ class UserTest < ActiveSupport::TestCase
     @user.valid?
     assert @user.errors[:is_active].include?("This must be true or false.")
   end
-  test "user email should be unique in a company" do
-    @company = create(:company)
-    @employee = @company.employees.first
-    @duplicate_employee = build(:user)
-    @duplicate_employee.company_id = @company.id
-    @duplicate_employee.email = @employee.email
-    @duplicate_employee.valid?
-    assert @duplicate_employee.errors[:email].include?("user email should be unique in a company")
-  end
+
 
   test "company must be present for an employee" do
     @user.role = "employee"
@@ -121,15 +113,15 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "employees' record should be imported " do
-    company = create(:company)
-    prev_user_count = User.count
+    company = create(:company, name: 'dummy')
+    prev_user_count = company.employees.count
     #CSV file should be imported
     file_name = File.new(Rails.root.join("test/fixtures/files/employees.csv"))
     csv_file = ActionDispatch::Http::UploadedFile.new({
     :tempfile => file_name, :filename => File.basename(file_name) })
     csv_file.content_type = "application/csv"
     csv_import = User.import(csv_file, company.id)
-    now_user_count = User.count
+    now_user_count = company.employees.count
     assert_equal now_user_count - prev_user_count, 1   
   end
 

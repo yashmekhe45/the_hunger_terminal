@@ -1,7 +1,8 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    // %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %title The Hunger Terminal
    
   %body   
@@ -20,19 +21,19 @@
       %h4#seeHow See How 
       .container-fluid.instructions
         .row
-          .col-md-3
+          .col-xs-12.col-md-3
             .step-one 1. Login
             .login-image= image_tag("login1.png",width:"55px",height:"55px")
             .description If already a member then login to our site
-          .col-md-3
+          .col-xs-12.col-md-3
             .step-one 2. Choose
             .login-image= image_tag("choice.png",width:"55px",height:"55px")
             .description Browse to find the vendors and their menus to find the food you like
-          .col-md-3
+          .col-xs-12.col-md-3
             .step-one 3. Order
             .login-image= image_tag("order.png",width:"55px",height:"55px")
             .description Place an order of the food you want
-          .col-md-3
+          .col-xs-12.col-md-3
             .step-one 4. Enjoy
             .login-image= image_tag("enjoy_food.png",width:"55px",height:"55px")
             .description Food is prepared and delivered to your door
@@ -40,21 +41,21 @@
     .container.bg-3.text-center
       %h4 Our Associates 
       .row
-        .col-md-2
+        .col-xs-12.col-md-2
           .thumbnail
             = image_tag("chandrama2.jpg", class: "img-responsive",width:"80%", height:"100%")
         .col-md-2
           .thumbnail
             = image_tag("saisagar1.jpg", class: "img-responsive",width:"80%", height:"100%")
-        .col-md-2
+        .col-xs-12.col-md-2
           .thumbnail
             = image_tag("giridhar6.jpg", class: "img-responsive",width:"80%", height:"100%")
-        .col-md-2
+        .col-xs-9.col-md-2
           .thumbnail
             = image_tag("eatsome2.png", class: "img-responsive",width:"80%", height:"100%")
-        .col-md-2
+        .col-xs-12.col-md-2
           .thumbnail
             = image_tag("chaitanya3.jpg", class: "img-responsive", width:"80%", height:"100%")
-        .col-md-2
+        .col-xs-12.col-md-2
           .thumbnail
             = image_tag("locavore11.png", class: "img-responsive", width:"80",height: "100%")

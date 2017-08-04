@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
 
+  load_and_authorize_resource
   skip_before_action :authenticate_user!, :only => [:new, :create]
   before_action :require_permission, only: [:show, :edit, :update, :delete, :get_order_details]
   before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
@@ -36,7 +37,13 @@ class CompaniesController < ApplicationController
   def get_order_details
   end
 
-  
+  def download_invalid_csv
+    load_company
+    send_file("#{Rails.root}/public/#{@company.name}-invalid_records.csv",
+    type: "application/csv"
+    ) 
+  end
+
   private
 
   def company_params

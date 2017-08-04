@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :companies, shallow: true, only: [:new, :create, :update] do
     member do
       get 'get_order_details'
+      get 'download_invalid_csv'
     end
 
     resources :users, except: [:destroy, :edit] do
@@ -27,13 +28,13 @@ Rails.application.routes.draw do
       end    
       collection do
         get 'search'
-        get 'download_invalid_csv'
         post 'add_multiple_employee_records'
         post 'import'
       end    
     end
 
     resources :terminals, except: [:destroy, :show] do
+      get 'download_invalid_csv'
       resources :orders, except: :index
       resources :menu_items, except: [:destroy, :show] do
         collection do
@@ -69,9 +70,10 @@ Rails.application.routes.draw do
     end
   end
 
-  # get 'companies/:company_id/terminals/:id/invalid_menu_download' => 'terminals#invalid_menu_download'
+  
  
   get "menu_items/download_csv"
+  
   get '/users/download_sample_file/:file_type' => 'users#download_sample_file', as: :download_sample_file
 
   get 'admin_dashboard/index'
@@ -84,8 +86,6 @@ Rails.application.routes.draw do
 
   get 'admin_dashboard/input_terminal_extra_charges'
   post 'admin_dashboard/save_terminal_extra_charges'
-
-  get '/OneClickOrder/:token/:order_id' => 'orders#one_click_order', as: :one_click_order
 
   
 

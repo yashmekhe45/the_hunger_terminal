@@ -5,7 +5,7 @@ class MenuItemsController < ApplicationController
   before_action :authenticate_user!  
 
   before_action :load_company, except: [:download_csv]
-  before_action :load_terminal, except: [:download_csv]
+  before_action :load_terminal, except: [:download_csv, :download_invalid_csv]
 
   before_action :load_menu_item, only: [ :edit, :update, :destroy ]
   load_and_authorize_resource
@@ -17,7 +17,7 @@ class MenuItemsController < ApplicationController
     if params[:search_item].present?
       @menu_items = @terminal.menu_items.where(["LOWER(name) LIKE ?", "%#{params[:search_item].downcase}%"]).page(params[:page]).per(6)
       if @menu_items.empty?
-        flash[:notice] = "Meu Item is not present."
+        flash[:notice] = "Menu Item is not present."
       end
     else 
       @menu_items = @terminal.menu_items.order(:name).page(params[:page]).per(6)
@@ -54,9 +54,10 @@ class MenuItemsController < ApplicationController
   def import
     unless params[:file].nil?
       result = MenuItemsUploadService.new(file: params[:file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
-      flash[:notice] = result[:value] 
+      flash[:notice] = result[:value]
+      redirect_to terminal_menu_items_path(@terminal)     
     end
-    redirect_to terminal_menu_items_path(@terminal)
+    
   end
 
   def download_csv
@@ -65,6 +66,7 @@ class MenuItemsController < ApplicationController
     type: "application/csv"
   )
   end
+
 
   private
 

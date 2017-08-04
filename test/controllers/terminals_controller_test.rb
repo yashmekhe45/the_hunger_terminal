@@ -71,6 +71,20 @@ class TerminalsControllerTest < ActionController::TestCase
     assert_redirected_to company_terminals_url(@company)
   end
 
+  test "should download invalid sample csv file" do
+    sign_in_admin
+    old_controller = @controller
+    @controller = MenuItemsController.new
+
+    file_name = File.new(Rails.root.join("test/fixtures/files/menu_invalid.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+    post :import, params: {file: csv_file, terminal_id: @terminal.id}
+    assert_redirected_to terminal_menu_items_url(@terminal)
+
+    @controller = old_controller
+    get :download_invalid_csv, params: {terminal_id: @terminal.id}
+    assert_response :success
+  end
 
   test "should not update for invalid record" do
     sign_in_admin

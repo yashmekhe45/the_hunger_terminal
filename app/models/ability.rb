@@ -7,25 +7,37 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role == "employee"
       can :manage, Order
-      cannot :manage,Company
       cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
-      cannot [:show,:update,:delete], Company 
+      cannot :manage,Company
+      cannot [:show,:update,:delete], Company      
+      cannot :input_terminal_extra_charges , :order_management
+      cannot :employees_daily_order_detail , :report_management
+      cannot :terminals_history , :report_management
+      cannot :employees_current_month, :report_management
+      cannot :terminals_todays , :report_management
+      cannot :payment, :payment_management
     end
 
     if user.role == "company_admin"
       can :manage, Order
       cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
-      can :manage, Terminal
-      can :manage, User
-      can :manage, MenuItem
+      # company_admin won't be allowed to access the company index
+      can :manage, Company, :id => user.company_id 
+      can :manage, Terminal, :company_id => user.company_id
+      can :manage, User, :company_id => user.company_id
+      can :manage, MenuItem, :company_id => user.company_id
       can :index, :order_management
       can :order_detail, :order_management
-      can :forward_orders, :order_management
-      can :place_orders, :order_management
+      can :forward_orders, :order_management 
+      can :place_orders, :order_management 
       can :confirm_orders, :order_management
-      can [:read, :update, :get_order_details], Company
-      cannot [:index, :delete], Company
-      # can :manage, Report
+      can :input_terminal_extra_charges , :order_management
+      can :employees_daily_order_detail , :report_management 
+      can :employees_current_month, :report_management 
+      can :monthly_all_employees, :report_management 
+      can :terminals_history , :report_management 
+      can :terminals_todays , :report_management 
+      can :payment, :payment_management 
     end
 
     #

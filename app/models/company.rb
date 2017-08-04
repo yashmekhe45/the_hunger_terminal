@@ -3,7 +3,7 @@ class Company < ApplicationRecord
   
   validates :name, :landline, :email, :subsidy,:start_ordering_at, :end_ordering_at, :address, presence: true
   validates :name, uniqueness:{case_sensitive: false}
-  validates :landline, uniqueness: true
+  validates :landline, :email, uniqueness: true
   validates :landline, length: {is: 11}
   validates_format_of :email,:with => Devise.email_regexp
   validates :subsidy, numericality: true
@@ -21,6 +21,7 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
+
 
   def send_reminders
     unless weekend? 

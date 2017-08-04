@@ -87,6 +87,14 @@ class MenuItemsControllerTest  < ActionController::TestCase
     assert_redirected_to terminal_menu_items_url(@terminal)
   end
 
+  test "bulk records containing invalid records through csv file " do
+    sign_in_admin
+    file_name = File.new(Rails.root.join("test/fixtures/files/menu_invalid.csv"))
+    csv_file = Rack::Test::UploadedFile.new(file_name, 'text/csv')
+    post :import, params: {file: csv_file, terminal_id: @terminal.id}
+    assert_redirected_to terminal_menu_items_url(@terminal)
+  end
+
 
   test "should download sample  csv file" do
     sign_in_admin

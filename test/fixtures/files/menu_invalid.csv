@@ -1,0 +1,4 @@
+name,price,veg,description,active_days
+paneer,,true,best food,"1,2,3,4,5"
+chicken masala,120,false,best food,"1,2,3,4,5"
+paneer tikka msasla,120,,best food,"1,2,3,4,5"

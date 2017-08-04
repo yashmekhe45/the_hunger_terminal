@@ -1,7 +1,10 @@
   require 'csv'
 class TerminalsController < ApplicationController
 
-  load_and_authorize_resource param_method: :terminal_params
+  load_and_authorize_resource :user
+  load_and_authorize_resource :company
+  load_and_authorize_resource
+  # load_and_authorize_resource param_method: :terminal_params
 
   
   before_action :authenticate_user!  
@@ -25,13 +28,14 @@ class TerminalsController < ApplicationController
       unless params[:terminal][:CSV_menu_file].nil?
         result = MenuItemsUploadService.new(file: params[:terminal][:CSV_menu_file],terminal_id: @terminal.id, company_id: @current_company.id).upload_records
         flash[:notice] = result[:value]
+        redirect_to terminal_menu_items_path(@terminal)
       end
       @terminal.payable = @terminal.current_amount - @terminal.payment_made
       @terminal.save
       @terminal_report = @terminal.terminal_reports.build(name:@terminal.name, current_amount:@terminal.current_amount, 
         payment_made: @terminal.payment_made, payable: @terminal.payable)
       @terminal_report.save
-      redirect_to terminal_menu_items_path(@terminal) and return
+      
     else
       render :new and return
     end
@@ -68,6 +72,14 @@ class TerminalsController < ApplicationController
       render :edit and return
     end
   end
+
+  def download_invalid_csv 
+
+    terminal = Terminal.find(params[:terminal_id])
+    send_file("#{Rails.root}/public/#{terminal.name}-invalid_records.csv",
+    type: "application/csv"
+    ) 
+  end
  
   private
 
@@ -76,7 +88,8 @@ class TerminalsController < ApplicationController
   end
 
   def load_company
-    @current_company = current_user.company
+    @current_company = Company.find params[:company_id]
+    
   end
 
   def load_terminal

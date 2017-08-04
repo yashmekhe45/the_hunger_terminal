@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: :one_click_order
-  load_and_authorize_resource  param_method: :order_params, except: :one_click_order
+  load_and_authorize_resource  param_method: :order_params
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
@@ -14,6 +13,9 @@ class OrdersController < ApplicationController
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
     @orders = current_user.orders.includes(:order_details).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
+    if @orders.empty?
+      flash[:error] = "No order is present for this period!"
+    end
   end
 
   def load_terminal
@@ -30,7 +32,7 @@ class OrdersController < ApplicationController
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create           
+  def create                                                                                                                          
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
@@ -52,7 +54,7 @@ class OrdersController < ApplicationController
 
 
   def edit
-    @subsidy = @order.discount
+    @subsidy = current_user.company.subsidy
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
@@ -81,7 +83,6 @@ class OrdersController < ApplicationController
     redirect_to vendors_path
   end  
 
-
   def one_click_order
     if params[:token]
       one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id], token: params[:token])
@@ -98,7 +99,6 @@ class OrdersController < ApplicationController
       end
     end
   end
-
 
   private
 

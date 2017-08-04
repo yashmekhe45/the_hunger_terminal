@@ -26,6 +26,14 @@ class CompanyTest < ActiveSupport::TestCase
     assert @company.errors[:email].include?("can't be blank")
   end
 
+ 
+  test "email should be unique" do
+    @company.save!
+    duplicate_record = build(:company, email: @company.email)
+    duplicate_record.valid?
+    assert duplicate_record.errors[:email].include?("has already been taken")
+  end 
+
   test "email should follow valid regular expression" do
     @company.email = "dummy"
     @company.valid?

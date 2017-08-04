@@ -8,6 +8,8 @@
             = file_field_tag :file , accept: '.csv '
             = submit_tag "Import CSV"
           = link_to 'Sample Menu CSV ', menu_items_download_csv_path
+          %p
+          = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
       .col-md-6
         %form{action:terminal_menu_items_path}
           .input-group.stylish-input-group

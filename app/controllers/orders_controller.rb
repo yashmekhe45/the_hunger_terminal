@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
-  load_and_authorize_resource  param_method: :order_params
+  skip_before_action :authenticate_user!, only: :one_click_order
+  load_and_authorize_resource  param_method: :order_params, except: :one_click_order
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   

@@ -15,6 +15,7 @@ class Order < ApplicationRecord
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
+  has_many :one_click_orders, dependent: :destroy
 
   before_validation :set_discount
   

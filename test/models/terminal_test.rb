@@ -38,24 +38,10 @@ class TerminalTest < ActiveSupport::TestCase
     assert @terminal.errors[:gstin].include?("is the wrong length (should be 15 characters)")
   end
 
-  test "terminal gstin must be unique in a company" do
-    @terminal.save
-    @company = @terminal.company
-    duplicate_terminal = build(:terminal, company: @company, gstin: @terminal.gstin)
-    duplicate_terminal.valid?
-    assert duplicate_terminal.errors[:gstin].include?("terminal GSTIN should be unique in a company") 
-  end
-
   test "gstin of a terminal can be blank" do
     @terminal = Terminal.create(:gstin=>"")
     @terminal.valid?
     assert_empty @terminal.gstin
-  end
-
-  test "gstin must follow regexp" do
-    @terminal = Terminal.create(:gstin=>"12ASDES2345A1Z3")
-    @terminal.valid?
-    assert_match( /\d\d[A-Z]{5}\d{4}[A-Z]\h[Z]\d/, @terminal.gstin )
   end
 
   test "tax should be less than or equal to 100" do
@@ -87,7 +73,6 @@ class TerminalTest < ActiveSupport::TestCase
     refute @terminal.valid?
     assert @terminal.errors[:payment_made].include?("must be greater than or equal to 0")
   end
-
 
   test "current_amount should not be negative" do
     @terminal.current_amount = -100

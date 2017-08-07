@@ -8,7 +8,7 @@ FactoryGirl.define do
     active { true }
     tax {"0.0"}
     min_order_amount {50.0} 
-    gstin_regex = /^\d\d[A-Z]{5}\d{4}[A-Z][0-9A-F][Z]\d$/
+    gstin_regex = /^\d\d[A-Z]{5}\d{4}[A-Z][0-9A-F][Z][0-9A-Z]$/
     gstin {Faker::Base.regexify(gstin_regex)}
     association :company
 

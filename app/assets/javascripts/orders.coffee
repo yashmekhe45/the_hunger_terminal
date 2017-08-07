@@ -108,10 +108,10 @@ find_total = (selected_item) ->
     arr = $('.total')
     $.each arr, (key, value) ->
       num=parseInt($(value).text())
-      sum += num  
+      sum += num
     tax1 = Math.round((tax/100)*sum)  
     $('#tax').text(tax1)   
-    if (subsidy < (subsidy/100)*sum)      
+    if (subsidy < (subsidy/100)*sum)
       $('#discount').text(subsidy)
       $('#grand_total').text(sum+tax1-subsidy)
     else

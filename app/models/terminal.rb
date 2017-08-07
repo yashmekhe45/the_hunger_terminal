@@ -5,8 +5,6 @@ class Terminal < ApplicationRecord
   validates :landline ,length: { is: 11 }
   validates :min_order_amount, :payment_made, :current_amount, numericality: {greater_than_or_equal_to: 0 }
   validates :gstin ,length: { is: 15 } , :allow_blank => true
-  validates :gstin ,uniqueness: { scope: :company_id, message: "terminal GSTIN should be unique in a company" }, :allow_blank => true
-  validate :validate_gstin
   validates_presence_of :gstin, :if => :tax?
   validates :tax ,numericality: { greater_than_or_equal_to: 0 , less_than_or_equal_to: 100 }, :allow_blank => true
   validates :active, inclusion: {in: [true, false]}  
@@ -30,12 +28,6 @@ class Terminal < ApplicationRecord
     unless(self.name == nil)
       self.name = name.squish
     end
-  end
-
-  def validate_gstin 
-    #to validate the gst number of terminal
-    return if(self.gstin == "")
-    self.errors.add(:gstin, "please enter valid GST Identification Number") unless self.gstin =~ /\d\d[A-Z]{5}\d{4}[A-Z]\h[Z]\d/
   end
 
   def active_must_accept_boolean_only

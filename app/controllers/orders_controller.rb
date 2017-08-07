@@ -90,7 +90,7 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(
-        :total_cost,:terminal_id,order_details_attributes:[:menu_item_id, :quantity]
+        :total_cost,:terminal_id,:id, order_details_attributes:[:menu_item_id, :quantity, :id,:_destroy]
       ).merge(user_id: current_user.id)
     end
 

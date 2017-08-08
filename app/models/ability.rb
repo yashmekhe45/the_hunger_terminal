@@ -18,14 +18,18 @@ class Ability
       cannot :payment, :payment_management
     end
 
+    
+    
     if user.role == "company_admin"
       can :manage, Order
       cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
-      # company_admin won't be allowed to access the company index
-      can :manage, Company, :id => user.company_id 
-      can :manage, Terminal, :company_id => user.company_id
       can :manage, User, :company_id => user.company_id
-      can :manage, MenuItem, :company_id => user.company_id
+      # company_admin won't be allowed to access the company index
+      can [:read, :update, :get_order_details, :download_invalid_csv], Company, id: user.company_id
+      can :manage, Terminal, :company_id => user.company_id
+      can :manage, MenuItem
+      can :manage, Order
+      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
       can :index, :order_management
       can :order_detail, :order_management
       can :forward_orders, :order_management 

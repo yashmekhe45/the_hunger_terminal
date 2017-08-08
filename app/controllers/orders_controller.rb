@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  load_and_authorize_resource  param_method: :order_params
+  load_and_authorize_resource  
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
-    @orders = current_user.orders.includes(:order_details).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
+    @orders = current_user.orders.includes(:order_details).includes(:terminal).where(status: "confirmed",date: Date.parse(@from_date)..Date.parse(@to_date)).order(date: :desc)
     if @orders.empty?
       flash[:error] = "No order is present for this period!"
     end
@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
     @terminal_id = params[:terminal_id]
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
+    @tax = @terminal.tax.to_i
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
@@ -48,13 +49,9 @@ class OrdersController < ApplicationController
     end
   end
 
-  def show
-    # @order = Order.find(params[:id])
-  end
-
-
   def edit
     @subsidy = current_user.company.subsidy
+    @tax = @terminal.tax.to_i
     @order_details = @order.order_details.all.includes(:menu_item) 
     oder_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)

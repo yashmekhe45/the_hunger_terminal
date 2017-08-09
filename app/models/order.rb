@@ -120,7 +120,7 @@ class Order < ApplicationRecord
     def calculate_tax
       order_tax = self.terminal.tax.to_f
       total_cost = self.total_cost
-      self.tax = (order_tax*total_cost)/100
+      self.tax = ((order_tax*total_cost)/100).round
     end
 
     def set_discount

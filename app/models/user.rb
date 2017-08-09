@@ -34,7 +34,7 @@ class User < ApplicationRecord
       where('company_id'=> c_id,'orders.status' => 'confirmed').
       where('orders.created_at' => Time.now.beginning_of_month-1.day..Time.now.midnight + 1.day).
       group('users.id').
-      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
+      select('users.name,users.id,sum(orders.total_cost+orders.tax)AS total,sum(orders.discount)AS subsidy').
       order('users.id')
   end
 

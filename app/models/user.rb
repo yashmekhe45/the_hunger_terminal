@@ -55,7 +55,7 @@ class User < ApplicationRecord
       where('orders.created_at' => 1.month.ago.utc.beginning_of_month..1.month.ago.utc.end_of_month).
       where('orders.status'=>'confirmed').
       group('users.id').
-      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
+      select('users.name,users.id,sum(orders.total_cost+orders.tax)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
       order('users.name')
   end
 

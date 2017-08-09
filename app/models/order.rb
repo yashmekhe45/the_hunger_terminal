@@ -13,7 +13,7 @@ class Order < ApplicationRecord
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
 
-  before_validation :set_discount
+  before_validation :set_discount, :calculate_tax
   
   accepts_nested_attributes_for :order_details, allow_destroy: true, reject_if: proc { |attributes| attributes['quantity'].to_i == 0 }
 
@@ -115,6 +115,12 @@ class Order < ApplicationRecord
       if self.order_details.any? == false
         errors.add(:base,"order shold have minimum one menu item")
       end
+    end
+
+    def calculate_tax
+      order_tax = self.terminal.tax.to_f
+      total_cost = self.total_cost
+      self.tax = (order_tax*total_cost)/100
     end
 
     def set_discount

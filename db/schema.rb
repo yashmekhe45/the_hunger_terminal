@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717104445) do
+ActiveRecord::Schema.define(version: 20170809074653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170717104445) do
     t.string   "status",        default: "pending"
     t.float    "discount"
     t.integer  "extra_charges", default: 0
+    t.float    "tax",           default: 0.0
     t.index ["company_id"], name: "index_orders_on_company_id", using: :btree
     t.index ["terminal_id"], name: "index_orders_on_terminal_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree

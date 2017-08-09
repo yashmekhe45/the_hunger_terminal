@@ -45,7 +45,7 @@ class Terminal < ApplicationRecord
       where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending', 'confirmed']).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
-      sum(total_cost) AS total')
+      sum(orders.total_cost+orders.tax) AS total')
   end
 
   def self.all_terminals_last_month_reports(c_id)
@@ -63,7 +63,7 @@ class Terminal < ApplicationRecord
       joins(:orders).
       where('orders.company_id' => c_id, 'orders.date' => Time.zone.today, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
       group('terminals.id').
-      select('terminals.name, terminals.id, sum(orders.total_cost) AS total')
+      select('terminals.name, terminals.id, sum(orders.total_cost+orders.tax) AS total')
   end
 
   def self.all_terminals_todays_order_details(c_id)

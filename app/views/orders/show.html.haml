@@ -34,11 +34,14 @@
                 %strong Subtotal:
                 %span₹#{@order.total_cost} 
               %h4  
+                %strong Tax: 
+                %span₹#{@order.tax}
+              %h4  
                 %strong Discount: 
                 %span₹#{@order.discount}
               %h4
                 %strong.order_total Total:
-                %span₹#{@order.total_cost-@order.discount}  
+                %span₹#{@order.total_cost+@order.tax-@order.discount}
               %h6.order_total (incl. of all taxes)    
       - if can? :edit, @order
         %a.card-link= link_to 'Edit Order', edit_order_path(@order), class: "btn btn-info"

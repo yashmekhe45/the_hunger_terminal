@@ -118,7 +118,7 @@ find_total = (selected_item) ->
       $('#discount').text((subsidy/100)*sum)
       $('#grand_total').text(sum+tax1-(subsidy/100)*sum)
     $('#total').text(sum)
-    $('#order_total_cost').val(sum+tax1)
+    $('#order_total_cost').val(sum)
     if sum == 0 
       $('.place_order').prop("disabled", true);
       $('i').show()

@@ -14,6 +14,7 @@
               TotalOrderPrice
               %h6.text-center (incl. of all taxes)
             %th.text-center Subsidy
+            %th.text-center Extra Charges
             %th.text-center
               CTE
               %h6.text-center (incl. of all taxes)
@@ -25,7 +26,8 @@
             %td.text-center= link_to user.name, history_reports_user_path(user) 
             %td.text-center ₹ #{user.total}
             %td.text-center ₹ #{user.subsidy}
-            %td.text-center ₹ #{user.total - user.subsidy}
+            %td.text-center ₹ #{user.extra_charges}
+            %td.text-center ₹ #{user.total + user.extra_charges - user.subsidy}
   -else
     .alert.alert-danger
       No record is found!!

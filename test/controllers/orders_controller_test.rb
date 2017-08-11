@@ -39,7 +39,7 @@ class OrdersControllerTest  < ActionController::TestCase
   end
 
   test "should not create order" do
-     sign_in_new_user
+    sign_in_new_user
     assert_difference 'Order.count', 0 do
       post :create, 
       params: 

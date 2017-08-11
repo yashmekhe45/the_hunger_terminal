@@ -4,7 +4,7 @@ FactoryGirl.define do
     total_cost { Faker::Number.positive }
     status {"pending"}
     discount { Faker::Number.decimal(2,3) }
-
+    tax { 10.5 }
     association :user
     association :company
     association :terminal

@@ -118,9 +118,13 @@ class Order < ApplicationRecord
     end
 
     def calculate_tax
-      order_tax = self.terminal.tax.to_f
+      if self.terminal == nil
+        order_tax = 0.0
+      else
+        order_tax = self.terminal.tax.to_f
+      end
       total_cost = self.total_cost
-      self.tax = ((order_tax*total_cost)/100).round
+      self.tax = ((order_tax*total_cost)/100).round if total_cost?
     end
 
     def set_discount

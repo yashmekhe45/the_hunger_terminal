@@ -139,6 +139,20 @@ class OrderTest < ActiveSupport::TestCase
     assert_not_equal result, []
   end
 
+  test "tax should be calculated before validation" do
+    order_obj = build(:order)
+    order_obj.terminal.tax = "10"
+    order_obj.valid?
+    assert_not_equal order_obj, []
+  end
+
+  test "tax should be 0 if terminal tax is not present" do
+    order_obj = build(:order)
+    order_obj.terminal.tax = "0"
+    order_obj.valid?
+    assert_not_equal order_obj, []
+  end
+
   #Test cases for associations will be written after integrating SHOULDA in application
 
   test "order should have company" do

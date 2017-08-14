@@ -25,14 +25,17 @@ class OrderTest < ActiveSupport::TestCase
     assert order_obj.errors[:date].include?("can't be in the future")
   end
 
-  test "order should be created between start time  end time" do
+  test "order should be created between start time and end time" do
     some_time = Time.parse("10 PM")
     Time.stub(:now, some_time) do
       order_obj = build(:order) 
       order_obj.valid?
       start_ordering_time = order_obj.company.start_ordering_at.strftime('%H:%M:%S')
       end_ordering_time = order_obj.company.end_ordering_at.strftime('%H:%M:%S')
-      assert order_obj.errors[:base].include?("order cannot be created or updated before #{start_ordering_time} and after #{end_ordering_time}")
+
+      start_time = order_obj.company.start_ordering_at.strftime('%I:%M %p')
+      end_time = order_obj.company.end_ordering_at.strftime('%I:%M %p')
+      assert order_obj.errors[:base].include?("order cannot be created or updated before #{start_time} and after #{end_time}")
     end
   end
 

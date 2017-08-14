@@ -1,12 +1,15 @@
-class Terminal < ApplicationRecord
-  
+class Terminal < ApplicationRecord  
  
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
   validates :landline ,length: { is: 11 }
-  validates :tax, :min_order_amount, :payment_made, :current_amount, numericality: {             greater_than_or_equal_to: 0 }
-  validates :active, inclusion: {in: [true, false]}
+  validates :min_order_amount, :payment_made, :current_amount, numericality: {greater_than_or_equal_to: 0 }
+  validates :gstin ,length: { is: 15 } , :allow_blank => true
+  validates_presence_of :gstin, :if => :tax?
+  validates :tax ,numericality: { greater_than_or_equal_to: 0 , less_than_or_equal_to: 100 }, :allow_blank => true
+  validates :active, inclusion: {in: [true, false]}  
   validates_with LandlineValidator
+
   # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
   has_many :menu_items, dependent: :destroy
   has_many :orders
@@ -42,7 +45,7 @@ class Terminal < ApplicationRecord
       where('orders.date' => Time.zone.today, 'orders.company_id' => c_id, 'orders.status' => ['placed', 'pending', 'confirmed']).
       group('terminals.id').
       select('terminals.name,terminals.min_order_amount,terminals.id,
-      sum(total_cost) AS total')
+      sum(orders.total_cost+orders.tax) AS total')
   end
 
   def self.all_terminals_last_month_reports(c_id)
@@ -60,7 +63,7 @@ class Terminal < ApplicationRecord
       joins(:orders).
       where('orders.company_id' => c_id, 'orders.date' => Time.zone.today, 'terminals.company_id' => c_id, 'orders.status' => 'confirmed').
       group('terminals.id').
-      select('terminals.name, terminals.id, sum(orders.total_cost) AS total')
+      select('terminals.name, terminals.id, sum(orders.total_cost+orders.tax) AS total')
   end
 
   def self.all_terminals_todays_order_details(c_id)

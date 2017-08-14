@@ -1,9 +1,9 @@
 class CompaniesController < ApplicationController
-
-  load_and_authorize_resource
-  skip_before_action :authenticate_user!, :only => [:new, :create]
+  
+  skip_before_action :authenticate_user!, :only => [:new, :create] 
+  load_and_authorize_resource except: [:new, :create]
   before_action :require_permission, only: [:show, :edit, :update, :delete, :get_order_details]
-  before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details, :set_order_details]
+  before_action :load_company, only: [:update, :show, :destroy,:edit, :get_order_details]
 
   def new
     @company = Company.new

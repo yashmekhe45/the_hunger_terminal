@@ -10,13 +10,15 @@
               %thead
                 %tr
                   %th Product
+                  %th Vendor
                   %th UnitPrice
                   %th Quantity
                   %th ItemPrice
               %tbody
                 - @order.order_details.each do |order_detail|
                   %tr
-                    %td= order_detail.menu_item_name  
+                    %td= order_detail.menu_item_name
+                    %td= @order.terminal.name
                     %td
                       %span ₹
                       %span.price= order_detail.price
@@ -25,7 +27,7 @@
                       %span ₹
                       %span.sub-total= order_detail.price * order_detail.quantity
           .col-sm-2
-          .col-sm-4
+          .col-sm-4.col-md-4
             .detail
               %h4 
                 %strong.date Date: 
@@ -34,11 +36,14 @@
                 %strong Subtotal:
                 %span₹#{@order.total_cost} 
               %h4  
+                %strong Total Tax:
+                %span₹#{@order.tax}
+              %h4  
                 %strong Discount: 
                 %span₹#{@order.discount}
               %h4
                 %strong.order_total Total:
-                %span₹#{@order.total_cost-@order.discount}  
+                %span₹#{@order.total_cost+@order.tax-@order.discount}
               %h6.order_total (incl. of all taxes)    
       - if can? :edit, @order
         %a.card-link= link_to 'Edit Order', edit_order_path(@order), class: "btn btn-info"

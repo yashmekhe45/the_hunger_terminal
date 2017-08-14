@@ -35,7 +35,7 @@ class User < ApplicationRecord
       where('company_id'=> c_id,'orders.status' => 'confirmed').
       where('orders.created_at' => Time.now.beginning_of_month-1.day..Time.now.midnight + 1.day).
       group('users.id').
-      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy').
+      select('users.name,users.id,sum(orders.total_cost+orders.tax)AS total,sum(orders.discount)AS subsidy,sum(orders.extra_charges)As extra_charges').
       order('users.id')
   end
 
@@ -56,7 +56,7 @@ class User < ApplicationRecord
       where('orders.created_at' => 1.month.ago.utc.beginning_of_month..1.month.ago.utc.end_of_month).
       where('orders.status'=>'confirmed').
       group('users.id').
-      select('users.name,users.id,sum(orders.total_cost)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
+      select('users.name,users.id,sum(orders.total_cost+orders.tax)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').
       order('users.name')
   end
 

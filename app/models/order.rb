@@ -8,10 +8,14 @@ class Order < ApplicationRecord
   validate :valid_date?, on: :create
   validate :valid_day?, on: :create
 
+
+  scope :confirmed, -> { where(status: 'confirmed') }
+
   belongs_to :user
   belongs_to :company
   belongs_to :terminal
   has_many :order_details, dependent: :destroy, inverse_of: :order,autosave: true
+  has_many :one_click_orders, dependent: :destroy
 
   before_validation :set_discount, :calculate_tax
   
@@ -105,7 +109,10 @@ class Order < ApplicationRecord
       current_time = Time.zone.now.strftime('%H:%M:%S')
       start_time = self.company.start_ordering_at.strftime('%H:%M:%S')
       end_time = self.company.end_ordering_at.strftime('%H:%M:%S')
+
       if !(current_time >= start_time and current_time <= end_time)
+        start_time = self.company.start_ordering_at.strftime('%I:%M %p')
+        end_time = self.company.end_ordering_at.strftime('%I:%M %p')
         errors.add(:base,"order cannot be created or updated before #{start_time} and after #{end_time}")
       end
     end

@@ -130,6 +130,15 @@ class OrdersControllerTest  < ActionController::TestCase
     assert_template :load_terminal
   end
 
+  test "can place one click order without sign in" do
+    one_click_order_obj = create :one_click_order
+    token = one_click_order_obj.token
+    order_id = one_click_order_obj.order_id
+    get :one_click_order, params: {token: token, order_id: order_id}
+    assert_response :success
+    assert_template :one_click_order
+  end
+
 
   def sign_in_user_having_order
     @user1.confirm

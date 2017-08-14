@@ -1,10 +1,33 @@
-%p Hello #{@name},
+%p Hello #{@employee_name},
 %p 
   This is just for the reminder that you can place order only upto 
   %b 12:30 PM
-%p So, place your order as soon as possible and enjoy your lunch!!!
-%p You can sign in to your accout through the link below to quickly place your order:
-%p= link_to 'Place Order',  new_user_session_url
+
+/ One click ordering logic
+-unless @orders.empty?
+  %b Now, you can order dishes in one single click! We recommend:
+  %table{style: 'cellspacing: 20px cellpadding: 20px; border-collapse: collapse; border: 1px solid #ddd;'}
+    %tr
+      %th{style: 'padding: 15px;  border: 1px solid #ddd;'} Vendor
+      %th{style: 'padding: 15px;  border: 1px solid #ddd;'} Menu Items
+    - @orders.each_with_index do |order, index|
+      %tr
+        
+        %td{style: 'padding: 2px; border: 1px solid #ddd;'}
+          =image_tag attachments["#{order.id}.jpg"].url, width: 75, height: 70
+        %td{style: 'padding: 10px;  border: 1px solid #ddd;'}
+          - order.order_details.each do |order_item|
+            %span #{order_item.menu_item_name}(#{order_item.quantity})
+            %br
+          -user_token = @one_click_orders[index].token
+          %p= link_to "Place Order", one_click_order_url(user_token, order.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'
+  %b OR Place another order by signing in : 
+-else
+  %p Place your order by signing in: 
+
+
+%p= link_to 'Sign In',  new_user_session_url, style: 'background-color: #4CAF50; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px; font-size: 15px;'
+%br
 %p Have a great day!!!
 %p Regards,
 %p The Hunger Terminal Team

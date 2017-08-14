@@ -1,10 +1,11 @@
 class OrdersController < ApplicationController
 
-  load_and_authorize_resource  
+  skip_before_action :authenticate_user!, only: :one_click_order
+  load_and_authorize_resource  param_method: :order_params, except: :one_click_order
   before_action :require_permission, only: [:show, :edit, :update, :delete]
   before_action :load_terminal_and_order, only: [:show, :edit, :update, :delete]
   
-  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Home", :root_path, except: [:one_click_order]
   add_breadcrumb "Terminals", :vendors_path, only: [:new, :create, :load_terminal]
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
   add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
@@ -75,11 +76,27 @@ class OrdersController < ApplicationController
 
 
   def destroy
-    # @order = Order.find(params[:id])
     @order.destroy
     flash[:success] = "Your order has been deleted successfully"
     redirect_to vendors_path
   end  
+
+  def one_click_order
+    if params[:token]
+      one_click_order_obj = OneClickOrder.find_by(order_id: params[:order_id], token: params[:token])
+      if one_click_order_obj
+        old_order = Order.find(params[:order_id])
+        @new_order = old_order.dup
+        @new_order.status = "pending"
+        @new_order.date = Time.zone.today
+        old_order.order_details.each do |order_detail|
+          new_order_detail = order_detail.dup
+          @new_order.order_details << new_order_detail
+        end
+        @new_order.save 
+      end
+    end
+  end
 
   private
 

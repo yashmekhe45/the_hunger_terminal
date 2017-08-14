@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                                                                                                                          
+  def create                         
     @order = Order.new(order_params)
     load_order_detail
     if @order.save

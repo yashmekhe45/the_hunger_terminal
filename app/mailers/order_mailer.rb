@@ -28,7 +28,7 @@ class OrderMailer < ApplicationMailer
   def create_one_click_orders(employee_id)
     #For now, we are sending last three orders for one click ordering
     user = User.find(employee_id)
-    @orders =  user.orders.includes(:order_details).confirmed.last(3)
+    @orders =  user.orders.includes(:order_details).confirmed.last(3).reverse
     @one_click_orders = []
 
     @orders.each do |order|

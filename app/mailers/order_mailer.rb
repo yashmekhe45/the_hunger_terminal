@@ -33,11 +33,11 @@ class OrderMailer < ApplicationMailer
 
     @orders.each do |order|
       @one_click_orders << order.one_click_orders.create(user_id: user.id) 
-      terminal_image = "uploads/terminal/image/hotelplaceholder1.jpg"
+      terminal_image = "/uploads/terminal/image/hotelplaceholder1.jpg"
       if order.terminal['image'].present?
         terminal_image  = order.terminal.image_url(:thumb) 
       end
-      image_url = "#{Rails.root}/public/" + terminal_image
+      image_url = "#{Rails.root}/public" + terminal_image
       attachments.inline["#{order.id}.jpg"] = File.read(image_url)
     end
   end

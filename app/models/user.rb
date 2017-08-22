@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :async
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable#, :async
   
   # devise :timeoutable, :timeout_in => 3.days
 

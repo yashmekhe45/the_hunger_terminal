@@ -50,6 +50,7 @@ gem 'redis', '~> 3.0'
 gem 'rollbar'
 gem 'roo'
 gem 'roo-xls'
+gem 'carrierwave-aws'
 # gem 'bootstrap-datepicker-rails', '1.4.0'
 
 # Use ActiveModel has_secure_password

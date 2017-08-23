@@ -72,11 +72,11 @@ class Order < ApplicationRecord
     order_ids = order_details.pluck(:id).uniq
     orders = Order.where(:id => order_ids)
     orders.update_all(:status => "confirmed")
-    @employees =  orders.
+    employee_ids =  orders.
                     joins(:user).
-                    pluck('users.email AS email, users.name AS name')
-    @employees.each do |employee|
-      OrderMailer.send_mail_to_employees(employee).deliver_later
+                    pluck('users.id')
+    employee_ids.each do |employee|
+      SendOrderMailJob.perform_later(employee)
     end
   end
 

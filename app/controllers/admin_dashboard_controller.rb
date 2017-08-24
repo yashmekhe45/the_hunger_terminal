@@ -50,7 +50,7 @@ class AdminDashboardController < ApplicationController
   def place_orders
     authorize! :place_orders, :order_management
     unless @terminal.email.blank?
-      SendOrderMailJob.perform_now(params[:terminal_id], @orders, params[:message], current_user.company_id)
+      OrderMailer.send_mail_to_terminal(params[:terminal_id], @orders, params[:message], current_user.company_id).deliver_now
       flash[:notice] = "email sent successfully"
     end
     # @orders = Order.menu_details(params[:terminal_id], current_user.company_id)

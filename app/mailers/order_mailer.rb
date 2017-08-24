@@ -12,7 +12,6 @@ class OrderMailer < ApplicationMailer
     user = User.select(:name, :email).find(employee)
     @name = user.name
     email = user.email
-    # p "delivered to " + @name + "===" + email
     mail(to: email, subject: 'Status of Order')
   end
 

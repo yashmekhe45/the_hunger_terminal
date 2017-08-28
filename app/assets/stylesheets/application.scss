@@ -428,6 +428,14 @@ button.toast-close-button {
     display: none;
   }
 
+  a[href]:after{
+    content: none;
+  }
+
+  #download_pdf{
+    display: none;
+  }
+
   #container {
     width: auto;
     margin: 0;

@@ -35,7 +35,6 @@ end
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   include FactoryGirl::Syntax::Methods
-  include ActiveJob::TestHelper
   fixtures :all
   DatabaseCleaner.strategy = :transaction
 

@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :one_click_orders
   before_validation :not_a_string , :remove_space
 
-  def is_admin?
+  def is_company_admin?
     self.role == 'company_admin'
   end
 

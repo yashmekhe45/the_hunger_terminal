@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SendOrderMailJobTest < ActiveJob::TestCase
+class SendEmployeeOrderMailJobTest < ActiveJob::TestCase
 
   include ActiveJob::TestHelper
   
@@ -11,7 +11,7 @@ class SendOrderMailJobTest < ActiveJob::TestCase
   test 'perform' do
     assert_performed_jobs 0
     perform_enqueued_jobs do
-      SendOrderMailJob.perform_later(@user.id)
+      SendEmployeeOrderMailJob.perform_later(@user.id)
     end
     assert_performed_jobs 1
   end

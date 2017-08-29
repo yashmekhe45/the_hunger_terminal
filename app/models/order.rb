@@ -75,8 +75,8 @@ class Order < ApplicationRecord
     employee_ids =  orders.
                     joins(:user).
                     pluck('users.id')
-    employee_ids.each do |employee|
-      SendOrderMailJob.perform_later(employee)
+    employee_ids.each do |employee_id|
+      SendEmployeeOrderMailJob.perform_later(employee_id)
     end
   end
 

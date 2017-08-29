@@ -6,7 +6,7 @@ class SendOrderMailJob < ApplicationJob
   # end
 
   def perform(employee)
-    OrderMailer.send_mail_to_employees(employee).deliver_later
+    OrderMailer.send_mail_to_employees(employee).deliver
   end
   
 end

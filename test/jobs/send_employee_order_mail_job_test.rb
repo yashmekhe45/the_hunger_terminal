@@ -6,6 +6,7 @@ class SendEmployeeOrderMailJobTest < ActiveJob::TestCase
   
   before :each do
     @user = create(:user)
+    @user.confirm
   end
   
   test 'perform' do

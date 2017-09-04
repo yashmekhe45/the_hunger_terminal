@@ -40,9 +40,14 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     assert_not_empty ActionMailer::Base.deliveries
   end
 
+  #here we have created orders for 2 employees
   test "should confirm orders" do
     sign_in_admin
-    get :confirm_orders, params: {terminal_id: @terminal1.id}
+    create_employees
+    create_orders
+    assert_enqueued_jobs 2 do
+      get :confirm_orders, params: {terminal_id: @terminal1.id, todays_order_total: "1000"}
+    end
     assert_response :redirect
     assert_redirected_to admin_dashboard_index_url
   end

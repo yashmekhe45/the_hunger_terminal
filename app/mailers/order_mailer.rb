@@ -9,8 +9,9 @@ class OrderMailer < ApplicationMailer
   end
 
   def send_mail_to_employees(employee)
-    email = employee[0]
-    @name = employee[1]
+    user = User.select(:name, :email).find(employee)
+    @name = user.name
+    email = user.email
     mail(to: email, subject: 'Status of Order')
   end
 

@@ -112,9 +112,9 @@ class OrderTest < ActiveSupport::TestCase
     order = create_order
     terminal_id = order.terminal.id
     company_id = order.company.id
-    ActionMailer::Base.deliveries = []
-    Order.confirm_all_placed_orders(terminal_id, company_id,[order])
-    assert_not_empty ActionMailer::Base.deliveries
+    assert_enqueued_jobs 1 do
+      Order.confirm_all_placed_orders(terminal_id, company_id,[order])
+    end
   end
 
 

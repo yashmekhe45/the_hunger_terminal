@@ -1,3 +1,3 @@
 Devise::Async.backend = :sidekiq
-Devise::Async.enabled = true
+Devise::Async.enabled = !Rails.env.test?
 Devise::Async.queue = :mailers

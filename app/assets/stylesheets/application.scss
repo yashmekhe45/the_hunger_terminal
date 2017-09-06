@@ -420,10 +420,6 @@ button.toast-close-button {
     display: none;
   }
 
-  footer {
-    margin-bottom: -780px;
-  }
-
   #backButton{
     display: none;
   }
@@ -448,7 +444,13 @@ button.toast-close-button {
   }
 
   #monthly_emp_report {
-    width: 970px;
+    position: relative;
+    width: 110%;
+    margin-bottom: 95%;
+  }
+
+  #monthly_emp_report > footer {
+    position: absolute;
   }
   
   #line_items {

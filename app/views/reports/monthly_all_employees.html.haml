@@ -1,4 +1,4 @@
-.container
+.container#monthly_emp_report
   -if !@users.empty?
     %h3.text-center Employee's Reports
     = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success", id: "download_pdf"
@@ -12,10 +12,10 @@
             %th.text-center
               TotalOrderPrice
               %h6.text-center (incl. of all taxes)
-            %th.text-center SubsidyGiven
+            %th.text-center Subsidy
             %th.text-center Extra Charges
             %th.text-center
-              CostToEmployee (CTE)
+              CTE
               %h6.text-center (incl. of all taxes)
 
           - @users.each_with_index do |user,i|

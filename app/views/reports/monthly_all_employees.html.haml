@@ -1,7 +1,7 @@
-.container
+.container#monthly_emp_report
   -if !@users.empty?
     %h3.text-center Employee's Reports
-    = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success"
+    = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success", id: "download_pdf"
     .table-responsive
       %table.table-hover.table-bordered
         %tbody
@@ -26,7 +26,7 @@
             %td.text-center ₹ #{user.total}
             %td.text-center ₹ #{user.subsidy}
             %td.text-center ₹ #{user.extra_charges}
-            %td.text-center ₹ #{user.total - user.subsidy + user.extra_charges}
+            %td.text-center= round_of_total(user.total - user.subsidy + user.extra_charges)
   -else
     .alert.alert-danger
       No record is found!!

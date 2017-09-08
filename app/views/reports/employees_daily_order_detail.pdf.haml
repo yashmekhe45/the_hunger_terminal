@@ -1,0 +1,32 @@
+.container
+  -if !@orders.empty?
+    %h2#h2.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
+    %h4#h4.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
+    .table-responsive
+      %table.table-hover.table-bordered.employees_report_table#table
+        %tbody
+          %tr
+            %th.align.text-center Sr No.
+            %th.align.text-center Employee
+            %th.align.text-center Vendor
+            %th.align.text-center Item 
+            %th.align.text-center Quantity
+          - employee = "nil"  
+          - i=0
+          - @orders.each do |order|
+            %tr  
+            - if employee == order.emp_name
+              %td.align.text-center
+              %td.align.text-center
+              %td.align.text-center
+            - else
+              %td.align.text-center= i+1
+              %td.align.text-center= order.emp_name
+              %td.align.text-center= order.vendor
+              - i = i+1
+            %td.align.text-center= order.menu
+            %td.align.text-center= order.quantity
+            - employee = order.emp_name
+  -else
+    .alert.alert-danger
+      No record is found!!

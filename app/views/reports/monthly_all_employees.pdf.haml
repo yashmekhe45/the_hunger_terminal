@@ -1,0 +1,32 @@
+%h2#h2.text-center Josh Software Private Limited
+
+.container
+  -if !@users.empty?
+    %h3#h3.text-center Employee's Reports
+    
+    .table-responsive
+      %table.table-hover.table-bordered#table
+        %tbody
+          %tr
+            %th.align.text-center Sr No.
+            %th.align.text-center Name
+            %th.align.text-center
+              TotalOrderPrice
+              %h5.text-center (incl. of all taxes)
+            %th.align.text-center Subsidy
+            %th.align.text-center Extra Charges
+            %th.align.text-center
+              CTE
+              %h5.text-center (incl. of all taxes)
+
+          - @users.each_with_index do |user,i|
+            %tr  
+            %td.align.text-center= i+1
+            %td.align.text-center= user.name
+            %td.align.text-center ₹ #{user.total}
+            %td.align.text-center ₹ #{user.subsidy}
+            %td.align.text-center ₹ #{user.extra_charges}
+            %td.align.text-center= round_of_total(user.total - user.subsidy + user.extra_charges)
+  -else
+    .alert.alert-danger
+      No record is found!!

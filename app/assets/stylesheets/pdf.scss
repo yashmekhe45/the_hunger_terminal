@@ -1,0 +1,33 @@
+#table {
+  padding-top: 2%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.align{
+  border: 1px solid black;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  text-align: center;
+  padding: 1%; 
+}
+
+#h2, #h3, #h4{
+  padding-top: 2%;
+  text-align: center;
+}
+
+body {
+  background-color: #FFF;
+}
+
+#container {        
+  width: auto;         
+  margin: 0;          
+  padding: 0;         
+  border: none;        
+}       
+
+#line_items {
+  page-break-before: always;
+}

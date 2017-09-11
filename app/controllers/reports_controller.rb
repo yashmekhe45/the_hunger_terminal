@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "monthly_all_employees.pdf.haml", handlers: [:haml], formats: :html))
+        kit = PDFKit.new(render_to_string(layout: false, action: "monthly_all_employees.pdf.haml"))
         kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
         send_data(kit.to_pdf, :filename => "employees_last_month_report.pdf", :type => "application/pdf",:disposition => 'inline')
       end
@@ -49,7 +49,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "employees_daily_order_detail.pdf.haml", handlers: [:haml], formats: :html))
+        kit = PDFKit.new(render_to_string(layout: false, action: "employees_daily_order_detail.pdf.haml"))
         kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
         send_data(kit.to_pdf, :filename => "employees_daily_order_detail.pdf", :type => 'application/pdf',:disposition => 'inline')
       end
@@ -69,7 +69,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "terminals_todays.pdf.haml", handlers: [:haml], formats: :html))
+        kit = PDFKit.new(render_to_string(layout: false, action: "terminals_todays.pdf.haml"))
         kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
         send_data(kit.to_pdf, :filename => "TerminalReport.pdf", :type => 'application/pdf',:disposition => 'inline')
       end

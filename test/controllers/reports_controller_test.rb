@@ -44,7 +44,7 @@ class ReportsControllerTest  < ActionController::TestCase
     sign_in_admin
     get :monthly_all_employees, format: 'pdf'
     assert_response :success
-    response.headers["Content-Disposition"] == "inline; filename=\"employees_last_month_report.pdf\""
+    response.headers["Content-Disposition"] == "inline; filename=\"monthly_all_employees.pdf\""
   end
 
 
@@ -71,7 +71,7 @@ class ReportsControllerTest  < ActionController::TestCase
     sign_in_admin
     get :terminals_todays, format: 'pdf'
     assert_response :success
-    response.headers["Content-Disposition"] == "inline; filename=\"TerminalReport.pdf\""
+    response.headers["Content-Disposition"] == "inline; filename=\"terminals_todays.pdf\""
   end
 
   test "terminals' today's report pdf should be generated" do

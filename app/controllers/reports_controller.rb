@@ -1,6 +1,8 @@
 
 class ReportsController < ApplicationController
 
+  include Reports
+
   before_action :load_company
 
   add_breadcrumb "Home", :root_path
@@ -28,13 +30,11 @@ class ReportsController < ApplicationController
 
   def monthly_all_employees
     authorize! :monthly_all_employees, :report_management
-    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)  
+    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "monthly_all_employees.pdf.haml"))
-        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
-        send_data(kit.to_pdf, :filename => "employees_last_month_report.pdf", :type => "application/pdf",:disposition => 'inline')
+        generate_pdf("monthly_all_employees")
       end
     end 
   end
@@ -49,9 +49,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "employees_daily_order_detail.pdf.haml"))
-        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
-        send_data(kit.to_pdf, :filename => "employees_daily_order_detail.pdf", :type => 'application/pdf',:disposition => 'inline')
+        generate_pdf("employees_daily_order_detail")
       end
     end 
   end
@@ -69,9 +67,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new(render_to_string(layout: false, action: "terminals_todays.pdf.haml"))
-        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.scss"
-        send_data(kit.to_pdf, :filename => "TerminalReport.pdf", :type => 'application/pdf',:disposition => 'inline')
+        generate_pdf("terminals_todays")
       end
     end 
   end

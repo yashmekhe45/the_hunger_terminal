@@ -1,4 +1,4 @@
-#table {
+.pdf_table {
   padding-top: 2%;
   border-collapse: collapse;
   margin: 0 auto;
@@ -12,22 +12,7 @@
   padding: 1%; 
 }
 
-#h2, #h3, #h4{
+.pdf_h2, .pdf_h3, .pdf_h4{
   padding-top: 2%;
   text-align: center;
-}
-
-body {
-  background-color: #FFF;
-}
-
-#container {        
-  width: auto;         
-  margin: 0;          
-  padding: 0;         
-  border: none;        
-}       
-
-#line_items {
-  page-break-before: always;
 }

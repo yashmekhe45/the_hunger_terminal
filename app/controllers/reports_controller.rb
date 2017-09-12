@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
 
   def monthly_all_employees
     authorize! :monthly_all_employees, :report_management
-    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)
+    @users = User.employee_last_month_report(current_user.company_id, Time.current-1.month)
     respond_to do |format|
       format.html
       format.pdf do

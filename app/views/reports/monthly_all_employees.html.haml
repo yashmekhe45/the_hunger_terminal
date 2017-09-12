@@ -1,4 +1,4 @@
--if (response.content_type == "application/pdf")
+-if is_pdf(response.content_type)
   %h2.pdf_h2.text-center Josh Software Private Limited
 
 -else
@@ -6,7 +6,7 @@
   -if !@users.empty?
     -time =Time.now - 1.month
     %h3.pdf_h3.text-center #{time.strftime("%B")}, #{time.year} Employee's Reports
-    -if (response.content_type != "application/pdf")
+    -if !is_pdf(response.content_type)
       = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success"
     .table-responsive
       %table.table-hover.table-bordered.pdf_table
@@ -26,7 +26,7 @@
           - @users.each_with_index do |user,i|
             %tr  
             %td.align.text-center= i+1
-            -if (response.content_type != "application/pdf")
+            -if !is_pdf(response.content_type)
               %td.align.text-center= link_to user.name, history_reports_user_path(user)
             -else
               %td.align.text-center= user.name
@@ -37,4 +37,3 @@
   -else
     .alert.alert-danger
       No record is found!!
-      

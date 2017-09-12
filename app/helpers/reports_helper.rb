@@ -8,5 +8,8 @@ module ReportsHelper
     p "₹ " + "#{last_month_total}"
   end
 
-  
+  def is_pdf(content_type)
+    content_type == "application/pdf" ? true : false
+  end
+
 end

@@ -3,7 +3,7 @@
     %h3.pdf_h3.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
     %h4.pdf_h4.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
 
-    -if (response.content_type != "application/pdf")
+    -if !is_pdf(response.content_type)
       = link_to 'last month report', history_reports_terminals_path, class: 'btn btn-info'
       = link_to 'print',  todays_reports_terminals_path(:format => 'pdf' ), class: 'btn btn-info'
     .table-responsive

@@ -43,6 +43,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
+  def self.default_url
+    "http://#{ENV.fetch('S3_BUCKET_NAME')}.s3.amazonaws.com/" + "#{Rails.env}/uploads/terminal/image/hotelplaceholder1.jpg"
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename

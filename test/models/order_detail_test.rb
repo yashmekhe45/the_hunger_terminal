@@ -66,4 +66,17 @@ class OrderDetailTest < ActiveSupport::TestCase
     @order_detail.valid?
     assert @order_detail.errors[:order].include?("can't be blank")
   end
+
+  test "orders should be fetched for OneClickOrdering" do
+    #It gives last three distinct orders of the user if any
+    order = Order.new
+    user = create(:user)
+    yesterday = Time.zone.today - 1.day
+    Date.stub(:today, yesterday) do
+      order = create(:order, user: user, status: 'confirmed')
+    end
+    
+    orders = OrderDetail.get_orders_for_one_click_ordering(user.id)
+    assert_equal orders, [order]
+  end
 end

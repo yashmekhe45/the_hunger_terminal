@@ -129,6 +129,7 @@ class CompanyTest < ActiveSupport::TestCase
     company = create(:company, name: "Josh Software")
     users = create(:user_with_orders, company: company)
     ActionMailer::Base.deliveries = []
+    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg").to_return(status: 200, body: "", headers: {})
     company.send_reminders
     assert_not_empty ActionMailer::Base.deliveries
   end

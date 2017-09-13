@@ -1,3 +1,4 @@
+require 'open-uri'
 class OrderMailer < ApplicationMailer
 
   def send_mail_to_terminal(terminal_id, terminal_orders, message, company_id)
@@ -26,19 +27,19 @@ class OrderMailer < ApplicationMailer
   private
 
   def create_one_click_orders(employee_id)
-    #For now, we are sending last three orders for one click ordering
-    user = User.find(employee_id)
-    @orders =  user.orders.includes(:order_details).confirmed.last(3).reverse
-    @one_click_orders = []
-
-    @orders.each do |order|
-      @one_click_orders << order.one_click_orders.create(user_id: user.id) 
-      terminal_image = "/uploads/terminal/image/hotelplaceholder1.jpg"
-      if order.terminal['image'].present?
-        terminal_image  = order.terminal.image_url(:thumb) 
+    #For now, we are sending last three distinct orders for one click ordering
+    @orders = []
+    @orders =  OrderDetail.get_orders_for_one_click_ordering(employee_id)
+    unless @orders.empty?
+      @one_click_orders = []
+      @orders.each do |order|
+        @one_click_orders << order.create_one_click_order(employee_id)
+        terminal_image = ImageUploader.default_url
+        if order.terminal['image'].present?
+          terminal_image  = order.terminal.image_url(:thumb)  
+        end
+        attachments.inline["#{order.id}.jpg"] = open(terminal_image).read
       end
-      image_url = "#{Rails.root}/public" + terminal_image
-      attachments.inline["#{order.id}.jpg"] = File.read(image_url)
     end
   end
 end

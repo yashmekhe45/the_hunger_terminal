@@ -1,6 +1,8 @@
 
 class ReportsController < ApplicationController
 
+  include Reports
+
   before_action :load_company
 
   add_breadcrumb "Home", :root_path
@@ -27,13 +29,12 @@ class ReportsController < ApplicationController
 
 
   def monthly_all_employees
-    authorize! :monthly_all_employees, :report_management 
-    @users = User.employee_last_month_report(current_user.company_id, Time.now-1.month)  
+    authorize! :monthly_all_employees, :report_management
+    @users = User.employee_last_month_report(current_user.company_id, Time.current-1.month)
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new('http://localhost:3000/reports/users/history', :page_size => 'A3')
-        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+        generate_pdf("monthly_all_employees")
       end
     end 
   end
@@ -48,8 +49,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new('http://localhost:3000/reports/users/todays', :page_size => 'A3')
-        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+        generate_pdf("employees_daily_order_detail")
       end
     end 
   end
@@ -67,8 +67,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        kit = PDFKit.new('http://localhost:3000/reports/terminals/todays', :page_size => 'A3')
-        send_data(kit.to_pdf, :filename => "your_pdf_name.pdf", :type => 'application/pdf',:disposition => 'inline')
+        generate_pdf("terminals_todays")
       end
     end 
   end

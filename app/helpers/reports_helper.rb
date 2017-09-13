@@ -8,5 +8,8 @@ module ReportsHelper
     p "₹ " + "#{last_month_total}"
   end
 
-  
+  def pdf?(content_type)
+    content_type.eql?("application/pdf")
+  end
+
 end

@@ -83,6 +83,10 @@ class Order < ApplicationRecord
   def self.get_all_orders_status(terminal_id)
     where(date: Time.zone.today, terminal_id: terminal_id).pluck(:status)
   end
+
+  def create_one_click_order(employee_id)
+    self.one_click_orders.create(user_id: "#{employee_id}")
+  end
   
   private
 

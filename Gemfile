@@ -50,6 +50,7 @@ gem 'redis', '~> 3.0'
 gem 'rollbar'
 gem 'roo'
 gem 'roo-xls'
+gem 'carrierwave-aws'
 # gem 'bootstrap-datepicker-rails', '1.4.0'
 
 # Use ActiveModel has_secure_password
@@ -62,6 +63,7 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'webmock'
 end
 
 group :development do

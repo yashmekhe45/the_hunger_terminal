@@ -10,7 +10,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
 require "database_cleaner"
-
+require 'webmock/minitest'
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
@@ -26,7 +26,6 @@ module CreateOrderHelper
     end
   end
 end
-
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   include ActiveJob::TestHelper

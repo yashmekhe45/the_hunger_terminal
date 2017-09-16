@@ -16,3 +16,9 @@ task :place_order_reminder => :environment do
   end
 end
 
+
+desc "This task will delete all the OneClickOrder records"
+task :nullify_oneclickorder_tokens => :environment do
+  OneClickOrder.nullify_tokens
+end
+

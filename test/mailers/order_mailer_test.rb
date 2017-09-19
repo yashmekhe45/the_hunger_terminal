@@ -42,8 +42,7 @@ class OrderMailerTest < ActionMailer::TestCase
     terminal_image.content_type = "image/jpeg"
     terminal.update(image: terminal_image) 
 
-    
-    @user.orders.create(status: 'confirmed', terminal:terminal, company: @company)
+    create_past_order_for_user(terminal)
     ordering_end_time  = @company.end_ordering_at.strftime('%I:%M %p')
 
     ActionMailer::Base.deliveries = []
@@ -60,7 +59,21 @@ class OrderMailerTest < ActionMailer::TestCase
     stub_request_if_terminal_image_absent
 
     terminal = create(:terminal, company: @company)
-    @user.orders.create(status: 'confirmed', terminal:terminal, company: @company)
+    create_past_order_for_user(terminal)
+    ordering_end_time  = @company.end_ordering_at.strftime('%I:%M %p')
+    
+    ActionMailer::Base.deliveries = []
+    email = OrderMailer.send_place_order_reminder(@user,ordering_end_time).deliver_now
+
+    assert_not_empty ActionMailer::Base.deliveries
+    assert_equal ["hunger-terminal@joshsoftware.com"], email.from
+    assert_equal [@user.email], email.to
+    assert_equal '[The Hunger Terminal] Place your order', email.subject
+  end
+
+  test "send place order reminder if no past order is present" do
+    stub_request_if_terminal_image_absent
+    terminal = create(:terminal, company: @company)
     ordering_end_time  = @company.end_ordering_at.strftime('%I:%M %p')
     
     ActionMailer::Base.deliveries = []
@@ -82,6 +95,13 @@ class OrderMailerTest < ActionMailer::TestCase
 
   def stub_request_if_terminal_image_absent()
    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg").to_return(status: 200, body: "", headers: {})
+  end
+
+  def create_past_order_for_user(terminal)
+    some_date = Time.new(2017,01,02)# 1st Jan
+    Time.stub(:now, some_date) do
+      create(:order, status: 'confirmed',user: @user, terminal:terminal, company: @company)
+    end
   end
 
 end

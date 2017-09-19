@@ -1,40 +1,34 @@
 .container
   -if !@orders.empty?
-    %h3.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
-    %h4.text-center Date: #{ Time.zone.now.strftime("%d %B, %Y") }
-    = link_to 'print', todays_reports_users_path(:format => 'pdf' ), class: 'btn btn-info'
+    %h3.pdf_heading.text-center #{current_user.company.name.capitalize} Employees's Today's Reports
+    %h4.pdf_heading.text-center Date: #{ Time.current.strftime("%d %B, %Y") }
+    -if !pdf?(response.content_type)
+      = link_to 'print', todays_reports_users_path(:format => 'pdf' ), class: 'btn btn-info'
     .table-responsive
-      %table.table-hover.table-bordered.employees_report_table
+      %table.table-hover.table-bordered.employees_report_table.pdf_table
         %tbody
-          %tr 
-            %th.text-center #
-            %th.text-center Employee
-            %th.text-center Vendor
-            %th.text-center Item 
-            %th.text-center Quantity
-          - employee = "nil"  
+          %tr
+            %th.align.text-center Sr No.
+            %th.align.text-center Employee
+            %th.align.text-center Vendor
+            %th.align.text-center Item
+            %th.align.text-center Quantity
+          - employee = "nil"
           - i=0
           - @orders.each do |order|
-            %tr  
+            %tr
             - if employee == order.emp_name
-              %td.text-center
-              %td.text-center
-              %td.text-center
+              %td.align.text-center
+              %td.align.text-center
+              %td.align.text-center
             - else
-              %td.text-center= i+1
-              %td.text-center= order.emp_name
-              %td.text-center= order.vendor
+              %td.align.text-center= i+1
+              %td.align.text-center= order.emp_name
+              %td.align.text-center= order.vendor
               - i = i+1
-            %td.text-center= order.menu
-            %td.text-center= order.quantity
+            %td.align.text-center= order.menu
+            %td.align.text-center= order.quantity
             - employee = order.emp_name
   -else
     .alert.alert-danger
       No record is found!!
-          
-
-
-
-
-
-  

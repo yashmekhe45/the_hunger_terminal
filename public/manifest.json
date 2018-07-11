@@ -1,0 +1,13 @@
+{
+  "name": "The Hunger Terminal",
+  "short_name": "hunger",
+  "icons": [{
+    "src": "/assets/images/enjoy_food.png",
+    "sizes": "224x225",
+    "type": "image/png"
+  }],
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": "<Your Project ID>",
+  "gcm_user_visible_only": true
+}

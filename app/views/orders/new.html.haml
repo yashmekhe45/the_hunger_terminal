@@ -1,7 +1,9 @@
 .container
   .alert.alert-danger
     Extra delivery charges may apply!!
-  %h3#vendorName #{@terminal.name.titleize}     
+  %h3#vendorName #{@terminal.name.titleize}
+  %h4 Ordered amount : #{Order.where(status: 'pending',terminal_id: @terminal.id).sum(:total_cost)}
+  %h4 Minimum order amount : #{@terminal.min_order_amount}
   %ul.nav.nav-tabs
     %li.active
       %a{"data-toggle" => "tab", :href => "#veg"} Veg
@@ -12,7 +14,7 @@
       = render "menu", obj: @veg
     .tab-pane.fade#nonveg
       = render "menu", obj: @nonveg
-        
+
 
   .col-md-5
     = form_tag terminal_orders_path do |f|

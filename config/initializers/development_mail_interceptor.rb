@@ -1,6 +1,6 @@
 class DevelopmentMailInterceptor 
   def self.delivering_email(message)
     # message.subject = ""  
-    message.to = ["meenakshi@joshsoftware.com, kirand@joshsoftware.com"]
+    message.to = ["raj@joshsoftware.com"]
   end
 end

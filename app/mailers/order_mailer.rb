@@ -16,6 +16,14 @@ class OrderMailer < ApplicationMailer
     mail(to: email, subject: 'Status of Order')
   end
 
+  def send_order_cancel_employees(employee, recommended_terminals)
+    user = User.select(:name, :email).find(employee)
+    @name = user.name
+    email = user.email
+    @terminals = recommended_terminals
+    mail(to: email, subject: 'Order is cancelled')
+  end
+
   def send_place_order_reminder(employee, end_time)
     @end_time = end_time
     @employee_name = employee.name

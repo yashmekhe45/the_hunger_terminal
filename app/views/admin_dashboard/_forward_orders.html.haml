@@ -6,14 +6,14 @@
       %h4.modal-title 
     .modal-body
       - if !@orders.any?
-        %p today's orders have been already forawrded to terminals
+        %p today's orders have been already forwarded to terminals
       - else
         - if @terminal.email.blank?
           %table.table-bordered
             %tr
               %td This terminal does not have any email id. Click on place order button to change the status of all placed orders and contact the terminal with this number:
             %tr
-              %td #{@terminal.landline}  
+              %td #{@terminal.landline}
         - else
           = label_tag :message, "Type your message:"
           %br

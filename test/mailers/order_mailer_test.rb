@@ -31,7 +31,6 @@ class OrderMailerTest < ActionMailer::TestCase
     assert_equal 'Status of Order', email.subject
   end
 
-
     #We are checking all the conditions for only one mail
   test "send place order reminder to employees if terminal image present" do
     terminal = create(:terminal, company: @company)
@@ -83,6 +82,15 @@ class OrderMailerTest < ActionMailer::TestCase
     assert_equal ["hunger-terminal@joshsoftware.com"], email.from
     assert_equal [@user.email], email.to
     assert_equal '[The Hunger Terminal] Place your order', email.subject
+  end
+
+  test 'send cancelled order status mail to employee' do
+    terminal = [create(:terminal, company: @company)]
+    email = OrderMailer.send_order_cancel_employees(@user.id,terminal).deliver_now
+    assert_not_empty ActionMailer::Base.deliveries
+    assert_equal ["hunger-terminal@joshsoftware.com"], email.from
+    assert_equal [@user.email], email.to
+    assert_equal 'Order is cancelled', email.subject
   end
 
   private

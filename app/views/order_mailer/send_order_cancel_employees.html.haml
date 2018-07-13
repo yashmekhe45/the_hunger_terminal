@@ -1,0 +1,22 @@
+%p Hello #{@name},
+%p Your order for today has been cancelled.
+%p You can place your order again.
+%p The time window has been extended for 15 minutes from now.
+
+%b Recommended Vendors:
+%table{ style: 'cellspacing: 20px cellpadding: 20px; border-collapse: collapse; border: 1px solid #ddd;' }
+  %tr
+    %th{ style: 'padding: 15px;  border: 1px solid #ddd;' } Vendor
+    %th{ style: 'padding: 15px;  border: 1px solid #ddd;' } Minimum order
+    - @terminals.each do |terminal|
+      %tr
+      %td{ style: 'padding: 10px; font-weight: bold' }= link_to terminal.name, new_terminal_order_url(terminal.id) ,class:"btn btn-info terminal"
+      %td{ style: 'padding: 10px; font-weight: bold' } Rs. #{ terminal.min_order_amount }
+    %br
+
+%p Place your order by signing in: 
+%p= link_to 'Sign In',  new_user_session_url, style: 'background-color: #4CAF50; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px; font-size: 15px;'
+
+%p Have a great day!!!
+%p Regards,
+%p The hunger terminal team!

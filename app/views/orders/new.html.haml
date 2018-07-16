@@ -2,8 +2,9 @@
   .alert.alert-danger
     Extra delivery charges may apply!!
   %h3#vendorName #{@terminal.name.titleize}
-  %h4 Ordered amount : #{Order.where(status: 'pending',terminal_id: @terminal.id).sum(:total_cost)}
-  %h4 Minimum order amount : #{@terminal.min_order_amount}
+  - unless @terminal.min_order_amount == 0
+    %h4 Ordered amount : #{Order.where(status: 'pending',terminal_id: @terminal.id).sum(:total_cost)}
+    %h4 Minimum order amount : #{@terminal.min_order_amount}
   %ul.nav.nav-tabs
     %li.active
       %a{"data-toggle" => "tab", :href => "#veg"} Veg
@@ -47,6 +48,3 @@
 %script{:type => 'text/javascript'}
   subsidy = #{@subsidy};
   tax = #{@tax};
-  
-
-  

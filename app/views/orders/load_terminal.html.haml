@@ -10,6 +10,7 @@
           %p.card-text= image_tag terminal.image_url(:thumb) if terminal.image?
           = link_to terminal.name+" > ", new_terminal_order_path(terminal.id) ,class:"btn btn-info terminal"
           - @ordered = Order.where(status: 'pending',terminal_id: terminal.id).sum(:total_cost)
-          %p Ordered amount           : #{@ordered}
-          %p Minimum order amount     : #{terminal.min_order_amount}
-          %p Confirmation possibility : #{100 * @ordered / terminal.min_order_amount} %
+          - unless terminal.min_order_amount == 0
+            %p Ordered amount           : #{@ordered}
+            %p Minimum order amount     : #{terminal.min_order_amount}
+            %p Confirmation possibility : #{100 * @ordered / terminal.min_order_amount} %

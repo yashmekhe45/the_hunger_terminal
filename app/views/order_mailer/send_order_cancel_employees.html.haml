@@ -12,7 +12,7 @@
     - @terminals.each do |terminal|
       %tr
       %td{ style: 'padding: 10px; font-weight: bold' } #{terminal.name}
-      %td{ style: 'padding: 10px; font-weight: bold' } Rs. #{ terminal.min_order_amount }
+      %td{ style: 'padding: 10px; font-weight: bold' } ₹ #{ terminal.min_order_amount }
       %p= link_to 'Place Order', new_terminal_order_url(terminal.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'
     %br
 

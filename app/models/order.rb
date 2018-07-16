@@ -88,7 +88,7 @@ class Order < ApplicationRecord
                     pluck('users.id')
     recommended_terminals = Terminal.where(active: true, company_id: company_id).order(:min_order_amount)[0..2]
     employee_ids.each do |employee_id|
-    SendEmployeeCancelMailJob.perform_now(employee_id, recommended_terminals)
+      OrderMailer.send_order_cancel_employees(employee_id, recommended_terminals).deliver_now
     Order.where(id: order_ids).destroy_all
     end
   end

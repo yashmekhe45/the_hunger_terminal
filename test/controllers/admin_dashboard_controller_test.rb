@@ -83,6 +83,16 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     assert_redirected_to admin_dashboard_index_url
   end
 
+  test 'should cancel orders' do
+    sign_in_admin
+    create_employees
+    create_orders
+    assert_enqueued_jobs 2 do
+      get :cancel_orders, params: {terminal_id: @terminal1.id, todays_order_total: "0"}
+    end
+    assert_response :redirect
+    assert_redirected_to admin_dashboard_index_url
+  end
 
   #This function has some issue. Will finish it by fixing the issue
   test "should destroy unavailable menu item record" do
@@ -112,6 +122,11 @@ class AdminDashboardControllerTest  < ActionController::TestCase
   def confirm_orders
     @order1.update_attribute(:status, "confirmed")
     @order2.update_attribute(:status, "confirmed")
+  end
+
+  def cancel_orders
+    @order1.destroy_all
+    @order2.destroy_all
   end
 
 end

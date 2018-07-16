@@ -84,7 +84,7 @@ class OrderMailerTest < ActionMailer::TestCase
     assert_equal '[The Hunger Terminal] Place your order', email.subject
   end
 
-  test 'send cancelled order status mail to employee' do
+  test 'send cancelled order mail to employee' do
     terminal = [create(:terminal, company: @company)]
     email = OrderMailer.send_order_cancel_employees(@user.id,terminal).deliver_now
     assert_not_empty ActionMailer::Base.deliveries

@@ -22,3 +22,7 @@ task :nullify_oneclickorder_tokens => :environment do
   OneClickOrder.nullify_tokens
 end
 
+desc "This task will reset the end ordering time"
+task reset_end_ordering_at: :environment do
+  Company.update(end_ordering_at: "12:30 PM")
+end

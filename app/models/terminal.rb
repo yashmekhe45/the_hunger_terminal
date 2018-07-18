@@ -1,5 +1,5 @@
 class Terminal < ApplicationRecord  
- 
+
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
   validates :landline ,length: { is: 11 }

@@ -1,7 +1,7 @@
 %p Hello #{@name},
 %p We are sorry to inform you that your order for today has been cancelled.
 %p You can place your order again.
-%p The time window has been extended to #{15.minutes.from_now.strftime('%I:%M%p')}.
+%p The time window has been extended to #{TIME_EXTENTION.minutes.from_now.strftime('%I:%M%p')}.
 
 %b Recommended Vendors:
 %table{ style: 'cellspacing: 20px cellpadding: 20px; border-collapse: collapse; border: 1px solid #ddd;' }

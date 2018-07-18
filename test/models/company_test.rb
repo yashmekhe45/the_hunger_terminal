@@ -26,13 +26,13 @@ class CompanyTest < ActiveSupport::TestCase
     assert @company.errors[:email].include?("can't be blank")
   end
 
- 
+
   test "email should be unique" do
     @company.save!
     duplicate_record = build(:company, email: @company.email)
     duplicate_record.valid?
     assert duplicate_record.errors[:email].include?("has already been taken")
-  end 
+  end
 
   test "email should follow valid regular expression" do
     @company.email = "dummy"
@@ -45,7 +45,7 @@ class CompanyTest < ActiveSupport::TestCase
     @company.valid?
     assert @company.errors[:landline].include?("can't be blank")
   end
-  
+
   test "landline should be unique" do
     @company.save!
     duplicate_record = build(:company,:landline =>@company.landline)
@@ -63,8 +63,8 @@ class CompanyTest < ActiveSupport::TestCase
     @company.landline ='6128'
     @company.valid?
     assert @company.errors[:landline].include?("is the wrong length (should be 11 characters)")
-  end 
-  
+  end
+
 
   test "subsidy should be a numeric value" do
     @company.subsidy = "non_numeric_val"
@@ -121,7 +121,7 @@ class CompanyTest < ActiveSupport::TestCase
     @company.subsidy = 10
     @company.valid?
     assert @company.errors[:employees].include?("company admin must be present")
-  end 
+  end
 
 
   #This works when we send  mails inline
@@ -135,4 +135,3 @@ class CompanyTest < ActiveSupport::TestCase
   end
 
 end
-

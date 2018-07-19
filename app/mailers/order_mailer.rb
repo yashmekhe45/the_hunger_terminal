@@ -21,6 +21,15 @@ class OrderMailer < ApplicationMailer
     @name = user.name
     email = user.email
     @terminals = recommended_terminals
+    unless @terminals.empty?
+      @terminals.each do |terminal|
+        terminal_image = ImageUploader.default_url
+        if terminal['image'].present?
+          terminal_image = terminal.image_url(:thumb)
+        end
+        attachments.inline["#{terminal.id}.jpg"] = open(terminal_image).read
+      end
+    end
     mail(to: email, subject: 'Order is cancelled')
   end
 

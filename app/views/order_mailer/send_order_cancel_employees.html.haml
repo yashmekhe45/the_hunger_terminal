@@ -6,13 +6,15 @@
 %b Recommended Vendors:
 %table{ style: 'cellspacing: 20px cellpadding: 20px; border-collapse: collapse; border: 1px solid #ddd;' }
   %tr
-    %th{ style: 'padding: 15px;  border: 1px solid #ddd;' } Vendor
-    %th{ style: 'padding: 15px;  border: 1px solid #ddd;' } Minimum order
-    %th{ style: 'padding: 15px;  border: 1px solid #ddd;' }
+    %th{style: 'padding: 15px; border: 1px solid #ddd;'}Vendor
+    %th{style: 'padding: 15px; border: 1px solid #ddd;'}Minimum order
+    %th
     - @terminals.each do |terminal|
       %tr
-      %td{ style: 'padding: 10px; font-weight: bold' } #{terminal.name}
-      %td{ style: 'padding: 10px; font-weight: bold' } ₹ #{ terminal.min_order_amount }
+      %td{style: 'padding: 2px; border: 1px solid #ddd; text-align: center;'}
+        =image_tag attachments["#{terminal.id}.jpg"].url, width: 75, height: 70
+        %div{style: 'font-weight: bold'}#{terminal.name}
+      %td{style: 'padding: 15px;  border: 1px solid #ddd; font-weight: bold'}₹ #{terminal.min_order_amount}
       %p= link_to 'Place Order', new_terminal_order_url(terminal.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'
     %br
 

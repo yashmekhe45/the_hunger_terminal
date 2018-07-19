@@ -107,4 +107,15 @@ class Terminal < ApplicationRecord
     @terminal_last_payment.save
   end
 
+  public
+
+  def ordered_amount
+    Order.where(status: 'pending',terminal_id: self.id).sum(:total_cost)
+  end
+
+  def confirmation_possibility
+    possibility = 100 * self.ordered_amount / self.min_order_amount
+    possibility < 100 ? possibility : 100
+  end
+
 end

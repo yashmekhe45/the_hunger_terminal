@@ -91,7 +91,10 @@ class Order < ApplicationRecord
                               active:     true
                             ).order(:min_order_amount)[0..2]
     employee_ids.each do |employee_id|
-      OrderMailer.send_order_cancel_employees(employee_id, recommended_terminals).deliver_now
+      OrderMailer.send_order_cancel_employees(
+        employee_id,
+        recommended_terminals
+      ).deliver_now
     Order.where(id: order_ids).destroy_all
     end
   end

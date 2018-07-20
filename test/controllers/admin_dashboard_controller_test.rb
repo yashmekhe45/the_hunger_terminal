@@ -55,6 +55,7 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     sign_in_admin
     create_orders
     cancelling_time = Time.now
+    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
     get :cancel_orders, params: {
       terminal_id:   @terminal1.id,
       order_details: @order1.order_details,
@@ -106,6 +107,7 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     sign_in_admin
     create_employees
     create_orders
+    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
     get :cancel_orders, params: {
       terminal_id: @terminal1.id,
       todays_order_total: '0'

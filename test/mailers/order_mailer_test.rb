@@ -84,9 +84,26 @@ class OrderMailerTest < ActionMailer::TestCase
     assert_equal '[The Hunger Terminal] Place your order', email.subject
   end
 
-  test 'send cancelled order mail to employee' do
+  test 'send order cancel mail to employees if terminal image not present' do
+    stub_request_if_terminal_image_absent
     terminal = [create(:terminal, company: @company)]
     email = OrderMailer.send_order_cancel_employees(@user.id,terminal).deliver_now
+    assert_not_empty ActionMailer::Base.deliveries
+    assert_equal ["hunger-terminal@joshsoftware.com"], email.from
+    assert_equal [@user.email], email.to
+    assert_equal 'Order is cancelled', email.subject
+  end
+
+  test 'send order cancel mail to employees if terminal image present' do
+    terminals = [create(:terminal, company: @company)]
+    terminals.each |terminal| do
+      stub_request_if_terminal_image_present(terminal.id)
+      file_name = File.new(Rails.root.join("test/fixtures/files/hotelplaceholder1.jpg"))
+      terminal_image = ActionDispatch::Http::UploadedFile.new({:tempfile => file_name, :filename => File.basename(file_name) })
+      terminal_image.content_type = "image/jpeg"
+      terminal.update(image: terminal_image)
+    end
+    email = OrderMailer.send_order_cancel_employees(@user.id,terminals).deliver_now
     assert_not_empty ActionMailer::Base.deliveries
     assert_equal ["hunger-terminal@joshsoftware.com"], email.from
     assert_equal [@user.email], email.to

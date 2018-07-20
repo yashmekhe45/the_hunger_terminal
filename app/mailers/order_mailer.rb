@@ -23,9 +23,10 @@ class OrderMailer < ApplicationMailer
     @terminals = recommended_terminals
     unless @terminals.empty?
       @terminals.each do |terminal|
-        terminal_image = ImageUploader.default_url
         if terminal['image'].present?
           terminal_image = terminal.image_url(:thumb)
+        else
+          terminal_image = ImageUploader.default_url
         end
         attachments.inline["#{terminal.id}.jpg"] = open(terminal_image).read
       end

@@ -16,22 +16,14 @@ class OrderMailer < ApplicationMailer
     mail(to: email, subject: 'Status of Order')
   end
 
-  def send_order_cancel_employees(employee, recommended_terminals)
-    user = User.select(:name, :email).find(employee)
-    @name = user.name
-    email = user.email
+  def send_order_cancel_employees(employee_ids, recommended_terminals)
+    emails = User.where(id: employee_ids).pluck(:email)
     @terminals = recommended_terminals
-    unless @terminals.empty?
-      @terminals.each do |terminal|
-        if terminal['image'].present?
-          terminal_image = terminal.image_url(:thumb)
-        else
-          terminal_image = ImageUploader.default_url
-        end
-        attachments.inline["#{terminal.id}.jpg"] = open(terminal_image).read
-      end
-    end
-    mail(to: email, subject: 'Order is cancelled')
+    # TO DO : Remove this after staging testing.
+    #@terminals.each do |terminal|
+      #attachments.inline["#{terminal.id}.jpg"] = open(terminal.logo_url).read
+    #end
+    mail(to: emails, subject: 'Order is cancelled')
   end
 
   def send_place_order_reminder(employee, end_time)

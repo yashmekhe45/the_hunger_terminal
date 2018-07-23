@@ -72,20 +72,8 @@ class AdminDashboardController < ApplicationController
   end
 
   def cancel_orders
-    authorize! :cancel_orders, :order_management
-    Terminal.update_current_amount_of_terminal(
-      params[:terminal_id],
-      current_user.company_id,
-      0
-    )
-    Order.cancel_all_placed_orders(
-      params[:terminal_id],
-      current_user.company_id,
-      @order_details
-    )
-    Company.where(id: current_user.company_id).
-            update(end_ordering_at: TIME_EXTENTION.minutes.from_now)
-    flash[:notice] = 'all orders cancelled'
+    Terminal.find(params[:terminal_id]).cancel_terminal_orders
+    flash[:notice] = 'Orders have been cancelled'
     redirect_to admin_dashboard_index_path
   end
 

@@ -1,4 +1,4 @@
-%p Hello #{@name},
+%p Dear User,
 %p We are sorry to inform you that your order for today has been cancelled.
 %p You can place your order again.
 %p The time window has been extended to #{TIME_EXTENTION.minutes.from_now.strftime('%I:%M%p')}.
@@ -12,7 +12,7 @@
     - @terminals.each do |terminal|
       %tr
       %td{style: 'padding: 2px; border: 1px solid #ddd; text-align: center;'}
-        =image_tag attachments["#{terminal.id}.jpg"].url, width: 75, height: 70
+        =image_tag terminal.logo_url, width: 75, height: 70
         %div{style: 'font-weight: bold'}#{terminal.name}
       %td{style: 'padding: 15px;  border: 1px solid #ddd; font-weight: bold'}₹ #{terminal.min_order_amount}
       %p= link_to 'Place Order', new_terminal_order_url(terminal.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'

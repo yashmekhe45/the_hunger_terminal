@@ -161,12 +161,4 @@ class OrderTest < ActiveSupport::TestCase
   test "order should have company" do
   end
 
-  test 'orders should be cancelled' do
-    order = create_order
-    terminal_id = order.terminal.id
-    company_id = order.company.id
-    Order.cancel_all_placed_orders(terminal_id, company_id, order.order_details)
-    orders = Order.where(id: order.id)
-    assert_equal(orders, [], 'Orders are not cancelled')
-  end
 end

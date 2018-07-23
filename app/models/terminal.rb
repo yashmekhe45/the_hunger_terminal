@@ -118,4 +118,19 @@ class Terminal < ApplicationRecord
     possibility < 100 ? possibility : 100
   end
 
+  def cancel_terminal_orders
+    orders = Order.where(terminal_id: self.id)
+    employee_ids = orders.joins(:user).pluck('users.id')
+    recommended_terminals = self.company.top_recommended_terminals
+    self.company.update(end_ordering_at: TIME_EXTENTION.minutes.from_now)
+    OrderMailer.send_order_cancel_employees(employee_ids, recommended_terminals)
+               .deliver_now
+    orders.destroy_all
+  end
+
+  def logo_url
+    return self.image_url(:thumb) if image_url.present?
+    ImageUploader.default_url
+  end
+
 end

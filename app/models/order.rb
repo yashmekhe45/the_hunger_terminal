@@ -80,25 +80,6 @@ class Order < ApplicationRecord
     end
   end
 
-  def self.cancel_all_placed_orders(terminal_id, company_id, order_details)
-    order_ids = order_details.pluck(:id).uniq
-    orders = Order.where(id: order_ids)
-    employee_ids =  orders.
-                    joins(:user).
-                    pluck('users.id')
-    recommended_terminals = Terminal.where(
-                              company_id: company_id,
-                              active:     true
-                            ).order(:min_order_amount)[0..2]
-    employee_ids.each do |employee_id|
-      OrderMailer.send_order_cancel_employees(
-        employee_id,
-        recommended_terminals
-      ).deliver_now
-    Order.where(id: order_ids).destroy_all
-    end
-  end
-
   def self.get_all_orders_status(terminal_id)
     where(date: Time.zone.today, terminal_id: terminal_id).pluck(:status)
   end

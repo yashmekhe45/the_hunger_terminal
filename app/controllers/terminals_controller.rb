@@ -12,7 +12,7 @@ class TerminalsController < ApplicationController
   add_breadcrumb "Terminals", :company_terminals_path, except: [:edit, :update]
   add_breadcrumb "New Terminal", :new_company_terminal_path, only: [:new, :create]
   add_breadcrumb "Edit Terminal", :edit_terminal_path, only: [:edit, :update]
-  
+
   def new
     @terminal = @current_company.terminals.build
     @terminal.menu_items.build  
@@ -91,6 +91,6 @@ class TerminalsController < ApplicationController
 
   def load_terminal
     @terminal = Terminal.find params[:id]
-  end  
+  end
+
 end
-    

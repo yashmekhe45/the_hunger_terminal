@@ -73,7 +73,7 @@ class AdminDashboardController < ApplicationController
 
   def cancel_orders
     Terminal.find(params[:terminal_id]).cancel_terminal_orders
-    flash[:notice] = 'Orders have been cancelled'
+    flash[:notice] = t(:orders_cancelled)
     redirect_to admin_dashboard_index_path
   end
 

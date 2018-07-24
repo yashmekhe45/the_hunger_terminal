@@ -134,14 +134,14 @@ class CompanyTest < ActiveSupport::TestCase
     assert_not_empty ActionMailer::Base.deliveries
   end
 
-  test 'Correct top recommended terminals on cancel' do
+  test 'company should provide correct recommended terminals on cancel' do
     @company.save!
-    for i in 1..5
+    5.times do |i|
       Terminal.create(company_id: @company.id, landline:"0123456789#{i}",
                       name:"Name #{i}", active: true, min_order_amount: i)
     end
     Terminal.where(min_order_amount: 2).update(active: false)
-    assert_equal [1, 3, 4],
+    assert_equal [0, 1, 3],
                  @company.top_recommended_terminals.pluck(:min_order_amount)
   end
 

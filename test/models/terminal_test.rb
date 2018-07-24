@@ -140,14 +140,14 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal (@terminal1.current_amount - current_amount).round, 200.to_f
   end
 
-  test 'Accurate confirmation possibility' do
+  test 'terminal should provide accurate confirmation possibility' do
     @order = build(:order, terminal_id: @terminal.id)
     assert_equal @terminal.ordered_amount,
                  Order.where(status: 'pending',terminal_id: @terminal.id)
                       .sum(:total_cost)
     possibility = 100 * @terminal.ordered_amount / @terminal.min_order_amount
-    rounded_possibility = possibility < 100 ? possibility : 100
-    assert_equal @terminal.confirmation_possibility, rounded_possibility
+    possibility = 100 if possibility > 100
+    assert_equal @terminal.confirmation_possibility, possibility.round(2)
   end
 
   test 'orders should be cancelled' do

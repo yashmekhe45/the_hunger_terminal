@@ -1,8 +1,5 @@
 machine:
   timezone: Asia/Kolkata
-database:
-  post:
-    - bundle exec rake db:seed
 test:
   post:
-    - bundle exec codeclimate-test-reporter
+    - gem install codeclimate-test-reporter && codeclimate-test-reporter

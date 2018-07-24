@@ -29,7 +29,6 @@ class Ability
       can :manage, Terminal, :company_id => user.company_id
       can :manage, MenuItem
       can :manage, Order
-      cannot [:edit, :delete], Order, status: ['placed','confirmed']
       can :index, :order_management
       can :order_detail, :order_management
       can :forward_orders, :order_management 

@@ -114,7 +114,7 @@ class Terminal < ApplicationRecord
   end
 
   def confirmation_possibility
-    possibility = 100 * self.ordered_amount / self.min_order_amount
+    possibility = (100 * self.ordered_amount / self.min_order_amount).round(2)
     possibility < 100 ? possibility : 100
   end
 

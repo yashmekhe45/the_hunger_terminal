@@ -1,4 +1,4 @@
-  require "test_helper"
+require "test_helper"
 
 class OrderMailerTest < ActionMailer::TestCase
 
@@ -102,7 +102,7 @@ class OrderMailerTest < ActionMailer::TestCase
       terminal_image = ActionDispatch::Http::UploadedFile.new({:tempfile => file_name, :filename => File.basename(file_name) })
       terminal_image.content_type = "image/jpeg"
       terminal.update(image: terminal_image)
-   end
+    end
     email = OrderMailer.send_order_cancel_employees(@user.id,terminals).deliver_now
     assert_not_empty ActionMailer::Base.deliveries
     assert_equal ["hunger-terminal@joshsoftware.com"], email.from

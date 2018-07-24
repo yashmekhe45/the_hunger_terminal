@@ -14,7 +14,6 @@
             %th.text-center Forward to Terminal
             %th.text-center Confirm
             %th.text-center Cancel
-
           - @res.each_with_index do |terminal,i|
             - placed = @placed[i]
             - confirmed = @confirmed[i]
@@ -23,7 +22,7 @@
             -if min_order > total
               -color='pink'
             -else
-              -color='cyan'
+              -color='lightgreen'
             %tr{bgcolor: color}
               %td.text-center= i+1
               %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, :title => 'see list of orders', :rel => 'tooltip'
@@ -32,7 +31,6 @@
               %td.text-center= link_to "Forward Orders", (placed or confirmed) ? '#' : admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: "btn btn-info", id: "forwardButton"
               %td.text-center= link_to "Confirm Orders", (confirmed or min_order > total) ? '#' : admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => total), disabled: (confirmed or min_order > total), class: "btn btn-info"
               %td.text-center= link_to "Cancel orders", confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id, todays_order_total: 0), disabled: confirmed, class: "btn btn-info"
-
 -else
   .container
     .alert.alert-danger

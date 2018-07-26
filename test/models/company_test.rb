@@ -137,8 +137,7 @@ class CompanyTest < ActiveSupport::TestCase
   test 'company should provide correct recommended terminals on cancel' do
     @company.save!
     5.times do |i|
-      Terminal.create(company_id: @company.id, landline:"0123456789#{i}",
-                      name:"Name #{i}", active: true, min_order_amount: i)
+      create(:terminal, min_order_amount: i, company_id: @company.id)
     end
     Terminal.where(min_order_amount: 2).update(active: false)
     assert_equal [0, 1, 3],

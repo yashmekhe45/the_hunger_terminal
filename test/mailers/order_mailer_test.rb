@@ -87,7 +87,11 @@ class OrderMailerTest < ActionMailer::TestCase
   test 'send order cancel mail to employees if terminal image not present' do
     stub_request_if_terminal_image_absent
     terminal = [create(:terminal, company: @company)]
-    email = OrderMailer.send_order_cancel_employees(@user.id,terminal).deliver_now
+    email = OrderMailer.send_order_cancel_employees(
+      @user.name,
+      @user.email,
+      terminal
+    ).deliver_now
     assert_not_empty ActionMailer::Base.deliveries
     assert_equal ["hunger-terminal@joshsoftware.com"], email.from
     assert_equal [@user.email], email.to
@@ -103,7 +107,11 @@ class OrderMailerTest < ActionMailer::TestCase
       terminal_image.content_type = "image/jpeg"
       terminal.update(image: terminal_image)
     end
-    email = OrderMailer.send_order_cancel_employees(@user.id,terminals).deliver_now
+    email = OrderMailer.send_order_cancel_employees(
+      @user.name,
+      @user.email,
+      terminals
+    ).deliver_now
     assert_not_empty ActionMailer::Base.deliveries
     assert_equal ["hunger-terminal@joshsoftware.com"], email.from
     assert_equal [@user.email], email.to

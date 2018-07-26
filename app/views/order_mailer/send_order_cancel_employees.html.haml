@@ -1,26 +1,22 @@
-%p Dear User,
-%p We are sorry to inform you that your order for today has been cancelled.
+%p Hello #{@name},
+%p We are sorry to inform you that your order for today is cancelled.
 %p You can place your order again.
 %p The time window has been extended to #{TIME_EXTENTION.minutes.from_now.strftime('%I:%M%p')}.
-
 %b Recommended Vendors:
 %table{ style: 'cellspacing: 20px cellpadding: 20px; border-collapse: collapse; border: 1px solid #ddd;' }
   %tr
     %th{style: 'padding: 15px; border: 1px solid #ddd;'}Vendor
     %th{style: 'padding: 15px; border: 1px solid #ddd;'}Minimum order
-    %th
     - @terminals.each do |terminal|
       %tr
-      %td{style: 'padding: 2px; border: 1px solid #ddd; text-align: center;'}
-        =image_tag terminal.logo_url, width: 75, height: 70
-        %div{style: 'font-weight: bold'}#{terminal.name}
-      %td{style: 'padding: 15px;  border: 1px solid #ddd; font-weight: bold'}₹ #{terminal.min_order_amount}
-      %p= link_to 'Place Order', new_terminal_order_url(terminal.id), style: 'background-color: DodgerBlue; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px;'
-    %br
-
+        %td{style: 'padding: 20px; border: 1px solid #ddd; text-align: center;'}
+          =image_tag terminal.logo_url, width: 80, height: 80
+          %div{style: 'font-weight: bold'}#{terminal.name}
+        %td{style: 'padding: 20px;  border: 1px solid #ddd; font-weight: bold'}
+          ₹ #{terminal.min_order_amount}
+          %p= link_to 'Place Order', new_terminal_order_url(terminal.id), style: 'background-color: DodgerBlue; color: white; font-size: 10px; padding: 10px; text-decoration: none; border-radius: 4px;'
 %p Place your order by signing in: 
 %p= link_to 'Sign In',  new_user_session_url, style: 'background-color: #4CAF50; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px; font-size: 15px;'
-
 %p Have a great day!!!
 %p Regards,
 %p The hunger terminal team!

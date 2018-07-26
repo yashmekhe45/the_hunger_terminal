@@ -16,10 +16,10 @@ class OrderMailer < ApplicationMailer
     mail(to: email, subject: 'Status of Order')
   end
 
-  def send_order_cancel_employees(employee_ids, recommended_terminals)
-    emails = User.where(id: employee_ids).pluck(:email)
+  def send_order_cancel_employees(name, email, recommended_terminals)
     @terminals = recommended_terminals
-    mail(to: emails, subject: 'Order is cancelled')
+    @name = name
+    mail(to: email, subject: 'Order is cancelled')
   end
 
   def send_place_order_reminder(employee, end_time)

@@ -4,11 +4,11 @@
   %h3.text-center Vendor List
   .row
     - @terminals.each do |terminal|
-      .col-xs-12.col-md-6
+      .col-xs-12.col-md-3
         .card-block.terminal
           %h3.card-title= terminal.name
-          %p.card-text= image_tag terminal.image_url(:thumb) if terminal.image?
-          = link_to terminal.name+" > ", new_terminal_order_path(terminal.id) ,class:"btn btn-info terminal"
+          %p.card-text{style: 'height:100px; width: 200px;'}= image_tag terminal.image_url(:thumb) if terminal.image?
+          %p= link_to terminal.name+" > ", new_terminal_order_path(terminal.id) ,class:"btn btn-info terminal"
           - unless terminal.min_order_amount == 0
             %p Ordered amount           : #{terminal.ordered_amount}
             %p Minimum order amount     : #{terminal.min_order_amount}

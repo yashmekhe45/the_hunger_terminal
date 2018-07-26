@@ -19,10 +19,6 @@ class OrderMailer < ApplicationMailer
   def send_order_cancel_employees(employee_ids, recommended_terminals)
     emails = User.where(id: employee_ids).pluck(:email)
     @terminals = recommended_terminals
-    # TO DO : Remove this after staging testing.
-    #@terminals.each do |terminal|
-      #attachments.inline["#{terminal.id}.jpg"] = open(terminal.logo_url).read
-    #end
     mail(to: emails, subject: 'Order is cancelled')
   end
 

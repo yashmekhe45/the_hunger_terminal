@@ -34,6 +34,10 @@ class Company < ApplicationRecord
     end
   end
 
+  def top_recommended_terminals
+    self.terminals.where(active: true).order(:min_order_amount).limit(3)
+  end
+
   private 
 
     def weekend?
@@ -55,7 +59,6 @@ class Company < ApplicationRecord
     end
 
     def create_company_admin
-      # byebug
       self.employees.first.role = "company_admin"
       self.employees.first.is_active = true
     end
@@ -66,4 +69,5 @@ class Company < ApplicationRecord
         errors.add(:employees, "company admin must be present")
       end
     end
+
 end

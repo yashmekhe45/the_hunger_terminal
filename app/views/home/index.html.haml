@@ -8,35 +8,31 @@
   %body   
     .jumbotron
       .container.text-center
-        %h1#titleOnIndex Food Ordering for Corporate Employees!!
+        %h1#titleOnIndex Food ordering made easy for corporate employees
         -if !user_signed_in?
-          %h2 Want to be a part of this application??
+          %h2 Login & enjoy your food!
           / %span.glyphicon.glyphicon-chevron-down
           %br
           = link_to "Company Sign Up", new_company_path, class: "btn btn-primary"
-          %br
-          %br
           = link_to "Employee Login", user_session_path, class: "btn btn-success"
     .container.text-center  
-      %h4#seeHow See How 
+      %h4#seeHow Enjoy your food in easy steps
       .container-fluid.instructions
         .row
-          .col-xs-12.col-md-3
+          .col-xs-12.col-md-2
+          .col-xs-12.col-md-2
             .step-one 1. Login
             .login-image= image_tag("login1.png",width:"55px",height:"55px")
-            .description If already a member then login to our site
-          .col-xs-12.col-md-3
+          .col-xs-12.col-md-2
             .step-one 2. Choose
             .login-image= image_tag("choice.png",width:"55px",height:"55px")
-            .description Browse to find the vendors and their menus to find the food you like
-          .col-xs-12.col-md-3
+          .col-xs-12.col-md-2
             .step-one 3. Order
             .login-image= image_tag("order.png",width:"55px",height:"55px")
-            .description Place an order of the food you want
-          .col-xs-12.col-md-3
+          .col-xs-12.col-md-2
             .step-one 4. Enjoy
             .login-image= image_tag("enjoy_food.png",width:"55px",height:"55px")
-            .description Food is prepared and delivered to your door
+          .col-xs-12.col-md-2
               
     .container.bg-3.text-center
       %h4 Our Associates 

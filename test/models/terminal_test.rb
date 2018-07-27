@@ -138,5 +138,30 @@ class TerminalTest < ActiveSupport::TestCase
     current_amount = @terminal.current_amount
     @terminal1 = Terminal.update_current_amount_of_terminal(@terminal.id, @company.id, 200)
     assert_equal (@terminal1.current_amount - current_amount).round, 200.to_f
-  end  
+  end
+
+  test 'terminal should provide accurate confirmation possibility' do
+    @order = build(:order, terminal_id: @terminal.id)
+    assert_equal @terminal.ordered_amount,
+                 Order.where(status: 'pending',terminal_id: @terminal.id)
+                      .sum(:total_cost)
+    possibility = 100 * @terminal.ordered_amount / @terminal.min_order_amount
+    possibility = 100 if possibility > 100
+    assert_equal @terminal.confirmation_possibility, possibility.round(2)
+  end
+
+  test 'orders should be cancelled' do
+    order = create(:order)
+    terminal = Terminal.find_by_id(order.terminal_id)
+    if terminal
+          stub_request(
+            :get, 
+            "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg").
+            to_return(status: 200, body: "", headers: {}
+          )
+      terminal.cancel_terminal_orders
+      orders = Order.where(id: order.id)
+      assert_equal(orders, [], 'Orders are not cancelled')
+    end
+  end
 end

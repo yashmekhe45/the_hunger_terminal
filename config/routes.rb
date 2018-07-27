@@ -87,6 +87,7 @@ Rails.application.routes.draw do
   get 'admin_dashboard/forward_orders'
   get 'admin_dashboard/place_orders'
   get 'admin_dashboard/confirm_orders'
+  get 'admin_dashboard/cancel_orders'
   get 'admin_dashboard/payment'
   get 'admin_dashboard/pay'
 

@@ -1,8 +1,8 @@
 class AdminDashboardController < ApplicationController
 
-  before_action :load_details, only: [:place_orders, :forward_orders, :confirm_orders]
+  before_action :load_details, only: [:place_orders, :forward_orders, :confirm_orders, :cancel_orders]
   before_action :authenticate_user!
-  before_action :load_terminal, only: [:place_orders, :forward_orders]
+  before_action :load_terminal, only: [:place_orders, :forward_orders, :cancel_orders]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Vendor wise Orders", :admin_dashboard_index_path, only: [:index]
@@ -69,7 +69,13 @@ class AdminDashboardController < ApplicationController
     Order.confirm_all_placed_orders(params[:terminal_id], current_user.company_id, @order_details)
     flash[:notice] = "all orders confirmed"
     redirect_to admin_dashboard_index_path
-  end 
+  end
+
+  def cancel_orders
+    Terminal.find(params[:terminal_id]).cancel_terminal_orders
+    flash[:notice] = t(:orders_cancelled)
+    redirect_to admin_dashboard_index_path
+  end
 
   def input_terminal_extra_charges
     authorize! :input_terminal_extra_charges , :order_management

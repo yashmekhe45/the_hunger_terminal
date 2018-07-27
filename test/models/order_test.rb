@@ -160,4 +160,5 @@ class OrderTest < ActiveSupport::TestCase
 
   test "order should have company" do
   end
+
 end

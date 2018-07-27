@@ -7,7 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role == "employee"
       can :manage, Order
-      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
+      cannot [:edit, :delete], Order, status: ['placed','confirmed']
       cannot :manage,Company
       cannot [:show,:update,:delete], Company      
       cannot :input_terminal_extra_charges , :order_management
@@ -22,19 +22,19 @@ class Ability
     
     if user.role == "company_admin"
       can :manage, Order
-      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
+      cannot [:edit, :delete], Order, status: ['placed','confirmed']
       can :manage, User, :company_id => user.company_id
       # company_admin won't be allowed to access the company index
       can [:read, :update, :get_order_details, :download_invalid_csv], Company, id: user.company_id
       can :manage, Terminal, :company_id => user.company_id
       can :manage, MenuItem
       can :manage, Order
-      cannot [:edit, :delete], Order, status: ['placed','confirmed','cancelled']
       can :index, :order_management
       can :order_detail, :order_management
       can :forward_orders, :order_management 
       can :place_orders, :order_management 
       can :confirm_orders, :order_management
+      can :cancel_orders, :order_management
       can :input_terminal_extra_charges , :order_management
       can :employees_daily_order_detail , :report_management 
       can :employees_current_month, :report_management 

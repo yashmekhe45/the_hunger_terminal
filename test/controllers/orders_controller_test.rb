@@ -108,19 +108,18 @@ class OrdersControllerTest  < ActionController::TestCase
     assert_redirected_to root_url
   end
 
-  test "destroy" do
-    sign_in_user_having_order
-    delete :destroy, params: {id: @order.id}
-    assert_response :redirect
-    assert_redirected_to vendors_url  
-  end
-
-
   test "should display order history" do
     sign_in_user_having_order
     get :order_history
     assert_response :success
     assert_template :order_history
+  end
+
+  test "destroy" do
+    sign_in_user_having_order
+    delete :destroy, params: {id: @order.id}
+    assert_response :redirect
+    assert_redirected_to vendors_url  
   end
 
   test "active terminals should be displayed" do

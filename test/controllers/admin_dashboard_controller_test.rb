@@ -28,7 +28,6 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     assert_response :success
   end
 
-
   #sends mail containing all ordered menu items to a terminal
   test "should place orders" do
     sign_in_admin
@@ -50,6 +49,27 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     end
     assert_response :redirect
     assert_redirected_to admin_dashboard_index_url
+  end
+
+  test 'cancel order should extend ordering time window' do
+    sign_in_admin
+    create_orders
+    cancelling_time = Time.now
+    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
+    get :cancel_orders, params: {
+      terminal_id:   @terminal1.id,
+      order_details: @order1.order_details,
+      current_user:  @user1,
+      todays_order_total: '0'
+    }
+    time_extended_to = @company.reload.end_ordering_at.change(
+      year:   cancelling_time.year,
+      month:  cancelling_time.month,
+      day:    cancelling_time.day
+    )
+    assert_equal TIME_EXTENTION,
+                 ((time_extended_to - cancelling_time)/1.minute).round,
+                 'Time extention is not accurate'
   end
 
   test "should input extra charges of terminals" do
@@ -83,6 +103,18 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     assert_redirected_to admin_dashboard_index_url
   end
 
+  test 'should cancel orders' do
+    sign_in_admin
+    create_employees
+    create_orders
+    stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
+    get :cancel_orders, params: {
+      terminal_id: @terminal1.id,
+      todays_order_total: '0'
+    }
+    assert_response :redirect
+    assert_redirected_to admin_dashboard_index_url
+  end
 
   #This function has some issue. Will finish it by fixing the issue
   test "should destroy unavailable menu item record" do
@@ -105,6 +137,8 @@ class AdminDashboardControllerTest  < ActionController::TestCase
   end
 
   def create_orders
+    @user1 = create(:user)
+    @user2 = create(:user)
     @order1 = create(:order, company: @company, terminal: @terminal1, user: @user1)
     @order2 = create(:order, company: @company, terminal: @terminal1, user: @user2)
   end

@@ -13,7 +13,7 @@ class OrderDetailTest < ActiveSupport::TestCase
     assert @order_detail.errors[:menu_item].include?("can't be blank")
   end
 
-  test "menuitem name should be present" do
+  test "menu item name should be present" do
     order_detail = build(:order_detail,menu_item: nil) # due to before validation
     order_detail.valid?
     assert order_detail.errors[:menu_item_name].include?("can't be blank")  

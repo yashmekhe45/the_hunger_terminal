@@ -1,5 +1,5 @@
 class Terminal < ApplicationRecord  
- 
+
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
   validates :landline ,length: { is: 11 }
@@ -20,7 +20,36 @@ class Terminal < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   before_validation :remove_space, :active_must_accept_boolean_only
-  
+
+  def ordered_amount
+    Order.where(status: 'pending',terminal_id: self.id).sum(:total_cost)
+  end
+
+  def confirmation_possibility
+    possibility = (100 * self.ordered_amount / self.min_order_amount).round(2)
+    possibility < 100 ? possibility : 100
+  end
+
+  def cancel_terminal_orders
+    orders = Order.where(terminal_id: self.id)
+    employees = User.where(id: orders.pluck(:user_id))
+    recommended_terminals = self.company.top_recommended_terminals
+    self.company.update(end_ordering_at: TIME_EXTENTION.minutes.from_now)
+    employees.each do |employee|
+      OrderMailer.send_order_cancel_employees(
+        employee.name,
+        employee.email,
+        recommended_terminals
+      ).deliver_now
+    end
+    orders.destroy_all
+  end
+
+  def logo_url
+    return self.image_url(:thumb) if image_url.present?
+    ImageUploader.default_url
+  end
+
   private 
     
   def remove_space

@@ -7,27 +7,28 @@
           %tr
             %th.text-center Sr No.
             %th.text-center Name
-            %th.text-center MinimumOrderPrice 
+            %th.text-center Minimum Order Price 
             %th.text-center
-              OrderPrice
+              Order Price
               %h6.text-center (incl. of all taxes)
-            %th.text-center Forward to Terminal
-            %th.text-center Confirm
-
+            %th.text-center Actions
           - @res.each_with_index do |terminal,i|
             - placed = @placed[i]
             - confirmed = @confirmed[i]
-            %tr  
-            %td.text-center= i+1
-            %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, class: "btn btn-info", :title => 'see list of orders', :rel => 'tooltip'
-            %td.text-center ₹ #{terminal.min_order_amount}
-            %td.text-center ₹ #{terminal.total}
-            %td.text-center= link_to "Forward Orders", (placed or confirmed) ? '#' :admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: "btn btn-info", id: "forwardButton"
-            %td.text-center= link_to "Confirm Orders", confirmed ? '#' :admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => terminal.total), :disabled => confirmed, class: "btn btn-info" 
+            - min_order = terminal.min_order_amount
+            - total = terminal.total
+            %tr
+              %td.text-center= i+1
+              %td.text-center= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, :title => 'see list of orders', :rel => 'tooltip'
+              %td.text-center ₹ #{terminal.min_order_amount}
+              %td.text-center ₹ #{terminal.total}
+              %td.text-center
+                = link_to 'Forward Orders', (placed or confirmed) ? '#' : admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: 'btn btn-info', id: 'forwardButton'
+                = link_to 'Confirm', (confirmed or min_order > total) ? '#' : admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => total), disabled: (confirmed or min_order > total), class: min_order < total ? 'btn btn-success' : 'btn btn-warning'
+                = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id, todays_order_total: 0), disabled: confirmed, class: 'btn btn-danger'
 -else
   .container
     .alert.alert-danger
       No record is found!!
-#myModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog", :tabeindex =>"-1" }
-#myForwardOrdersModal.modal.fade{"aria-labelledby" =>"Order",:role => "dialog",:tabeindex =>"-1" }
-
+#myModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog', :tabeindex =>'-1' }
+#myForwardOrdersModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog',:tabeindex =>'-1' }

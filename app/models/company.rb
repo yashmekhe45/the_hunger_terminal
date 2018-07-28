@@ -35,7 +35,9 @@ class Company < ApplicationRecord
   end
 
   def top_recommended_terminals
-    self.terminals.where(active: true).order(:min_order_amount).limit(3)
+    terminals.where(active: true).sort_by{|ter|
+                [-ter.confirmation_possibility, ter.min_order_amount]
+              }[0..2]
   end
 
   private 

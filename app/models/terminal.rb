@@ -22,19 +22,21 @@ class Terminal < ApplicationRecord
   before_validation :remove_space, :active_must_accept_boolean_only
 
   def ordered_amount
-    Order.where(status: 'pending',terminal_id: self.id).sum(:total_cost)
+    Order.where(status: 'pending',terminal_id: id).sum(:total_cost)
   end
 
   def confirmation_possibility
-    possibility = (100 * self.ordered_amount / self.min_order_amount).round(2)
-    possibility < 100 ? possibility : 100
+    return 100 if min_order_amount ==0
+    possibility = 100 * ordered_amount / min_order_amount
+    possibility < 100 ? possibility.round(2) : 100
   end
 
   def cancel_terminal_orders
-    orders = Order.where(terminal_id: self.id)
+    orders = Order.where(terminal_id: id)
     employees = User.where(id: orders.pluck(:user_id))
-    recommended_terminals = self.company.top_recommended_terminals
-    self.company.update(end_ordering_at: TIME_EXTENTION.minutes.from_now)
+    orders.destroy_all
+    recommended_terminals = company.top_recommended_terminals
+    company.update(end_ordering_at: TIME_EXTENTION.minutes.from_now)
     employees.each do |employee|
       OrderMailer.send_order_cancel_employees(
         employee.name,
@@ -42,7 +44,6 @@ class Terminal < ApplicationRecord
         recommended_terminals
       ).deliver_now
     end
-    orders.destroy_all
   end
 
   def logo_url

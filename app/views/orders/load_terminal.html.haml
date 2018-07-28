@@ -11,7 +11,7 @@
           %p= link_to 'Place Order', new_terminal_order_path(terminal.id) ,class:"btn btn-info terminal"
           %br
           .text-left
-            - unless terminal.min_order_amount == 0
+            - unless terminal.confirmation_possibility == 100
               %h5 Ordered amount           : #{terminal.ordered_amount}
               %h5 Minimum order amount     : #{terminal.min_order_amount}
               %h5 Confirmation possibility : #{terminal.confirmation_possibility} %

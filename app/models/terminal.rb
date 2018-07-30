@@ -20,15 +20,15 @@ class Terminal < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   before_validation :remove_space, :active_must_accept_boolean_only
+  before_save :titleize_name
 
   def ordered_amount
     Order.where(status: 'pending',terminal_id: id).sum(:total_cost)
   end
 
   def confirmation_possibility
-    return 100 if min_order_amount ==0
-    possibility = 100 * ordered_amount / min_order_amount
-    possibility < 100 ? possibility.round(2) : 100
+    return 100 if min_order_amount <= ordered_amount
+    (100 * ordered_amount / min_order_amount).round(2)
   end
 
   def cancel_terminal_orders
@@ -135,6 +135,10 @@ class Terminal < ApplicationRecord
       current_amount: @terminal.current_amount, payment_made: @terminal.payment_made,
       payable: @terminal.payable-@terminal.payment_made)
     @terminal_last_payment.save
+  end
+
+  def titleize_name
+    self.name = name.titleize
   end
 
 end

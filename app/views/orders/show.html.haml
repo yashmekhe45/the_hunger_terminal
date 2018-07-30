@@ -29,22 +29,18 @@
           .col-sm-2
           .col-sm-4.col-md-4
             .detail
-              %h4 
-                %strong.date Date: 
-                %span #{@order.date}
-              %h4 
-                %strong Subtotal:
-                %span₹#{@order.total_cost} 
-              %h4  
-                %strong Total Tax:
-                %span₹#{@order.tax}
-              %h4  
-                %strong Discount: 
-                %span₹#{@order.discount}
-              %h4
-                %strong.order_total Total:
-                %span₹#{@order.total_cost+@order.tax-@order.discount}
-              %h6.order_total (incl. of all taxes)    
+              %h4.text-right
+                %span.bag Bag Total :
+                %strong ₹ #{@order.total_cost}
+              %h4.text-right
+                %span.bag Bag Tax :
+                %strong ₹ #{@order.tax}
+              %h4.text-right
+                %span.bag.discount Bag Discount :
+                %strong - ₹ #{@order.discount}
+              %h4.text-right
+                %span.bag Total Payable :
+                %strong ₹ #{@order.total_cost+@order.tax-@order.discount}
       - if can? :edit, @order
         %a.card-link= link_to 'Edit Order', edit_order_path(@order), class: "btn btn-info"
       - if can? :delete, @order

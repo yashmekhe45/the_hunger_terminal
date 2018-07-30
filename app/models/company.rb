@@ -21,7 +21,7 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, :employees
 
   before_validation :remove_space
-
+  before_save :titleize_name
 
   def send_reminders
     unless weekend? 
@@ -70,6 +70,10 @@ class Company < ApplicationRecord
       if employee == nil
         errors.add(:employees, "company admin must be present")
       end
+    end
+
+    def titleize_name
+      self.name = name.titleize
     end
 
 end

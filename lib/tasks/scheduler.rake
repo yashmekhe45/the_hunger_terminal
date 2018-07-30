@@ -14,9 +14,9 @@ task :place_order_reminder => :environment do
   end
 end
 
-desc 'This task Titleizes company, terminal, and employee names'
+desc 'This task Titleizes company, terminal, menu_item, and employee names'
 task titleize_names: :environment do
-  Company.all.each do |company|
+  Company.all.includes(:employees, terminals: :menu_items).each do |company|
     company.update(name: company.name.titleize)
     company.terminals.each do |terminal|
       terminal.update(name: terminal.name.titleize)

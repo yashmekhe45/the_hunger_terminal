@@ -86,10 +86,10 @@ class TerminalTest < ActiveSupport::TestCase
      assert @terminal.errors[:min_order_amount].include?("must be greater than or equal to 0")
   end
 
-  test "squish spaces on terminal name" do
-    @terminal1 = build(:terminal, name: "  dominoz   ")
+  test 'squish spaces on terminal name' do
+    @terminal1 = build(:terminal, name: '  dominoz   ')
     @terminal1.save
-    assert_equal @terminal1.name, "dominoz"
+    assert_equal 'Dominoz', @terminal1.name
   end
 
   test "terminal can't be created without company_id" do 
@@ -140,14 +140,16 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal (@terminal1.current_amount - current_amount).round, 200.to_f
   end
 
-  test 'terminal should provide accurate confirmation possibility' do
-    @order = build(:order, terminal_id: @terminal.id)
+  test 'terminal should provide accurate confirmation possibility and ordered_amount' do
+    build(:order, terminal_id: @terminal.id)
+    build(:order, terminal_id: @terminal.id)
     assert_equal @terminal.ordered_amount,
                  Order.where(status: 'pending',terminal_id: @terminal.id)
                       .sum(:total_cost)
-    possibility = 100 * @terminal.ordered_amount / @terminal.min_order_amount
-    possibility = 100 if possibility > 100
-    assert_equal @terminal.confirmation_possibility, possibility.round(2)
+    assert_equal @terminal.confirmation_possibility,
+                 @terminal.min_order_amount > @terminal.ordered_amount ?
+                 (100 * @terminal.ordered_amount / @terminal.min_order_amount)
+                 .round(2) : 100
   end
 
   test 'orders should be cancelled' do
@@ -164,4 +166,5 @@ class TerminalTest < ActiveSupport::TestCase
       assert_equal(orders, [], 'Orders are not cancelled')
     end
   end
+
 end

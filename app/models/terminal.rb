@@ -28,7 +28,7 @@ class Terminal < ApplicationRecord
 
   def confirmation_possibility
     return 100 if min_order_amount <= ordered_amount
-    100 * ordered_amount / min_order_amount
+    (100 * ordered_amount / min_order_amount).round(2)
   end
 
   def cancel_terminal_orders

@@ -20,6 +20,9 @@ task titleize_names: :environment do
     company.update(name: company.name.titleize)
     company.terminals.each do |terminal|
       terminal.update(name: terminal.name.titleize)
+      terminal.menu_items.each do |menu_item|
+        menu_item.update(name: menu_item.name.titleize)
+      end
     end
     company.employees.each do |employee|
       employee.update(name: employee.name.titleize)

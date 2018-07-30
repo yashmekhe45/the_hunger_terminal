@@ -10,7 +10,7 @@ class MenuItem < ApplicationRecord
   belongs_to :terminal
 
   before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only, :remove_space
-
+  before_save :titleize_name
   
   protected
 
@@ -38,4 +38,9 @@ class MenuItem < ApplicationRecord
       self.description = description.squish
     end
   end
+
+  def titleize_name
+    self.name = name.titleize
+  end
+
 end

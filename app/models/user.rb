@@ -17,7 +17,9 @@ class User < ApplicationRecord
   belongs_to :company
   has_many :orders
   has_many :one_click_orders
+
   before_validation :not_a_string , :remove_space
+  before_save :titleize_name
 
   def is_company_admin?
     self.role == 'company_admin'
@@ -146,6 +148,10 @@ class User < ApplicationRecord
       self.errors[:is_active] << 'This must be true or false.' 
       return false
     end
+  end
+
+  def titleize_name
+    self.name = name.titleize
   end
 
 end

@@ -134,13 +134,25 @@ class CompanyTest < ActiveSupport::TestCase
     assert_not_empty ActionMailer::Base.deliveries
   end
 
-  test 'company should provide correct recommended terminals on cancel' do
+  test 'correct recommended terminals according to confirmation_possibility' do
+    @company.save!
+    3.times do |i|
+      create(:terminal, id: i, min_order_amount: i*100, company_id: @company.id)
+    end
+    create(:order, total_cost: 50, terminal_id: 1)
+    create(:order, total_cost: 50, terminal_id: 2)
+    create(:order, total_cost: 99, terminal_id: 2)
+    assert_equal [0, 2, 1],
+                 @company.top_recommended_terminals.pluck(:id)
+  end
+
+  test 'correct recommended terminals for same confirmation_possibility' do
     @company.save!
     5.times do |i|
-      create(:terminal, min_order_amount: i, company_id: @company.id)
+      create(:terminal, min_order_amount: i+1, company_id: @company.id)
     end
     Terminal.where(min_order_amount: 2).update(active: false)
-    assert_equal [0, 1, 3],
+    assert_equal [1, 3, 4],
                  @company.top_recommended_terminals.pluck(:min_order_amount)
   end
 

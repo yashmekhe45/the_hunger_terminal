@@ -76,7 +76,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .terminal_box{
   box-shadow: 1px 1px 10px;
-  padding : 10px;
+  padding: 10px;
   margin-top: 15px;
   margin-bottom: 15px;
   height: 310px;
@@ -84,6 +84,12 @@ input[type=number]::-webkit-outer-spin-button {
   .terminal_image{
     height: 100px;
     width: 100px;
-    margin: 0 auto
+    margin: 0 auto;
+  }
+
+  .terminal.details{
+    position: absolute;
+    margin-left: 10px;
+    bottom: 25px;
   }
 }

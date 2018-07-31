@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20170809074653) do
     t.string   "email"
     t.boolean  "active",           default: true
     t.string   "image"
-    t.float    "min_order_amount", default: 0.0
+    t.float    "min_order_amount"
     t.float    "payment_made",     default: 0.0
     t.float    "payable",          default: 0.0
     t.float    "current_amount",   default: 0.0

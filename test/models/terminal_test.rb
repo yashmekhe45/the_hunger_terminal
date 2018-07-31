@@ -167,4 +167,29 @@ class TerminalTest < ActiveSupport::TestCase
     end
   end
 
+  test 'terminal should return correct #ordered_amount' do
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 1, terminal_id: @terminal.id)
+    create(:order, total_cost: 2, terminal_id: @terminal.id)
+    assert_equal 3, @terminal.ordered_amount
+  end
+
+  test '#ordered_amount returned by terminal do not consider confirmed orders' do
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 1, terminal_id: @terminal.id)
+    create(:order, total_cost: 2, terminal_id: @terminal.id, status: 'confirmed')
+    assert_equal 1, @terminal.ordered_amount
+  end
+
+  test '#ordered_amount returned by terminal do not consider orders before today' do
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 30, 1, 1, 1)
+    create(:order, total_cost: 1, terminal_id: @terminal.id, date: Time.zone.today)
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 2, terminal_id: @terminal.id, date: Time.zone.today)
+    assert_equal 2, @terminal.ordered_amount
+  end
+
 end

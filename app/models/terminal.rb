@@ -23,7 +23,8 @@ class Terminal < ApplicationRecord
   before_save :titleize_name
 
   def ordered_amount
-    Order.where(status: 'pending',terminal_id: id).sum(:total_cost)
+    Order.where(status: 'pending',terminal_id: id, date: Time.zone.today)
+         .sum(:total_cost)
   end
 
   def confirmation_possibility

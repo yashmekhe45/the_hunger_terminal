@@ -8,9 +8,9 @@
         .card-block.terminal_box.text-center
           %h3.card-title= terminal.name
           %p.card-text.terminal_image= image_tag terminal.image_url(:thumb) if terminal.image?
-          %p= link_to 'Place Order', new_terminal_order_path(terminal.id) ,class:"btn btn-info terminal"
+          %p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
           .text-left.terminal.details
             - unless min_order_reached?(terminal)
-              %h5 Ordered amount&emsp;&emsp;&emsp; : ₹ #{terminal.ordered_amount}
-              %h5 Minimum order amount : ₹ #{terminal.min_order_amount}
-            %h5 Confirmation possibility : #{terminal.confirmation_possibility} %
+              %h5 Pending order amount &emsp;: ₹ #{terminal.ordered_amount}
+              %h5 Minimum order amount&emsp;: ₹ #{terminal.min_order_amount}
+            %h5 Confirmation possibility&emsp;: #{terminal.confirmation_possibility} %

@@ -11,6 +11,6 @@
           %br.p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
           .text-left.terminal.details
             - unless min_order_reached?(terminal)
-              %h5 Pending order amount &emsp;: ₹ #{terminal.ordered_amount}
-              %h5 Minimum order amount&emsp;: ₹ #{terminal.min_order_amount}
-            %h5 Confirmation possibility&emsp;: #{terminal.confirmation_possibility} %
+              %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}
+              %h5 Minimum order amount&emsp; : ₹ #{terminal.min_order_amount}
+            %h5 Confirmation possibility&emsp; : #{terminal.confirmation_possibility} %

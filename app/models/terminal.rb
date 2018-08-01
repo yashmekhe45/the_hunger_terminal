@@ -33,7 +33,11 @@ class Terminal < ApplicationRecord
   end
 
   def cancel_terminal_orders
-    orders = Order.where(terminal_id: id)
+    orders = Order.where(
+      terminal_id: id,
+      date: Time.zone.today,
+      status: ['pending', 'placed']
+    )
     employees = User.where(id: orders.pluck(:user_id))
     orders.destroy_all
     recommended_terminals = company.top_recommended_terminals

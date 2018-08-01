@@ -2,7 +2,7 @@
   .alert.alert-danger
     Extra delivery charges may apply!!
   %h3#vendorName #{@terminal.name}
-  - unless @terminal.min_order_amount == 0
+  - unless min_order_reached?(@terminal)
     %h4 Pending order amount &emsp; : ₹ #{@terminal.ordered_amount}
     %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   %ul.nav.nav-tabs

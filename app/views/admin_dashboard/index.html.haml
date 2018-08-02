@@ -12,7 +12,7 @@
               Order Price
               %h6.text-center (incl. of all taxes)
             %th.text-center Actions
-          - @res.each_with_index do |terminal,i|
+          - @res.each_with_index do |terminal, i|
             - placed = @placed[i]
             - confirmed = @confirmed[i]
             - min_order = terminal.min_order_amount
@@ -25,7 +25,7 @@
               %td.text-center
                 = link_to 'Forward Orders', (placed or confirmed) ? '#' : admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: 'btn btn-info', id: 'forwardButton'
                 = link_to 'Confirm', (confirmed or min_order > total) ? '#' : admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => total), disabled: (confirmed or min_order > total), class: min_order < total ? 'btn btn-success' : 'btn btn-warning'
-                = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id, todays_order_total: 0), disabled: confirmed, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete all the orders from this vendor?'}
+                = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id), disabled: confirmed, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete all the orders from this vendor?'}
 -else
   .container
     .alert.alert-danger

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resources :order_details, only: :destroy
+  resources :order_details, only: [:destroy, :show]
 
   get 'order/vendors' => 'orders#load_terminal' ,:as => 'vendors'
   get 'order/myOrder' => 'orders#order_history' ,:as => 'orders'

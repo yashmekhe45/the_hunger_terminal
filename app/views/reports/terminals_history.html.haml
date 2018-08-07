@@ -10,7 +10,7 @@
             %th.text-center Total
             %th.text-center Paid 
             / %th.text-center No Of Orders
-          - @terminals.each_with_index do |terminal,i|
+          - @terminals.each_with_index do |terminal, i|
             %tr  
             %td.text-center= i+1
             %td.text-center= link_to terminal.name, history_reports_terminal_path(terminal)

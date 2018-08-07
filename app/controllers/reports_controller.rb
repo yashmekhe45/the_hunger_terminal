@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
   add_breadcrumb "Individual Employee Report", :todays_reports_users_path, only: [:individual_employee]
 
 
-  add_breadcrumb "Emplyees' Last Month Report", :history_reports_users_path, only: [:monthly_all_employees]
+  add_breadcrumb "Employees' Last Month Report", :history_reports_users_path, only: [:monthly_all_employees]
 
   add_breadcrumb "Terminals' Today's Report", :todays_reports_terminals_path, only: [:terminals_todays]
 

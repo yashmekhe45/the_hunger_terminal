@@ -1,5 +1,5 @@
 .container
-  %h3.text-center Employee : #{User.find(@orders.ids.first).name}
+  %h3.text-center Employee : #{User.where(@orders.ids).first.name}
   .table-responsive
     %table.table-hover.table-bordered
       %tbody

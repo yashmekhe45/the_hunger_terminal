@@ -70,7 +70,7 @@ class User < ApplicationRecord
       where('orders.user_id' => user_id).
       where('orders.created_at' => 1.month.ago.beginning_of_month-1.day..1.month.ago.end_of_month+1.day).
       where('orders.status' => 'confirmed').
-      select('users.name, users.id, orders.created_at, orders.id,
+      select('users.name, users.id, orders.date, orders.id,
         orders.total_cost, orders.discount, orders.tax')
   end
 

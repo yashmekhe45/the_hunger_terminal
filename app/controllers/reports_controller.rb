@@ -77,6 +77,10 @@ class ReportsController < ApplicationController
     @terminal_reports = TerminalReport.all.where(terminal_id:params[:id].to_i)
   end
 
+  def order_details
+    @order_details = OrderDetail.where(order_id: params[:order_id])
+  end
+
   private 
 
   def load_company

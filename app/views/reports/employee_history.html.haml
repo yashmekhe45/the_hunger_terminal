@@ -11,7 +11,7 @@
           %th.text-center Subsidy
           %th.text-center Tax
           %th.text-center Cost To Employee
-        - @orders.each_with_index do |order, i|
+        - @user_orders.each_with_index do |order, i|
           %tr  
           %td.text-center= i + 1 
           %td.text-center= order.date

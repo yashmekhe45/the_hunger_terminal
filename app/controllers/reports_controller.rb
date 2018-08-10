@@ -40,10 +40,8 @@ class ReportsController < ApplicationController
   end
 
   def employee_history
-    @orders = User.employee_individual_report(current_user.company_id,params[:id])
-    if user = User.where(id: @orders.ids).first
-      @name = user.name
-    end
+    @user_orders = User.employee_individual_report(current_user.company_id,params[:id])
+    @name = @user_orders.first&.name
   end
 
   def employees_daily_order_detail

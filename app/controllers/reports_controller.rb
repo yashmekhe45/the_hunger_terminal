@@ -78,6 +78,7 @@ class ReportsController < ApplicationController
   end
 
   def order_details
+    authorize! :order_details, :report_management
     @order_details = OrderDetail.where(order_id: params[:order_id])
   end
 

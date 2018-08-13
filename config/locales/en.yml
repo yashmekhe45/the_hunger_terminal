@@ -22,4 +22,3 @@
 en:
   hello: "Hello world"
   orders_cancelled: 'Orders have been cancelled!!'
-  not_authorised: 'You are not authorized to access it!!'

@@ -9,7 +9,7 @@ class Ability
       can :manage, Order
       cannot [:edit, :delete], Order, status: ['placed','confirmed']
       cannot :manage,Company
-      cannot [:show,:update,:delete], Company      
+      cannot [:show,:update,:delete], Company
       cannot :input_terminal_extra_charges , :order_management
       cannot :employees_daily_order_detail , :report_management
       cannot :terminals_history , :report_management
@@ -19,7 +19,6 @@ class Ability
     end
 
     if user.role == "company_admin"
-      can :manage, Order
       can :manage, User, :company_id => user.company_id
       # company_admin won't be allowed to access the company index
       can [:read, :update, :get_order_details, :download_invalid_csv], Company, id: user.company_id
@@ -29,16 +28,17 @@ class Ability
       cannot [:edit, :delete], Order, status: ['placed','confirmed']
       can :index, :order_management
       can :order_detail, :order_management
-      can :forward_orders, :order_management 
-      can :place_orders, :order_management 
+      can :forward_orders, :order_management
+      can :place_orders, :order_management
       can :confirm_orders, :order_management
       can :cancel_orders, :order_management
       can :input_terminal_extra_charges , :order_management
-      can :employees_daily_order_detail , :report_management 
-      can :employees_current_month, :report_management 
-      can :monthly_all_employees, :report_management 
-      can :terminals_history , :report_management 
-      can :terminals_todays , :report_management 
+      can :employees_daily_order_detail , :report_management
+      can :employees_current_month, :report_management
+      can :monthly_all_employees, :report_management
+      can :terminals_history , :report_management
+      can :terminals_todays , :report_management
+      can :order_details, :report_management
       can :payment, :payment_management 
     end
 

@@ -193,4 +193,14 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal 2, @terminal.ordered_amount
   end
 
+  test '#ordered_amount returned by terminal do not consider passed order' do
+    @terminal.tax = 12
+    @terminal.save!
+    travel_to Time.zone.local(2018, 8, 16)
+    order_1 = create(:order, total_cost: 111, terminal_id: @terminal.id)
+    order_2 = create(:order, total_cost: 222, terminal_id: @terminal.id)
+    assert_equal 249, @terminal.ordered_amount(order_1.id)
+    assert_equal 124, @terminal.ordered_amount(order_2.id)
+  end
+
 end

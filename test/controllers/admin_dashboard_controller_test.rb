@@ -56,12 +56,7 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     create_orders
     cancelling_time = Time.now
     stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
-    get :cancel_orders, params: {
-      terminal_id:   @terminal1.id,
-      order_details: @order1.order_details,
-      current_user:  @user1,
-      todays_order_total: '0'
-    }
+    get :cancel_orders, params: {terminal_id: @terminal1.id}
     time_extended_to = @company.reload.end_ordering_at.change(
       year:   cancelling_time.year,
       month:  cancelling_time.month,
@@ -108,12 +103,20 @@ class AdminDashboardControllerTest  < ActionController::TestCase
     create_employees
     create_orders
     stub_request(:get, "http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
-    get :cancel_orders, params: {
-      terminal_id: @terminal1.id,
-      todays_order_total: '0'
-    }
+    get :cancel_orders, params: {terminal_id: @terminal1.id}
     assert_response :redirect
     assert_redirected_to admin_dashboard_index_url
+  end
+
+  test 'employees should not cancel orders' do
+    create_orders
+    @user1.update(role: 'employee')
+    @user1.confirm
+    sign_in @user1
+    stub_request(:get,"http://hunger-terminal.s3.amazonaws.com/test/uploads/terminal/image/hotelplaceholder1.jpg")
+    get :cancel_orders, params: {terminal_id: @terminal1.id}
+    assert_response :redirect
+    assert_redirected_to vendors_path
   end
 
   #This function has some issue. Will finish it by fixing the issue

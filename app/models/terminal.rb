@@ -1,4 +1,4 @@
-class Terminal < ApplicationRecord  
+class Terminal < ApplicationRecord
 
   validates :name, :landline , :company_id, presence: true
   validates :landline ,uniqueness: { scope: :company_id,  message: "terminal landline should be unique in a company" }
@@ -7,14 +7,15 @@ class Terminal < ApplicationRecord
   validates :gstin ,length: { is: 15 } , :allow_blank => true
   validates_presence_of :gstin, :if => :tax?
   validates :tax ,numericality: { greater_than_or_equal_to: 0 , less_than_or_equal_to: 100 }, :allow_blank => true
-  validates :active, inclusion: {in: [true, false]}  
+  validates :active, inclusion: {in: [true, false]}
   validates_with LandlineValidator
 
-  # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format." 
+  # validates_format_of :email,with: Devise.email_regexp, message: "Invalid email format."
   has_many :menu_items, dependent: :destroy
   has_many :orders
   has_many :terminal_reports
   has_many :terminal_extra_charges
+  has_many :reviews, as: :reviewable
   belongs_to :company
 
   mount_uploader :image, ImageUploader
@@ -51,8 +52,12 @@ class Terminal < ApplicationRecord
     ImageUploader.default_url
   end
 
-  private 
-    
+  def rating
+    self.reviews.average(:rating).to_f
+  end
+
+  private
+
   def remove_space
     #squish method is not for nil classes
     unless(self.name == nil)
@@ -61,10 +66,10 @@ class Terminal < ApplicationRecord
   end
 
   def active_must_accept_boolean_only
-    if [true,false,'t', 'f', 'true','false',1,0].include?(self.active_before_type_cast) 
+    if [true,false,'t', 'f', 'true','false',1,0].include?(self.active_before_type_cast)
       return true
     else
-      self.errors[:active] << 'This must be true or false.' 
+      self.errors[:active] << 'This must be true or false.'
       return false
     end
   end
@@ -86,7 +91,7 @@ class Terminal < ApplicationRecord
       group('terminals.id').
       select('terminals.name,terminals.id,sum(terminal_reports.current_amount) AS total,
         sum(terminal_reports.payment_made) AS total_paid')
-  end  
+  end
 
   def self.all_terminals_todays_orders_report(c_id)
     self.
@@ -123,9 +128,9 @@ class Terminal < ApplicationRecord
       @terminal.payment_made = -@terminal.payable
     else
       @terminal.current_amount = 0
-      @terminal.payment_made = 0 
+      @terminal.payment_made = 0
     end
-    @terminal.save  
+    @terminal.save
   end
 
   def self.save_last_payment_made_to_terminal(t_id, c_id)

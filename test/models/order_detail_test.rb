@@ -92,7 +92,7 @@ class OrderDetailTest < ActiveSupport::TestCase
                  OrderDetail.get_orders_for_one_click_ordering(user.id)
   end
 
-  test 'inactive orders should not be fetched for OneClickOrdering' do
+  test 'orders from inactive terminals should not be fetched for OneClickOrdering' do
     user = create(:user)
     terminal1 = build(:terminal)
     terminal2 = build(:terminal, active: false)

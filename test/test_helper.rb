@@ -18,6 +18,8 @@ require 'webmock/minitest'
 # Umment for awesome colorful output
 # require "minitest/pride"
 
+WebMock.disable_net_connect!(allow: [/codeclimate.com/])
+
 module CreateOrderHelper
   def create_order
     some_time = Time.parse "10 AM"  ## gives time object in IST time zone

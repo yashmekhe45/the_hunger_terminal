@@ -1,6 +1,5 @@
 machine:
   timezone: Asia/Kolkata
-
 test:
   post:
     - gem install codeclimate-test-reporter && codeclimate-test-reporter

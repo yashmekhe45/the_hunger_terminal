@@ -138,7 +138,6 @@ class OrdersControllerTest  < ActionController::TestCase
     assert_template :one_click_order
   end
 
-
   def sign_in_user_having_order
     @user1.confirm
     sign_in @user1
@@ -147,6 +146,5 @@ class OrdersControllerTest  < ActionController::TestCase
     @user2.confirm
     sign_in @user2
   end
-
 
 end

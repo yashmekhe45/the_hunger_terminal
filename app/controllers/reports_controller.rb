@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
   add_breadcrumb "Individual Employee Report", :todays_reports_users_path, only: [:individual_employee]
 
 
-  add_breadcrumb "Emplyees' Last Month Report", :history_reports_users_path, only: [:monthly_all_employees]
+  add_breadcrumb "Employees' Last Month Report", :history_reports_users_path, only: [:monthly_all_employees]
 
   add_breadcrumb "Terminals' Today's Report", :todays_reports_terminals_path, only: [:terminals_todays]
 
@@ -40,7 +40,8 @@ class ReportsController < ApplicationController
   end
 
   def employee_history
-    @orders = User.employee_individual_report(current_user.company_id,params[:id])
+    @user_orders = User.employee_individual_report(current_user.company_id,params[:id])
+    @name = @user_orders.first&.name
   end
 
   def employees_daily_order_detail
@@ -74,6 +75,11 @@ class ReportsController < ApplicationController
 
   def terminal_history
     @terminal_reports = TerminalReport.all.where(terminal_id:params[:id].to_i)
+  end
+
+  def order_details
+    authorize! :order_details, :report_management
+    @order_details = OrderDetail.where(order_id: params[:order_id])
   end
 
   private 

@@ -15,6 +15,13 @@
                 %h4.product-name.nomargin.veg= menu_item.name
               - else
                 %h4.product-name.nomargin.non-veg= menu_item.name 
+              %span
+                - full_star(menu_item.rating).times do
+                  %i.fa.fa-star
+                - if half_star?(menu_item.rating)
+                  %i.fa.fa-star-half-full
+                - empty_star(menu_item.rating).times do
+                  %i.glyphicon.glyphicon-star-empty
               %h6.vendor-name= menu_item.description
               %span.hide.menu_item_id= menu_item.id
         %td

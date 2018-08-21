@@ -167,4 +167,40 @@ class TerminalTest < ActiveSupport::TestCase
     end
   end
 
+  test '#ordered_amount returned by terminal considers tax' do
+    @terminal.tax = 10
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 20, terminal_id: @terminal.id)
+    create(:order, total_cost: 30, terminal_id: @terminal.id)
+    assert_equal 55, @terminal.ordered_amount
+  end
+
+  test '#ordered_amount returned by terminal do not consider confirmed orders' do
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 1, terminal_id: @terminal.id)
+    create(:order, total_cost: 2, terminal_id: @terminal.id, status: 'confirmed')
+    assert_equal 1, @terminal.ordered_amount
+  end
+
+  test '#ordered_amount returned by terminal do not consider orders before today' do
+    @terminal.save!
+    travel_to Time.zone.local(2018, 7, 30, 1, 1, 1)
+    create(:order, total_cost: 1, terminal_id: @terminal.id, date: Time.zone.today)
+    travel_to Time.zone.local(2018, 7, 31, 1, 1, 1)
+    create(:order, total_cost: 2, terminal_id: @terminal.id, date: Time.zone.today)
+    assert_equal 2, @terminal.ordered_amount
+  end
+
+  test '#ordered_amount returned by terminal do not consider passed order' do
+    @terminal.tax = 12
+    @terminal.save!
+    travel_to Time.zone.local(2018, 8, 16)
+    order_1 = create(:order, total_cost: 111, terminal_id: @terminal.id)
+    order_2 = create(:order, total_cost: 222, terminal_id: @terminal.id)
+    assert_equal 249, @terminal.ordered_amount(order_1.id)
+    assert_equal 124, @terminal.ordered_amount(order_2.id)
+  end
+
 end

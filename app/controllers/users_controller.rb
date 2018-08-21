@@ -116,7 +116,9 @@ class UsersController < ApplicationController
   end
 
   def require_permission
-    if current_user != Company.find(params[:company_id]).employees.find_by(role: "company_admin")
+    unless current_user.in?(Company.find(params[:company_id])
+                                   .employees
+                                   .where(role: "company_admin"))
       flash[:error] = "You are not authorized to access it!!"
       redirect_to vendors_path
     end

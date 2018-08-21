@@ -23,8 +23,13 @@ class Terminal < ApplicationRecord
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
 
-  def ordered_amount
-    Order.where(status: 'pending',terminal_id: id).sum(:total_cost)
+  def ordered_amount(order_id = nil)
+    (
+      Order
+      .where(status: 'pending', terminal_id: id, date: Time.zone.today)
+      .where.not(id: order_id)
+      .sum(:total_cost) * (100 + tax.to_f) / 100
+    ).round
   end
 
   def confirmation_possibility
@@ -33,7 +38,11 @@ class Terminal < ApplicationRecord
   end
 
   def cancel_terminal_orders
-    orders = Order.where(terminal_id: id)
+    orders = Order.where(
+      terminal_id: id,
+      date: Time.zone.today,
+      status: ['pending', 'placed']
+    )
     employees = User.where(id: orders.pluck(:user_id))
     orders.destroy_all
     recommended_terminals = company.top_recommended_terminals

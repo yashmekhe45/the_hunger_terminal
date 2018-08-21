@@ -72,6 +72,7 @@ class AdminDashboardController < ApplicationController
   end
 
   def cancel_orders
+    authorize! :confirm_orders, :order_management
     Terminal.find(params[:terminal_id]).cancel_terminal_orders
     flash[:notice] = t(:orders_cancelled)
     redirect_to admin_dashboard_index_path

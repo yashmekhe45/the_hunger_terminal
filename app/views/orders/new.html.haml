@@ -1,10 +1,10 @@
 .container
   .alert.alert-danger
     Extra delivery charges may apply!!
-  %h3#vendorName #{@terminal.name.titleize}
-  - unless @terminal.min_order_amount == 0
-    %h4 Ordered amount : #{Order.where(status: 'pending',terminal_id: @terminal.id).sum(:total_cost)}
-    %h4 Minimum order amount : #{@terminal.min_order_amount}
+  %h3#vendorName #{@terminal.name}
+  - unless min_order_reached?(@terminal)
+    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
+    %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   %ul.nav.nav-tabs
     %li.active
       %a{"data-toggle" => "tab", :href => "#veg"} Veg

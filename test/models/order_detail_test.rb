@@ -79,4 +79,31 @@ class OrderDetailTest < ActiveSupport::TestCase
     orders = OrderDetail.get_orders_for_one_click_ordering(user.id)
     assert_equal orders, [order]
   end
+
+  test 'only confirmed orders should be fetched for OneClickOrdering' do
+    user = create(:user)
+    travel_to Time.zone.local(2018, 8, 21)
+    order1 = create(:order, user: user, status: 'confirmed')
+    travel_to Time.zone.local(2018, 8, 22)
+    create(:order, user: user)
+    travel_to Time.zone.local(2018, 8, 23)
+    order2 = create(:order, user: user, status: 'confirmed')
+    assert_equal [order2, order1],
+                 OrderDetail.get_orders_for_one_click_ordering(user.id)
+  end
+
+  test 'inactive orders should not be fetched for OneClickOrdering' do
+    user = create(:user)
+    terminal1 = build(:terminal)
+    terminal2 = build(:terminal, active: false)
+    travel_to Time.zone.local(2018, 8, 21)
+    order1 = create(:order, user: user, status: 'confirmed', terminal: terminal1)
+    travel_to Time.zone.local(2018, 8, 22)
+    create(:order, user: user, status: 'confirmed', terminal: terminal2)
+    travel_to Time.zone.local(2018, 8, 23)
+    order2 = create(:order, user: user, status: 'confirmed', terminal: terminal1)
+    assert_equal [order2, order1],
+                 OrderDetail.get_orders_for_one_click_ordering(user.id)
+  end
+
 end

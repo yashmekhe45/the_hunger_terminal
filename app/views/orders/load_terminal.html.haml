@@ -9,6 +9,13 @@
           %h3.card-title= terminal.name
           %p.card-text.terminal_image= image_tag terminal.image_url(:thumb) if terminal.image?
           %br.p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
+          %span
+          - full_star(terminal.rating).times do
+            %i.fa.fa-star
+          - if half_star?(terminal.rating)
+            %i.fa.fa-star-half-full
+          - empty_star(terminal.rating).times do
+            %i.glyphicon.glyphicon-star-empty
           .text-left.terminal.details
             - unless min_order_reached?(terminal)
               %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}

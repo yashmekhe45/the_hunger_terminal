@@ -1,7 +1,7 @@
 .container
   %h3#vendorName #{@terminal.name}
-  -unless min_order_reached?(@terminal, @order)
-    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount(@order)}
+  -unless min_order_reached?(@terminal, @order.id)
+    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount(@order.id)}
     %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   .col-md-7.col-sm-7
     %table#cart.table.table-hover.table-condensed

@@ -32,7 +32,22 @@ class OrderDetail < ApplicationRecord
   private 
 
   def self.get_order_details(employee_id)
-    self.joins(:order).select("DISTINCT ON (order_id, orders.terminal_id, menu_item_id, quantity) *,orders.terminal_id AS terminal_id").where("orders.user_id" =>"#{employee_id}","orders.status" => 'confirmed').order('order_id desc').group_by(&:order_id).map {|order_id, order_detail| { order_id => order_detail.pluck(:menu_item_name, :quantity, :terminal_id)}}
+    joins(order: :terminal).
+    select('DISTINCT ON (
+      order_id,
+      orders.terminal_id,
+      menu_item_id,
+      quantity) *, orders.terminal_id AS terminal_id').
+    where(
+      'orders.user_id': employee_id,
+      'orders.status': :confirmed,
+      terminals: {active: true}
+    ).
+    order('order_id desc').group_by(&:order_id).
+    map {|order_id, order_detail| {
+        order_id => order_detail.pluck(:menu_item_name, :quantity, :terminal_id)
+      }
+    }
   end
 
   def self.get_orders(order_ids)

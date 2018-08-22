@@ -22,9 +22,14 @@ class Terminal < ApplicationRecord
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
 
-  def ordered_amount
-    orders = Order.where(status: 'pending', terminal_id: id, date: Time.zone.today)
-    orders.sum(:total_cost) + orders.sum(:tax)
+  #Pending orders' amount from a terminal without considering an order if order's id is passed
+  def ordered_amount(order_id = nil)
+    (
+      Order
+      .where(status: 'pending', terminal_id: id, date: Time.zone.today)
+      .where.not(id: order_id)
+      .sum(:total_cost) * (100 + tax.to_f) / 100
+    ).round
   end
 
   def confirmation_possibility

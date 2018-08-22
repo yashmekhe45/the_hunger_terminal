@@ -1,5 +1,5 @@
 .container
-  -if !@users.empty?  
+  -if !@users.empty?
     %h3.text-center Employee's Reports
     = link_to 'Todays Orders', todays_reports_users_path, class: "btn btn-info"
     = link_to 'Last Month Orders', history_reports_users_path, class: "btn btn-info"
@@ -11,19 +11,18 @@
             %th.text-center Emp.ID
             %th.text-center Name
             %th.text-center
-              TotalOrderPrice
+              Total Order Price
               %h6.text-center (incl. of all taxes)
             %th.text-center Subsidy
             %th.text-center Extra Charges
             %th.text-center
-              CTE
+              Cost To Employee
               %h6.text-center (incl. of all taxes)
-
-          - @users.each_with_index do |user,i|
+          - @users.each_with_index do |user, i|
             %tr  
-            %td.text-center= i+1
+            %td.text-center= i + 1
             %td.text-center= user.id
-            %td.text-center= link_to user.name, history_reports_user_path(user) 
+            %td.text-center= link_to user.name, history_reports_user_path(user)
             %td.text-center ₹ #{user.total}
             %td.text-center ₹ #{user.subsidy}
             %td.text-center ₹ #{user.extra_charges}
@@ -31,5 +30,3 @@
   -else
     .alert.alert-danger
       No record is found!!
-
-

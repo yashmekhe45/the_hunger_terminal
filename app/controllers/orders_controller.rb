@@ -54,9 +54,9 @@ class OrdersController < ApplicationController
     @subsidy = current_user.company.subsidy
     @tax = @terminal.tax.to_i
     @order_details = @order.order_details.all.includes(:menu_item) 
-    oder_menus = @order.order_details.pluck(:menu_item_id)
+    order_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
-    unique_item =  terminal_menus-oder_menus
+    unique_item =  terminal_menus - order_menus
     @terminal_id = @terminal.id
     if !unique_item.empty?
       @menu_items = MenuItem.where(terminal_id: @terminal.id).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)

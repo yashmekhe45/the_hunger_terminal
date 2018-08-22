@@ -193,7 +193,7 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal 2, @terminal.ordered_amount
   end
 
-  test '#ordered_amount returned by terminal do not consider passed order' do
+  test '#ordered_amount returned by terminal do not consider the order whose id is passed' do
     @terminal.tax = 12
     @terminal.save!
     travel_to Time.zone.local(2018, 8, 16)

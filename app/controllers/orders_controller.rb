@@ -20,7 +20,13 @@ class OrdersController < ApplicationController
   end
 
   def load_terminal
-    @terminals = Terminal.where(active: true, company: current_user.company)
+    @terminals = Terminal
+                 .where(active: true, company_id: current_user.company_id)
+                 .select(:id, :name, :min_order_amount,
+                         :tax, 'avg(reviews.rating) as rating')
+                 .left_outer_joins(:reviews)
+                 .group(:id)
+                 .order('rating desc nulls last')
   end
 
   def new 
@@ -124,11 +130,25 @@ class OrdersController < ApplicationController
     end
 
     def get_veg_menu_items
-      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
+      return MenuItem
+             .where(terminal_id: params[:terminal_id])
+             .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
+             .where("available = ? AND veg = ?",true,true)
+             .select(:name, :description, :price, :veg, 'avg(reviews.rating) as rating')
+             .left_outer_joins(:reviews)
+             .group(:id)
+             .order('rating desc nulls last')
     end
 
     def get_nonveg_menu_items
-      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
+      return MenuItem
+             .where(terminal_id: params[:terminal_id])
+             .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
+             .where("available = ? AND veg = ?",true,false)
+             .select(:name, :description, :price, :veg, 'avg(reviews.rating) as rating')
+             .left_outer_joins(:reviews)
+             .group(:id)
+             .order('rating desc nulls last')
     end
 
 end

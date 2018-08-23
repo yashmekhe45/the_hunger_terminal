@@ -61,10 +61,6 @@ class Terminal < ApplicationRecord
     ImageUploader.default_url
   end
 
-  def rating
-    self.reviews.average(:rating).to_f
-  end
-
   private
 
   def remove_space

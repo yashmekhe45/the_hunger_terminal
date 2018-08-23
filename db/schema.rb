@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20180814094158) do
     t.float    "discount"
     t.integer  "extra_charges", default: 0
     t.float    "tax",           default: 0.0
-    t.string   "reviewed",      default: "f"
+    t.boolean  "reviewed",      default: false
     t.index ["company_id"], name: "index_orders_on_company_id", using: :btree
     t.index ["terminal_id"], name: "index_orders_on_terminal_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree

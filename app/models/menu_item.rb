@@ -13,10 +13,6 @@ class MenuItem < ApplicationRecord
   before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only, :remove_space
   before_save :titleize_name
 
-  def rating
-    self.reviews.average(:rating).to_f
-  end
-
   protected
 
   def available_must_accept_boolean_only

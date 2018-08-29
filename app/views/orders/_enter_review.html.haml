@@ -1,0 +1,33 @@
+.modal-dialog{role: 'document'}
+  .modal-content
+    .modal-header
+      %h2.modal-title Review
+      .modal-body
+        %h4 Vendor name : #{@order.terminal.name}
+        = form_tag reviews_path do
+          = fields_for 'reviews[]', @review do |f|
+            %br= f.label :rating
+            .rate
+              = render 'rating_stars', i: 0
+            %br=f.label :comment
+            = f.text_field :comment
+            = f.hidden_field :reviewable_type, value: 'Terminal'
+            = f.hidden_field :reviewable_id, value: @order.terminal.id
+            %br
+          - @order.order_details.each_with_index do |detail, i|
+            %br
+            %br
+            %h4 Item name : #{detail.menu_item.name}
+            = fields_for 'reviews[]', @review do |f|
+              %br= f.label :rating
+              .rate
+                = render 'rating_stars', i: i + 1
+              %br=f.label :comment
+              = f.text_field :comment
+              %br
+              = f.hidden_field :reviewable_type, value: 'MenuItem' 
+              = f.hidden_field :reviewable_id, value: @order.order_details[i].id
+          %br
+          .modal-footer
+            %button.btn.btn-secondary{'data-dismiss': 'modal', type: 'button'}Close
+            %button.btn.btn-primary{type: 'submit'}Submit

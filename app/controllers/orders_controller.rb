@@ -10,6 +10,15 @@ class OrdersController < ApplicationController
   add_breadcrumb "My Order History", :orders_path, only: [:order_history]
   add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
 
+  def enter_review
+    @order = Order.find(params[:order_id])
+    @review = Review.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def order_history
     @from_date = params[:from] || 7.days.ago.strftime('%Y-%m-%d')
     @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')

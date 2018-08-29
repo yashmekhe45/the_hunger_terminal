@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   get 'order/vendors' => 'orders#load_terminal' ,:as => 'vendors'
   get 'order/myOrder' => 'orders#order_history' ,:as => 'orders'
+  get 'order/review' => 'orders#enter_review' ,:as => 'enter_review'
+  resource :reviews, only: [:create]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users, :skip => [:registration],  controllers: { confirmations: 'confirmation' }
   as :user do

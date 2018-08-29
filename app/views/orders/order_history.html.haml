@@ -9,8 +9,7 @@
     %br
     %br
     %br
-    .card 
-
+    .card
       -if @orders.empty?
         .alert.alert-danger
           No record is found for this period!!
@@ -27,6 +26,7 @@
               %th Payable 
               %th Items(Qty)
               %th Vendor
+              %th Feedback
           %tbody
           -@orders.each do |order|
             %tr
@@ -47,6 +47,7 @@
                   %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
                   %br
               %td= order.terminal.name
+              %td= link_to 'Review', enter_review_path(order_id: order.id), remote: true
           - if grand_total != 0
             %tr
               %td= 'Aggregate Amount '
@@ -57,7 +58,5 @@
               %td= grand_payable
               %td
               %td
-
-
-
-             
+              %td
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}

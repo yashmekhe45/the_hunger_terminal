@@ -10,16 +10,15 @@
           %p.card-text.terminal_image= image_tag terminal.image_url(:thumb) if terminal.image?
           %br.p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
           %span
-          - var = terminal.rating.to_f
-          - full_star(var).times do
-            %i.fa.fa-star
-          - if half_star?(var)
-            %i.fa.fa-star-half-full
-          - empty_star(var).times do
-            %i.glyphicon.glyphicon-star-empty
-          #{terminal.rating}
+            = render 'show_rating_stars', rating: terminal.rating
           .text-left.terminal.details
             - unless min_order_reached?(terminal)
               %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}
               %h5 Minimum order amount&emsp; : ₹ #{terminal.min_order_amount}
             %h5 Confirmation possibility&emsp; : #{terminal.confirmation_possibility} %
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}
+
+- if prompt_review?(@order)
+  :javascript
+    $('#enter_review').html('#{escape_javascript(render 'enter_review')}')
+    $('#enter_review').modal('show');

@@ -12,17 +12,11 @@
           .row
             .col-sm-12
               - if menu_item.veg == true
-                %h4.product-name.nomargin.veg= menu_item.name
+                %h4.product-name.nomargin.veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
               - else
-                %h4.product-name.nomargin.non-veg= menu_item.name 
+                %h4.product-name.nomargin.non-veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
               %span
-                - var = menu_item.rating.to_f
-                - full_star(var).times do
-                  %i.fa.fa-star
-                - if half_star?(var)
-                  %i.fa.fa-star-half-full
-                - empty_star(var).times do
-                  %i.glyphicon.glyphicon-star-empty
+                = render 'show_rating_stars', rating: menu_item.rating
               %h6.vendor-name= menu_item.description
               %span.hide.menu_item_id= menu_item.id
         %td

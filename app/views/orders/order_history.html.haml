@@ -47,7 +47,10 @@
                   %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
                   %br
               %td= order.terminal.name
-              %td= link_to 'Review', enter_review_path(order_id: order.id), remote: true
+              - if order.reviewed
+                %td Reviewed
+              - else
+                %td{id: order.id}= link_to 'Review', enter_review_path(order_id: order.id), remote: true
           - if grand_total != 0
             %tr
               %td= 'Aggregate Amount '

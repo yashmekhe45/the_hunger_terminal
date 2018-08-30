@@ -1,0 +1,8 @@
+.showing_stars
+  - var = local_assigns[:rating].to_f.round
+  - full_star(var).times do
+    %i.fa.fa-star
+  - if half_star?(var)
+    %i.fa.fa-star-half-full
+  - empty_star(var).times do
+    %i.glyphicon.glyphicon-star-empty

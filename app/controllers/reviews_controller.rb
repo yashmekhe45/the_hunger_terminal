@@ -5,19 +5,25 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review_params[:reviews].each_with_index do |review_param, index|
+    review_params[:reviews].each do |review_param|
       @review = Review.new(review_param)
+      @review[:company_id] = current_user.company_id
       @review.save
       flash[:success] = 'Review added!!'
+    end
+    (order = Order.find(params[:order][:id])).update(reviewed: true)
+    respond_to do |format|
+      format.js { @item_id = order.id }
     end
   end
 
   private
 
   def review_params
-    params[:reviews].each_with_index do |review, index|
-      review[:rating] = params[:ratings]["#{index}"] if params[:ratings]
-      review[:company_id] = current_user.company_id
+    if params[:ratings]
+      params[:reviews].each_with_index do |review, index|
+        review[:rating] = params[:ratings]["#{index}"]
+      end
     end
     params.permit(reviews: [:rating, :comment, :reviewable_type, :reviewable_id, :company_id])
   end

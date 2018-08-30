@@ -2,24 +2,30 @@
   .alert.alert-danger
     Extra delivery charges may apply!!
   %h3#vendorName #{@terminal.name}
+  = render 'show_rating_stars', rating: @rating
   - unless min_order_reached?(@terminal)
     %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
     %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   %ul.nav.nav-tabs
     %li.active
-      %a{"data-toggle" => "tab", :href => "#veg"} Veg
+      %a{'data-toggle': 'tab', href: '#veg'}Veg
     %li
-      %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+      %a{'data-toggle': 'tab', href: '#nonveg'}Non-veg
+    %li
+      %a{'data-toggle': 'tab', href: '#reviews'}Reviews
   .tab-content.col-md-7.col-sm-7
     .tab-pane.fade.in.active#veg
-      = render "menu", obj: @veg
+      = render 'menu', obj: @veg
     .tab-pane.fade#nonveg
-      = render "menu", obj: @nonveg
-
-
+      = render 'menu', obj: @nonveg
+    .tab-pane.fade#reviews
+      = render 'terminal_reviews', obj: @comments
   .col-md-5
     = form_tag terminal_orders_path do |f|
       = render 'form', f: f
+
+#show_comments.modal.fade{'aria-labelledby': 'Show Comments', role: 'dialog', tabindex: '-1'}
+
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }

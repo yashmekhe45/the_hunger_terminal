@@ -1,15 +1,15 @@
 module OrdersHelper
 
   def full_star(rating)
-    rating.round / 2
+    rating / 2
   end
 
   def half_star?(rating)
-    rating.round % 2 == 1
+    rating % 2 == 1
   end
 
   def empty_star(rating)
-    (5 - (rating.round / 2) - rating % 2).round
+    5 - rating / 2 - rating % 2
   end
 
   def min_order_reached?(terminal, order_id = nil)
@@ -17,4 +17,11 @@ module OrdersHelper
     terminal.min_order_amount <= terminal.ordered_amount(order_id)
   end
 
+  def prompt_review?(order)
+    order ? !order.reviewed : false
+  end
+
+  def rating(item)
+    item.reviews.average(:rating)
+  end
 end

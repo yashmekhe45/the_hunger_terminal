@@ -3,7 +3,6 @@ class CreateReviews < ActiveRecord::Migration[5.0]
     create_table :reviews do |t|
       t.float :rating
       t.text :comment
-      t.string :criterion
       t.integer :company_id
       t.references :reviewable, polymorphic: true
 

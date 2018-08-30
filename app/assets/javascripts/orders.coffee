@@ -121,7 +121,7 @@ find_total = (selected_item) ->
     $('#order_total_cost').val(sum)
     if sum == 0 
       $('.place_order').prop("disabled", true);
-      $('i').show()
+      $('i1').show()
     else
       $('.place_order').prop("disabled", false); 
-      $('i').hide()  
+      $('i1').hide()

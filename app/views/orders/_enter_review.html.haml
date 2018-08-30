@@ -1,19 +1,25 @@
 .modal-dialog{role: 'document'}
   .modal-content
     .modal-header
+      %button.close{'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button'}
+        %span{'aria-hidden': 'true'}Skip >>
       %h2.modal-title Review
       .modal-body
         %h4 Vendor name : #{@order.terminal.name}
-        = form_tag reviews_path do
+        = form_tag reviews_path, id: 'review_form', remote: true do
+          =fields_for 'order' do |f|
+            = f.hidden_field :id, value: @order.id
           = fields_for 'reviews[]', @review do |f|
             %br= f.label :rating
             .rate
               = render 'rating_stars', i: 0
             %br=f.label :comment
-            = f.text_field :comment
+            = f.text_area :comment, cols: 50, rows: 3, id: 'terminal_comment'
             = f.hidden_field :reviewable_type, value: 'Terminal'
             = f.hidden_field :reviewable_id, value: @order.terminal.id
             %br
+          :javascript
+            $('#terminal_comment').text('');
           - @order.order_details.each_with_index do |detail, i|
             %br
             %br
@@ -23,10 +29,13 @@
               .rate
                 = render 'rating_stars', i: i + 1
               %br=f.label :comment
-              = f.text_field :comment
+              = f.text_area :comment, cols: 50, rows: 3, id: "comment#{i}"
               %br
               = f.hidden_field :reviewable_type, value: 'MenuItem' 
-              = f.hidden_field :reviewable_id, value: @order.order_details[i].id
+              = f.hidden_field :reviewable_id, value: @order.order_details[i].menu_item_id
+            :javascript
+              $('#comment#{i}').text('');
+            %br
           %br
           .modal-footer
             %button.btn.btn-secondary{'data-dismiss': 'modal', type: 'button'}Close

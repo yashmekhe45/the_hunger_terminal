@@ -11,12 +11,14 @@ class OrdersController < ApplicationController
   add_breadcrumb "Today's Order", :order_path, only: [:show, :edit, :update]
 
   def enter_review
-    @order = Order.find(params[:order_id])
+    @order ||= Order.find(params[:order_id])
     @review = Review.new
-    respond_to do |format|
-      format.html
-      format.js
-    end
+  end
+
+  def show_comments
+    item = MenuItem.find(params[:item_id])
+    @name = item.name
+    @comments = item.reviews.where.not(comment: '').pluck(:comment)
   end
 
   def order_history
@@ -36,6 +38,8 @@ class OrdersController < ApplicationController
                  .left_outer_joins(:reviews)
                  .group(:id)
                  .order('rating desc nulls last')
+    @order = current_user.orders.last
+    @review = Review.new
   end
 
   def new 
@@ -46,10 +50,12 @@ class OrdersController < ApplicationController
     @veg = get_veg_menu_items
     @nonveg = get_nonveg_menu_items
     @tax = @terminal.tax.to_i
+    @rating = @terminal.reviews.average(:rating)
+    @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                         
+  def create
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
@@ -68,14 +74,13 @@ class OrdersController < ApplicationController
   def edit
     @subsidy = current_user.company.subsidy
     @tax = @terminal.tax.to_i
-    @order_details = @order.order_details.all.includes(:menu_item) 
+    @order_details = @order.order_details.includes(:menu_item)
     order_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus - order_menus
     @terminal_id = @terminal.id
-    if !unique_item.empty?
-      @menu_items = MenuItem.where(terminal_id: @terminal.id).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
-    end
+    @rating = @terminal.reviews.average(:rating)
+    @menu_items = unordered_items(unique_item) unless unique_item.empty?
     add_breadcrumb "Edit Order"
   end
 
@@ -143,7 +148,7 @@ class OrdersController < ApplicationController
              .where(terminal_id: params[:terminal_id])
              .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
              .where("available = ? AND veg = ?",true,true)
-             .select(:name, :description, :price, :veg, 'avg(reviews.rating) as rating')
+             .select(:id, :name, :description, :price, :veg, 'avg(reviews.rating) as rating')
              .left_outer_joins(:reviews)
              .group(:id)
              .order('rating desc nulls last')
@@ -154,10 +159,22 @@ class OrdersController < ApplicationController
              .where(terminal_id: params[:terminal_id])
              .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
              .where("available = ? AND veg = ?",true,false)
-             .select(:name, :description, :price, :veg, 'avg(reviews.rating) as rating')
+             .select(:id, :name, :description, :price, :veg, 'avg(reviews.rating) as rating')
              .left_outer_joins(:reviews)
              .group(:id)
              .order('rating desc nulls last')
+    end
+
+    def unordered_items(unique_item)
+      MenuItem
+      .where(terminal_id: @terminal.id)
+      .where("active_days @> ARRAY[?]::varchar[]", [Time.zone.now.wday.to_s])
+      .where(available: true).where(:id => unique_item)
+      .select(:id, :name, :description, :price,
+              :veg, 'avg(reviews.rating) as rating')
+      .left_outer_joins(:reviews)
+      .group(:id)
+      .order('rating desc nulls last')
     end
 
 end

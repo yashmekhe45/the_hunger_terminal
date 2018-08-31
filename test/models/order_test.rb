@@ -26,7 +26,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "order should be created between start time and end time" do
-    some_time = Time.parse("10 PM")
+    some_time = Time.zone.parse("10 PM")
     Time.stub(:now, some_time) do
       order_obj = build(:order) 
       order_obj.valid?

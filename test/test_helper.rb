@@ -22,7 +22,7 @@ WebMock.disable_net_connect!(allow: [/codeclimate.com/])
 
 module CreateOrderHelper
   def create_order
-    some_time = Time.parse "10 AM"  ## gives time object in IST time zone
+    some_time = Time.zone.parse "11 AM"  ## gives time object in IST time zone
     Time.stub(:now, some_time) do
       order_obj = create :order
     end

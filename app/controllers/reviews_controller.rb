@@ -21,6 +21,17 @@ class ReviewsController < ApplicationController
     Order.find(params[:order]).update(skipped_review: true)
   end
 
+  def enter_review
+    @order ||= Order.find(params[:order_id])
+    @review = Review.new
+  end
+
+  def show_comments
+    item = MenuItem.find(params[:item_id])
+    @name = item.name
+    @comments = item.reviews.where.not(comment: '').pluck(:comment)
+  end
+
   private
 
   def review_params

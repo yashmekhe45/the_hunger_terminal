@@ -27,9 +27,15 @@
 
 .thumbnail {
   //background-color:transparent !important;
-  height: 120px;
-  width: 150px;
   text-align: center;
+  display: inline;
+  padding: 5px 5px 5px 10px;
+
+  img{
+    width: 120px;
+    height: 100px;
+    border: gray 1px solid;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -60,10 +66,6 @@ h2 {
 }
 
 
-.container{
-  padding-left: 60px;
-}
-
 .container.home
 {
   padding-left: 10px;
@@ -85,15 +87,40 @@ span.caret{
   margin-left: 48%;
 }
 
-#titleOnIndex
-{
-  font-size: 3em;
-}
-
 #seeHow
 {
   font-style: italic;
   font-family: fantasy;
   font-size: x-large;
   -webkit-text-fill-color: brown;
+}
+
+.home-body{
+  .top-section{
+    height: 300px;
+
+    .header{
+      padding-top: 20px;
+      padding-bottom: 80px;
+    }
+  }
+
+  .how-it-works{
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    color: white;
+    font-size: xx-large;
+  }
+
+  .company-login-link{
+    position: absolute;
+    bottom: 3%;
+    right: 20%;
+    color: white;
+    text-decoration: underline;
+    font-size: xx-large;
+    font-style: italic;
+    font-family: fantasy;
+  }
 }

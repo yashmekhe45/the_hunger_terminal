@@ -12,16 +12,15 @@
  *
  *= require toastr
  *= require_tree
+ *= require material_icons
 */
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 @import "terminals";
 @import "companies";
 @import "home";
 @import "menu_items";
 @import "users";
-@import "bootstrap-datepicker";
-
+@import "materialize";
 
 body {
   -webkit-background-size: cover;
@@ -31,7 +30,7 @@ body {
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weigpht: 400;
-  padding-top: 7%;
+  // padding-top: 7%;
   margin-bottom: 5%;
   height: 100%
 }
@@ -408,4 +407,17 @@ button.toast-close-button {
     padding: 15px 15px 15px 50px;
     width: 25em;
   }
+}
+
+.dropdown-content{
+  min-width: 150px;
+}
+
+.padding-top-100{
+  padding-top: 100px;
+}
+
+
+.padding-bottom-50{
+  padding-bottom: 50px;
 }

@@ -1,26 +1,19 @@
-%nav.navbar.navbar-inverse.navbar-fixed-top
-  .container-fluid
-    .navbar-header
-      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a#logo.navbar-brand{:href => root_path} The Hunger Terminal
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse    
-      %ul.nav.navbar-nav.navbar-right
-        %li
-          -if user_signed_in? && current_user.role == "company_admin" 
-            %a{:href => get_order_details_company_path(current_user.company_id)}
-              Set Order details 
-            %span.sr-only (current)
+%nav.grey.darken-4
+  .nav-wrapper
+    %a.brand-logo{:href => root_path} The Hunger Terminal
+    %ul.right.hide-on-med-and-down
+      %li
+        -if user_signed_in? && current_user.role == "company_admin" 
+          %a{:href => get_order_details_company_path(current_user.company_id)}
+            Set Order details 
+          %span.sr-only (current)
         -if user_signed_in?    
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown1", :href => "#"}
               My Order
               / %span.caret
-            %ul.dropdown-menu
-              %li
+            %ul#dropdown1.dropdown-content
+              %li.grey.lighten-5
                 %a{:href => vendors_path} Place Order
               -if user_signed_in? && current_user.orders.find_by(date: Time.zone.today)
                 %li
@@ -29,13 +22,12 @@
                   %a{:href => order_path(order_id)} Today's Order          
               %li
                 %a{:href => orders_path} Order history          
-        %li
-          - if !user_signed_in?
-            = link_to new_user_session_path do
-              %span.glyphicon.glyphicon-log-in
-              Login
-          - else
-            = link_to destroy_user_session_path, method: :delete do
-              %span.glyphicon.glyphicon-log-out
-              Logout
-              
+      %li
+        - if !user_signed_in?
+          = link_to new_user_session_path do
+            %span.glyphicon.glyphicon-log-in
+            Login
+        - else
+          = link_to destroy_user_session_path, method: :delete do
+            %span.glyphicon.glyphicon-log-out
+            Logout

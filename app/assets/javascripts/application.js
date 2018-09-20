@@ -18,9 +18,7 @@
 //= require jquery_nested_form
 //= require toastr
 //= require_tree .
-//= require bootstrap-sprockets
-//= require bootstrap-datepicker
-
+//= require materialize
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
@@ -41,6 +39,9 @@
       } 
       
     });
+    $('.dropdown-trigger').dropdown();
+    $('.parallax').parallax();
+    $('select').formSelect();
   });
 
 

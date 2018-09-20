@@ -5,53 +5,36 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %title The Hunger Terminal
    
-  %body   
-    .jumbotron
-      .container.text-center
-        %h1#titleOnIndex Food ordering made easy for corporate employees
+  %body.home-body
+    .section.white.top-section
+      .container.center-align
+        %h4.header Food ordering made easy for corporate employees
         -if !user_signed_in?
-          %h2 Login & enjoy your food!
-          / %span.glyphicon.glyphicon-chevron-down
-          %br
-          = link_to "Company Sign Up", new_company_path, class: "btn btn-primary"
-          = link_to "Employee Login", user_session_path, class: "btn btn-success"
-    .container.text-center  
-      %h4#seeHow Enjoy your food in easy steps
-      .container-fluid.instructions
+          = link_to "Employee Login", user_session_path, class: "btn grey darken-4"
+    .parallax-container
+      .how-it-works
+        How it works?
+      .parallax
+        = image_tag "home-bg.jpg"
+      = link_to "Click here to try this for your company", new_company_path, class: "company-login-link"
+
+    .section.white
+      .container
         .row
-          .col-xs-12.col-md-2
-          .col-xs-12.col-md-2
-            .step-one 1. Login
-            .login-image= image_tag("login1.png",width:"55px",height:"55px")
-          .col-xs-12.col-md-2
-            .step-one 2. Choose
-            .login-image= image_tag("choice.png",width:"55px",height:"55px")
-          .col-xs-12.col-md-2
-            .step-one 3. Order
-            .login-image= image_tag("order.png",width:"55px",height:"55px")
-          .col-xs-12.col-md-2
-            .step-one 4. Enjoy
-            .login-image= image_tag("enjoy_food.png",width:"55px",height:"55px")
-          .col-xs-12.col-md-2
-              
-    .container.bg-3.text-center
-      %h4 Our Associates 
-      .row
-        .col-xs-12.col-md-2
-          .thumbnail
-            = image_tag("chandrama2.jpg", class: "img-responsive",width:"80%", height:"100%")
-        .col-md-2
-          .thumbnail
-            = image_tag("saisagar1.jpg", class: "img-responsive",width:"80%", height:"100%")
-        .col-xs-12.col-md-2
-          .thumbnail
-            = image_tag("giridhar6.jpg", class: "img-responsive",width:"80%", height:"100%")
-        .col-xs-9.col-md-2
-          .thumbnail
-            = image_tag("eatsome2.png", class: "img-responsive",width:"80%", height:"100%")
-        .col-xs-12.col-md-2
-          .thumbnail
-            = image_tag("chaitanya3.jpg", class: "img-responsive", width:"80%", height:"100%")
-        .col-xs-12.col-md-2
-          .thumbnail
-            = image_tag("locavore11.png", class: "img-responsive", width:"80",height: "100%")
+          .col.s12.m10.offset-m1
+            .row
+              .col.s12.center-align
+                %h4.header.padding-bottom-50.padding-top-100 Our Associates
+              .col.s12
+                .thumbnail
+                  = image_tag "chandrama2.jpg"
+                .thumbnail
+                  = image_tag "saisagar1.jpg"
+                .thumbnail
+                  = image_tag "giridhar6.jpg"
+                .thumbnail
+                  = image_tag "eatsome2.png"
+                .thumbnail
+                  = image_tag "chaitanya3.jpg"
+                .thumbnail
+                  = image_tag "locavore11.png"

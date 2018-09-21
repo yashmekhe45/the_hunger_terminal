@@ -421,3 +421,19 @@ button.toast-close-button {
 .padding-bottom-50{
   padding-bottom: 50px;
 }
+
+body.inner-bg{
+  margin-bottom: 0% !important;
+}
+
+.inner-bg{
+  background: asset-url("inner-food-bg.jpg") no-repeat center center fixed;
+
+  .with-backdrop{
+    padding: 20px;
+    background-color: black;
+    opacity: 0.80;
+    // margin-bottom: 25px;
+    // margin-top: 25px;
+  }
+}

@@ -117,3 +117,63 @@ Landline.required:after {
 {
   margin: 0 auto;
 }
+
+.with-backdrop{
+  .terminal-box{
+    opacity: 1;
+    border-radius: 25px;
+    height: 245px;
+
+    .card-content{
+      padding: 0px 0px 24px 0px;
+    }
+
+    .thumbnail{
+      min-height: 85px;
+      display: block;
+      img{
+        height: 85px;
+      }
+    }
+
+    .progress{
+      height: 29px;
+      margin-bottom: 0px;
+      border-radius: 25px 25px 0px 0px;
+      background: linear-gradient(-90deg, red, lightpink);
+
+      .determinate{
+        background: linear-gradient(to right, #00ff00 0%, #009933 29%);
+      }
+
+      .material-icons{
+        position: absolute;
+        margin-left: 0px;
+      }
+
+      .amount{
+        padding-right: 15px;
+      }
+    }
+  }
+
+  .terminal-info-box{
+    margin-top: 50px;
+    p{
+      margin: 0px 0px;
+    }
+    color: white;
+
+    .row{
+      margin-bottom: 0px;
+    }
+
+    .material-icons{
+      font-size: 64px;
+    }
+
+    a{
+      color: white !important;
+    }
+  }
+}

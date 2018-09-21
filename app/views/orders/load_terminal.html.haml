@@ -1,16 +1,31 @@
-.container.load
-  .alert.alert-success
-    You can order multiple menu items from a single vendor!!
-  %h3.text-center Vendor List
-  .row
-    - @terminals.each do |terminal|
-      .col-xs-12.col-md-3
-        .card-block.terminal_box.text-center
-          %h3.card-title= terminal.name
-          %p.card-text.terminal_image= image_tag terminal.image_url(:thumb) if terminal.image?
-          %br.p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
-          .text-left.terminal.details
-            - unless min_order_reached?(terminal)
-              %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}
-              %h5 Minimum order amount&emsp; : ₹ #{terminal.min_order_amount}
-            %h5 Confirmation possibility&emsp; : #{terminal.confirmation_possibility} %
+.row
+  .terminal-info-box
+    .row
+      = link_to order_path(1) do
+        %div.right.material-icons.md-36 local_cafe
+    .row
+      %div.right
+        = link_to "Today's Order", order_path(1)
+    .row
+      .col.s12.m6
+        There is minimum order required to be placed with all the terminals Order will be confirmed if the bar turns all green
+
+.row
+  - @terminals.each do |terminal|
+    .col.s6.m3
+      .card.grey.lighten-4.terminal-box
+        .card-content.white-text
+          / %span.card-title
+          .progress
+            .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
+            / above - 8 to adjust icon properly
+            %i.right.material-icons.md-36.right{:style => "left: #{terminal.confirmation_possibility - 8}%"} restaurant_menu
+            %i.amount.right ₹ #{terminal.min_order_amount.to_i}
+          %p
+            %h5.center-align.black-text= terminal.name
+            .center-align
+              .thumbnail
+                = image_tag terminal.image_url(:thumb) if terminal.image?
+                = image_tag "enjoy_food.png" unless terminal.image?
+            .center-align
+              = link_to "Order", new_terminal_order_path(terminal.id), class: "btn grey darken-4"

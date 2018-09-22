@@ -1,11 +1,13 @@
 .row
   .terminal-info-box
-    .row
-      = link_to order_path(1) do
-        %div.right.material-icons.md-36 local_cafe
-    .row
-      %div.right
-        = link_to "Today's Order", order_path(1)
+    - if todays_order
+      .row
+        = link_to order_path(todays_order&.id) do
+          %div.right.material-icons.md-36 local_cafe
+    - if todays_order
+      .row
+        %div.right
+          = link_to "Today's Order", order_path(todays_order&.id)
     .row
       .col.s12.m6
         There is minimum order required to be placed with all the terminals Order will be confirmed if the bar turns all green

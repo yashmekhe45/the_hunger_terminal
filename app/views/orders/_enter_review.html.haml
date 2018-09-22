@@ -1,13 +1,15 @@
 .modal-dialog{role: 'document'}
   .modal-content
     .modal-header
-      %button.close{'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button'}
-        %span{'aria-hidden': 'true'}Skip >>
+      -if skipped?(@order)
+        %button.close{'data-dismiss': 'modal'}Close
+      -else
+        %button.close=link_to 'Skip >>', skip_review_path(order: @order), remote: true
       %h2.modal-title Review
       .modal-body
         %h4 Vendor name : #{@order.terminal.name}
         = form_tag reviews_path, id: 'review_form', remote: true do
-          =fields_for 'order' do |f|
+          = fields_for 'order' do |f|
             = f.hidden_field :id, value: @order.id
           = fields_for 'reviews[]', @review do |f|
             %br= f.label :rating

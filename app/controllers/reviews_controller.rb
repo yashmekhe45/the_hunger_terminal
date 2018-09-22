@@ -17,6 +17,10 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def skip_review
+    Order.find(params[:order]).update(skipped_review: true)
+  end
+
   private
 
   def review_params

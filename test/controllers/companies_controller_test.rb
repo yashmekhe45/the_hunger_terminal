@@ -18,7 +18,7 @@ class CompaniesControllerTest  < ActionController::TestCase
     params: 
       { company:
         { name: "dummy software", landline: "02472240728", 
-         email: "info@dummysoftware.com", subsidy: 50, start_ordering_at: Time.parse("12 AM"),end_ordering_at: Time.parse("12:30 PM"),
+         email: "info@dummysoftware.com", subsidy: 50, start_ordering_at: Time.zone.parse("12 AM"),end_ordering_at: Time.zone.parse("12:30 PM"),
          address_attributes:
           { house_no: "23A", pincode: 416415, locality:"Baner", city: "pune", state: "mh"}, 
           employees_attributes: 
@@ -54,13 +54,13 @@ class CompaniesControllerTest  < ActionController::TestCase
     sign_in_admin
     other_user = create(:user, company: create(:company))
     other_user.company = @company
-    patch :update, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: 50, start_ordering_at: Time.parse("12 AM"), end_ordering_at: Time.parse("12:30 PM")}
+    patch :update, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: 50, start_ordering_at: Time.zone.parse("12 AM"), end_ordering_at: Time.zone.parse("12:30 PM")}
     assert_redirected_to root_url
   end
 
   test "Ordering Information should not be updated for invalid values" do
     sign_in_admin
-    get :get_order_details, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: -5, start_ordering_at: Time.parse("12 AM"), end_ordering_at: Time.parse("12:30 PM")}
+    get :get_order_details, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: -5, start_ordering_at: Time.zone.parse("12 AM"), end_ordering_at: Time.zone.parse("12:30 PM")}
 
     assert_response :success
 

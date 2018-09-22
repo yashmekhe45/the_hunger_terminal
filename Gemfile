@@ -80,7 +80,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'devise-async', git: 'https://github.com/mhfs/devise-async.git', branch: 'devise-4.x'
-gem 'cancancan'
 gem 'faker'
 
 group :test do 

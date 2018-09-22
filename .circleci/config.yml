@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.3.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+      - image: circleci/postgres:9.5
+    environment:
+      - RACK_ENV: "test"
+      - RAILS_ENV: "test"
+      - TZ: "/usr/share/zoneinfo/Asia/Kolkata"
+    working_directory: ~/the_hunger_terminal
+
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - restore_cache:
+          key: the_hunger_terminal-2.3.3-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install gems
+          command: bundle check || bundle install
+      - save_cache:
+          key: the_hunger_terminal-2.3.3-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /home/circleci/the_hunger_terminal/vendor/bundle
+      - run:
+          name: DB Create
+          command: bundle exec rake db:create
+      - run:
+          name: DB Setup
+          command: bundle exec rake db:schema:load --trace
+      - run:
+          name: Test
+          command: bundle exec rake test
+      - store_artifacts:
+          path: coverage
+          destination: reports

@@ -1,18 +1,21 @@
-.container
-  .row 
-    .searchcontainer
-      .col-md-2
-      .col-md-7
-        %form{action:company_terminals_path}
-          .input-group.stylish-input-group
-            %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-            %span.input-group-addon{align:"center"}
-              %button{type:"submit"}
-                %span.glyphicon.glyphicon-search 
-      .col-md-3   
-        .pull-left
-          = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
+.row
+  .col.s9
+    .card
+      %form{action:company_terminals_path}
+        .input-group.stylish-input-group
+          .row
+            .col.s10
+              %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+            .col.s2
+              %br
+              %span.input-group-addon{align:"center"}
+                %button{type:"submit"}
+                  %span.material-icons.md-36 search
+  .col.s3
+    %br
+    = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
 
+.card
   -if !@terminals.empty?        
     .row
       .col-md-1
@@ -41,15 +44,13 @@
                 %td.text-center
                   =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
                     -if object.active
-                      .text-center
-                        %button.btn.btn-success{:type=> "button"}
-                          %span.glyphicon.glyphicon-ok-circle>
+                      %button.btn.green.lighten-1{:type=> "button"}
+                        %span.material-icons.md-36 check_circle
                     -else
-                      .text-center
-                        %button.btn.btn-danger{:type=> "button"}
-                          %span.glyphicon.glyphicon-remove-circle>
+                      %button.btn.red.darken-1{:type=> "button"}
+                        %span.material-icons.md-36 cancel
   -else
     .alert.alert-danger
       No record is found!!                         
-.text-center
+.center-align
   = paginate @terminals 

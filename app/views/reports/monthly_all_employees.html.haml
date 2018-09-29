@@ -1,10 +1,10 @@
 -if pdf?(response.content_type)
   %h2.pdf_heading.text-center Josh Software Private Limited
 
-.container
+.card
   -if !@users.empty?
     -time =Time.current - 1.month
-    %h3.pdf_heading.text-center #{time.strftime("%B")}, #{time.year} Employee's Reports
+    %h3.pdf_heading.center-align #{time.strftime("%B")}, #{time.year} Employee's Reports
     -if !pdf?(response.content_type)
       = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success"
     .table-responsive

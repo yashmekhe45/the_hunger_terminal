@@ -115,7 +115,7 @@ footer {
 .sidenav {
    
   height: 100%;
-  width: 104px;
+  width: 210px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -140,15 +140,20 @@ footer {
     color: #f1f1f1;
 }
 
+.sidenav li > a{
+  color: #337ab7;
+}
+
 span.gly {
   font-size: 24px;
  left: -7px;
 }
+
+
 div.icon {
  padding-top:20px;
  padding-bottom:20px;
- height: 80px;
- width: 75px;
+ // height: 80px;
  display: block;
  }
 
@@ -442,4 +447,8 @@ table{
   background-color: white;
   margin: 0.5rem 0 1rem 0;
   border-radius: 2px;
+}
+
+.hunger-title-bar{
+  z-index: 400 !important;
 }

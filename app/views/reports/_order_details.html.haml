@@ -1,8 +1,8 @@
 .modal-dialog{:role => "document"}
   .modal-content
     .modal-header
-      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-        %span{"aria-hidden" => "true"} ×
+      / %button.close.modal-close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+      / %span{"aria-hidden" => "true"} ×
       %h3.modal-title.text-center Order Details
       .table-responsive
         %table.table-hover.table-bordered{:align => "center"}
@@ -19,4 +19,4 @@
               %td.text-center= order_detail.quantity
               %td.text-center= order_detail.price
     .modal-footer
-      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close 
+      %button.btn.btn-default.modal-close{"data-dismiss" => "modal", :type => "button"} Close 

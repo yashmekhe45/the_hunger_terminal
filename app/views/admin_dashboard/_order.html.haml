@@ -2,7 +2,7 @@
   / Modal content
   .modal-content
     .modal-header 
-      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %button.close.modal-close{"data-dismiss" => "modal", :type => "button"} ×
       %h4.modal-title 
     .modal-body
       - if !@order_details.any?
@@ -31,4 +31,4 @@
               /       %span.glyphicon.glyphicon-remove
               - employee = order_detail.emp_name
     .modal-footer
-      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close        
+      %button.btn.btn-defaul.modal-close{"data-dismiss" => "modal", :type => "button"} Close        

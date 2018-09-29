@@ -1,8 +1,9 @@
-.container
+.card
   -if !@users.empty?
-    %h3.text-center Employee's Reports
-    = link_to 'Todays Orders', todays_reports_users_path, class: "btn btn-info"
-    = link_to 'Last Month Orders', history_reports_users_path, class: "btn btn-info"
+    %h3.center-align Employee's Reports
+    .center-align
+      = link_to 'Todays Orders', todays_reports_users_path, class: "btn btn-info"
+      = link_to 'Last Month Orders', history_reports_users_path, class: "btn btn-info"
     .table-responsive
       %table.table-hover.table-bordered.employees_report_table
         %tbody

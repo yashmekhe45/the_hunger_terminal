@@ -43,6 +43,8 @@
     $('.parallax').parallax();
     $('select').formSelect();
     $('.tabs').tabs();
+    $('.sidenav').sidenav();
+    $('.modal').modal();
   });
 
 

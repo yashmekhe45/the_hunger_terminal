@@ -1,48 +1,52 @@
-.container
-  .alert.alert-danger
-    Extra delivery charges may apply!!
-  %h3#vendorName #{@terminal.name}
-  - unless min_order_reached?(@terminal)
-    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
-    %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
-  %ul.nav.nav-tabs
-    %li.active
-      %a{"data-toggle" => "tab", :href => "#veg"} Veg
-    %li
-      %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
-  .tab-content.col-md-7.col-sm-7
-    .tab-pane.fade.in.active#veg
+.row
+  %h3.center-align.white-text #{@terminal.name}
+  .h6.white-text
+    Extra delivery charges may apply!
+  / - unless min_order_reached?(@terminal)
+  /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
+  /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
+  .col.s6
+    %ul.tabs
+      %li.tab.active
+        %a{"data-toggle" => "tab", :href => "#veg"} Veg
+      %li.tab
+        %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+
+.row
+  .col.s6
+    .div.active#veg
       = render "menu", obj: @veg
-    .tab-pane.fade#nonveg
+    .div#nonveg
       = render "menu", obj: @nonveg
 
 
-  .col-md-5
+  .col.s6
     = form_tag terminal_orders_path do |f|
       = render 'form', f: f
+
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }
-    .col-xs-4
-      %h4.product-name
+    .col.s6
+      %h6.product-name
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
 
-    .col-xs-6
-      .col-xs-6
+    .col.s4
+      .col.s6
         %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
         %h6  
           %strong
             {{quantity}}
-      .col-xs-6.text-right
+      .col.s6
         %h6  
           %strong₹ 
           %strong.total
             {{total}}
-    .col-xs-2
+    .col.s2
       %button.btn.btn-link.btn-s.delete_new{:type => "button"}
-        %span.glyphicon.glyphicon-remove
+        .white X
   {{/.}}
 
 %script{:type => 'text/javascript'}

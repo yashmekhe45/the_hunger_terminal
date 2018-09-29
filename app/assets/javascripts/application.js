@@ -27,7 +27,7 @@
 
     $("#bton").click(function(event) {
       event.preventDefault();
-      params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})
+      params = $.param({ from: $('.from').val(),to: $('.to').val()})
       if($('#fromDate').val() > $('#toDate').val()) 
       {
         alert("From Date must be smaller than To Date")
@@ -42,6 +42,7 @@
     $('.dropdown-trigger').dropdown();
     $('.parallax').parallax();
     $('select').formSelect();
+    $('.tabs').tabs();
   });
 
 

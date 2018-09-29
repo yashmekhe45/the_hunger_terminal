@@ -1,36 +1,32 @@
-.panel.panel-info
-  .panel-heading  
-    .panel-title
-      .row
-        .col-xs-6
-          %h5
-            %span.glyphicon.glyphicon-shopping-cart
-            Food Cart
-  .panel-body
-    .order-details
-      %i "There is no sincere love than the love for food"
-    #order_details
-  .panel-footer
-    / .row.text-center
-    /   .col-xs-8
-    %h4.text-right
-      %span.bag Bag Total :
-      %strong ₹
-      %strong#total 0
-    %h4.text-right
-      %span.bag Bag Tax :
-      %strong ₹
-      %strong#tax 0
-    %h4.text-right
-      %span.bag.discount Bag Discount :
-      %strong - ₹
-      %strong#discount 0
-    %h4.text-right
-      %span.bag Total Payable :
-      %strong ₹
-      %strong#grand_total 0
-    %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
-    %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
-  .col-xs-12#place_order
-    %button.btn.btn-success.btn-block.place_order{:type => "submit"}
-      Place Order
+.row
+  .card
+    .card-action.teal.lighten-4
+      %h6
+        %i.material-icons.md-36 shopping_cart
+        Food Cart
+    .card-content
+      .order-details
+      #order_details
+    .card-action.right-align
+      %h6
+        %span.bag Bag Total :
+        %strong ₹
+        %strong#total 0
+      %h6
+        %span.bag Bag Tax :
+        %strong ₹
+        %strong#tax 0
+      %h6
+        %span.bag.discount Bag Discount :
+        %strong - ₹
+        %strong#discount 0
+      %h6
+        %span.bag Total Payable :
+        %strong ₹
+        %strong#grand_total 0
+      %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
+      %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
+    .card-action.right-align
+      #place_order
+        %button.right-align.btn.btn-success.btn-block.place_order{:type => "submit"}
+          Place Order

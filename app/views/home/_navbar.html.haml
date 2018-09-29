@@ -15,13 +15,11 @@
             %ul#dropdown1.dropdown-content
               %li.grey.lighten-5
                 %a{:href => vendors_path} Place Order
-              -if user_signed_in? && current_user.orders.find_by(date: Time.zone.today)
+              -if user_signed_in? && todays_order
                 %li
-                  - order_id = current_user.orders.find_by(date: Time.zone.today).id
-                  - terminal_id = current_user.orders.find_by(date: Time.zone.today).terminal.id
-                  %a{:href => order_path(order_id)} Today's Order          
+                  %a{:href => order_path(todays_order&.id)} Today's Order          
               %li
-                %a{:href => orders_path} Order history          
+                %a{:href => orders_path} Order history
       %li
         - if !user_signed_in?
           = link_to new_user_session_path do

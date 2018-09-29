@@ -1,4 +1,4 @@
-.container
+.row
   %h3#vendorName #{@terminal.name}
   -unless min_order_reached?(@terminal, @order.id)
     %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount(@order.id)}

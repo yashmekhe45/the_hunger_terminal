@@ -1,4 +1,4 @@
-%table#cart.table.table-hover.table-condensed
+%table#table-responsive
   %thead
     %tr
       %th{:style => "width:45%"} Product
@@ -10,11 +10,11 @@
       %tr{:id => "#{menu_item.id}"} 
         %td{"data-th" => "Product"}
           .row
-            .col-sm-12
+            .col.s6
               - if menu_item.veg == true
-                %h4.product-name.nomargin.veg= menu_item.name
+                %h5.product-name.nomargin.veg= menu_item.name
               - else
-                %h4.product-name.nomargin.non-veg= menu_item.name 
+                %h5.product-name.nomargin.non-veg= menu_item.name 
               %h6.vendor-name= menu_item.description
               %span.hide.menu_item_id= menu_item.id
         %td

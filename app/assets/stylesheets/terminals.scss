@@ -177,3 +177,18 @@ Landline.required:after {
     }
   }
 }
+
+.tabs.menu-tabs{
+  background-color: transparent;
+  display: inline;
+
+  li{
+    a{
+      color: white;
+    }
+
+    a.active{
+      color: black;
+    }
+  }
+}

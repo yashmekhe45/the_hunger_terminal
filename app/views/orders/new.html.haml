@@ -1,15 +1,20 @@
 .row
-  %h3.center-align.white-text #{@terminal.name}
-  .h6.white-text
-    Extra delivery charges may apply!
+  =link_to 'Go Back', vendors_path, class: 'btn'
+  %h3.white-text.center-align #{@terminal.name}
+
   / - unless min_order_reached?(@terminal)
   /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
   /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   .col.s6
-    %ul.tabs
-      %li.tab.active
+    .h6.white-text
+      Extra delivery charges may apply!
+    %br
+    %br
+    %br
+    %ul.tabs.menu-tabs
+      %li.tab.active.green
         %a{"data-toggle" => "tab", :href => "#veg"} Veg
-      %li.tab
+      %li.tab.red
         %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
 
 .row

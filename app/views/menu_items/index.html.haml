@@ -1,8 +1,8 @@
-.container
+.card
   .h3.text-center.terminal_name Menu Items of #{@terminal.name}
   .row
     .searchcontainer 
-      .col-md-3
+      .col.s12
         .pull-left
           = form_tag import_terminal_menu_items_path, multipart: true do
             = file_field_tag :file , accept: '.csv '
@@ -10,23 +10,30 @@
           = link_to 'Sample Menu CSV ', menu_items_download_csv_path
           %p
           = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
-      .col-md-6
-        %form{action:terminal_menu_items_path}
-          .input-group.stylish-input-group
-            %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
-            %span.input-group-addon
-              %button{type:"submit"}
-                %span.glyphicon.glyphicon-search
-      .col-md-3  
-        .pull-left
-          = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true 
+.card
+  %form{action:terminal_menu_items_path}
+    .row
+      .col.s10
+        .input-group.stylish-input-group
+          %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
+      .col.s2
+        %span.input-group-addon{align:"center"}
+          %button{type:"submit"}
+            %span.material-icons.md-36 search
+.card  
+  .div.center-align
+    %br
+    = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true
+    %br
+    %br
 
+.card
   -unless @menu_items.empty?
     .row
-      .col-md-2
-      .col-md-8
+      .col.s2
+      .col.s8
         .table-responsive  
-          %table.table-hover.table-bordered{:align => "center"}
+          %table{:align => "center"}
             %thead
               %tr
                 %th.text-center #
@@ -54,9 +61,8 @@
                         .text-center  
                           %button.btn.btn-danger{:type => "button"}
                             %span.glyphicon.glyphicon-remove-circle>          
-          .text-center          
-            = paginate @menu_items
-      .col-md-2            
+          .center-align
+            = paginate @menu_items           
   -else
     .alert.alert-danger
       No record is found!!

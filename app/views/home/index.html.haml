@@ -11,12 +11,13 @@
         %h4.header Food ordering made easy for corporate employees
         -if !user_signed_in?
           = link_to "Employee Login", user_session_path, class: "btn grey darken-4"
-    .parallax-container
-      .how-it-works
-        How it works?
-      .parallax
-        = image_tag "home-bg.jpg"
-      = link_to "Click here to try this for your company", new_company_path, class: "company-login-link"
+    -if !user_signed_in?
+      .parallax-container
+        .how-it-works
+          How it works?
+        .parallax
+          = image_tag "home-bg.jpg"
+        = link_to "Click here to try this for your company", new_company_path, class: "company-login-link"
 
     .section.white
       .container

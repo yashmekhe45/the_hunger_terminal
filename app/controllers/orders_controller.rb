@@ -20,13 +20,12 @@ class OrdersController < ApplicationController
   end
 
   def load_terminal
-    @terminals = Terminal
-                 .where(active: true, company_id: current_user.company_id)
-                 .select(:id, :name, :min_order_amount,
-                         :tax, 'avg(reviews.rating) as rating')
-                 .left_outer_joins(:reviews)
-                 .group(:id)
-                 .order('rating desc nulls last')
+    @terminals = Terminal.where(active: true, company_id: current_user.company_id)
+                         .select(:id, :name, :min_order_amount,
+                                 :tax, 'avg(reviews.rating) as rating')
+                         .left_outer_joins(:reviews)
+                         .group(:id)
+                         .order('rating desc nulls last')
     @order = current_user.orders.last
     @review = Review.new
   end
@@ -36,8 +35,8 @@ class OrdersController < ApplicationController
     @subsidy = current_user.company.subsidy
     @order = Order.new(company_id: current_user.company.id)
     @terminal_id = params[:terminal_id]
-    @veg = get_veg_menu_items
-    @nonveg = get_nonveg_menu_items
+    @veg = Order.veg_items(@terminal_id)
+    @nonveg = Order.nonveg_items(@terminal_id)
     @tax = @terminal.tax.to_i
     @rating = @terminal.reviews.average(:rating)
     @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
@@ -69,7 +68,7 @@ class OrdersController < ApplicationController
     unique_item =  terminal_menus - order_menus
     @terminal_id = @terminal.id
     @rating = @terminal.reviews.average(:rating)
-    @menu_items = unordered_items(unique_item) unless unique_item.empty?
+    @menu_items = Order.unordered_items(@terminal_id, unique_item) unless unique_item.empty?
     add_breadcrumb "Edit Order"
   end
 
@@ -130,40 +129,6 @@ class OrdersController < ApplicationController
         flash[:error] = "You are not authorized to access it!!"
         redirect_to root_path
       end
-    end
-
-    def get_veg_menu_items
-      return MenuItem
-             .where(terminal_id: params[:terminal_id])
-             .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
-             .where("available = ? AND veg = ?",true,true)
-             .select(:id, :name, :description, :price, :veg, 'avg(reviews.rating) as rating')
-             .left_outer_joins(:reviews)
-             .group(:id)
-             .order('rating desc nulls last')
-    end
-
-    def get_nonveg_menu_items
-      return MenuItem
-             .where(terminal_id: params[:terminal_id])
-             .where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s])
-             .where("available = ? AND veg = ?",true,false)
-             .select(:id, :name, :description, :price, :veg, 'avg(reviews.rating) as rating')
-             .left_outer_joins(:reviews)
-             .group(:id)
-             .order('rating desc nulls last')
-    end
-
-    def unordered_items(unique_item)
-      MenuItem
-      .where(terminal_id: @terminal.id)
-      .where("active_days @> ARRAY[?]::varchar[]", [Time.zone.now.wday.to_s])
-      .where(available: true).where(:id => unique_item)
-      .select(:id, :name, :description, :price,
-              :veg, 'avg(reviews.rating) as rating')
-      .left_outer_joins(:reviews)
-      .group(:id)
-      .order('rating desc nulls last')
     end
 
 end

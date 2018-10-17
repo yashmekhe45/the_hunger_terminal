@@ -23,7 +23,7 @@ class Terminal < ApplicationRecord
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
 
-  #Pending orders' amount from a terminal without considering an order if order's id is passed
+  #Ordered amount from a terminal without considering an order if order's id is passed
   def ordered_amount(order_id = nil)
     (
       Order

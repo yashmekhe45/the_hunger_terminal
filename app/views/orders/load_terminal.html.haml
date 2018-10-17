@@ -13,7 +13,7 @@
             = render 'show_rating_stars', rating: terminal.rating
           .text-left.terminal.details
             - unless min_order_reached?(terminal)
-              %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}
+              %h5 Pending orders' amount&emsp;: ₹ #{terminal.min_order_amount - terminal.ordered_amount}
               %h5 Minimum order amount&emsp; : ₹ #{terminal.min_order_amount}
             %h5 Confirmation possibility&emsp; : #{terminal.confirmation_possibility} %
 #enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}

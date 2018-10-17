@@ -4,7 +4,7 @@
   %h3#vendorName #{@terminal.name}
   = render 'show_rating_stars', rating: @rating
   - unless min_order_reached?(@terminal)
-    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
+    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.min_order_amount - @terminal.ordered_amount}
     %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
   %ul.nav.nav-tabs
     %li.active

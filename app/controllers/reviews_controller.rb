@@ -8,6 +8,7 @@ class ReviewsController < ApplicationController
     review_params[:reviews].each do |review_param|
       @review = Review.new(review_param)
       @review[:company_id] = current_user.company_id
+      @review[:reviewer_id] = current_user.id
       @review.save
     end
     (order = Order.find(params[:order][:id])).update(reviewed: true)

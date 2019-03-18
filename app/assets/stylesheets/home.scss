@@ -108,9 +108,14 @@ span.caret{
   .how-it-works{
     position: absolute;
     top: 5%;
-    left: 20%;
+    left: 15%;
     color: white;
     font-size: xx-large;
+    text-align: center;
+    img{
+      margin-top: 15px;
+      width: 80%;
+    }
   }
 
   .company-login-link{

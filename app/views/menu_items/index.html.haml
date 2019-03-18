@@ -54,13 +54,11 @@
                   %td.text-center
                     =link_to menu_item_path(menu_item, terminal_id: params[:terminal_id],'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
                       -if menu_item.available
-                        .text-center
-                          %button.btn.btn-success{:type => "button"}
-                            %span.glyphicon.glyphicon-ok-circle>
+                        %button.btn.green.lighten-1{:type=> "button"}
+                          %span.material-icons.md-36 check_circle
                       -else
-                        .text-center  
-                          %button.btn.btn-danger{:type => "button"}
-                            %span.glyphicon.glyphicon-remove-circle>          
+                        %button.btn.red.darken-1{:type=> "button"}
+                          %span.material-icons.md-36 cancel       
           .center-align
             = paginate @menu_items           
   -else

@@ -17,8 +17,8 @@
 //= require turbolinks
 //= require jquery_nested_form
 //= require toastr
-//= require_tree .
 //= require materialize
+//= require_tree .
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
@@ -45,6 +45,8 @@
     $('.tabs').tabs();
     $('.sidenav').sidenav();
     $('.modal').modal();
+    $('select').formSelect();
+    M.updateTextFields();
   });
 
 

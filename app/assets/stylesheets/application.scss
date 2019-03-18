@@ -452,3 +452,9 @@ table{
 .hunger-title-bar{
   z-index: 400 !important;
 }
+
+.ht-multiselect{
+  .select-wrapper{
+    display: inline-block;
+  }
+}

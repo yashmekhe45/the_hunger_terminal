@@ -22,7 +22,7 @@
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
-      format: 'yyyy-mm-dd'
+      format: 'yyy-mm-dd'
     });
 
     $("#bton").click(function(event) {

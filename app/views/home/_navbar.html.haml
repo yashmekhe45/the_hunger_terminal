@@ -1,6 +1,8 @@
 %nav.grey.darken-4
   .nav-wrapper.hunger-title-bar
     %a.brand-logo{:href => root_path} The Hunger Terminal
+    %a.sidenav-trigger{"data-target" => "mobile-demo", :href => "#"}
+      %i.material-icons menu
     %ul.right.hide-on-med-and-down
       %li
         -if user_signed_in? && current_user.role == "company_admin" 
@@ -29,3 +31,32 @@
           = link_to destroy_user_session_path, method: :delete do
             %span.glyphicon.glyphicon-log-out
             Logout
+
+%ul#mobile-demo.sidenav
+  %li
+    -if user_signed_in? && current_user.role == "company_admin"
+      %a{:href => get_order_details_company_path(current_user.company_id)}
+        Set Order details
+      %span.sr-only (current)
+    -if user_signed_in?
+      %li
+        %a.dropdown-trigger{"data-target" => "dropdown2", :href => "#"}
+          My Order
+          / %span.caret
+        %ul#dropdown2.dropdown-content
+          %li.grey.lighten-5
+            %a{:href => vendors_path} Place Order
+          -if user_signed_in? && todays_order
+            %li
+              %a{:href => order_path(todays_order&.id)} Today's Order
+          %li
+            %a{:href => orders_path} Order history
+  %li
+    - if !user_signed_in?
+      = link_to new_user_session_path do
+        %span.glyphicon.glyphicon-log-in
+        Login
+    - else
+      = link_to destroy_user_session_path, method: :delete do
+        %span.glyphicon.glyphicon-log-out
+        Logout

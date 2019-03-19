@@ -524,8 +524,13 @@
                             %div{:style => "mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;"}  
                           %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
                             %div{:style => "mso-line-height-rule: exactly;mso-text-raise: 4px;"}
-                              - order.order_details.each do |order_item|
-                                %p{:style => "Margin-top: 0;Margin-bottom: 20px;color: #fff;"} #{order_item.menu_item_name}(#{order_item.quantity})
+                              - order.order_details.to_a.fill(nil, (order.order_details.length)...3).each do |order_item|
+                                %p{:style => "Margin-top: 0;Margin-bottom: 20px;color: #fff;"}
+                                  - if order_item
+                                    #{order_item.menu_item_name} (#{order_item.quantity})
+                                  - else
+                                    %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
+                                      %div{:style => "mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;"}  
                           %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
                             -user_token = @one_click_orders[index].token
                             = link_to "Place Order", one_click_order_url(user_token, order.id), style: "color: white; background-color: purple; border-radius: 3px; border: none; font-size: 14px;padding: 10px 20px;text-decoration: none;display: inline-block;"

@@ -112,22 +112,24 @@ footer {
   padding: 5%;
 }
 
-.sidenav.ht-admin-sidenav {
-   
+.sidenav {
   height: 100%;
-  width: 8%;
   position: fixed;
-  z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.sidenav.ht-admin-sidenav a {
+.sidenav.ht-admin-sidenav{
+  width: 8%;
+  background-color: #111;
+  z-index: 1;
+}
+
+.sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 15px;

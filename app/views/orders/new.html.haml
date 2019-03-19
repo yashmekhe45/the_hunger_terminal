@@ -5,7 +5,7 @@
   / - unless min_order_reached?(@terminal)
   /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
   /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
-  .col.s6
+  .col.m6.s12
     .h6.white-text
       Extra delivery charges may apply!
     %br
@@ -18,38 +18,38 @@
         %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
 
 .row
-  .col.s6
+  .col.m6.s12
     .div.active#veg
       = render "menu", obj: @veg
     .div#nonveg
       = render "menu", obj: @nonveg
 
 
-  .col.s6
+  .col.m6.s12
     = form_tag terminal_orders_path do |f|
       = render 'form', f: f
 
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }
-    .col.s6
+    .col.m6.s12
       %h6.product-name
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
 
-    .col.s4
-      .col.s6
+    .col.m4.s8
+      .col.m6.s12
         %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
         %h6  
           %strong
             {{quantity}}
-      .col.s6
+      .col.m6.s12
         %h6  
           %strong₹ 
           %strong.total
             {{total}}
-    .col.s2
+    .col.m2.s4
       %button.btn.btn-link.btn-s.delete_new{:type => "button"}
         %span X
   {{/.}}

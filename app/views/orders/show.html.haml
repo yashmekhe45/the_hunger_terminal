@@ -1,7 +1,7 @@
 -if can? :show, @order
   %h3.center-align.white-text Today's Order
   .row
-    .col.s6
+    .col.m6.s12
       %table.responsive-table
         %thead
           %tr
@@ -23,7 +23,7 @@
                 %span ₹
                 %span.sub-total= order_detail.price * order_detail.quantity
 
-    .col.s6
+    .col.m6.s12
       .card
         .card-content
           %h6

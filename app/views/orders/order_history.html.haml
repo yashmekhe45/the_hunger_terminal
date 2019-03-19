@@ -2,16 +2,16 @@
 %input{:type => "text", :class => "datepicker"}
 .card
   .row
-    .col.s2
-    .col.s6
+    .col.m2.s4
+    .col.m6.s12
       %h4 Filter orders by date range :
   .row
-    .col.s2
-    .col.s3
+    .col.m2.s4
+    .col.m3.s6
       %input{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
-    .col.s3
+    .col.m3.s6
       %input{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
-    .col.s3
+    .col.m3.s6
       %button.btn.btn-info#bton{:type => "button"}Find
   %br
   %br

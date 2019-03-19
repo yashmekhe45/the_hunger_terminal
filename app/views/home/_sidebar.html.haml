@@ -1,13 +1,13 @@
-%ul.sidenav.sidenav-fixed.grey.lighten-1
+%ul.sidenav.sidenav-fixed.grey.darken-4
   %div.icon
     %a.valign-wrapper{:href => "/companies/#{current_user.company_id}/users"}
-      %i.material-icons.md-18 person
+      / %i.material-icons.md-18 person
       %span.name Employee
   
   %li.icon
     %a.dropdown-trigger{"data-target" => "d3", :href => admin_dashboard_index_path}
       / %i.material-icons.md-18 list
-      %span.name Today's Orders >
+      %span.name Today's Orders
     %ul.dropdown-content#d3
       %li
         %a#menu{href: admin_dashboard_index_path} Vendor wise Orders
@@ -28,7 +28,7 @@
   %li.icon
     %a.dropdown-trigger{"data-target" => "d1",:href => ""}
       / %i.material-icons.md-18 book
-      %span.name Employees Report>
+      %span.name Employees Report
     %ul.dropdown-content#d1
       %li
         %a#menu{ :href => todays_reports_users_path } Todays Report
@@ -40,7 +40,7 @@
   %li.icon
     %a.dropdown-trigger{"data-target" => "d2",:href => ""}
       / %i.material-icons.md-18 insert_drive_file
-      %span.name Terminals Report >
+      %span.name Terminals Report
     %ul.dropdown-content#d2
       %li
         %a#menu{ :href => todays_reports_terminals_path } Todays Report
@@ -50,10 +50,10 @@
         %a#menu{ :href => admin_dashboard_payment_path } Running Balance
   %div.icon  
     %a.valign-wrapper{:href => "/companies/#{current_user.company_id}/terminals"}
-      %i.material-icons.md-18 restaurant
+      / %i.material-icons.md-18 restaurant
       %span.name Terminal
   
   %div.icon
     %a.valign-wrapper{ :href => admin_dashboard_payment_path }
-      %i.material-icons.md-18 payment
+      / %i.material-icons.md-18 payment
       %span.name Payment

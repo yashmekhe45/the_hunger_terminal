@@ -6,16 +6,16 @@
     = simple_form_for @company , url: company_path(@company), method: "PATCH" do |f|
       .form-group
         .row
-          .col.s6
+          .col.m6.s12
             = f.input :subsidy,input_html: { :input_type => "number",:min => 0, :max => 100, id: "subsidy" }
-          .col.s6.start_ordering_at
+          .col.m6.s12.start_ordering_at
             = f.input :start_ordering_at, input_html: {id: "start_ordering_at"} 
 
       .form-group
         .row
-          .col.s6
+          .col.m6.s12
             = f.input :end_ordering_at, id: "end_ordering_at"
-          .col.s6
+          .col.m6.s12
             = f.input :review_ordering_at, id: "review_ordering_at"
 
       

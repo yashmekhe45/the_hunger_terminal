@@ -1,5 +1,5 @@
 %h3.center-align.white-text My Order History
-%input{:type => "text", :class => "datepicker"}
+
 .card
   .row
     .col.m2.s4
@@ -7,9 +7,9 @@
       %h4 Filter orders by date range :
   .row
     .col.m2.s4
-    .col.m3.s6
+    .col.m3.s12
       %input{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
-    .col.m3.s6
+    .col.m3.s12
       %input{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
     .col.m3.s6
       %button.btn.btn-info#bton{:type => "button"}Find

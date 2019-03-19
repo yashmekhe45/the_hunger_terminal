@@ -13,12 +13,12 @@
 //= require jquery
 //= require moment
 
-//= require jquery_ujs
 //= require turbolinks
+//= require jquery_ujs
 //= require jquery_nested_form
 //= require toastr
-//= require materialize
 //= require_tree .
+//= require materialize
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
@@ -39,6 +39,7 @@
       } 
       
     });
+    $('.datepicker').datepicker();
     $('.dropdown-trigger').dropdown();
     $('.parallax').parallax();
     $('select').formSelect();

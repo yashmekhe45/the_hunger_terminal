@@ -1,33 +1,34 @@
-.row
-  =link_to 'Go Back', vendors_path, class: 'btn'
-  %h3.white-text.center-align #{@terminal.name}
+.container
+  .row
+    =link_to 'Go Back', vendors_path, class: 'btn'
+    %h3.black-text.center-align #{@terminal.name}
 
-  / - unless min_order_reached?(@terminal)
-  /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
-  /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
-  .col.m6.s12
-    .h6.white-text
-      Extra delivery charges may apply!
-    %br
-    %br
-    %br
-    %ul.tabs.menu-tabs
-      %li.tab.active.green
-        %a{"data-toggle" => "tab", :href => "#veg"} Veg
-      %li.tab.red
-        %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+    / - unless min_order_reached?(@terminal)
+    /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
+    /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
+    .col.m6.s12
+      .h6.black-text
+        Extra delivery charges may apply!
+      %br
+      %br
+      %br
+      %ul.tabs.menu-tabs
+        %li.tab.active.green
+          %a{"data-toggle" => "tab", :href => "#veg"} Veg
+        %li.tab.red
+          %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
 
-.row
-  .col.m6.s12
-    .div.active#veg
-      = render "menu", obj: @veg
-    .div#nonveg
-      = render "menu", obj: @nonveg
+  .row
+    .col.m6.s12
+      .div.active#veg
+        = render "menu", obj: @veg
+      .div#nonveg
+        = render "menu", obj: @nonveg
 
 
-  .col.m6.s12
-    = form_tag terminal_orders_path do |f|
-      = render 'form', f: f
+    .col.m6.s12
+      = form_tag terminal_orders_path do |f|
+        = render 'form', f: f
 
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}

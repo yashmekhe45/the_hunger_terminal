@@ -1,45 +1,46 @@
--if can? :show, @order
-  %h3.center-align.white-text Today's Order
-  .row
-    .col.m6.s12
-      %table.responsive-table
-        %thead
-          %tr
-            %th Product
-            %th Vendor
-            %th UnitPrice
-            %th Quantity
-            %th ItemPrice
-        %tbody
-          - @order.order_details.each do |order_detail|
+.container
+  -if can? :show, @order
+    %h3.center-align.black-text Today's Order
+    .row
+      .col.m6.s12
+        %table.responsive-table
+          %thead
             %tr
-              %td= order_detail.menu_item_name
-              %td= @order.terminal.name
-              %td
-                %span ₹
-                %span.price= order_detail.price
-              %td.text-center= order_detail.quantity
-              %td.text-center
-                %span ₹
-                %span.sub-total= order_detail.price * order_detail.quantity
+              %th Product
+              %th Vendor
+              %th UnitPrice
+              %th Quantity
+              %th ItemPrice
+          %tbody
+            - @order.order_details.each do |order_detail|
+              %tr
+                %td= order_detail.menu_item_name
+                %td= @order.terminal.name
+                %td
+                  %span ₹
+                  %span.price= order_detail.price
+                %td.text-center= order_detail.quantity
+                %td.text-center
+                  %span ₹
+                  %span.sub-total= order_detail.price * order_detail.quantity
 
-    .col.m6.s12
-      .card
-        .card-content
-          %h6
-            %span.bag Bag Total :
-            %strong ₹ #{@order.total_cost}
-          %h6
-            %span.bag Bag Tax :
-            %strong ₹ #{@order.tax}
-          %h6
-            %span.bag.discount Bag Discount :
-            %strong - ₹ #{@order.discount}
-          %h6
-            %span.bag Total Payable :
-            %strong ₹ #{@order.total_cost+@order.tax-@order.discount}
-        .card-action
-          - if can? :edit, @order
-            %a.card-link= link_to 'Edit Order', edit_order_path(@order), class: "btn btn-info"
-          - if can? :delete, @order
-            %a.card-link= link_to 'Delete Order', order_path(@order), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-danger"
+      .col.m6.s12
+        .card
+          .card-content
+            %h6
+              %span.bag Bag Total :
+              %strong ₹ #{@order.total_cost}
+            %h6
+              %span.bag Bag Tax :
+              %strong ₹ #{@order.tax}
+            %h6
+              %span.bag.discount Bag Discount :
+              %strong - ₹ #{@order.discount}
+            %h6
+              %span.bag Total Payable :
+              %strong ₹ #{@order.total_cost+@order.tax-@order.discount}
+          .card-action
+            - if can? :edit, @order
+              %a.card-link= link_to 'Edit Order', edit_order_path(@order), class: "btn btn-info"
+            - if can? :delete, @order
+              %a.card-link= link_to 'Delete Order', order_path(@order), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-danger"

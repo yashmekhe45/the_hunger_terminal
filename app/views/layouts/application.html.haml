@@ -9,7 +9,7 @@
     = stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
-  %body{:class => "#{user_signed_in? ? 'inner-bg' : 'external-bg'}" }
+  %body.external-bg
     -if user_signed_in?  && current_user.role == "company_admin"
       =render  "home/sidebar"
       =render "home/navbar"
@@ -24,8 +24,10 @@
         - flash.each do |f|
           - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
           toastr['#{type}']('#{f[1]}');
-    .div{:class => "#{user_signed_in? ? 'container with-backdrop' : ''}" }
-      = yield
+    .div{:class => "#{user_signed_in? ? 'ht-inner-section' : ''}" }
+      = yield :inner_header
+      .ht-middle-section 
+        = yield
     -if user_signed_in? && request.original_url != root_url
       =render "layouts/backlink"
   %footer.container-fluid.text-center

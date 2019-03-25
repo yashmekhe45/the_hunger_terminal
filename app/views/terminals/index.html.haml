@@ -1,56 +1,57 @@
-.row
-  .col.s9
-    .card
-      %form{action:company_terminals_path}
-        .input-group.stylish-input-group
-          .row
-            .col.s10
-              %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-            .col.s2
-              %br
-              %span.input-group-addon{align:"center"}
-                %button{type:"submit"}
-                  %span.material-icons.md-36 search
-  .col.s3
-    %br
-    = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
+.container
+  .row
+    .col.s9
+      .card
+        %form{action:company_terminals_path}
+          .input-group.stylish-input-group
+            .row
+              .col.s10
+                %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+              .col.s2
+                %br
+                %span.input-group-addon{align:"center"}
+                  %button{type:"submit"}
+                    %span.material-icons.md-36 search
+    .col.s3
+      %br
+      = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
 
-.card
-  -if !@terminals.empty?        
-    .row
-      .col-md-1
-      .col-md-10
-        .table-responsive
-          %table.table-hover.table-bordered.terminals_listing_table
-            %tbody
-              %tr
-                %th.text-center #
-                %th.text-center Name
-                %th.text-center Landline
-                %th.text-center Status
-                %th.text-center Edit Terminal
-                %th.text-center Actions
-              - @terminals.each_with_index do |object,i|
+  .card
+    -if !@terminals.empty?        
+      .row
+        .col-md-1
+        .col-md-10
+          .table-responsive
+            %table.table-hover.table-bordered.terminals_listing_table
+              %tbody
                 %tr
-                %td.text-center= i+1
-                %td.text-center= link_to object.name, terminal_menu_items_path(object)
-                %td.text-center= object.landline
-                %td.text-center= object.active ? "active" : "inactive" 
-                
-                %td.text-center
-                  = link_to "Edit", edit_terminal_path(object)
-            
+                  %th.text-center #
+                  %th.text-center Name
+                  %th.text-center Landline
+                  %th.text-center Status
+                  %th.text-center Edit Terminal
+                  %th.text-center Actions
+                - @terminals.each_with_index do |object,i|
+                  %tr
+                  %td.text-center= i+1
+                  %td.text-center= link_to object.name, terminal_menu_items_path(object)
+                  %td.text-center= object.landline
+                  %td.text-center= object.active ? "active" : "inactive" 
+                  
+                  %td.text-center
+                    = link_to "Edit", edit_terminal_path(object)
+              
 
-                %td.text-center
-                  =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
-                    -if object.active
-                      %button.btn.green.lighten-1{:type=> "button"}
-                        %span.material-icons.md-36 check_circle
-                    -else
-                      %button.btn.red.darken-1{:type=> "button"}
-                        %span.material-icons.md-36 cancel
-  -else
-    .alert.alert-danger
-      No record is found!!                         
-.center-align
-  = paginate @terminals 
+                  %td.text-center
+                    =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
+                      -if object.active
+                        %button.btn.green.lighten-1{:type=> "button"}
+                          %span.material-icons.md-36 check_circle
+                      -else
+                        %button.btn.red.darken-1{:type=> "button"}
+                          %span.material-icons.md-36 cancel
+    -else
+      .alert.alert-danger
+        No record is found!!                         
+  .center-align
+    = paginate @terminals 

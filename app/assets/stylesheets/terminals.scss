@@ -118,32 +118,61 @@ Landline.required:after {
   margin: 0 auto;
 }
 
-.with-backdrop{
+.ht-inner-section{
+  .ht-middle-section{
+    background-image: url(/assets/inner-food-bg.jpg);
+    background-attachment: fixed;
+
+    h3{
+      margin-top: 0px;
+      padding-top: 10px;
+    }
+  }
+
+  .ht-top-section{
+    height: 140px;
+    color: black;
+
+    a{
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .ht-scrollable-container{
+    overflow: scroll;
+    height: 500px;
+  }
+
   .terminal-box{
     opacity: 1;
-    border-radius: 25px;
-    height: 245px;
+    height: 180px;
+
+    .small-text{
+      font-size: 8px;
+    }
 
     .card-content{
-      padding: 0px 0px 24px 0px;
+      padding: 0px 0px 10px 0px;
     }
 
     .thumbnail{
-      min-height: 85px;
+      min-height: 55px;
       display: block;
       img{
-        height: 85px;
+        height: 55px;
+        width: 90px;
       }
     }
 
     .progress{
-      height: 29px;
+      height: 20px;
       margin-bottom: 0px;
-      border-radius: 25px 25px 0px 0px;
-      background: linear-gradient(-90deg, red, lightpink);
+      background: white;
+      border: 1px solid lightgreen;
 
       .determinate{
-        background: linear-gradient(to right, #00ff00 0%, #009933 29%);
+        background: lightgreen;
       }
 
       .material-icons{
@@ -152,27 +181,8 @@ Landline.required:after {
       }
 
       .amount{
-        padding-right: 15px;
+        padding-right: 2px;
       }
-    }
-  }
-
-  .terminal-info-box{
-    p{
-      margin: 0px 0px;
-    }
-    color: white;
-
-    .row{
-      margin-bottom: 0px;
-    }
-
-    .material-icons{
-      font-size: 64px;
-    }
-
-    a{
-      color: white !important;
     }
   }
 }

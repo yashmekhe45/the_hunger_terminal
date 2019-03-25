@@ -1,31 +1,42 @@
-.row
-  .terminal-info-box
-    - if todays_order
-      .row
-        = link_to order_path(todays_order&.id) do
-          %div.right.material-icons.md-36 local_cafe
-      .row
-        %div.right
-          = link_to "Today's Order", order_path(todays_order&.id)
+- content_for :inner_header do
+  .ht-top-section
     .row
-      There is minimum order required to be placed with all the terminals Order will be confirmed if the bar turns all green
+    .row
+      .col.s0.m2
+      .col.s12.m8
+        .row
+          .col.s12.m8
+            %span There is minimum order required to be placed with all the terminals.
+            %br
+            %span Order will be confirmed if the bar turns all green
+          .col.s0.m2
+            - if todays_order
+              .row
+                = link_to order_path(todays_order&.id) do
+                  %div.right.material-icons.md-36.black-text local_cafe
+              .row
+                %div.right
+                  = link_to "Today's Order", order_path(todays_order&.id)
+            
 
-.row
-  - @terminals.each do |terminal|
-    .col.s6.m3
-      .card.grey.lighten-4.terminal-box
-        .card-content.white-text
-          / %span.card-title
-          .progress
-            .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
-            / above - 8 to adjust icon properly
-            %i.right.material-icons.md-36.right{:style => "left: #{terminal.confirmation_possibility - 8}%"} restaurant_menu
-            %i.amount.right ₹ #{terminal.min_order_amount.to_i}
-          %p
-            %h5.center-align.black-text= terminal.name
-            .center-align
-              .thumbnail
-                = image_tag terminal.image_url(:thumb) if terminal.image?
-                = image_tag "enjoy_food.png" unless terminal.image?
-            .center-align
-              = link_to "Order", new_terminal_order_path(terminal.id), class: "btn grey darken-4"
+.row.ht-scrollable-container
+  .col.s0.m2
+  .col.s12.m8
+    - @terminals.each do |terminal|
+      .col.s6.m3
+        .card.white.terminal-box
+          .card-content.black-text
+            / %span.card-title
+            .progress
+              %i.amount.left.black-text ₹ 0
+              %text.center-align.small-text.green-text.lighten-2-text Confirmation Possibility
+              .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
+              %i.amount.right.black-text ₹ #{terminal.min_order_amount.to_i}
+            %p
+              %h6.center-align.black-text= terminal.name
+              .center-align
+                .thumbnail
+                  = image_tag terminal.image_url(:thumb) if terminal.image?
+                  = image_tag "enjoy_food.png" unless terminal.image?
+              .center-align
+                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn grey darken-4"

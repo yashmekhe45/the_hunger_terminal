@@ -1,34 +1,35 @@
-.card
-  -if !@orders.empty?
-    %h3.pdf_heading.center-align #{current_user.company.name.capitalize} Employees's Today's Reports
-    %h4.pdf_heading.center-align Date: #{ Time.current.strftime("%d %B, %Y") }
-    -if !pdf?(response.content_type)
-      = link_to 'print', todays_reports_users_path(:format => 'pdf' ), class: 'btn btn-info'
-    .table-responsive
-      %table.table-hover.table-bordered.employees_report_table.pdf_table
-        %tbody
-          %tr
-            %th.align.text-center Sr No.
-            %th.align.text-center Employee
-            %th.align.text-center Vendor
-            %th.align.text-center Item
-            %th.align.text-center Quantity
-          - employee = "nil"
-          - i=0
-          - @orders.each do |order|
+.container
+  .card
+    -if !@orders.empty?
+      %h3.pdf_heading.center-align #{current_user.company.name.capitalize} Employees's Today's Reports
+      %h4.pdf_heading.center-align Date: #{ Time.current.strftime("%d %B, %Y") }
+      -if !pdf?(response.content_type)
+        = link_to 'print', todays_reports_users_path(:format => 'pdf' ), class: 'btn btn-info'
+      .table-responsive
+        %table.table-hover.table-bordered.employees_report_table.pdf_table
+          %tbody
             %tr
-            - if employee == order.emp_name
-              %td.align.text-center
-              %td.align.text-center
-              %td.align.text-center
-            - else
-              %td.align.text-center= i+1
-              %td.align.text-center= order.emp_name
-              %td.align.text-center= order.vendor
-              - i = i+1
-            %td.align.text-center= order.menu
-            %td.align.text-center= order.quantity
-            - employee = order.emp_name
-  -else
-    .alert.alert-danger
-      No record is found!!
+              %th.align.text-center Sr No.
+              %th.align.text-center Employee
+              %th.align.text-center Vendor
+              %th.align.text-center Item
+              %th.align.text-center Quantity
+            - employee = "nil"
+            - i=0
+            - @orders.each do |order|
+              %tr
+              - if employee == order.emp_name
+                %td.align.text-center
+                %td.align.text-center
+                %td.align.text-center
+              - else
+                %td.align.text-center= i+1
+                %td.align.text-center= order.emp_name
+                %td.align.text-center= order.vendor
+                - i = i+1
+              %td.align.text-center= order.menu
+              %td.align.text-center= order.quantity
+              - employee = order.emp_name
+    -else
+      .alert.alert-danger
+        No record is found!!

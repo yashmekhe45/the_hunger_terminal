@@ -1,34 +1,35 @@
--if !@res.empty?
-  .card.center-align
-    %h3 Vendors List
-    %center
-      %table
-        %tbody
-          %tr
-            %th Sr No.
-            %th Name
-            %th Minimum Order Price 
-            %th
-              Order Price
-              %h6 (incl. of all taxes)
-            %th Actions
-          - @res.each_with_index do |terminal, i|
-            - placed = @placed[i]
-            - confirmed = @confirmed[i]
-            - min_order = terminal.min_order_amount
-            - total = terminal.total
+.container
+  -if !@res.empty?
+    .card.center-align
+      %h3 Vendors List
+      %center
+        %table
+          %tbody
             %tr
-              %td= i+1
-              %td= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, :title => 'see list of orders', :rel => 'tooltip'
-              %td ₹ #{terminal.min_order_amount}
-              %td ₹ #{terminal.total}
-              %td
-                = link_to 'Forward Orders', (placed or confirmed) ? '#' : admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: 'btn btn-info', id: 'forwardButton'
-                = link_to 'Confirm', confirmed ? '#' : admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => total), disabled: confirmed, class: min_order < total ? 'btn btn-success' : 'btn btn-warning'
-                = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id), disabled: confirmed, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete all the orders from this vendor?'}
--else
-  .container
-    .alert.alert-danger
-      No record is found!!
-#myModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog', :tabeindex =>'-1' }
-#myForwardOrdersModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog',:tabeindex =>'-1' }
+              %th Sr No.
+              %th Name
+              %th Minimum Order Price 
+              %th
+                Order Price
+                %h6 (incl. of all taxes)
+              %th Actions
+            - @res.each_with_index do |terminal, i|
+              - placed = @placed[i]
+              - confirmed = @confirmed[i]
+              - min_order = terminal.min_order_amount
+              - total = terminal.total
+              %tr
+                %td= i+1
+                %td= link_to terminal.name, admin_dashboard_order_detail_path(:terminal_id => terminal.id),remote: true, :title => 'see list of orders', :rel => 'tooltip'
+                %td ₹ #{terminal.min_order_amount}
+                %td ₹ #{terminal.total}
+                %td
+                  = link_to 'Forward Orders', (placed or confirmed) ? '#' : admin_dashboard_forward_orders_path(:terminal_id => terminal.id), remote: true, :disabled => (placed or confirmed), class: 'btn btn-info', id: 'forwardButton'
+                  = link_to 'Confirm', confirmed ? '#' : admin_dashboard_confirm_orders_path(:terminal_id => terminal.id, :todays_order_total => total), disabled: confirmed, class: min_order < total ? 'btn btn-success' : 'btn btn-warning'
+                  = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id), disabled: confirmed, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete all the orders from this vendor?'}
+  -else
+    .container
+      .alert.alert-danger
+        No record is found!!
+  #myModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog', :tabeindex =>'-1' }
+  #myForwardOrdersModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog',:tabeindex =>'-1' }

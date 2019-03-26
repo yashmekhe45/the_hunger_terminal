@@ -1,24 +1,24 @@
 - content_for :inner_header do
   .ht-top-section
     .row
-    .row
+    .row.no-bottom-margin
       .col.s0.m2
       .col.s12.m8
-        .row
-          .col.s12.m8
+        .row.no-bottom-margin
+          .col.s12.m8.grey-text.darken-3-text.instruction-text
+            %span Time left
+            %div
             %span There is minimum order required to be placed with all the terminals.
             %br
             %span Order will be confirmed if the bar turns all green
-          .col.s0.m2
+          .col.s0.m2.todays-order.right
             - if todays_order
-              .row
-                = link_to order_path(todays_order&.id) do
-                  %div.right.material-icons.md-36.black-text local_cafe
-              .row
-                %div.right
-                  = link_to "Today's Order", order_path(todays_order&.id)
-            
+              = link_to order_path(todays_order&.id) do
+                = image_tag "hot-food.svg", class: 'order-icon'
+                = link_to "Today's Order", order_path(todays_order&.id)
 
+
+%div.shadow-top
 .row.ht-scrollable-container
   .col.s0.m2
   .col.s12.m8

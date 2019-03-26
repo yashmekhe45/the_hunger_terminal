@@ -18,11 +18,11 @@
     %br
     %br
   .row
-    .div 
-
+    .div
       -if @orders.empty?
-        .alert.alert-danger
-          No record is found for this period!!
+        .card
+          .alert.alert-danger.center-align
+            No record is found for this period!!
       -else
         -grand_total = grand_tax = grand_discount = grand_extra_charges = grand_payable =0
         %table.responsive-table

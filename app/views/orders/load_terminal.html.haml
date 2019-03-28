@@ -6,8 +6,8 @@
       .col.s12.m8
         .row.no-bottom-margin
           .col.s12.m8.grey-text.darken-3-text.instruction-text
-            %span Time left
-            %div
+            %span#order-timer-text Time Left
+            %div.red-text#order-timer
             %span There is minimum order required to be placed with all the terminals.
             %br
             %span Order will be confirmed if the bar turns all green
@@ -40,3 +40,11 @@
                   = image_tag "enjoy_food.png" unless terminal.image?
               .center-align
                 = link_to "Order", new_terminal_order_path(terminal.id), class: "btn grey darken-4"
+
+%script{:type => 'text/javascript'}
+  orderTime = "#{@end_ordering_at}"
+  today = new Date()
+  today = `${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`
+  $('#order-timer').countdown(`${today} ${orderTime}`, function(event) {
+  $(this).html(event.strftime('%H:%M:%S'));
+  });

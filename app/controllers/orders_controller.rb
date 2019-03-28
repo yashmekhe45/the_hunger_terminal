@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
 
   def load_terminal
     @terminals = Terminal.where(active: true, company: current_user.company)
+    @end_ordering_at = current_user.company.end_ordering_at.strftime('%H:%M:%S')
   end
 
   def new 

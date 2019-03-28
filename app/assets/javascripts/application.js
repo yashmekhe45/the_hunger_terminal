@@ -18,6 +18,7 @@
 //= require jquery_nested_form
 //= require toastr
 //= require_tree .
+//= require jquery.countdown.min.js
 //= require materialize
 
   $(document).on('turbolinks:load',function(){

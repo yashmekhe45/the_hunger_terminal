@@ -1,6 +1,10 @@
+- content_for :inner_header do
+  .ht-top-section
+    .row
+      %h3.center-align.black-text Today's Order
+
 .container
   -if can? :show, @order
-    %h3.center-align.black-text Today's Order
     .row
       .col.m6.s12
         %table.responsive-table

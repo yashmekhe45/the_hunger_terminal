@@ -1,6 +1,9 @@
 %nav.grey.darken-4
-  .nav-wrapper.hunger-title-bar
-    %a.brand-logo{:href => root_path} The Hunger Terminal
+  .nav-wrapper.hunger-title-bar.container
+    = link_to root_path do
+      = image_tag 'chef-logo.svg', class: 'ht-logo'
+      %span.white-text Hunger Terminal
+
     %a.sidenav-trigger{"data-target" => "mobile-demo", :href => "#"}
       %i.material-icons menu
     %ul.right.hide-on-med-and-down

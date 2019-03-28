@@ -6,12 +6,12 @@
       .col.s12.m8
         .row.no-bottom-margin
           .col.s12.m8.grey-text.darken-3-text.instruction-text
-            %span#order-timer-text Time Left
-            %div.red-text#order-timer
+            %span.hide-on-med-and-down#order-timer-text Time Left
+            %div.red-text.hide-on-med-and-down#order-timer
             %span There is minimum order required to be placed with all the terminals.
             %br
             %span Order will be confirmed if the bar turns all green
-          .col.s0.m2.todays-order.right
+          .col.hide-on-med-and-down.s0.m2.todays-order.right
             - if todays_order
               = link_to order_path(todays_order&.id) do
                 = image_tag "hot-food.svg", class: 'order-icon'

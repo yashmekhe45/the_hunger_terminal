@@ -1,17 +1,22 @@
+- content_for :inner_header do
+  .ht-top-section
+    .row
+      %h3.black-text.center-align #{@terminal.name}
+      .row.center-align
+        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text'
+      
+
 .container
   .row
-    =link_to 'Go Back', vendors_path, class: 'btn'
-    %h3.black-text.center-align #{@terminal.name}
-
     / - unless min_order_reached?(@terminal)
     /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
     /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
     .col.m6.s12
-      .h6.black-text
-        Extra delivery charges may apply!
       %br
       %br
       %br
+      / .h6.black-text.center-align
+      /   Extra delivery charges may apply!
       %ul.tabs.menu-tabs
         %li.tab.active.green
           %a{"data-toggle" => "tab", :href => "#veg"} Veg

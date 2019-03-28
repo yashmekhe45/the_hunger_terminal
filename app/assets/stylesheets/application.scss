@@ -455,6 +455,21 @@ table{
 
 .hunger-title-bar{
   z-index: 400 !important;
+
+  .ht-logo{
+    height: 70%;
+    right: -30px;
+    position: relative;
+  }
+
+  span{
+    font-size: smaller;
+    position: relative;
+    top: 19%;
+    left: -35px;
+    font-size: 10px;
+  }
+
 }
 
 .ht-multiselect{

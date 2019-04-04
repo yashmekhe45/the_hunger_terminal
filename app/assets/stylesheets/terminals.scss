@@ -122,7 +122,7 @@ Landline.required:after {
   .ht-middle-section{
     background-image: url(/assets/inner-food-bg.jpg);
     background-size: cover;
-
+    
     h3{
       margin-top: 0px;
       padding-top: 10px;
@@ -167,7 +167,7 @@ Landline.required:after {
     }
 
     #order-timer{
-      font-size: 30px;
+      font-size: 35px;
     }
   }
 
@@ -180,14 +180,18 @@ Landline.required:after {
   .terminal-box{
     opacity: 1;
     height: 180px;
-    margin: 20px 20px 0 20px;
+    margin: 20px 0px 0 20px;
 
     .small-text{
-      font-size: 8px;
+      font-size: 77%;
+      z-index:1;
+      position: absolute;
     }
 
     .card-content{
-      padding: 0px 0px 10px 0px;
+      padding: 0px 0px 0px 0px;
+      height: 100%;
+      position: relative;
     }
 
     .thumbnail{
@@ -202,11 +206,14 @@ Landline.required:after {
     .progress{
       height: 20px;
       margin-bottom: 0px;
+      margin-left: 0px;
       background: white;
       border: 1px solid lightgreen;
 
       .determinate{
         background: lightgreen;
+        z-index:0;
+        position: absolute; 
       }
 
       .material-icons{
@@ -216,11 +223,27 @@ Landline.required:after {
 
       .amount{
         padding-right: 2px;
+        z-index: 2;
+        position: relative;
+        font-size: small;
       }
     }
+
   }
 }
+.bottomFixed {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
 
+.order-btn {
+  width:100%;
+  font-size: small;
+  height: 32px !important;
+  background-color: #212121 !important;
+  padding: inherit;
+}
 .tabs.menu-tabs{
   background-color: transparent;
   display: inline;

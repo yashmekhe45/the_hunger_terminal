@@ -8,11 +8,52 @@
       %i.material-icons menu
     %ul.right.hide-on-med-and-down
       %li
-        -if user_signed_in? && current_user.role == "company_admin" 
-          %a{:href => get_order_details_company_path(current_user.company_id)}
-            Set Order details 
-          %span.sr-only (current)
-        -if user_signed_in?    
+        -if user_signed_in? && current_user.role == "company_admin"
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown4", :href => "#"}Reports
+            %ul#dropdown4.dropdown-content.nav-dropdown-content
+              %li
+                %a.order-trigger{:href => "#", "data-alignment"=> "left", "data-target" => "employeereport"}Employees
+              %li
+                %a.order-trigger{:href => "#","data-alignment"=> "left", "data-target" => "terminalreport"}Terminal
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown3", :href => "#"} Manage  
+            %ul#dropdown3.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => "/companies/#{current_user.company_id}/users"}Employees
+              %li
+                %a{:href => "/companies/#{current_user.company_id}/terminals"}Terminal
+              %li
+                %a{:href => admin_dashboard_payment_path}Payment 
+              %li
+                %a{:href => get_order_details_company_path(current_user.company_id)}
+                  Set Order Details
+              %li
+                %a.order-trigger{:href => "#", "data-alignment"=> "left", "data-target" => "todaysorder"} Today's Order
+            %ul#todaysorder.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => admin_dashboard_index_path}Vendor Wise 
+              %li
+                %a{:href => todays_reports_users_path}Employees Wise 
+              %li
+                %a{:href => admin_dashboard_input_terminal_extra_charges_path}Add Extra Charges
+            %ul#employeereport.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => todays_reports_users_path }Today's 
+              %li
+                %a{:href => history_reports_users_path}Last Month
+              %li
+                %a{:href => mtd_reports_users_path }Current Balance
+            %ul#terminalreport.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => todays_reports_terminals_path}Today's 
+              %li
+                %a{:href => history_reports_terminals_path }Last Month 
+              %li
+                %a{:href => admin_dashboard_payment_path}Running Balance
+                          
+
+        -if user_signed_in?   
           %li
             %a.dropdown-trigger{"data-target" => "dropdown1", :href => "#"}
               My Order
@@ -24,7 +65,8 @@
                 %li
                   %a{:href => order_path(todays_order&.id)} Today's Order          
               %li
-                %a{:href => orders_path} Order history
+                %a{:href => orders_path} Order History
+         
       %li
         - if !user_signed_in?
           = link_to new_user_session_path do

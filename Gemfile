@@ -7,7 +7,6 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'autoprefixer-rails', '~> 6.7', '>= 6.7.2'
-gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'rails', '~> 5.0.1'
 gem 'toastr-rails'
 gem 'haml-rails'
@@ -52,6 +51,9 @@ gem 'roo'
 gem 'roo-xls'
 gem 'carrierwave-aws'
 # gem 'bootstrap-datepicker-rails', '1.4.0'
+
+gem 'materialize-sass'
+gem 'material_icons'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,41 +1,107 @@
-%nav.navbar.navbar-inverse.navbar-fixed-top
-  .container-fluid
-    .navbar-header
-      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a#logo.navbar-brand{:href => root_path} The Hunger Terminal
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse    
-      %ul.nav.navbar-nav.navbar-right
-        %li
-          -if user_signed_in? && current_user.role == "company_admin" 
-            %a{:href => get_order_details_company_path(current_user.company_id)}
-              Set Order details 
-            %span.sr-only (current)
-        -if user_signed_in?    
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+%nav.grey.darken-4
+  .nav-wrapper.hunger-title-bar.container
+    = link_to root_path do
+      = image_tag 'chef-logo.svg', class: 'ht-logo'
+      %span.white-text Hunger Terminal
+
+    %a.sidenav-trigger{"data-target" => "mobile-demo", :href => "#"}
+      %i.material-icons menu
+    %ul.right.hide-on-med-and-down
+      %li
+        -if user_signed_in? && current_user.role == "company_admin"
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown4", :href => "#"}Reports
+            %ul#dropdown4.dropdown-content.nav-dropdown-content
+              %li
+                %a.order-trigger{:href => "#", "data-alignment"=> "left", "data-target" => "employeereport"}Employees
+              %li
+                %a.order-trigger{:href => "#","data-alignment"=> "left", "data-target" => "terminalreport"}Terminal
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown3", :href => "#"} Manage  
+            %ul#dropdown3.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => "/companies/#{current_user.company_id}/users"}Employees
+              %li
+                %a{:href => "/companies/#{current_user.company_id}/terminals"}Terminal
+              %li
+                %a{:href => admin_dashboard_payment_path}Payment 
+              %li
+                %a{:href => get_order_details_company_path(current_user.company_id)}
+                  Set Order Details
+              %li
+                %a.order-trigger{:href => "#", "data-alignment"=> "left", "data-target" => "todaysorder"} Today's Order
+            %ul#todaysorder.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => admin_dashboard_index_path}Vendor Wise 
+              %li
+                %a{:href => todays_reports_users_path}Employees Wise 
+              %li
+                %a{:href => admin_dashboard_input_terminal_extra_charges_path}Add Extra Charges
+            %ul#employeereport.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => todays_reports_users_path }Today's 
+              %li
+                %a{:href => history_reports_users_path}Last Month
+              %li
+                %a{:href => mtd_reports_users_path }Current Balance
+            %ul#terminalreport.dropdown-content.nav-dropdown-content
+              %li
+                %a{:href => todays_reports_terminals_path}Today's 
+              %li
+                %a{:href => history_reports_terminals_path }Last Month 
+              %li
+                %a{:href => admin_dashboard_payment_path}Running Balance
+                          
+
+        -if user_signed_in?   
+          %li
+            %a.dropdown-trigger{"data-target" => "dropdown1", :href => "#"}
               My Order
               / %span.caret
-            %ul.dropdown-menu
-              %li
+            %ul#dropdown1.dropdown-content
+              %li.grey.lighten-5
                 %a{:href => vendors_path} Place Order
-              -if user_signed_in? && current_user.orders.find_by(date: Time.zone.today)
+              -if user_signed_in? && todays_order
                 %li
-                  - order_id = current_user.orders.find_by(date: Time.zone.today).id
-                  - terminal_id = current_user.orders.find_by(date: Time.zone.today).terminal.id
-                  %a{:href => order_path(order_id)} Today's Order          
+                  %a{:href => order_path(todays_order&.id)} Today's Order          
               %li
-                %a{:href => orders_path} Order history          
-        %li
-          - if !user_signed_in?
-            = link_to new_user_session_path do
-              %span.glyphicon.glyphicon-log-in
-              Login
-          - else
-            = link_to destroy_user_session_path, method: :delete do
-              %span.glyphicon.glyphicon-log-out
-              Logout
-              
+                %a{:href => orders_path} Order History
+         
+      %li
+        - if !user_signed_in?
+          = link_to new_user_session_path do
+            %span.glyphicon.glyphicon-log-in
+            Login
+        - else
+          = link_to destroy_user_session_path, method: :delete do
+            %span.glyphicon.glyphicon-log-out
+            Logout
+
+%ul#mobile-demo.sidenav
+  %li
+    -if user_signed_in? && current_user.role == "company_admin"
+      %a{:href => get_order_details_company_path(current_user.company_id)}
+        Set Order details
+      %span.sr-only (current)
+    -if user_signed_in?
+      %li
+        %a.dropdown-trigger{"data-target" => "dropdown2", :href => "#"}
+          My Order
+          / %span.caret
+        %ul#dropdown2.dropdown-content
+          %li.grey.lighten-5
+            %a{:href => vendors_path} Place Order
+          -if user_signed_in? && todays_order
+            %li
+              %a{:href => order_path(todays_order&.id)} Today's Order
+          %li
+            %a{:href => orders_path} Order history
+  %li
+    - if !user_signed_in?
+      = link_to new_user_session_path do
+        %span.glyphicon.glyphicon-log-in
+        Login
+    - else
+      = link_to destroy_user_session_path, method: :delete do
+        %span.glyphicon.glyphicon-log-out
+        Logout

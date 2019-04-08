@@ -1,39 +1,40 @@
--if pdf?(response.content_type)
-  %h2.pdf_heading.text-center Josh Software Private Limited
-
 .container
-  -if !@users.empty?
-    -time =Time.current - 1.month
-    %h3.pdf_heading.text-center #{time.strftime("%B")}, #{time.year} Employee's Reports
-    -if !pdf?(response.content_type)
-      = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success"
-    .table-responsive
-      %table.table-hover.table-bordered.pdf_table
-        %tbody
-          %tr
-            %th.align.text-center Sr No.
-            %th.align.text-center Name
-            %th.align.text-center
-              Total Order Price
-              %h5.text-center (incl. of all taxes)
-            %th.align.text-center Subsidy
-            %th.align.text-center Extra Charges
-            %th.align.text-center
-              Cost To Employee
-              %h5.text-center (incl. of all taxes)
+  -if pdf?(response.content_type)
+    %h2.pdf_heading.text-center Josh Software Private Limited
 
-          - @users.each_with_index do |user,i|
-            %tr  
-            %td.align.text-center= i+1
-            -if !pdf?(response.content_type)
-              %td.align.text-center= link_to user.name, history_reports_user_path(user)
-            -else
-              %td.align.text-center= user.name
-            %td.align.text-center ₹ #{user.total}
-            %td.align.text-center ₹ #{user.subsidy}
-            %td.align.text-center ₹ #{user.extra_charges}
-            %td.align.text-center= round_of_total(user.total - user.subsidy + user.extra_charges)
-  -else
-    .alert.alert-danger
-      No record is found!!
-      
+  .card
+    -if !@users.empty?
+      -time =Time.current - 1.month
+      %h3.pdf_heading.center-align #{time.strftime("%B")}, #{time.year} Employee's Reports
+      -if !pdf?(response.content_type)
+        = link_to "Download_pdf", history_reports_users_path(:format => 'pdf'), class: "btn btn-success"
+      .table-responsive
+        %table.table-hover.table-bordered.pdf_table
+          %tbody
+            %tr
+              %th.align.text-center Sr No.
+              %th.align.text-center Name
+              %th.align.text-center
+                Total Order Price
+                %h5.text-center (incl. of all taxes)
+              %th.align.text-center Subsidy
+              %th.align.text-center Extra Charges
+              %th.align.text-center
+                Cost To Employee
+                %h5.text-center (incl. of all taxes)
+
+            - @users.each_with_index do |user,i|
+              %tr  
+              %td.align.text-center= i+1
+              -if !pdf?(response.content_type)
+                %td.align.text-center= link_to user.name, history_reports_user_path(user)
+              -else
+                %td.align.text-center= user.name
+              %td.align.text-center ₹ #{user.total}
+              %td.align.text-center ₹ #{user.subsidy}
+              %td.align.text-center ₹ #{user.extra_charges}
+              %td.align.text-center= round_of_total(user.total - user.subsidy + user.extra_charges)
+    -else
+      .alert.alert-danger
+        No record is found!!
+        

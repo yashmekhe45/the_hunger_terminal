@@ -1,37 +1,35 @@
-%nav.sidenav
+%ul.sidenav.sidenav-fixed.grey.darken-4.ht-admin-sidenav
   %div.icon
-    %a{:href => "/companies/#{current_user.company_id}/users"}
-      %span.glyphicon.glyphicon-user.gly
-      .name.text-center Employee
+    %a.valign-wrapper{:href => "/companies/#{current_user.company_id}/users"}
+      / %i.material-icons.md-18 person
+      %span.name Employee
   
-  %li.dropdown.icon
-    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => admin_dashboard_index_path}
-      %span.glyphicon.glyphicon-th-list
-      .name.text-center Today's Orders 
-      %span.caret
-    %ul.dropdown-menu
+  %li.icon
+    %a.dropdown-trigger{"data-target" => "d3", :href => admin_dashboard_index_path}
+      / %i.material-icons.md-18 list
+      %span.name Today's Orders
+    %ul.dropdown-content#d3
       %li
         %a#menu{href: admin_dashboard_index_path} Vendor wise Orders
       %li
         %a#menu{href: todays_reports_users_path }Employee wise Orders
       %li
         %a#menu{href: admin_dashboard_input_terminal_extra_charges_path} Add Extra charges
-  / %div.icon
-  /   %a{:href => reports_index_path}
-  /     %span.glyphicon.glyphicon-file.gly
-  /     .name.text-center Empolyees Report
-  
-  / %div.icon
-  /   %a{:href => reports_all_terminals_daily_report_path}
-  /     %span.glyphicon.glyphicon-cutlery.gly
-  /     .name.text-center Terminals Report
+    / %div.icon
+    /   %a{:href => reports_index_path}
+    /     %span.glyphicon.glyphicon-file.gly
+    /     .name.text-center Empolyees Report
+    
+    / %div.icon
+    /   %a{:href => reports_all_terminals_daily_report_path}
+    /     %span.glyphicon.glyphicon-cutlery.gly
+    /     .name.text-center Terminals Report
 
-  %li.dropdown.icon
-    %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
-      %span.glyphicon.glyphicon-file.gly
-      .name.text-center Employees Report
-      %span.caret
-    %ul.dropdown-menu
+  %li.icon
+    %a.dropdown-trigger{"data-target" => "d1",:href => ""}
+      / %i.material-icons.md-18 book
+      %span.name Employees Report
+    %ul.dropdown-content#d1
       %li
         %a#menu{ :href => todays_reports_users_path } Todays Report
       %li
@@ -39,24 +37,23 @@
       %li
         %a#menu{ :href => mtd_reports_users_path } Current Balance
         
-  %li.dropdown.icon
-    %a.dropdown-toggle{"data-toggle" => "dropdown",:href => ""}
-      %span.glyphicon.glyphicon-file.gly
-      .name.text-center Terminals Report
-      %span.caret
-    %ul.dropdown-menu
+  %li.icon
+    %a.dropdown-trigger{"data-target" => "d2",:href => ""}
+      / %i.material-icons.md-18 insert_drive_file
+      %span.name Terminals Report
+    %ul.dropdown-content#d2
       %li
         %a#menu{ :href => todays_reports_terminals_path } Todays Report
       %li
         %a#menu{ :href =>  history_reports_terminals_path } Last Month Report
       %li
         %a#menu{ :href => admin_dashboard_payment_path } Running Balance
-  %div.icon    
-    %a{:href => "/companies/#{current_user.company_id}/terminals"}
-      %span.glyphicon.glyphicon-cutlery.gly
-      .name.text-center Terminal
+  %div.icon  
+    %a.valign-wrapper{:href => "/companies/#{current_user.company_id}/terminals"}
+      / %i.material-icons.md-18 restaurant
+      %span.name Terminal
   
   %div.icon
-    %a{ :href => admin_dashboard_payment_path }
-      %span.i.fa.fa-inr{:style => "font-size:3r0px;color:#337ab7;align:center"}
-      .name.text-center Payment
+    %a.valign-wrapper{ :href => admin_dashboard_payment_path }
+      / %i.material-icons.md-18 payment
+      %span.name Payment

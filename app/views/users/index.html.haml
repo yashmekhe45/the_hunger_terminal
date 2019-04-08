@@ -1,26 +1,25 @@
-%h1.text-center EMPLOYEES
-.container
+%h3.center-align EMPLOYEES
+.div
   =render "add_employees_and_search_bar"
 %br
-%br
-%br
 
-.container
+.card
+  %br
   -if !@users.empty?
     %table.table.table-fixed#employees_table
       %tbody
         %tr
           %th 
-            .text-center
+            .center-align
               NAME
           %th
-            .text-center
+            .center-align
               EMAIL ID 
           %th 
-            .text-center
+            .center-align
               STATUS
           %th 
-            .text-center
+            .center-align
               CHANGE STATUS
         %tr
           - @users.each do |user|
@@ -28,9 +27,11 @@
   -else
     .alert.alert-danger
       No record is found!!
+  %br
 
-.text-center
+.center-align
   = paginate @users
+
 #user_form.modal.fade{"aria-labelledby" => "add_single_user_record", :role => "dialog", :tabindex => "-1"}
 #import_employees.modal.fade{"aria-labelledby" => "add_multiple_employee_records", :role => "dialog", :tabindex => "-1"}
 

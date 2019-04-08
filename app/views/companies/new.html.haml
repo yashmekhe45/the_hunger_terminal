@@ -1,67 +1,65 @@
 .container.center.Absolute-Center.is-Responsive
-  .row
-    .col-md-3
-    .col-md-6
-      .panel.panel-success
-        .panel-heading
-          .panel-title 
-            .h5.strong Company Sign Up Form
-        .panel-body
-          = simple_nested_form_for(@company) do |f|
+  %br
+  .card
+    .card-title
+      .h5.strong Company Sign Up Form
+    .card-content
+      = simple_nested_form_for(@company) do |f|
+        .form-group
+          .col.s6
+            = f.input :name, :label => false, :placeholder => "Name"
+          .col.s6
+            = f.input :landline, :label => false, input_html: { maxlength: 11 }, :placeholder => "Landline" 
+        .form-group
+          .col.s6
+            = f.input :email, :label => false, :placeholder => "Email"
+          .col.s6  
+            = f.input :subsidy, :label => false, :placeholder => "subsidy amount",input_html: { :input_type => "number",:min => 0, :max => 100 }
+        .form-group
+          .col.s6
+            = f.input :start_ordering_at, :label => "Ordering start time", :placeholder => "Name"  
+          .col.s6
+            = f.input :end_ordering_at, :label => "Ordering end time", :placeholder => "Name" 
+        .location
+          %h5 Company Location Details:
+          = f.simple_fields_for :address do |a|
             .form-group
-              .col-md-6
-                = f.input :name, :label => false, :placeholder => "Name"
-              .col-md-6
-                = f.input :landline, :label => false, input_html: { maxlength: 11 }, :placeholder => "Landline" 
+              .col.s6
+                = a.input :house_no, :label => false, :placeholder => "House No"
+              .col.s6
+                = a.input :pincode, :label => false, :placeholder => "PIN Code", input_html: { :input_type => "number",length: 6 }
+            .form-group 
+              .col.s12   
+                = a.input :locality, :label => false, :placeholder => "Locality"
             .form-group
-              .col-md-6
-                = f.input :email, :label => false, :placeholder => "Email"
-              .col-md-6  
-                = f.input :subsidy, :label => false, :placeholder => "subsidy amount",input_html: { :input_type => "number",:min => 0, :max => 100 }
+              .col.s6
+                = a.input :city, :label => false, :placeholder => "City"
+              .col.s6
+                = a.input :state, :label => false, :placeholder => "State"
+        .admin
+          .form-group
+            .col.s12
+              %h5 Company Admin Details:
+          = f.simple_fields_for :employees do |u|
             .form-group
-              .col-md-6
-                = f.input :start_ordering_at, :label => "Ordering start time", :placeholder => "Name"  
-              .col-md-6
-                = f.input :end_ordering_at, :label => "Ordering end time", :placeholder => "Name" 
-            .location
-              %h5 Company Location Details:
-              = f.simple_fields_for :address do |a|
-                .form-group
-                  .col-md-6
-                    = a.input :house_no, :label => false, :placeholder => "House No"
-                  .col-md-6
-                    = a.input :pincode, :label => false, :placeholder => "PIN Code", input_html: { :input_type => "number",length: 6 }
-                .form-group 
-                  .col-md-12   
-                    = a.input :locality, :label => false, :placeholder => "Locality"
-                .form-group
-                  .col-md-6
-                    = a.input :city, :label => false, :placeholder => "City"
-                  .col-md-6
-                    = a.input :state, :label => false, :placeholder => "State"
-            .admin
-              .form-group
-                .col-md-12
-                  %h5 Company Admin Details:
-              = f.simple_fields_for :employees do |u|
-                .form-group
-                  .col-md-12
-                    = u.input :name, :label => false, :placeholder => "Name"
-                .form-group
-                  .col-md-6
-                    = u.input :mobile_number, :label => false, input_html: { maxlength: 10 }, :placeholder => "Mobile_No"
-                  .col-md-6
-                    = u.input :email, :label => false, :placeholder => "Email"
-                .form-group
-                  .col-md-6
-                    = u.input :password, :label => false, :placeholder => "Password",  class: 'form-control'
-                  .col-md-6
-                    = u.password_field :password_confirmation, class: 'form-control', :placeholder => "Confirm Password"
-                    %br              
-                .form-group
-                  .col-md-6
-                    = f.submit 'Sign up', class: "btn btn-primary sign_up_button", 'data-disable-with': "Processing..."
-                  .col-md-6
-                    = link_to "Back", root_path, :class=> "btn btn-success", 'data-disable-with': '...'
+              .col.s12
+                = u.input :name, :label => false, :placeholder => "Name"
+            .form-group
+              .col.s6
+                = u.input :mobile_number, :label => false, input_html: { maxlength: 10 }, :placeholder => "Mobile_No"
+              .col.s6
+                = u.input :email, :label => false, :placeholder => "Email"
+            .form-group
+              .col.s6
+                = u.input :password, :label => false, :placeholder => "Password",  class: 'form-control'
+              .col.s6
+                = u.password_field :password_confirmation, class: 'form-control', :placeholder => "Confirm Password"
+                %br              
+            .form-group
+              .row
+                .col.s6
+                  = f.submit 'Sign up', class: "btn btn-primary sign_up_button", 'data-disable-with': "Processing..."
+                .col.s6
+                  = link_to "Back", root_path, :class=> "btn btn-success", 'data-disable-with': '...'
 
                 

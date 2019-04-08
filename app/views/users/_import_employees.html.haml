@@ -1,18 +1,19 @@
-.modal-dialog{role: "document"}
-  .modal-content
-    .modal-header
-      %h4.text-center Add Employee Records
-    .modal-body
-      %h5.employee_import_file Download Sample File
-      .row
-        .col-sm-4.col-md-4
-          =link_to "Sample CSV file",download_sample_file_path("csv")
-        .col-sm-4.col-md-4
-          =link_to "Sample XLS file", download_sample_file_path("xls")
-        .col-sm-4.col-md-4
-          =link_to "Sample XLSX file", download_sample_file_path("xlsx")
-      %hr.user_import_page
-      %h5.employee_import_file Import File
-      = form_tag add_multiple_employee_records_company_users_path, id: "import_form", multipart: true do
-        = file_field_tag :file, required: true
-        = submit_tag "Import", 'data-disable-with': "Please wait.."
+.container
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %h4.text-center Add Employee Records
+      .modal-body
+        %h5.employee_import_file Download Sample File
+        .row
+          .col-sm-4.col-md-4
+            =link_to "Sample CSV file",download_sample_file_path("csv")
+          .col-sm-4.col-md-4
+            =link_to "Sample XLS file", download_sample_file_path("xls")
+          .col-sm-4.col-md-4
+            =link_to "Sample XLSX file", download_sample_file_path("xlsx")
+        %hr.user_import_page
+        %h5.employee_import_file Import File
+        = form_tag add_multiple_employee_records_company_users_path, id: "import_form", multipart: true do
+          = file_field_tag :file, required: true
+          = submit_tag "Import", 'data-disable-with': "Please wait.."

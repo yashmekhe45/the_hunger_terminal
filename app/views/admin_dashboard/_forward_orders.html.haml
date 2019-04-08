@@ -2,7 +2,7 @@
   / Modal content
   .modal-content
     .modal-header 
-      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      / %button.close{"data-dismiss" => "modal", :type => "button"} ×
       %h4.modal-title 
     .modal-body
       - if !@orders.any?
@@ -36,4 +36,4 @@
       %a.button{ class: "btn btn-info", id: "placeOrder", data: { terminal_id: params[:terminal_id] } }Place Orders
       / = button_to "Place_orders", admin_dashboard_place_orders_path(:terminal_id =>params[:terminal_id]), :disabled => !@orders.any?, class: "btn btn-info"
       / = button_to "Close", data-dismiss: "modal"
-      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+      %button.btn.btn-default.modal-close{"data-dismiss" => "modal", :type => "button"} Close

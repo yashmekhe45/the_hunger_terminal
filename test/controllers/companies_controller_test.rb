@@ -55,7 +55,7 @@ class CompaniesControllerTest  < ActionController::TestCase
     other_user = create(:user, company: create(:company))
     other_user.company = @company
     patch :update, params: {id: @company, company:{ name: @company.name} }, company: {subsidy: 50, start_ordering_at: Time.zone.parse("12 AM"), end_ordering_at: Time.zone.parse("12:30 PM")}
-    assert_redirected_to root_url
+    assert_redirected_to company_terminals_path(@company.id)
   end
 
   test "Ordering Information should not be updated for invalid values" do

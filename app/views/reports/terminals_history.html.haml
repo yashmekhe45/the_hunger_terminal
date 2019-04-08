@@ -1,22 +1,23 @@
 .container
-  -if !@terminals.empty?  
-    %h3.text-center #{current_user.company.name.capitalize} Vendors's Reports
-    .table-responsive
-      %table.table-hover.table-bordered.terminals_report_table
-        %tbody
-          %tr
-            %th.text-center Sr No.
-            %th.text-center Name
-            %th.text-center Total
-            %th.text-center Paid 
-            / %th.text-center No Of Orders
-          - @terminals.each_with_index do |terminal, i|
-            %tr  
-            %td.text-center= i+1
-            %td.text-center= link_to terminal.name, history_reports_terminal_path(terminal)
-            %td.text-center ₹ #{terminal.total}
-            %td.text-center ₹ #{terminal.total_paid}
-            / %td.text-center= terminal.no_of_orders
-  -else
-    .alert.alert-danger
-      No record is found!!
+  .card
+    -if !@terminals.empty?  
+      %h3.center-align #{current_user.company.name.capitalize} Vendors's Reports
+      .table-responsive
+        %table.table-hover.table-bordered.terminals_report_table
+          %tbody
+            %tr
+              %th.text-center Sr No.
+              %th.text-center Name
+              %th.text-center Total
+              %th.text-center Paid 
+              / %th.text-center No Of Orders
+            - @terminals.each_with_index do |terminal, i|
+              %tr  
+              %td.text-center= i+1
+              %td.text-center= link_to terminal.name, history_reports_terminal_path(terminal)
+              %td.text-center ₹ #{terminal.total}
+              %td.text-center ₹ #{terminal.total_paid}
+              / %td.text-center= terminal.no_of_orders
+    -else
+      .alert.alert-danger
+        No record is found!!

@@ -53,11 +53,11 @@ class User < ApplicationRecord
       order('users.id')
   end
 
-  def self.employee_last_month_report(c_id, month_back_date)
+  def self.employee_last_month_report(c_id, from_date, to_date)
     self.
       joins(:orders).
       where('company_id'=> c_id).
-      where('orders.created_at' => 1.month.ago.utc.beginning_of_month..1.month.ago.utc.end_of_month).
+      where('orders.created_at' => from_date..to_date).
       where('orders.status'=>'confirmed').
       group('users.id').
       select('users.name,users.id,sum(orders.total_cost+orders.tax)AS total,sum(orders.discount)AS subsidy, sum(orders.extra_charges)AS extra_charges').

@@ -27,18 +27,20 @@ class ReportsController < ApplicationController
     @users = User.employee_report(current_user.company_id)
   end
 
-
   def monthly_all_employees
     authorize! :monthly_all_employees, :report_management
-    @users = User.employee_last_month_report(current_user.company_id, Time.current-1.month)
+    @from_date = params[:from] || Date.today.beginning_of_month.strftime('%Y-%m-%d')
+    @to_date = params[:to] || Date.today.strftime('%Y-%m-%d')
+    @users = User.employee_last_month_report(current_user.company_id, @from_date, @to_date)
     respond_to do |format|
       format.html
+      format.js
       format.pdf do
         generate_pdf("monthly_all_employees")
       end
     end 
   end
-
+  
   def employee_history
     @user_orders = User.employee_individual_report(current_user.company_id,params[:id])
     @name = @user_orders.first&.name

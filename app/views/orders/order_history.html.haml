@@ -1,22 +1,35 @@
-.container
-  %h3.text-center My Order History
-  .row
-    .col-sm-12
-      %span Filter orders by date range : 
-      %input{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
-      %input{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
-      %button.btn.btn-info#bton{:type => "button"}Find
-    %br
-    %br
-    %br
-    .card 
+- content_for :inner_header do
+  .ht-top-section
+    .row
+      %h3.center-align.black-text My Order History
 
+.container
+  .row
+  .card
+    .row
+      .col.m2.s4
+      .col.m6.s12
+        %h4 Filter orders by date range :
+    .row
+      .col.m2.s4
+      .col.m3.s12
+        %input{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
+      .col.m3.s12
+        %input{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
+      .col.m3.s6
+        %button.btn.btn-info#bton{:type => "button"}Find
+    %br
+    %br
+    %br
+  .row
+    .div
       -if @orders.empty?
-        .alert.alert-danger
-          No record is found for this period!!
+        .card
+          .alert.alert-danger.center-align
+            No record is found for this period!!
       -else
         -grand_total = grand_tax = grand_discount = grand_extra_charges = grand_payable =0
-        %table.table.table-hover.table-bordered.order_history_table
+        %table.responsive-table
           %thead
             %tr
               %th Date
@@ -57,7 +70,3 @@
               %td= grand_payable
               %td
               %td
-
-
-
-             

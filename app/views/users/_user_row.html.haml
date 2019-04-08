@@ -2,14 +2,14 @@
 %tr
   %td
     =link_to user_path(user,"company_id" => user.company.id) do
-      .text-center
+      .center-align
         #{user.name}
   %td
-    .text-center
+    .center-align
       =user.email
 
   %td{:width => "200px"}
-    .text-center
+    .center-align
       -if !user.is_active
         = "INACTIVE"
       -else 
@@ -18,10 +18,11 @@
   %td
     =link_to user_path(user,'user[is_active]' => !user.is_active,'page'  => params[:page], "company_id" => user.company.id), method: :patch ,data: { confirm: 'Are you sure?' } do
       -if user.is_active
-        .text-center
-          %button.btn.btn-success{:type => "button"}
-            %span.glyphicon.glyphicon-ok-circle>
+        .center-align
+          %button.btn.green.lighten-1{:type=> "button"}
+            %span.material-icons.md-36 check_circle
       -else 
-        .text-center
-          %button.btn.btn-danger{:type => "button"}
-            %span.glyphicon.glyphicon-remove-circle>
+        .center-align
+          %button.btn.red.darken-1{:type=> "button"}
+            %span.material-icons.md-36 cancel
+

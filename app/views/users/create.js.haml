@@ -2,4 +2,4 @@
   window.location = "/companies/#{@company.id.to_s}/users"
 - else
   $("#user_form").html("#{escape_javascript(render 'user_form')}")
-  $("#user_form").modal('show')
+  $("#user_form").modal('open')

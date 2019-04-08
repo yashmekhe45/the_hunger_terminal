@@ -1,16 +1,64 @@
-.container.load
-  .alert.alert-success
-    You can order multiple menu items from a single vendor!!
-  %h3.text-center Vendor List
-  .row
+- content_for :inner_header do
+  .ht-top-section
+    %br
+    .row.no-bottom-margin
+      .container
+        .row.no-bottom-margin
+          .col.s12.m8.grey-text.darken-3-text.instruction-text
+            %span.hide-on-med-and-down#order-timer-text Time Left
+            %div.hide-on-med-and-down#order-timer
+            %span Note: There is minimum order required to be placed for some terminals.
+            %br
+            %span Order will be confirmed if the confirmation possibility turns 100% (i.e all green) 
+          .col.hide-on-med-and-down.s0.m2.todays-order.right
+            - if todays_order
+              = link_to order_path(todays_order&.id) do
+                = image_tag "hot-food.svg", class: 'order-icon'
+                = link_to "Today's Order", order_path(todays_order&.id)
+%div.shadow-top
+.row.ht-scrollable-container
+  .col.s0.m1
+  .col.s12.m11
     - @terminals.each do |terminal|
-      .col-xs-12.col-md-3
-        .card-block.terminal_box.text-center
-          %h3.card-title= terminal.name
-          %p.card-text.terminal_image= image_tag terminal.image_url(:thumb) if terminal.image?
-          %br.p= link_to 'Place Order', new_terminal_order_path(terminal.id), class: 'btn btn-info terminal'
-          .text-left.terminal.details
-            - unless min_order_reached?(terminal)
-              %h5 Pending orders' amount&emsp;: ₹ #{terminal.ordered_amount}
-              %h5 Minimum order amount&emsp; : ₹ #{terminal.min_order_amount}
-            %h5 Confirmation possibility&emsp; : #{terminal.confirmation_possibility} %
+      .col.s12.m6.l3
+        .card.white.terminal-box
+          .card-content.black-text
+            / %span.card-title
+            - if terminal.confirmation_possibility == 100
+              .row.progress
+                .col.s2.m2
+                .col.s8.m8
+                  %text.center-align.small-text.black-text Confirmation Possibility 100%
+                  .determinate{:style => "width: #{terminal.confirmation_possibility}%"}
+                .col.s2.m2
+            - else
+              .row.progress
+                .col.s2.m2
+                  %i.amount.left.black-text ₹#{terminal.ordered_amount}
+                .col.s8.m8
+                  %text.center-align.small-text.black-text Confirmation Possibility
+                  .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
+                .col.s2.m2
+                  %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
+            %p
+              %h6.center-align.black-text= terminal.name
+              .center-align
+                .thumbnail
+                  = image_tag terminal.image_url(:thumb) if terminal.image?
+                  = image_tag "enjoy_food.png" unless terminal.image?
+              .bottomFixed
+                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn"
+
+%script{:type => 'text/javascript'}
+  orderTime = "#{@end_ordering_at}"
+  today = new Date()
+  today = `${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`
+  $('#order-timer').countdown(`${today} ${orderTime}`, function(event) { 
+  $(this).html(event.strftime('%H:%M:%S'));
+  if(event.strftime('%H') > "00" || event.strftime('%M') >  "30"){
+  document.getElementById('order-timer').className = " green-text "
+  }
+  else{
+  document.getElementById('order-timer').className = " red-text " 
+  }
+  });

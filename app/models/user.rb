@@ -129,6 +129,9 @@ class User < ApplicationRecord
     end
   end
 
+  def todays_order
+    orders.find_by(date: Time.zone.today)
+  end
 
   private
 

@@ -2,21 +2,21 @@
   .row
     .col-md-3
     .col-md-6  
-      .panel.panel-success
-        .panel-heading
-          .panel-title 
+      .card
+        .card-content.terminal
+          .card-title
             -if params[:action] == 'new'
-              .h3.text-center.strong Add New Vendor
+              %h4.center-align Add New Vendor
             -else
-              .h3.text-center.strong Edit Details of #{@terminal.name}
-        .panel-body.terminal    
+              %h4.center-align Edit Details of #{@terminal.name}   
+          %hr
           .logoupload.text-center
             = f.file_field :image, onchange: "validateFiles(this);", |
               data: { max_file_size: 1.megabytes }                    |
             = f.label :remote_image_url, "Upload logo of vendor"
           .form-group
             .col-md-6  
-              = f.input :name, label: "Name", placeholder: 'Name'
+              = f.input :name, label: "Name", placeholder: 'Name', class: 'active'
             .col-md-6  
               = f.input :landline, label: "Landline", input_html: { maxlength: 11 }, placeholder: '02000000000'  
           -if params[:action] == 'new'
@@ -41,7 +41,9 @@
               = f.input :tax, label: "GST", placeholder: '10'
      
           .csvfileupload.text-center
-            = f.input :CSV_menu_file, as: :file
+            %b Upload menu CSV: 
+            = f.file_field :CSV_menu_file
+
             = link_to 'Sample Menu CSV', menu_items_download_csv_path
           .submit.text-center
             = f.button :submit, class: "btn btn-success"

@@ -12,16 +12,15 @@
  *
  *= require toastr
  *= require_tree
+ *= require material_icons
 */
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 @import "terminals";
 @import "companies";
 @import "home";
 @import "menu_items";
 @import "users";
-@import "bootstrap-datepicker";
-
+@import "materialize";
 
 body {
   -webkit-background-size: cover;
@@ -31,7 +30,7 @@ body {
   font-family: 'Open Sans',sans-serif;
   color: #2F4F4F; //#ffffff;
   font-weigpht: 400;
-  padding-top: 7%;
+  // padding-top: 7%;
   margin-bottom: 5%;
   height: 100%
 }
@@ -44,6 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+  margin-left:1%;
 }
 
 #logo {
@@ -114,18 +114,20 @@ footer {
 }
 
 .sidenav {
-   
   height: 100%;
-  width: 104px;
   position: fixed;
-  z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.sidenav.ht-admin-sidenav{
+  width: 8%;
+  background-color: #111;
+  z-index: 1;
 }
 
 .sidenav a {
@@ -141,15 +143,22 @@ footer {
     color: #f1f1f1;
 }
 
+.sidenav li > a{
+  padding-bottom: 80px;
+  color: #337ab7;
+  line-height: 20px;
+}
+
 span.gly {
   font-size: 24px;
  left: -7px;
 }
+
+
 div.icon {
  padding-top:20px;
  padding-bottom:20px;
- height: 80px;
- width: 75px;
+ // height: 80px;
  display: block;
  }
 
@@ -407,5 +416,71 @@ button.toast-close-button {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em;
+  }
+}
+
+.nav-dropdown-content{
+  min-width: 150px;
+  overflow-y:visible;
+}
+
+.nav-dropdown-content .nav-dropdown-content {
+   margin-left: 100%;
+   left: 0px !important;
+}
+
+.padding-top-100{
+  padding-top: 100px;
+}
+
+
+.padding-bottom-50{
+  padding-bottom: 50px;
+}
+
+body.inner-bg{
+  margin-bottom: 0% !important;
+}
+
+.inner-bg{
+  background: asset-url("inner-food-bg.jpg") no-repeat center center fixed;
+
+  .with-backdrop{
+    padding: 20px;
+    background-color: black;
+    opacity: 0.80;
+    // margin-bottom: 25px;
+    // margin-top: 25px;
+  }
+}
+
+table{
+  background-color: white;
+  margin: 0.5rem 0 1rem 0;
+  border-radius: 2px;
+}
+
+.hunger-title-bar{
+  z-index: 400 !important;
+
+  .ht-logo{
+    height: 70%;
+    right: -30px;
+    position: relative;
+  }
+
+  span{
+    font-size: smaller;
+    position: relative;
+    top: 19%;
+    left: -35px;
+    font-size: 10px;
+  }
+
+}
+
+.ht-multiselect{
+  .select-wrapper{
+    display: inline-block;
   }
 }

@@ -2,7 +2,7 @@
   window.location = "/terminals/#{@terminal.id.to_s}/menu_items"
 - else
   $("#menu_item_new").html("#{escape_javascript(render 'new_form')}")
-  $("#menu_item_new").modal('show')
+  $("#menu_item_new").modal('open')
   - if flash[:error].present?
     toastr.error("#{flash[:error]}")
   

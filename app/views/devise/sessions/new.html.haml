@@ -1,20 +1,17 @@
 .container.Absolute-Center.is-Responsive
   .row
-    .col-md-4
-    .col-md-4
-      .panel.panel-success
-        .panel-heading
-          .panel-title
-            %h4 Log In
-        .panel-body
-          = simple_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-horizontal') do |f| 
-            .form-inputs
-              = f.input :email, required: false, autofocus: true
-              = f.input :password, required: false 
-              = f.input :remember_me, as: :boolean if devise_mapping.rememberable? 
+    %h4.center-align Login into your account
+    .col.s12.m4.l2
+    .card.col.s12.m4.l8
+      .card-content
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-horizontal') do |f|
+          .form-inputs
+            = f.input :email, required: false, autofocus: true
+            = f.input :password, required: false
+            / = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+            %br/
 
-            .form-actions
-              = f.button :submit, "Log in" 
-        .panel-footer
-          = render "devise/shared/links" 
-    .col-md-4
+          .form-actions.center-align
+            = f.button :submit, "Log in"
+      .card-action.center-align
+        = render "devise/shared/links"

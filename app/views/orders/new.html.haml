@@ -1,48 +1,63 @@
+- content_for :inner_header do
+  .ht-top-section
+    .row
+      %h3.black-text.center-align #{@terminal.name}
+      .row.center-align
+        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text'
+      
+
 .container
-  .alert.alert-danger
-    Extra delivery charges may apply!!
-  %h3#vendorName #{@terminal.name}
-  - unless min_order_reached?(@terminal)
-    %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
-    %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
-  %ul.nav.nav-tabs
-    %li.active
-      %a{"data-toggle" => "tab", :href => "#veg"} Veg
-    %li
-      %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
-  .tab-content.col-md-7.col-sm-7
-    .tab-pane.fade.in.active#veg
-      = render "menu", obj: @veg
-    .tab-pane.fade#nonveg
-      = render "menu", obj: @nonveg
+  .row
+    / - unless min_order_reached?(@terminal)
+    /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
+    /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
+    .col.m6.s12
+      %br
+      %br
+      %br
+      / .h6.black-text.center-align
+      /   Extra delivery charges may apply!
+      %ul.tabs.menu-tabs
+        %li.tab.active.green
+          %a{"data-toggle" => "tab", :href => "#veg"} Veg
+        %li.tab.red
+          %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
+
+  .row
+    .col.m6.s12
+      .div.active#veg
+        = render "menu", obj: @veg
+      .div#nonveg
+        = render "menu", obj: @nonveg
 
 
-  .col-md-5
-    = form_tag terminal_orders_path do |f|
-      = render 'form', f: f
+    .col.m6.s12.food-cart-div
+      = form_tag terminal_orders_path do |f|
+        = render 'form', f: f
+
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }
-    .col-xs-4
-      %h4.product-name
+    .col.m6.s12
+      %h6.product-name
         %strong
           {{menu_item_name}}
         %input.hide{:type => "text", :value => "{{menu_item_id}}", name: "order[order_details_attributes][{{menu_item_id}}][menu_item_id]"}
 
-    .col-xs-6
-      .col-xs-6
+    .col.m4.s8
+      .col.m6.s12
         %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
         %h6  
           %strong
             {{quantity}}
-      .col-xs-6.text-right
+      .col.m6.s12
         %h6  
           %strong₹ 
           %strong.total
             {{total}}
-    .col-xs-2
+    .col.m2.s4
       %button.btn.btn-link.btn-s.delete_new{:type => "button"}
-        %span.glyphicon.glyphicon-remove
+        %span X
   {{/.}}
 
 %script{:type => 'text/javascript'}

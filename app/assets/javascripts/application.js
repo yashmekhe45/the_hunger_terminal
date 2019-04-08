@@ -13,14 +13,13 @@
 //= require jquery
 //= require moment
 
-//= require jquery_ujs
 //= require turbolinks
+//= require jquery_ujs
 //= require jquery_nested_form
 //= require toastr
 //= require_tree .
-//= require bootstrap-sprockets
-//= require bootstrap-datepicker
-
+//= require jquery.countdown.min.js
+//= require materialize
 
   $(document).on('turbolinks:load',function(){
     $('#fromDate, #toDate').datepicker({
@@ -29,7 +28,7 @@
 
     $("#bton").click(function(event) {
       event.preventDefault();
-      params = $.param({ from: $('#bton').parent().find('.from').val(),to: $('#bton').parent().find('.to').val()})
+      params = $.param({ from: $('.from').val(),to: $('.to').val()})
       if($('#fromDate').val() > $('#toDate').val()) 
       {
         alert("From Date must be smaller than To Date")
@@ -41,6 +40,15 @@
       } 
       
     });
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+    $('.dropdown-trigger').dropdown();
+    $('.parallax').parallax();
+    $('select').formSelect();
+    $('.tabs').tabs();
+    $('.sidenav').sidenav();
+    $('.modal').modal();
+    $('select').formSelect();
+    M.updateTextFields();
   });
 
 

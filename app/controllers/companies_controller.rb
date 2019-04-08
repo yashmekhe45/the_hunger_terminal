@@ -28,7 +28,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
    if @company.update_attributes(company_params)
       flash[:success] = "updated successfully!!"
-      redirect_to root_path
+      redirect_to company_terminals_path(params[:id])
    else
       render :get_order_details
    end

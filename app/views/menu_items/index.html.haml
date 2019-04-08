@@ -1,65 +1,70 @@
 .container
-  .h3.text-center.terminal_name Menu Items of #{@terminal.name}
-  .row
-    .searchcontainer 
-      .col-md-3
-        .pull-left
-          = form_tag import_terminal_menu_items_path, multipart: true do
-            = file_field_tag :file , accept: '.csv '
-            = submit_tag "Import CSV"
-          = link_to 'Sample Menu CSV ', menu_items_download_csv_path
-          %p
-          = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
-      .col-md-6
-        %form{action:terminal_menu_items_path}
+  .card
+    .h3.text-center.terminal_name Menu Items of #{@terminal.name}
+    .row
+      .searchcontainer 
+        .col.s12
+          .pull-left
+            = form_tag import_terminal_menu_items_path, multipart: true do
+              = file_field_tag :file , accept: '.csv '
+              = submit_tag "Import CSV"
+            = link_to 'Sample Menu CSV ', menu_items_download_csv_path
+            %p
+            = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
+  .card
+    %form{action:terminal_menu_items_path}
+      .row
+        .col.s10
           .input-group.stylish-input-group
             %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
-            %span.input-group-addon
-              %button{type:"submit"}
-                %span.glyphicon.glyphicon-search
-      .col-md-3  
-        .pull-left
-          = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true 
+        .col.s2
+          %span.input-group-addon{align:"center"}
+            %button{type:"submit"}
+              %span.material-icons.md-36 search
+  .card  
+    .div.center-align
+      %br
+      = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true
+      %br
+      %br
 
-  -unless @menu_items.empty?
-    .row
-      .col-md-2
-      .col-md-8
-        .table-responsive  
-          %table.table-hover.table-bordered{:align => "center"}
-            %thead
-              %tr
-                %th.text-center #
-                %th.text-center Name
-                %th.text-center Price
-                %th.text-center Type
-                %th.text-center Avaibility
-                %th.text-center Status
-            %tbody
-              - @menu_items.each_with_index do |menu_item, index|
+  .card
+    -unless @menu_items.empty?
+      .row
+        .col.s2
+        .col.s8
+          .table-responsive  
+            %table{:align => "center"}
+              %thead
                 %tr
-                  %td.text-center= index+1
-                  %td.text-center
-                    %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_menu_item_path(menu_item, terminal_id: params[:terminal_id]), :title => "Edit menu item details!"} #{menu_item.name}                  
-                  %td.text-center= "#{menu_item.price}/-"
-                  %td.text-center= menu_item.veg ? "Veg" : "Non Veg"
-                  %td.text-center= menu_item.available ? "Available" : "Not Available"
-                  %td.text-center
-                    =link_to menu_item_path(menu_item, terminal_id: params[:terminal_id],'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
-                      -if menu_item.available
-                        .text-center
-                          %button.btn.btn-success{:type => "button"}
-                            %span.glyphicon.glyphicon-ok-circle>
-                      -else
-                        .text-center  
-                          %button.btn.btn-danger{:type => "button"}
-                            %span.glyphicon.glyphicon-remove-circle>          
-          .text-center          
-            = paginate @menu_items
-      .col-md-2            
-  -else
-    .alert.alert-danger
-      No record is found!!
+                  %th.text-center #
+                  %th.text-center Name
+                  %th.text-center Price
+                  %th.text-center Type
+                  %th.text-center Avaibility
+                  %th.text-center Status
+              %tbody
+                - @menu_items.each_with_index do |menu_item, index|
+                  %tr
+                    %td.text-center= index+1
+                    %td.text-center
+                      %a{"data-toggle" => "tooltip", "data-remote" => "true", :href => edit_menu_item_path(menu_item, terminal_id: params[:terminal_id]), :title => "Edit menu item details!"} #{menu_item.name}                  
+                    %td.text-center= "#{menu_item.price}/-"
+                    %td.text-center= menu_item.veg ? "Veg" : "Non Veg"
+                    %td.text-center= menu_item.available ? "Available" : "Not Available"
+                    %td.text-center
+                      =link_to menu_item_path(menu_item, terminal_id: params[:terminal_id],'menu_item[available]' => is_available_menu_item?(menu_item),'page'  => params[:page]), method: :patch ,data: { confirm: 'Are you sure?' } do
+                        -if menu_item.available
+                          %button.btn.green.lighten-1{:type=> "button"}
+                            %span.material-icons.md-36 check_circle
+                        -else
+                          %button.btn.red.darken-1{:type=> "button"}
+                            %span.material-icons.md-36 cancel       
+            .center-align
+              = paginate @menu_items           
+    -else
+      .alert.alert-danger
+        No record is found!!
 
-#menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}
-#menu_item_new.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}
+  #menu_item.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}
+  #menu_item_new.modal.fade{"aria-labelledby" => "Menu Item", :role => "dialog", :tabindex => "-1"}

@@ -1,6 +1,9 @@
 .container
-  .card
-    %h3.center-align Add Extra Charges of  Terminals
+  %br
+  %br
+  .card.scroll-card
+    %br
+    %h5.center-align Add Extra Charges of  Terminals
     -grand_total = 0
     -if !@todays_terminals.empty?
       =form_tag('save_terminal_extra_charges', method: "POST", id:"terminal_extra_charges_form") do

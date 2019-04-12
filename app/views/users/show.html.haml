@@ -1,18 +1,20 @@
 = stylesheet_link_tag 'users'
-.card
+.container
   %br
-  %br
-  %h3.center-align Employee Record
-  %br
-  %br
-  %table.table-hover{:border =>3,:align=>"center",:style=>"width:60%;background-color:white;margin-left:25%"}
-    %tbody
-      %tr
-        %th Name:
-        %td= @user.name
-      %tr
-        %th Email ID:
-        %td= @user.email
-      %tr
-        %th Mobile Number
-        %td= @user.mobile_number
+  .card
+    %br
+    %br
+    %h5.center-align Employee Record
+    %br
+    %br
+    %table.table-hover{:border =>3,:align=>"center",:style=>"width:60%;background-color:white;margin-left:25%"}
+      %tbody
+        %tr
+          %th Name:
+          %td= @user.name
+        %tr
+          %th Email ID:
+          %td= @user.email
+        %tr
+          %th Mobile Number
+          %td= @user.mobile_number

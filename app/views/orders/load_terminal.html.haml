@@ -16,9 +16,10 @@
                 = image_tag "hot-food.svg", class: 'order-icon'
                 = link_to "Today's Order", order_path(todays_order&.id)
 %div.shadow-top
-.row.ht-scrollable-container
-  .col.s0.m1
-  .col.s12.m11
+
+.row
+  .col.s1.m1
+  .col.s12.m10
     - @terminals.each do |terminal|
       .col.s12.m6.l3
         .card.white.terminal-box
@@ -48,6 +49,7 @@
                   = image_tag "enjoy_food.png" unless terminal.image?
               .bottomFixed
                 = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn"
+
 
 %script{:type => 'text/javascript'}
   orderTime = "#{@end_ordering_at}"

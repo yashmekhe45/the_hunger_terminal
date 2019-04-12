@@ -1,72 +1,22 @@
 - content_for :inner_header do
-  .ht-top-section
-    .row
-      %h3.center-align.black-text My Order History
-
+  .row
+    %h5.center-align.black-text My Order History
 .container
   .row
-  .card
+  %br
+  %br
+  .card.scroll-card
     .row
-      .col.m2.s4
-      .col.m6.s12
-        %h4 Filter orders by date range :
     .row
-      .col.m2.s4
-      .col.m3.s12
-        %input{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
-      .col.m3.s12
-        %input{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
-      .col.m3.s6
+      .col.m2.s2
+      .col.m2.s2
+        %h6 Filter Order:
+      .col.m2.s2
+        %input.historydate{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}/
+      .col.m2.s2
+        %input.historydate{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}/
+      .col.m2.s2
         %button.btn.btn-info#bton{:type => "button"}Find
-    %br
-    %br
-    %br
-  .row
-    .div
-      -if @orders.empty?
-        .card
-          .alert.alert-danger.center-align
-            No record is found for this period!!
-      -else
-        -grand_total = grand_tax = grand_discount = grand_extra_charges = grand_payable =0
-        %table.responsive-table
-          %thead
-            %tr
-              %th Date
-              %th Total
-              %th Tax
-              %th Discount 
-              %th Extra Charges 
-              %th Payable 
-              %th Items(Qty)
-              %th Vendor
-          %tbody
-          -@orders.each do |order|
-            %tr
-              %td= order.date
-              %td= order.total_cost
-              - grand_total += order.total_cost
-              %td= order.tax
-              - grand_tax += order.tax
-              %td= order.discount
-              - grand_discount += order.discount
-              %td= order.extra_charges
-              -grand_extra_charges += order.extra_charges
-              %td= order.total_cost - order.discount + order.extra_charges + order.tax
-              - grand_payable += order.total_cost - order.discount + order.extra_charges + order.tax
-              %td
-                - order.order_details.each_with_index do |order_item,index|
-                  - indexplusone = index+1
-                  %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
-                  %br
-              %td= order.terminal.name
-          - if grand_total != 0
-            %tr
-              %td= 'Aggregate Amount '
-              %td= grand_total
-              %td= grand_tax
-              %td= grand_discount
-              %td= grand_extra_charges
-              %td= grand_payable
-              %td
-              %td
+    .row
+      #orderhistory
+        = render 'history_table', orders:@orders

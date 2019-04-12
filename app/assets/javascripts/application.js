@@ -26,20 +26,47 @@
       format: 'yyyy-mm-dd'
     });
 
+    $(".reportdate").on('change',function(event) {
+      event.preventDefault();
+      params = $.param({ from: $('.from').val(), to: $('.to').val()})
+      if($('#fromDate').val() > $('#toDate').val()) 
+      {
+        toastr.error("From Date must be smaller than To Date");
+        $('#fromDate').focus()
+      }
+      else
+      {
+        $.ajax({
+            type:'GET',
+            dataType:"script",
+            url:'/reports/users/history?' + params
+        });
+      }
+    });
+
+    $('#pdfdownload').click(function(event){
+      params = $.param({ from: $('.from').val(), to: $('.to').val()})
+      window.location.href = '/reports/users/history.pdf?' + params
+    })
+  
     $("#bton").click(function(event) {
       event.preventDefault();
       params = $.param({ from: $('.from').val(),to: $('.to').val()})
       if($('#fromDate').val() > $('#toDate').val()) 
       {
-        alert("From Date must be smaller than To Date")
+        toastr.error("From Date must be smaller than To Date");
         $('#fromDate').focus()
       }
       else
       {
-        window.location.href = '/order/myOrder' + '?' + params
+        $.ajax({
+          type:'GET',
+          dataType:'script',
+          url:'/order/myOrder?' + params 
+        });
       } 
-      
     });
+    
     $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
     $('.dropdown-trigger').dropdown();
     $('.parallax').parallax();

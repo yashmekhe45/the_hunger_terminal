@@ -17,6 +17,10 @@ class OrdersController < ApplicationController
     if @orders.empty?
       flash[:error] = "No order is present for this period!"
     end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def load_terminal

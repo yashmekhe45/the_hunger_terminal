@@ -10,7 +10,9 @@ td{
   font-size: large;
 }
 
-
+.historydate{
+  width: 66% !important;
+}
 .indexcontainer
 {
   margin-left: 100px;
@@ -117,11 +119,18 @@ Landline.required:after {
 {
   margin: 0 auto;
 }
+.home-background
+{
+  background-image: url(/assets/inner-food-bg-mozjpeg.jpg);
+  background-size: cover;
+}
 
 .ht-inner-section{
   .ht-middle-section{
-    background-image: url(/assets/inner-food-bg.jpg);
+    background-image: url(/assets/inner-food-bg-mozjpeg.jpg);
     background-size: cover;
+    min-height: 650px;
+    background-repeat: no-repeat;
     
     h3{
       margin-top: 0px;
@@ -172,9 +181,14 @@ Landline.required:after {
   }
 
   .ht-scrollable-container{
-    overflow: scroll;
+    overflow-y: scroll;
     height: 500px;
     width: 100%;
+  }
+  .scroll-card{
+   overflow: scroll;
+    height: 500px;
+    width: 100%; 
   }
 
   .terminal-box{

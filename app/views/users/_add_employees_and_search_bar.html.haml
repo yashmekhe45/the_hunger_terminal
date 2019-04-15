@@ -1,15 +1,14 @@
 .container
   .card
-    .row#add_employee_records
-      %h4.center-align Add Employee Records
+    .row
+      %br
+      %h5.center-align Add Employee Records
       .col.s6
         =link_to ' Add Multiple Records', import_company_users_path(@company), class: "btn btn-info modal-trigger", remote: true, "data-target" => "import_employees", "data-toggle" => "modal", method: 'POST'
       .col.s4
         = link_to 'Add Single Record', new_company_user_path(@company), class: "btn btn-success modal-trigger", remote: true, "data-target" => "user_form", "data-toggle" => "modal"
       .col.s2   
         = link_to 'Invalid Record',download_invalid_csv_company_path(@company)
-
-  .card
     .row
       .col.s2
       .col.s8

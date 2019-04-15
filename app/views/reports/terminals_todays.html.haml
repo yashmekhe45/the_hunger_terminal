@@ -1,12 +1,19 @@
 .container
-  .card
+  %br
+  %br
+  .card.scroll-card
     -if !@terminals.empty?  
-      %h3.pdf_heading.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
-      %h4.pdf_heading.text-center Date: #{ Time.current.strftime("%d %B, %Y") }
-
-      -if !pdf?(response.content_type)
-        = link_to 'last month report', history_reports_terminals_path, class: 'btn btn-info'
-        = link_to 'print',  todays_reports_terminals_path(:format => 'pdf' ), class: 'btn btn-info'
+      %h5.pdf_heading.text-center #{current_user.company.name.capitalize} Vendors' Today's Reports
+      .row
+        .col.s1
+        .col.s3
+          %h6.pdf_heading.text-center Date: #{ Time.current.strftime("%d %B, %Y") }
+        .col.s2
+        .col.s7
+          .right-align.topbtn
+            -if !pdf?(response.content_type)
+              = link_to 'last month report', history_reports_terminals_path, class: 'btn btn-info'
+              = link_to 'print',  todays_reports_terminals_path(:format => 'pdf' ), class: 'btn btn-info'
       .table-responsive
         %table.table-hover.table-bordered.terminals_report_table.pdf_table
           %tbody
@@ -31,7 +38,7 @@
               %td.align.text-center= terminal.menu_item_name
               %td.align.text-center= terminal.quantity
               -terminal_name = terminal.name
-      %h4.pdf_heading.text-center Total Order From All Terminals
+      %h5.pdf_heading.text-center Total Order From All Terminals
       -grand_total = 0        
       .table-responsive
         %table.table-hover.table-bordered.terminals_report_table.pdf_table
@@ -48,7 +55,7 @@
               %td.align.text-center= terminal.name
               %td.align.text-center= terminal.total
               -grand_total = grand_total + terminal.total
-      %h4.pdf_heading.text-center Todays Net Total = #{grand_total}/-
+      %h5.pdf_heading.text-center Todays Net Total = #{grand_total}/-
     -else
       .alert.alert-danger
         No record is found!!

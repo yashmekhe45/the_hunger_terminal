@@ -1,7 +1,9 @@
 .container
   -if !@res.empty?
-    .card.center-align
-      %h3 Vendors List
+    %br
+    %br
+    .card.scroll-card
+      %h5.center-align Vendors List
       %center
         %table
           %tbody
@@ -29,7 +31,10 @@
                   = link_to 'Cancel', confirmed ? '#' : admin_dashboard_cancel_orders_path(terminal_id: terminal.id), disabled: confirmed, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete all the orders from this vendor?'}
   -else
     .container
-      .alert.alert-danger
-        No record is found!!
+      %br
+      %br
+      .card
+        .alert.alert-danger
+          No record is found!!
   #myModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog', :tabeindex =>'-1' }
   #myForwardOrdersModal.modal.fade{'aria-labelledby' =>'Order',:role => 'dialog',:tabeindex =>'-1' }

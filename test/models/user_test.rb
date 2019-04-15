@@ -101,14 +101,15 @@ class UserTest < ActiveSupport::TestCase
     user2 = build(:user)
     user2.company_id = company_id
     user2.save!
-    report = User.employee_last_month_report(company_id, Time.now - 1.month)
+
+    report = User.employee_last_month_report(company_id,Date.today.beginning_of_month, Date.today)
     assert_equal report, []
   end
 
   test "individual employee's last month report should be generated" do
     user = create(:user) # created an user who don't have any last month report
     company_id = user.company_id
-    report = User.employee_last_month_report(company_id, user.id)
+    report = User.employee_individual_report(company_id, user.id)
     assert_equal report, []
   end
 

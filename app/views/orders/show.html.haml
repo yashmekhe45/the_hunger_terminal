@@ -1,12 +1,11 @@
 - content_for :inner_header do
-  .ht-top-section
-    .row
-      %h3.center-align.black-text Today's Order
-
+  .row
+    %h5.center-align.black-text Today's Order
 .container
   -if can? :show, @order
     .row
       .col.m6.s12
+        %br
         %table.responsive-table
           %thead
             %tr
@@ -29,6 +28,7 @@
                   %span.sub-total= order_detail.price * order_detail.quantity
 
       .col.m6.s12
+        %br
         .card
           .card-content
             %h6

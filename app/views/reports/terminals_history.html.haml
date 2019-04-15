@@ -1,7 +1,9 @@
 .container
-  .card
+  %br
+  %br
+  .card.scroll-card
     -if !@terminals.empty?  
-      %h3.center-align #{current_user.company.name.capitalize} Vendors's Reports
+      %h5.center-align #{current_user.company.name.capitalize} Vendors's Reports
       .table-responsive
         %table.table-hover.table-bordered.terminals_report_table
           %tbody

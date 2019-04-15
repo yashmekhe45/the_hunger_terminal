@@ -1,36 +1,51 @@
-%h3.center-align EMPLOYEES
-.div
-  =render "add_employees_and_search_bar"
+
 %br
+.container
+  .card
+    .row
+      %br
+      %h5.center-align Add Employee Records
+      .col.s2
+      .col.s4
+        =link_to ' Add Multiple Records', import_company_users_path(@company), class: "btn btn-info modal-trigger", remote: true, "data-target" => "import_employees", "data-toggle" => "modal", method: 'POST'
+      .col.s4
+        = link_to 'Add Single Record', new_company_user_path(@company), class: "btn btn-success modal-trigger", remote: true, "data-target" => "user_form", "data-toggle" => "modal"
+      .col.s2   
+        = link_to 'Invalid Record',download_invalid_csv_company_path(@company)
+    .row
+      .col.s2
+      .col.s8
+        = form_tag({controller: "users", action:"search"}, method: "get") do
+          = text_field_tag(:search_value)
+          = submit_tag("Search")
+          =link_to  "RESET",company_users_path(@company.id), :class=> "btn", :id => "resetButton"
 
-.card
-  %br
-  -if !@users.empty?
-    %table.table.table-fixed#employees_table
-      %tbody
-        %tr
-          %th 
-            .center-align
-              NAME
-          %th
-            .center-align
-              EMAIL ID 
-          %th 
-            .center-align
-              STATUS
-          %th 
-            .center-align
-              CHANGE STATUS
-        %tr
-          - @users.each do |user|
-            = render 'user_row', user: user
-  -else
-    .alert.alert-danger
-      No record is found!!
-  %br
+    -if !@users.empty?
+      %table.table.table-fixed#employees_table
+        %tbody
+          %tr
+            %th 
+              .center-align
+                NAME
+            %th
+              .center-align
+                EMAIL ID 
+            %th 
+              .center-align
+                STATUS
+            %th 
+              .center-align
+                CHANGE STATUS
+          %tr
+            - @users.each do |user|
+              = render 'user_row', user: user
+    -else
+      .alert.alert-danger
+        No record is found!!
+    %br
 
-.center-align
-  = paginate @users
+  .center-align
+    = paginate @users
 
 #user_form.modal.fade{"aria-labelledby" => "add_single_user_record", :role => "dialog", :tabindex => "-1"}
 #import_employees.modal.fade{"aria-labelledby" => "add_multiple_employee_records", :role => "dialog", :tabindex => "-1"}

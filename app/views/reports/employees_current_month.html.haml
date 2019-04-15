@@ -1,8 +1,10 @@
 .container
-  .card
+  %br
+  %br
+  .card.scroll-card
     -if !@users.empty?
-      %h3.center-align Employee's Reports
-      .center-align
+      %h5.center-align Employee's Reports
+      .right-align.topbtn
         = link_to 'Todays Orders', todays_reports_users_path, class: "btn btn-info"
         = link_to 'Last Month Orders', history_reports_users_path, class: "btn btn-info"
       .table-responsive

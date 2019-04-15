@@ -1,22 +1,23 @@
 .container
-  .row
-    .col.s9
-      .card
-        %form{action:company_terminals_path}
-          .input-group.stylish-input-group
-            .row
-              .col.s10
-                %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-              .col.s2
-                %br
-                %span.input-group-addon{align:"center"}
-                  %button{type:"submit"}
-                    %span.material-icons.md-36 search
-    .col.s3
-      %br
-      = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
+  %br
+  %br      
+  .card.scroll-card
+    %form{action:company_terminals_path}
+      .input-group.stylish-input-group
+        .row
+          .col.s2
+          .col.s6
+            %input.form-control{placeholder:"Search",type:"text",name:"search"}/
+          .col.s1
+            %span.input-group-addon{align:"center"}
+            %br
+            %button{type:"submit"}
+              %span.material-icons.md-36 search
+          .col.s3
+            %br
+            = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
 
-  .card
+
     -if !@terminals.empty?        
       .row
         .col-md-1

@@ -1,34 +1,50 @@
 .container
+  %br
   .card
-    .h3.text-center.terminal_name Menu Items of #{@terminal.name}
+    %br
     .row
-      .searchcontainer 
-        .col.s12
-          .pull-left
-            = form_tag import_terminal_menu_items_path, multipart: true do
-              = file_field_tag :file , accept: '.csv '
-              = submit_tag "Import CSV"
-            = link_to 'Sample Menu CSV ', menu_items_download_csv_path
-            %p
-            = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
-  .card
-    %form{action:terminal_menu_items_path}
-      .row
-        .col.s10
-          .input-group.stylish-input-group
-            %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
-        .col.s2
-          %span.input-group-addon{align:"center"}
-            %button{type:"submit"}
-              %span.material-icons.md-36 search
-  .card  
-    .div.center-align
-      %br
-      = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn btn-success", remote: true
-      %br
-      %br
+      .div.center-align
+        %h5.text-center.terminal_name Menu Items of #{@terminal.name}
+    .row
+      .col.s2
+      .col.s8
+        %hr
+      .col.s2
+    %br
+    .row
+      .searchcontainer
+        .row
+          .col.s2
+          .col.s2
+            %h6 Add menu items :
+          .col.s8
+            .pull-left
+              = simple_form_for import_terminal_menu_items_path, multipart: true do |f|
+                = f.file_field :file , accept: '.csv ', class: 'upload'
+                = f.submit "Import CSV", class: 'btn'
+            %br
+            %br
+              .col.s4.pr-8
+                = link_to 'Invalid Record CSV', terminal_download_invalid_csv_path(@terminal)
+              .col.s4
+                = link_to 'Sample CSV ', menu_items_download_csv_path
 
-  .card
+    %br
+    .row
+      .col.s2
+      .col.s4
+        = link_to 'Add Menu Item', new_terminal_menu_item_url(@terminal), class: "btn", remote: true
+      .col.s6
+        %form{action:terminal_menu_items_path}
+          .col.s6
+            .input-group.stylish-input-group
+              %input.form-control{placeholder:"Search",type:"text",name:"search_item"}/
+          .col.s2
+            %span.input-group-addon{align:"center"}
+              %button{type:"submit"}
+                %span.material-icons.md-36 search
+
+    %br
     -unless @menu_items.empty?
       .row
         .col.s2
@@ -60,8 +76,11 @@
                         -else
                           %button.btn.red.darken-1{:type=> "button"}
                             %span.material-icons.md-36 cancel       
+            %br
             .center-align
-              = paginate @menu_items           
+              = paginate @menu_items
+            %br
+            %br
     -else
       .alert.alert-danger
         No record is found!!

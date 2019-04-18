@@ -19,9 +19,9 @@
             %h6 Add menu items :
           .col.s8
             .pull-left
-              = simple_form_for import_terminal_menu_items_path, multipart: true do |f|
-                = f.file_field :file , accept: '.csv ', class: 'upload'
-                = f.submit "Import CSV", class: 'btn'
+              = form_tag import_terminal_menu_items_path, multipart: true do
+                = file_field_tag :file , accept: '.csv '
+                = submit_tag "Import CSV", class: 'btn'
             %br
             %br
               .col.s4.pr-8

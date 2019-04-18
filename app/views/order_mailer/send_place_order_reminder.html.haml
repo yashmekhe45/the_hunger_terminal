@@ -519,9 +519,14 @@
                           %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
                             %div{:style => "mso-line-height-rule: exactly;mso-text-raise: 4px;"}
                               %h3.size-20{:lang => "x-size-20", :style => "Margin-top: 0;Margin-bottom: 12px;font-style: normal;font-weight: normal;color: #F4F7A9;font-size: 17px;line-height: 26px;font-family: Avenir,sans-serif;"}
-                                %strong #{ order.terminal.name }'s Order  
+                                %strong #{ order.terminal.name }'s Order
+                            - if order.terminal.name.length < 8
+                              %br
+                            %hr
+                            %br
                           %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
-                            %div{:style => "mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;"}  
+                            =image_tag attachments["#{order.id}.jpg"].url, width: 175, height: 170
+                          
                           %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
                             %div{:style => "mso-line-height-rule: exactly;mso-text-raise: 4px;"}
                               - order.order_details.to_a.fill(nil, (order.order_details.length)...3).each do |order_item|
@@ -530,8 +535,9 @@
                                     #{order_item.menu_item_name} (#{order_item.quantity})
                                   - else
                                     %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
-                                      %div{:style => "mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;"}  
-                          %div{:style => "Margin-left: 20px;Margin-right: 20px;"}
+                                      %div{:style => "mso-line-height-rule: exactly;line-height: 5px;font-size: 1px;"}  
+                          %hr
+                          %div{:style => "Margin-left: 50px;Margin-right: 20px;"}
                             -user_token = @one_click_orders[index].token
                             = link_to "Place Order", one_click_order_url(user_token, order.id), style: "color: white; background-color: purple; border-radius: 3px; border: none; font-size: 14px;padding: 10px 20px;text-decoration: none;display: inline-block;"
                             %div{:style => "mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;"}  
@@ -551,7 +557,8 @@
                         %h2.size-22{:lang => "x-size-22", :style => "Margin-top: 16px;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #e31212;font-size: 18px;line-height: 26px;font-family: Avenir,sans-serif;text-align: left;"}
                           %span{:style => "color:#fff"} Place your order by signing in:
 
-                  %p= link_to 'Sign In',  new_user_session_url, style: 'background-color: #4CAF50; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px; font-size: 15px;'
+                  %br &emsp;
+                  = link_to 'Sign In',  new_user_session_url, style: 'background-color: #4CAF50; color: white;font-size: 10px; padding: 10px; margin: 4px; text-decoration: none; border-radius: 4px; font-size: 15px;'
               
               %div{:style => "line-height:20px;font-size:20px;"}  
               .layout.one-col.fixed-width{:style => "Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;"}

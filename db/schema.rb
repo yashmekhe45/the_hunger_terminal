@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 20190426064913) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.string  "endpoint",   null: false
+    t.string  "auth_key",   null: false
+    t.string  "p256dh_key", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+  end
+
   create_table "terminal_extra_charges", force: :cascade do |t|
     t.integer  "daily_extra_charge", default: 0
     t.datetime "created_at",                     null: false
@@ -171,6 +179,7 @@ ActiveRecord::Schema.define(version: 20190426064913) do
   add_foreign_key "orders", "companies"
   add_foreign_key "orders", "terminals"
   add_foreign_key "orders", "users"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "terminal_extra_charges", "companies"
   add_foreign_key "terminal_extra_charges", "terminals"
   add_foreign_key "terminal_reports", "terminals"

@@ -17,6 +17,7 @@ class User < ApplicationRecord
   belongs_to :company
   has_many :orders
   has_many :one_click_orders
+  has_many :subscriptions, dependent: :destroy
 
   before_validation :not_a_string , :remove_space
   before_save :titleize_name

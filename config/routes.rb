@@ -96,8 +96,8 @@ Rails.application.routes.draw do
 
   get '/OneClickOrder/:token/:order_id' => 'orders#one_click_order', as: :one_click_order
 
-
-  
+  post "/subscribe" => "subscriptions#create"
+  post "/push" => "push_notifications#create"
 
   # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'

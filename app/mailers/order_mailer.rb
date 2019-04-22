@@ -27,9 +27,14 @@ class OrderMailer < ApplicationMailer
     @employee_name = employee.name
     email = employee.email
     create_one_click_orders(employee.id)
-    mail(to:email, subject: '[The Hunger Terminal] Place your order')
+    mail(to: email, subject: '[The Hunger Terminal] Place your order')
   end
 
+  def send_new_terminal_added_mail(employee, terminal)
+    @employee_name = employee.name
+    @terminal = terminal
+    mail(to: employee.email, subject: "New Terminal #{terminal.name} has been added")
+  end
 
   private
 

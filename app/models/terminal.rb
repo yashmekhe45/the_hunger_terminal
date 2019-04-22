@@ -21,6 +21,7 @@ class Terminal < ApplicationRecord
 
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
+  after_create :inform_new_terminal_added
 
   #Pending orders' amount from a terminal without considering an order if order's id is passed
   def ordered_amount(order_id = nil)
@@ -53,6 +54,13 @@ class Terminal < ApplicationRecord
         employee.email,
         recommended_terminals
       ).deliver_now
+    end
+  end
+
+  def inform_new_terminal_added
+    employees = User.where(company_id: company_id, is_active: true)
+    employees.each do |employee|
+      InformNewTerminalAddedJob.perform_later(employee, self)
     end
   end
 

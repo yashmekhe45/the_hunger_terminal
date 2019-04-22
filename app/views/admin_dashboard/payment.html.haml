@@ -2,8 +2,17 @@
   - if !@terminals.empty?
     %br
     %br
-    .card.scroll-card
-      %h5.center-align Vendors Current Details
+    .card
+      %br
+      .row
+        .div.center-align
+          %h5.center-align Vendors Current Details
+      .row
+        .col.s2
+        .col.s8
+          %hr
+        .col.s2
+      %br
       %center
         %table.table-hover.table-bordered.terminals_running_balance_table
           %tbody
@@ -21,8 +30,10 @@
               %td.text-center= terminal.current_amount
               %td.text-center= terminal.payment_made
               %td.text-center= terminal.payable
-              %td.text-center= link_to "pay", admin_dashboard_pay_path(:terminal_id => terminal.id), remote: true 
-  -else 
+              %td.text-center= link_to "pay", admin_dashboard_pay_path(:terminal_id => terminal.id), remote: true
+      %br
+      %br
+  -else
     .container
       .alert.alert-danger
         No record is found!!

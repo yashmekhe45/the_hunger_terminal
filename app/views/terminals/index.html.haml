@@ -1,26 +1,35 @@
 .container
   %br
-  %br      
-  .card.scroll-card
+  %br
+  .card
+    %br
+    .row
+      .div.center-align
+        %h5.text-center.terminal_name Terminals
+    .row
+      .col.s2
+      .col.s8
+        %hr
+      .col.s2
     %form{action:company_terminals_path}
       .input-group.stylish-input-group
         .row
           .col.s2
-          .col.s6
+          .col.s4
             %input.form-control{placeholder:"Search",type:"text",name:"search"}/
-          .col.s1
+          .col.s2
             %span.input-group-addon{align:"center"}
             %br
             %button{type:"submit"}
               %span.material-icons.md-36 search
-          .col.s3
+          .col.s2
             %br
-            = link_to 'New Terminal', new_company_terminal_path, class: "btn btn-success"
+              = link_to 'New Terminal', new_company_terminal_path, class: "btn"
 
 
     -if !@terminals.empty?        
       .row
-        .col-md-1
+        .col-md-2
         .col-md-10
           .table-responsive
             %table.table-hover.table-bordered.terminals_listing_table
@@ -37,22 +46,22 @@
                   %td.text-center= i+1
                   %td.text-center= link_to object.name, terminal_menu_items_path(object)
                   %td.text-center= object.landline
-                  %td.text-center= object.active ? "active" : "inactive" 
-                  
+                  %td.text-center= object.active ? "Active" : "Inactive"
                   %td.text-center
                     = link_to "Edit", edit_terminal_path(object)
-              
-
                   %td.text-center
-                    =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: {confirm: 'Are you sure?'} do 
+                    =link_to terminal_path(object,'terminal[active]' =>is_inactive_object?(object)), method: :patch, data: { confirm: 'Are you sure?' } do
                       -if object.active
-                        %button.btn.green.lighten-1{:type=> "button"}
-                          %span.material-icons.md-36 check_circle
-                      -else
-                        %button.btn.red.darken-1{:type=> "button"}
+                        %button.btn.red.darken-1{ type: 'button', title: 'Make it Inactive'}
                           %span.material-icons.md-36 cancel
+                      -else
+                        %button.btn.green.lighten-1{ type: 'button', title: 'Make it Active'}
+                          %span.material-icons.md-36 check_circle
+      %br
     -else
       .alert.alert-danger
-        No record is found!!                         
+        No record is found!!
+
   .center-align
     = paginate @terminals 
+  %br

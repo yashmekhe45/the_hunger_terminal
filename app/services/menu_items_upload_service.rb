@@ -8,7 +8,7 @@ class MenuItemsUploadService
 
   def upload_records
     message_hash = Hash.new
-    if ['text/csv', 'application/octet-stream'].include?(@file.content_type)
+    if ['text/csv', 'application/octet-stream', 'application/vnd.ms-excel'].include?(@file.content_type)
       csv_file = File.open(@file.path)
       menu_items = CSV.parse( csv_file, headers: true )
       if menu_items.headers == ["name","price","veg","description","active_days"]

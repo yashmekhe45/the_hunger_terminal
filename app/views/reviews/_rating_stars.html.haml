@@ -1,0 +1,31 @@
+- i = local_assigns[:i]
+
+%input{id: "rate10#{i}", name: "ratings[#{i}]", type: 'radio', value: '10'}
+%label{for: "rate10#{i}", title: '5 stars'}
+
+%input{id: "rate9#{i}", name: "ratings[#{i}]", type: 'radio', value: '9'}
+%label.half{for: "rate9#{i}", title: '4 1/2 stars'}
+
+%input{id: "rate8#{i}", name: "ratings[#{i}]", type: 'radio', value: '8'}
+%label{for: "rate8#{i}", title: '4 stars'}
+
+%input{id: "rate7#{i}", name: "ratings[#{i}]", type: 'radio', value: '7'}
+%label.half{for: "rate7#{i}", title: '3 1/2 stars'}
+
+%input{id: "rate6#{i}", name: "ratings[#{i}]", type: 'radio', value: '6'}
+%label{for: "rate6#{i}", title: '3 stars'}
+
+%input{id: "rate5#{i}", name: "ratings[#{i}]", type: 'radio', value: '5'}
+%label.half{for: "rate5#{i}", title: '2 1/2 stars'}
+
+%input{id: "rate4#{i}", name: "ratings[#{i}]", type: 'radio', value: '4'}
+%label{for: "rate4#{i}", title: '2 stars'}
+
+%input{id: "rate3#{i}", name: "ratings[#{i}]", type: 'radio', value: '3'}
+%label.half{for: "rate3#{i}", title: '1 1/2 stars'}
+
+%input{id: "rate2#{i}", name: "ratings[#{i}]", type: 'radio', value: '2'}
+%label{for: "rate2#{i}", title: '1 star'}
+
+%input{id: "rate1#{i}", name: "ratings[#{i}]", type: 'radio', value: '1'}
+%label.half{for: "rate1#{i}", title: '1/2 star'}

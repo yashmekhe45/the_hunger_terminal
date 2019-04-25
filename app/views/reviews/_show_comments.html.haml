@@ -1,0 +1,14 @@
+.modal-dialog{role: 'document'}
+  .modal-content
+    .modal-header
+      %button.close{'data-dismiss': 'modal'}
+        %span{'aria-hidden': 'true'}X
+      %h3.modal-title What foodies think about #{@name}
+      .modal-body
+        -if @comments.empty?
+          %h4 No comments yet !!!
+        -else
+          %ol
+            - @comments.each do |comment|
+              %br
+              %li.comment #{comment}

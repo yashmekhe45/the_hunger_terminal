@@ -42,14 +42,23 @@
                 .col.s2.m2
                   %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
             %p
-              %h6.center-align.black-text= terminal.name
+              /%h6.center-align.black-text= terminal.name
+              %h6.center-align.black-text= link_to terminal.name, enter_review_path(id: terminal.id, reviewable_type: 'Terminal'), remote: true
+              .center-align
+                = render 'show_rating_stars', rating: terminal.rating
               .center-align
                 .thumbnail
                   = image_tag terminal.image_url(:thumb) if terminal.image?
                   = image_tag "enjoy_food.png" unless terminal.image?
               .bottomFixed
-                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn"
+                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn" 
 
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}
+
+- if prompt_review?(@order)
+  :javascript
+    $('#enter_review').html('#{escape_javascript(render 'reviews/enter_review')}')
+    $('#enter_review').modal('show')
 
 %script{:type => 'text/javascript'}
   orderTime = "#{@end_ordering_at}"

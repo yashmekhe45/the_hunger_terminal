@@ -35,7 +35,8 @@
               - indexplusone = index+1
               %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
               %br
-          %td= order.terminal.name
+          /%td= order.terminal.name
+          %td= link_to order.terminal.name, enter_review_path(order_id: order.id), remote: true
       - if grand_total != 0
         %tr
           %td= 'Aggregate Amount '
@@ -46,3 +47,5 @@
           %td= grand_payable
           %td
           %td
+
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}

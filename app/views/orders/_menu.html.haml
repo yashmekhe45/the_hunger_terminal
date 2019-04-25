@@ -12,9 +12,11 @@
           .row
             .col.s12
               - if menu_item.veg == true
-                %h6.product-name.nomargin.veg= menu_item.name
+                %h6.product-name.nomargin.veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
               - else
-                %h6.product-name.nomargin.non-veg= menu_item.name 
+                %h6.product-name.nomargin.non-veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
+              %span
+                = render 'show_rating_stars', rating: menu_item.rating
               %small.vendor-name= menu_item.description
               %span.hide.menu_item_id= menu_item.id
         %td

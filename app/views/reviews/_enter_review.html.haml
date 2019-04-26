@@ -1,39 +1,90 @@
+/ .modal-dialog{role: 'document'}
+/   .modal-content
+/     .modal-header
+/       %h2.modal-title.center Review order from #{@order.date}
+/       .modal-body
+/         = form_tag reviews_path, id: 'review_form', remote: true do
+/           .review_box
+/             %h4 Vendor name : #{@order.terminal.name}
+/             = fields_for 'order' do |f|
+/               = f.hidden_field :id, value: @order.id
+/             = fields_for 'reviews[]', @review do |f|
+/               %br= f.label :rating
+/               .rate
+/                 = render 'reviews/rating_stars', i: 0
+/               %br=f.label :comment
+/               = f.text_area :comment, cols: 62, rows: 3, id: 'terminal_comment'
+/               = f.hidden_field :reviewable_type, value: 'Terminal'
+/               = f.hidden_field :reviewable_id, value: @order.terminal.id
+/           :javascript
+/             $('#terminal_comment').text('');
+/           - @order.order_details.each_with_index do |detail, i|
+/             = fields_for 'reviews[]', @review do |f|
+/               .review_box
+/                 %h4 Item name : #{detail.menu_item.name}
+/                 %br= f.label :rating
+/                 .rate
+/                   = render 'reviews/rating_stars', i: i + 1
+/                 %br=f.label :comment
+/                 = f.text_area :comment, cols: 62, rows: 3, id: "comment#{i}"  
+/                 = f.hidden_field :reviewable_type, value: 'MenuItem'
+/                 = f.hidden_field :reviewable_id, value: @order.order_details[i].menu_item_id
+/             :javascript
+/               $('#comment#{i}').text('');
+/           .modal-footer#close
+/             -unless skipped?(@order)
+/               =link_to 'Not interested', skip_review_path(order: @order), remote: true, class: 'btn btn-danger'
+/             %button.btn.btn-info{'data-dismiss': 'modal', type: 'button'}Ask me later
+/             %button.btn.btn-primary{type: 'submit'}Submit
+
+
+
+
 .modal-dialog{role: 'document'}
   .modal-content
     .modal-header
-      /%h2.modal-title.center Review order from #{@order.date}
-      %h2.modal-title.center Review order from #{@order.date}
+      %h4.modal-title.center Review order from #{@order.date}
       .modal-body
         = form_tag reviews_path, id: 'review_form', remote: true do
-          .review_box
-            %h4 Vendor name : #{@order.terminal.name}
-            = fields_for 'order' do |f|
-              = f.hidden_field :id, value: @order.id
-            = fields_for 'reviews[]', @review do |f|
-              %br= f.label :rating
-              .rate
-                = render 'reviews/rating_stars', i: 0
-              %br=f.label :comment
-              = f.text_area :comment, cols: 62, rows: 3, id: 'terminal_comment'
-              = f.hidden_field :reviewable_type, value: 'Terminal'
-              = f.hidden_field :reviewable_id, value: @order.terminal.id
-          :javascript
-            $('#terminal_comment').text('');
-          - @order.order_details.each_with_index do |detail, i|
-            = fields_for 'reviews[]', @review do |f|
+          .row
+            .col.s12.m6
               .review_box
-                %h4 Item name : #{detail.menu_item.name}
-                %br= f.label :rating
-                .rate
-                  = render 'reviews/rating_stars', i: i + 1
-                %br=f.label :comment
-                = f.text_area :comment, cols: 62, rows: 3, id: "comment#{i}"  
-                = f.hidden_field :reviewable_type, value: 'MenuItem'
-                = f.hidden_field :reviewable_id, value: @order.order_details[i].menu_item_id
-            :javascript
-              $('#comment#{i}').text('');
-          .modal-footer
-            -unless skipped?(@order)
-              =link_to 'Not interested', skip_review_path(order: @order), remote: true, class: 'btn btn-danger'
-            %button.btn.btn-info{'data-dismiss': 'modal', type: 'button'}Ask me later
-            %button.btn.btn-primary{type: 'submit'}Submit
+                %h6 Vendor name : #{@order.terminal.name}
+                = fields_for 'order' do |f|
+                  = f.hidden_field :id, value: @order.id
+                = fields_for 'reviews[]', @review do |f|
+                  %br= f.label :rating
+                  .rate
+                    = render 'reviews/rating_stars', i: 0
+                  %br=f.label :comment
+                  = f.text_area :comment, id: 'terminal_comment'
+                  = f.hidden_field :reviewable_type, value: 'Terminal'
+                  = f.hidden_field :reviewable_id, value: @order.terminal.id
+              :javascript
+                $('#terminal_comment').text('');
+            .col.s12.m6
+              - @order.order_details.each_with_index do |detail, i|
+                = fields_for 'reviews[]', @review do |f|
+                  .review_box
+                    %h6 Item name : #{detail.menu_item.name}
+                    %br= f.label :rating
+                    .rate
+                      = render 'reviews/rating_stars', i: i + 1
+                    %br=f.label :comment
+                    = f.text_area :comment, id: "comment#{i}"  
+                    = f.hidden_field :reviewable_type, value: 'MenuItem'
+                    = f.hidden_field :reviewable_id, value: @order.order_details[i].menu_item_id
+                :javascript
+                  $('#comment#{i}').text('');
+            .row
+              .modal-footer
+                %center#close
+                  -unless skipped?(@order)
+                    =link_to 'Not interested', skip_review_path(order: @order), remote: true, class: 'btn btn-danger'
+                  %button.btn.btn-info{'data-dismiss': 'modal', type: 'button'}Ask me later
+                  %button.btn.btn-primary{type: 'submit'}Submit
+
+:javascript
+  $(document).on("click","#close",function() {
+    $('#enter_review').modal('close');
+  });

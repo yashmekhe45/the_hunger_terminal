@@ -42,8 +42,7 @@
                 .col.s2.m2
                   %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
             %p
-              /%h6.center-align.black-text= terminal.name
-              %h6.center-align.black-text= link_to terminal.name, enter_review_path(id: terminal.id, reviewable_type: 'Terminal'), remote: true
+              %h6.center-align.black-text= terminal.name
               .center-align
                 = render 'show_rating_stars', rating: terminal.rating
               .center-align
@@ -57,8 +56,13 @@
 
 - if prompt_review?(@order)
   :javascript
-    $('#enter_review').html('#{escape_javascript(render 'reviews/enter_review')}')
-    $('#enter_review').modal('show')
+    $('#enter_review').html('#{escape_javascript(render 'reviews/enter_review')}');
+    $('#enter_review').modal({
+      dismissible: true
+    });
+    $(document).on('turbolinks:load',function(){
+      $('#enter_review').modal('open');
+    });
 
 %script{:type => 'text/javascript'}
   orderTime = "#{@end_ordering_at}"

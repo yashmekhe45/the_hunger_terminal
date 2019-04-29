@@ -21,6 +21,15 @@ class Terminal < ApplicationRecord
 
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
+  after_commit :inform_new_terminal_added, if: proc { |record| terminal_active_status_changed?(record) }
+    # if: (Proc.new do |record|
+    #       record.previous_changes.key?(:active) &&
+    #       record.previous_changes[:active].last.eql?(true)
+    #     end)
+
+  def terminal_active_status_changed?(record)
+    record.previous_changes.key?(:active) && record.previous_changes[:active].last.eql?(true)
+  end
 
   #Pending orders' amount from a terminal without considering an order if order's id is passed
   def ordered_amount(order_id = nil)
@@ -54,6 +63,14 @@ class Terminal < ApplicationRecord
         recommended_terminals
       ).deliver_now
     end
+  end
+
+  def inform_new_terminal_added
+    return if is_notified_to_employee
+    User.where(company_id: company_id, is_active: true).find_each do |employee|
+      InformNewTerminalAddedJob.perform_later(employee, self)
+    end
+    self.update(is_notified_to_employee: true)
   end
 
   def logo_url

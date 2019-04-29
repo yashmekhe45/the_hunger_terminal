@@ -31,6 +31,7 @@ td{
 .table-responsive
 {
   margin-top: 1%;
+  overflow: auto;
 }
 
 .h3.text-center.terminal_name{
@@ -129,7 +130,7 @@ Landline.required:after {
   .ht-middle-section{
     background-image: url(/assets/inner-food-bg-mozjpeg.jpg);
     background-size: cover;
-    min-height: 650px;
+    min-height: 88vh;
     background-repeat: no-repeat;
     
     h3{

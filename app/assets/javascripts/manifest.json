@@ -1,0 +1,13 @@
+{
+  "name": "The Hunger Terminal",
+  "short_name": "Hunger Terminal",
+  "icons": [
+    {
+      "src": "images/enjoy_food.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -31,6 +31,8 @@ class Company < ApplicationRecord
       recipients.each do |recipient|
         OrderMailer.send_place_order_reminder(recipient, end_time).deliver_now
       end
+
+      PushNotification.send_to(recipients)
     end
   end
 

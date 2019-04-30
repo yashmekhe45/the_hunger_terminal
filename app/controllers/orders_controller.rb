@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
     @order = current_user.orders.last
   end
 
-  def new 
+  def new
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
     @order = Order.new(company_id: current_user.company.id)
@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
     @tax = @terminal.tax.to_i
     @rating = @terminal.reviews.average(:rating)
     @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
+    @rating = @terminal.reviews.average(:rating).to_f
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 

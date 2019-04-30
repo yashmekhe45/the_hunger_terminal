@@ -23,8 +23,13 @@ class Terminal < ApplicationRecord
   before_validation :remove_space, :active_must_accept_boolean_only
   before_save :titleize_name
   after_create :inform_new_terminal_added
+  after_commit :inform_new_terminal_added, if: proc { |record| terminal_active_status_changed?(record) }
 
-  #Ordered amount from a terminal without considering an order if order's id is passed
+  def terminal_active_status_changed?(record)
+    record.previous_changes.key?(:active) && record.previous_changes[:active].last.eql?(true)
+  end
+
+  #Pending orders' amount from a terminal without considering an order if order's id is passed
   def ordered_amount(order_id = nil)
     (
       Order
@@ -59,10 +64,11 @@ class Terminal < ApplicationRecord
   end
 
   def inform_new_terminal_added
-    employees = User.where(company_id: company_id, is_active: true)
-    employees.each do |employee|
+    return if is_notified_to_employee
+    User.where(company_id: company_id, is_active: true).find_each do |employee|
       InformNewTerminalAddedJob.perform_later(employee, self)
     end
+    self.update(is_notified_to_employee: true)
   end
 
   def logo_url

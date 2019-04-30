@@ -2,6 +2,7 @@
   .modal-content
     .modal-header
       %h4.modal-title.center Review order from #{@order.date}
+      %center ( Based on Value for Money, Quality, Taste, Packaging etc. )
       .modal-body
         = form_tag reviews_path, id: 'review_form', remote: true do
           .row

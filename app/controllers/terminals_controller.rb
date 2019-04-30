@@ -20,6 +20,7 @@ class TerminalsController < ApplicationController
 
   def create
     @terminal = @current_company.terminals.build terminal_params
+    
     if @terminal.save
       flash[:success] = "terminal created successfully" 
       unless params[:terminal][:CSV_menu_file].nil?

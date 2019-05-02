@@ -33,4 +33,5 @@
   %footer.container-fluid.text-center
     %p © Josh Software Pvt. Ltd. 
 :javascript
-  var user_signed_in = "#{user_signed_in?}"
+  var userSignedIn = "#{user_signed_in?}"
+  var vapidPublicKey = new Uint8Array(#{@base64_vapid_public})

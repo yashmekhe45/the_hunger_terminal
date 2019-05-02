@@ -10,6 +10,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "gcm_sender_id": "the hunger terminal",
+  "gcm_sender_id": "hunger-terminal-test",
   "gcm_user_visible_only": true
 }

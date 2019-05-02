@@ -12,6 +12,9 @@ $(document).on("turbolinks:load", function() {
               })
               .then(function(subscription) {
                 $.post("/subscribe", { subscription: subscription.toJSON() });
+              })
+              .catch(function(error) {
+                console.log(error.message);
               });
           });
       }

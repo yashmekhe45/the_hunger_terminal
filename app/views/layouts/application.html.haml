@@ -9,6 +9,7 @@
     = stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    %link{href: "/manifest.json", rel: "manifest"}
   %body.external-bg
     -if user_signed_in?  && current_user.role == "company_admin"
       =render "home/navbar"
@@ -31,4 +32,6 @@
       =render "layouts/backlink"
   %footer.container-fluid.text-center
     %p © Josh Software Pvt. Ltd. 
-
+:javascript
+  var userSignedIn = "#{user_signed_in?}"
+  var vapidPublicKey = new Uint8Array(#{@base64_vapid_public})

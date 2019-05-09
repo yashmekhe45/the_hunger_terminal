@@ -31,7 +31,6 @@ Corporate companies who wants to reduce food wastage can use this platform for t
 
 - Company admin will add local food vendors with their menu.
 
-
 - He/she will send invitation to all the employees of the company.
 
 - Employee who accept the invitation are only allowed to order from the website.
@@ -40,18 +39,18 @@ Corporate companies who wants to reduce food wastage can use this platform for t
 
 - A reminder will be send to registered employees who have not placed order for that day.
 
-- The monthly employee and vendor reports are generated for company admin.
+- Respective frequently ordered dishes(featured dishes) of each employee will be displayed in the reminder mail.
+
+- Employee can place his/her order just by clicking the featured dish.
 
 - Employee can check his/her order history.
 
--  Employee can place his/her order just by clicking the featured dish.
+- The monthly employee and vendor reports are generated for company admin.
 
 # Upcoming features
 
--  Respective frequently ordered dishes(featured dishes) of each employee will be displayed in the reminder mail.
+- Employee can Rate & Review to a particular vendor, menu item.
 
--  Employee can rate to a particular vendor, menu item.
+- Employee can set their preferences viz. Veg or Nonveg, Spices.
 
-- Employee can set their preferences: Veg or Nonveg.
-
-- Employee will be able to place orders from multiple vendors in a day
+- Employee will be able to place orders from multiple vendors in a day.

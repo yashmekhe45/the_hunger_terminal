@@ -21,3 +21,5 @@
 /config/database.yml
 /coverage
 .env
+.env.development
+.env.staging

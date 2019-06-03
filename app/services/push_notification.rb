@@ -8,6 +8,7 @@ class PushNotification
         endpoint: subscription.endpoint,
         p256dh:   subscription.p256dh_key,
         auth:     subscription.auth_key,
+        api_key:  ENV['FIREBASE_API_KEY'],
         vapid: {
           subject:     'mailto:hr@joshsoftware.com',
           public_key:  ENV['VAPID_PUBLIC_KEY'],

@@ -3,24 +3,18 @@
   -if pdf?(response.content_type)
     %h2.pdf_heading.text-center Josh Software Private Limited
   .card.scroll-card
-    -if !@users.empty?
-      %h5.pdf_heading.center-align Employee's Reports
-      .row
-        .col.s2
-        .col.s2
-          %h6.center-align Date: 
-        .col.s2
-          %input.reportdate{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}
-        .col.s2
-          %input.reportdate{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}
-        .col.s2
-          -if !pdf?(response.content_type)
-            %btn.btn.btn-success#pdfdownload Download
-      .row
-        #order_report  
-          = render 'monthly_reports', users: @users
-    -else
-      .alert.alert-danger
-        .card
-          No record is found!!
-        
+    %h5.pdf_heading.center-align Employee's Reports
+    .row
+      .col.s2
+      .col.s2
+        %h6.center-align Date: 
+      .col.s2
+        %input.reportdate{:type => "text", :placeholder => "From Date", :class => "from datepicker", :value => @from_date, :id =>"fromDate"}
+      .col.s2
+        %input.reportdate{:type => "text", :class => "to datepicker", :placeholder => "To Date", :value => @to_date, :id =>"toDate"}
+      .col.s2
+        -if !pdf?(response.content_type)
+          %btn.btn.btn-success#pdfdownload Download
+    .row
+      #order_report  
+        = render 'monthly_reports', users: @users

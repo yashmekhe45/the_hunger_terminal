@@ -1,8 +1,8 @@
 class PushNotification
-  def self.send_to(users)
+  def self.send_to(user_ids)
     expired_subscription_ids = []
 
-    Subscription.where(user_id: users).each do |subscription|
+    Subscription.where(user_id: user_ids).each do |subscription|
       webpush_params = {
         message:  WEB_NOTIFICATION_MSG,
         endpoint: subscription.endpoint,

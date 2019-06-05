@@ -32,7 +32,7 @@ class Company < ApplicationRecord
         OrderMailer.send_place_order_reminder(recipient, end_time).deliver_now
       end
 
-      PushNotification.send_to(recipients)
+      PushNotification.send_to(recipients.pluck(:id))
     end
   end
 

@@ -1,13 +1,14 @@
 class PushNotification
-  def self.send_to(users)
+  def self.send_to(user_ids)
     expired_subscription_ids = []
 
-    Subscription.where(user_id: users).each do |subscription|
+    Subscription.where(user_id: user_ids).each do |subscription|
       webpush_params = {
         message:  WEB_NOTIFICATION_MSG,
         endpoint: subscription.endpoint,
         p256dh:   subscription.p256dh_key,
         auth:     subscription.auth_key,
+        api_key:  ENV['FIREBASE_API_KEY'],
         vapid: {
           subject:     'mailto:hr@joshsoftware.com',
           public_key:  ENV['VAPID_PUBLIC_KEY'],

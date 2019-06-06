@@ -16,6 +16,7 @@ class Ability
       cannot :employees_current_month, :report_management
       cannot :terminals_todays , :report_management
       cannot :payment, :payment_management
+      can :destroy, Review, reviewer_id: user.id
     end
 
     if user.role == "company_admin"
@@ -39,7 +40,8 @@ class Ability
       can :terminals_history , :report_management
       can :terminals_todays , :report_management
       can :order_details, :report_management
-      can :payment, :payment_management 
+      can :payment, :payment_management
+      can :destroy, Review, reviewer_id: user.id 
     end
 
     #

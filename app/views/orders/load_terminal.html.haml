@@ -52,9 +52,8 @@
               .bottomFixed
                 = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn" 
 
-#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}
-
-- if prompt_review?(@order)
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1', "data-backdrop" => 'false'}
+- if @order.present? && @order.ask_for_review?
   :javascript
     $('#enter_review').html('#{escape_javascript(render 'reviews/enter_review')}');
     $('#enter_review').modal({

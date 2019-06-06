@@ -17,7 +17,7 @@
 }
 // Hide radio button
 .rate > input {
-  display: none;
+  opacity: 0;  
 }
 // Order correctly by floating highest to the right
 .rate > label {
@@ -65,4 +65,35 @@ input:checked ~ label:hover ~ label,
 .showing_stars
 {
   color: orange;
+}
+.name_color{
+  color: blue;
+}
+.delete_btn{
+  color: red;
+}
+.date_color{
+  color: lightblue;
+  font-size: 12px;
+}
+.bold_txt{
+  font-weight: bold;
+}
+.li_style{
+ list-style-type: none;
+}
+.icon_color{
+  color: red;
+  text-shadow: 1px 2px 4px orange;
+}
+.delete_icon{
+  font-size: 1.5rem;
+}
+.comment_font{
+  font-size: 13px;
+  position: relative;
+  top: -4px;
+}
+.comment_italic{
+  font-style: italic;
 }

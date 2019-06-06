@@ -13,10 +13,20 @@
             .col.s12
               - if menu_item.veg == true
                 %h6.product-name.nomargin.veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
+                %span
+                  = render 'show_rating_stars', rating: menu_item.rating
+                %span
+                  = link_to show_comments_path(item_id: menu_item.id), remote: true do
+                    %i.material-icons{class: 'tiny comment',"aria-label" => "Add Reviews",}comment
+                    %i.comment_font Reviews(#{menu_item.reviews.count})
               - else
                 %h6.product-name.nomargin.non-veg=link_to menu_item.name, show_comments_path(item_id: menu_item.id), remote: true
-              %span
-                = render 'show_rating_stars', rating: menu_item.rating
+                %span
+                  = render 'show_rating_stars', rating: menu_item.rating
+                %span
+                  = link_to show_comments_path(item_id: menu_item.id), remote: true do
+                    %i.material-icons{class: 'tiny comment',"aria-label" => "Add Reviews",}comment
+                    %i.comment_font Reviews(#{menu_item.reviews.count})
               %small.vendor-name= menu_item.description
               %span.hide.menu_item_id= menu_item.id
         %td

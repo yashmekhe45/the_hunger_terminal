@@ -5,7 +5,7 @@
       .center
         = render 'show_rating_stars', rating: @rating
       .center-align
-        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text'
+        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text', data: { turbolinks: false }
 
 .container
   .row

@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   get 'review/enter_review' => 'reviews#enter_review' ,:as => 'enter_review'
   get 'review/comments' => 'reviews#show_comments' ,:as => 'show_comments'
   get 'review/skip_review' => 'reviews#skip_review' ,:as => 'skip_review'
-  resource :reviews, only: [:create]
+  get 'review/previous_review' => 'reviews#previous_review' ,:as => 'previous_review'
+  resource :reviews, only: [:create,:destroy,:edit]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users, :skip => [:registration],  controllers: { confirmations: 'confirmation' }
   as :user do

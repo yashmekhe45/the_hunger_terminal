@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
 
+before_action :find_menu_item_with_reviews, only:[:show_comments, :destroy]
+
   def new
     @review = Review.new
   end
@@ -11,9 +13,8 @@ class ReviewsController < ApplicationController
       @review[:reviewer_id] = current_user.id
       @review.save
     end
-    (order = Order.find(params[:order][:id])).update(reviewed: true)
     respond_to do |format|
-      format.js { @item_id = order.id }
+      format.js
     end
   end
 
@@ -27,9 +28,14 @@ class ReviewsController < ApplicationController
   end
 
   def show_comments
-    item = MenuItem.find(params[:item_id])
-    @name = item.name
-    @comments = item.reviews.where.not(comment: '').pluck(:comment)
+  end
+
+  def destroy
+    review = Review.find(params[:id])
+    review.destroy 
+    respond_to do |format|
+      format.js
+    end 
   end
 
   private
@@ -37,10 +43,15 @@ class ReviewsController < ApplicationController
   def review_params
     if params[:ratings]
       params[:reviews].each_with_index do |review, index|
+        index += 1 if params[:ratings]["#{index}"].nil? 
         review[:rating] = params[:ratings]["#{index}"]
       end
     end
     params.permit(reviews: [:rating, :comment, :reviewable_type, :reviewable_id, :company_id])
   end
 
+  def find_menu_item_with_reviews
+    @item = MenuItem.find(params[:item_id])
+    @reviews = @item.reviews.order('created_at DESC')
+  end
 end

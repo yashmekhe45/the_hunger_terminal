@@ -21,3 +21,4 @@
 /config/database.yml
 /coverage
 .env
+.env.development

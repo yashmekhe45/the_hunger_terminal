@@ -1,4 +1,5 @@
 class Review < ApplicationRecord
-  belongs_to :reviewer, class_name: :user
+  validates :comment, presence: true
+  belongs_to :reviewer, class_name: 'User'
   belongs_to :reviewable, polymorphic: true
 end

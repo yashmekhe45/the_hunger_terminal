@@ -88,6 +88,28 @@ class Order < ApplicationRecord
     self.one_click_orders.create(user_id: "#{employee_id}")
   end
 
+  def has_terminal_review?
+    return true unless Review.exists?(reviewer_id: self.user_id, reviewable_type: "Terminal", reviewable_id: self.terminal_id)
+  end
+
+  def has_menu_item_review?(detail)
+    return true unless Review.exists?(reviewer_id: self.user_id, reviewable_type: "MenuItem", reviewable_id: detail.menu_item_id)
+  end
+
+  def ask_for_review?
+    return false if self.created_at.today?   
+    has_order_reviewed_or_not?
+  end
+
+  def has_order_reviewed_or_not?
+    return false if self.nil? || self.skipped_review == true
+    return true  if has_terminal_review?
+    reviews_menu_item_flags = self.order_details.collect do |detail|
+      has_menu_item_review?(detail) ? true : false
+    end
+    reviews_menu_item_flags.include?(true)
+  end
+
   private
 
     def valid_date?

@@ -5,7 +5,7 @@
         .col.s12.m10
           %h5.modal-title.name_color.center-align What foodies think about #{@item.name}
           %span.center-align
-            = render 'orders/show_rating_stars', rating: rating(@item)
+            = render 'orders/show_rating_stars', rating: @item.avg_rating
         .col.s12.m2
           %button.close.modal-close{"aria-label" => "Close", "data-dismiss": "modal", :type => "button"}
             %span{'aria-hidden': 'true'}X

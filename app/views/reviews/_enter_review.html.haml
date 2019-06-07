@@ -6,7 +6,7 @@
       .modal-body
         = form_tag reviews_path, id: 'review_form', remote: true do
           .row
-            - if @order.has_terminal_review?
+            - unless @order.terminal.is_reviewed?(@order.user_id)
               .col.s12.m6
                 .review_box
                   %h6 Vendor: #{@order.terminal.name}
@@ -23,7 +23,7 @@
                 :javascript
                   $('#terminal_comment').text('');
             - @order.order_details.includes(:menu_item).each_with_index do |detail, i|
-              - if @order.has_menu_item_review?(detail)
+              - unless detail.menu_item.is_reviewed?(@order.user_id)
                 = fields_for 'reviews[]', @review do |f|
                   .col.s12.m6
                     .review_box
@@ -41,7 +41,6 @@
             .modal-footer
               %center
                 -unless skipped?(@order)
-                  =link_to 'Not interested', skip_review_path(order: @order), remote: true, id: 'close', class: 'btn waves-effect waves-light red lighten-2'
+                  =link_to 'Not interested', skip_review_path(order: @order), remote: true, id: 'close', class: 'btn waves-effect waves-light red lighten-2 modal-close'
                 %button.btn.btn-info.modal-close{'data-dismiss': 'modal', type: 'button'}Ask me later
                 %button.btn.btn-primary{type: 'submit'}Submit
-    

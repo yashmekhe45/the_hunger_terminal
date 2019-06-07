@@ -2,10 +2,6 @@ class ReviewsController < ApplicationController
 
 before_action :find_menu_item_with_reviews, only:[:show_comments, :destroy]
 
-  def new
-    @review = Review.new
-  end
-
   def create
     review_params[:reviews].each do |review_param|
       @review = Review.new(review_param)
@@ -13,6 +9,9 @@ before_action :find_menu_item_with_reviews, only:[:show_comments, :destroy]
       @review[:reviewer_id] = current_user.id
       @review.save
     end
+    from_date = 7.days.ago.strftime('%Y-%m-%d')
+    to_date = Date.today.strftime('%Y-%m-%d')
+    @orders = current_user.orders.includes(:order_details).includes(:terminal).where(status: "confirmed", date: Date.parse(from_date)..Date.parse(to_date)).order(date: :desc)
     respond_to do |format|
       format.js
     end

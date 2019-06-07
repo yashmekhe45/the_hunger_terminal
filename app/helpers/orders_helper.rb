@@ -17,10 +17,6 @@ module OrdersHelper
     terminal.min_order_amount <= terminal.ordered_amount(order_id)
   end
 
-  def rating(item)
-    item.reviews.average(:rating)
-  end
-
   def skipped?(order)
     order.skipped_review
   end

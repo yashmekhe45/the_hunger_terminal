@@ -13,6 +13,14 @@ class MenuItem < ApplicationRecord
   before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only, :remove_space
   before_save :titleize_name
 
+  def is_reviewed?(user_id)
+    Review.exists?(reviewer_id:user_id,reviewable_type:"MenuItem",reviewable_id:self.id)
+  end
+
+  def avg_rating
+    reviews.average(:rating)
+  end
+  
   protected
 
   def available_must_accept_boolean_only

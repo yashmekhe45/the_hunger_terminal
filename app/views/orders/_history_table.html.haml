@@ -38,7 +38,7 @@
               %br
           /%td= order.terminal.name
           %td= order.terminal.name
-          - if order.has_order_reviewed_or_not?
+          - if order.is_order_reviewed?
             %td 
               = link_to  enter_review_path(order_id: order.id), remote: true do
                 %i.material-icons{class: 'small rate_review',"aria-label" => "Add Reviews",}rate_review

@@ -3,7 +3,7 @@
     .row
       %h3.black-text.center-align #{@terminal.name}
       .center
-        = render 'show_rating_stars', rating: @rating
+        = render 'show_rating_stars', rating: @avg_rating
       .center-align
         = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text', data: { turbolinks: false }
 

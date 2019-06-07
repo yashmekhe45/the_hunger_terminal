@@ -203,4 +203,15 @@ class TerminalTest < ActiveSupport::TestCase
     assert_equal 124, @terminal.ordered_amount(order_2.id)
   end
 
+  test "return true if terminal review present" do
+    order_obj = create(:order)
+    review = create(:review)
+    Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "Terminal",reviewable_id: order_obj.terminal_id)
+    assert_equal(order_obj.terminal.is_reviewed?(order_obj.user_id), true)
+  end
+
+  test "return false if terminal review not present" do
+    order_obj = create(:order)
+    assert_equal(order_obj.terminal.is_reviewed?(order_obj.user_id),false)
+  end
 end

@@ -76,6 +76,10 @@ class Terminal < ApplicationRecord
     ImageUploader.default_url
   end
 
+  def is_reviewed?(user_id)
+    Review.exists?(reviewer_id: user_id, reviewable_type: "Terminal", reviewable_id: self.id)
+  end
+
   private
 
   def remove_space

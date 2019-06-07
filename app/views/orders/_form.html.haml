@@ -25,7 +25,7 @@
         %strong ₹
         %strong#grand_total 0
       %input.hide.form-control.input-sm#order_total_cost{:type => "text", :value => "0", name: "order[total_cost]"}
-      %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal_id, name: "order[terminal_id]"}
+      %input.hide.form-control.input-sm#order_terminal_id{:type => "text", :value => @terminal.id, name: "order[terminal_id]"}
     .card-action.right-align
       #place_order
         %button.right-align.btn.place_order{:type => "submit"}

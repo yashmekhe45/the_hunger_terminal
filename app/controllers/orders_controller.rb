@@ -39,13 +39,11 @@ class OrdersController < ApplicationController
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
     @order = Order.new(company_id: current_user.company.id)
-    @terminal_id = params[:terminal_id]
-    @veg = Order.veg_items(@terminal_id)
-    @nonveg = Order.nonveg_items(@terminal_id)
+    @veg = Order.veg_items(@terminal.id)
+    @nonveg = Order.nonveg_items(@terminal.id)
     @tax = @terminal.tax.to_i
-    @rating = @terminal.reviews.average(:rating)
     @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
-    @rating = @terminal.reviews.average(:rating).to_f
+    @avg_rating = @terminal.reviews.average(:rating).to_f
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
@@ -73,7 +71,6 @@ class OrdersController < ApplicationController
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus - order_menus
     @terminal_id = @terminal.id
-    @rating = @terminal.reviews.average(:rating)
     @menu_items = Order.unordered_items(@terminal_id, unique_item) unless unique_item.empty?
     add_breadcrumb "Edit Order"
   end

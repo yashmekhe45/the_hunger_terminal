@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190426064913) do
+ActiveRecord::Schema.define(version: 20190524115213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,16 +82,31 @@ ActiveRecord::Schema.define(version: 20190426064913) do
     t.integer  "company_id"
     t.date     "date"
     t.integer  "total_cost"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "terminal_id"
-    t.string   "status",        default: "pending"
+    t.string   "status",         default: "pending"
     t.float    "discount"
-    t.integer  "extra_charges", default: 0
-    t.float    "tax",           default: 0.0
+    t.integer  "extra_charges",  default: 0
+    t.float    "tax",            default: 0.0
+    t.boolean  "reviewed"
+    t.boolean  "skipped_review"
     t.index ["company_id"], name: "index_orders_on_company_id", using: :btree
     t.index ["terminal_id"], name: "index_orders_on_terminal_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text     "comment"
+    t.float    "rating"
+    t.integer  "company_id"
+    t.integer  "reviewer_id"
+    t.string   "reviewable_type"
+    t.integer  "reviewable_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id", using: :btree
+    t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
   end
 
   create_table "subscriptions", force: :cascade do |t|

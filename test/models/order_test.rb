@@ -161,4 +161,30 @@ class OrderTest < ActiveSupport::TestCase
   test "order should have company" do
   end
 
+  test "should return nil if terminal review present" do
+    order_obj = create(:order)
+    review = create(:review)
+    Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "Terminal",reviewable_id: order_obj.terminal_id)
+    assert_equal(order_obj.has_terminal_review?, nil)
+  end
+
+  test "return true if order review is present" do
+    order_obj = create(:order)
+    review = create(:review)
+    Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "Terminal",reviewable_id: order_obj.terminal_id)
+    assert_equal(order_obj.is_order_reviewed?, true)
+  end
+
+  test "does not ask for review if order is created at today" do
+    order_obj = create(:order)
+    assert_not order_obj.ask_for_review?
+  end
+
+  test "ask for review if order is previous and order has not review" do
+    order_obj = create(:order)
+    review = create(:review)
+    order_obj.update(created_at: Date.today.prev_day)
+    Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "Terminal",reviewable_id: order_obj.terminal_id)
+    assert_equal(order_obj.ask_for_review?, true)
+  end
 end

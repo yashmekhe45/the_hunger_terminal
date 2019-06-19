@@ -61,7 +61,6 @@
     .col.m6.s12
       = simple_form_for @order, url: order_path, html: { method: :patch, class: 'form-horizontal' } do |f|
         = render 'form', f: f
-
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}
   .row{"data-menu-item-id": "{{menu_item_id}}" }
@@ -78,7 +77,6 @@
       / %h4
       /   %small
       /     {{vendor_name}}
-
     .col.m4.s8
       .col.m6.s12
         %input.hide.form-control.input-sm#order_detail_qty{:type => "text", :value => "{{quantity}}", name: "order[order_details_attributes][{{menu_item_id}}][quantity]"}
@@ -95,12 +93,8 @@
         %span X
       / %a.glyphicon.glyphicon-trash.delete{ :"data-confirm" => "Are You Sure?", :"data-remote" => "true", :rel => "nofollow", :"data-method" => "delete", :href => "/order_details/{{id}}"}
   {{/.}} 
-
-
 %script{:type => 'text/javascript'}
   subsidy = #{@subsidy};
   tax = #{@tax};
   order_details = #{raw @order.order_details.to_json};
   load_orders_data(order_details) 
-
-

@@ -2,9 +2,10 @@
   .ht-top-section
     .row
       %h3.black-text.center-align #{@terminal.name}
-      .row.center-align
-        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text'
-      
+      .center
+        = render 'show_rating_stars', rating: @avg_rating
+      .center-align
+        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text', data: { turbolinks: false }
 
 .container
   .row
@@ -34,6 +35,8 @@
     .col.m6.s12.food-cart-div
       = form_tag terminal_orders_path do |f|
         = render 'form', f: f
+
+#show_comments.modal.fade{'aria-labelledby': 'Show Comments', role: 'dialog', tabindex: '-1'}
 
 %script#order_detail_template{:type => 'text/html'}
   {{#.}}

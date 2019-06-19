@@ -16,6 +16,7 @@
           %th Payable 
           %th Items(Qty)
           %th Vendor
+          %th comments & Ratings
       %tbody
       -orders.each do |order|
         %tr
@@ -35,7 +36,12 @@
               - indexplusone = index+1
               %span #{indexplusone}. #{order_item.menu_item_name}(#{order_item.quantity})
               %br
+          /%td= order.terminal.name
           %td= order.terminal.name
+          - if order.is_order_reviewed?
+            %td 
+              = link_to  enter_review_path(order_id: order.id), remote: true do
+                %i.material-icons{class: 'small rate_review',"aria-label" => "Add Reviews",}rate_review
       - if grand_total != 0
         %tr
           %td= 'Aggregate Amount '
@@ -46,3 +52,4 @@
           %td= grand_payable
           %td
           %td
+#history_feedback.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1'}

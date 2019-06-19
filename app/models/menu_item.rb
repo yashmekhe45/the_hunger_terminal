@@ -7,10 +7,19 @@ class MenuItem < ApplicationRecord
   validates :name, uniqueness: {scope: :terminal_id,  case_sensitive: false}
 
   has_many :order_details
+  has_many :reviews, as: :reviewable
   belongs_to :terminal
 
   before_validation :available_must_accept_boolean_only, :veg_must_accept_boolean_only, :remove_space
   before_save :titleize_name
+
+  def is_reviewed?(user_id)
+    Review.exists?(reviewer_id:user_id,reviewable_type:"MenuItem",reviewable_id:self.id)
+  end
+
+  def avg_rating
+    reviews.average(:rating)
+  end
   
   protected
 

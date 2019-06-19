@@ -87,7 +87,21 @@ class Order < ApplicationRecord
   def create_one_click_order(employee_id)
     self.one_click_orders.create(user_id: "#{employee_id}")
   end
-  
+
+  def ask_for_review?
+    return false if self.created_at.today?   
+    is_order_reviewed?
+  end
+
+  def is_order_reviewed?
+    return false if skipped_review == true
+    return true  unless  terminal.is_reviewed?(user_id)
+    reviews_menu_item_flags = order_details.includes(:menu_item).collect do |detail|
+      detail.menu_item.is_reviewed?(user_id) ? true : false
+    end
+    reviews_menu_item_flags.include?(false)
+  end
+
   private
 
     def valid_date?
@@ -149,6 +163,29 @@ class Order < ApplicationRecord
         total_cost = 0.0
       end
       self.discount = [subsidy, (subsidy*total_cost)/100].min
-    end 
+    end
+
+    def self.veg_items(terminal_id)
+      menu_items(terminal_id).where(veg: true)
+    end
+
+    def self.nonveg_items(terminal_id)
+      menu_items(terminal_id).where(veg: false)
+    end
+
+    def self.unordered_items(terminal_id, unique_item)
+      menu_items(terminal_id).where(id: unique_item)
+    end
+
+    def self.menu_items(terminal_id)
+      MenuItem.where(terminal_id: terminal_id, available: true)
+              .where("active_days @> ARRAY[?]::varchar[]",
+                     [Time.zone.now.wday.to_s])
+              .select(:id, :name, :description, :price,
+                      :veg, 'avg(reviews.rating) as rating')
+              .left_outer_joins(:reviews)
+              .group(:id)
+              .order('rating desc nulls last')
+    end
+
 end
- 

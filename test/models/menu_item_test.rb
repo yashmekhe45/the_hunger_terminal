@@ -65,4 +65,22 @@ class MenuItemTest < ActiveSupport::TestCase
   test "menu item has many order_details" do
   end
 
+  test "return true if menu_item review present" do
+    order_obj = create(:order)
+    review = create(:review)
+    order_obj.order_details.each do |detail|
+      Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "MenuItem",reviewable_id: detail.menu_item_id)
+      assert_equal(detail.menu_item.is_reviewed?(order_obj.user_id), true)
+    end
+  end
+
+  test "return false if menu_item review not present" do
+    order_obj = create(:order)
+    review = create(:review)
+    order_obj.order_details.each do |detail|
+      assert_equal(detail.menu_item.is_reviewed?(order_obj.user_id), false)
+    end
+  end
+
+
 end

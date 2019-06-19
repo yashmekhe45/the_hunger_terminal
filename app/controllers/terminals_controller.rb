@@ -15,9 +15,9 @@ class TerminalsController < ApplicationController
 
   def new
     @terminal = @current_company.terminals.build
-    @terminal.menu_items.build  
+    @terminal.menu_items.build
   end
-  
+
   def create
     @terminal = @current_company.terminals.build terminal_params
     

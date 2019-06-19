@@ -25,21 +25,29 @@ class OrdersController < ApplicationController
 
   def load_terminal
     @terminals = Terminal.where(active: true, company: current_user.company)
+                         .select(:id, :name, :min_order_amount,
+                                 :tax, 'avg(reviews.rating) as rating')
+                         .left_outer_joins(:reviews)
+                         .group(:id)
+                         .order('rating desc nulls last')
     @end_ordering_at = current_user.company.end_ordering_at.strftime('%H:%M:%S')
+    @review = Review.new
+    @order = current_user.orders.last
   end
 
-  def new 
+  def new
     @terminal = Terminal.find(params[:terminal_id])
     @subsidy = current_user.company.subsidy
     @order = Order.new(company_id: current_user.company.id)
-    @terminal_id = params[:terminal_id]
-    @veg = get_veg_menu_items
-    @nonveg = get_nonveg_menu_items
+    @veg = Order.veg_items(@terminal.id)
+    @nonveg = Order.nonveg_items(@terminal.id)
     @tax = @terminal.tax.to_i
+    @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
+    @avg_rating = @terminal.reviews.average(:rating).to_f
     add_breadcrumb @terminal.name, new_terminal_order_path
   end
 
-  def create                         
+  def create
     @order = Order.new(order_params)
     load_order_detail
     if @order.save
@@ -58,14 +66,12 @@ class OrdersController < ApplicationController
   def edit
     @subsidy = current_user.company.subsidy
     @tax = @terminal.tax.to_i
-    @order_details = @order.order_details.all.includes(:menu_item) 
+    @order_details = @order.order_details.includes(:menu_item)
     order_menus = @order.order_details.pluck(:menu_item_id)
     terminal_menus = @terminal.menu_items.pluck(:id)
     unique_item =  terminal_menus - order_menus
     @terminal_id = @terminal.id
-    if !unique_item.empty?
-      @menu_items = MenuItem.where(terminal_id: @terminal.id).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where(available: true).where(:id => unique_item)
-    end
+    @menu_items = Order.unordered_items(@terminal_id, unique_item) unless unique_item.empty?
     add_breadcrumb "Edit Order"
   end
 
@@ -126,14 +132,6 @@ class OrdersController < ApplicationController
         flash[:error] = "You are not authorized to access it!!"
         redirect_to root_path
       end
-    end
-
-    def get_veg_menu_items
-      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,true)
-    end
-
-    def get_nonveg_menu_items
-      return MenuItem.where(terminal_id: params[:terminal_id]).where("active_days @> ARRAY[?]::varchar[]",[Time.zone.now.wday.to_s]).where("available = ? AND veg = ?",true,false)
     end
 
 end

@@ -44,12 +44,24 @@
             %p
               %h6.center-align.black-text= terminal.name
               .center-align
+                = render 'show_rating_stars', rating: terminal.rating
+              .center-align
                 .thumbnail
                   = image_tag terminal.image_url(:thumb) if terminal.image?
                   = image_tag "enjoy_food.png" unless terminal.image?
               .bottomFixed
-                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn"
+                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn" 
 
+#enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1', "data-backdrop" => 'false'}
+- if @order.present? && @order.ask_for_review?
+  :javascript
+    $('#enter_review').html('#{escape_javascript(render 'reviews/enter_review')}');
+    $('#enter_review').modal({
+      dismissible: true
+    });
+    $(document).on('turbolinks:load',function(){
+      $('#enter_review').modal('open');
+    });
 
 %script{:type => 'text/javascript'}
   orderTime = "#{@end_ordering_at}"

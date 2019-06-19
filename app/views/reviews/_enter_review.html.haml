@@ -1,0 +1,46 @@
+.modal-dialog{role: 'document'}
+  .modal-content
+    .modal-header
+      %h5.modal-title.center Please review your last order 
+      %center ( Based on Value for Money, Quality, Taste, Packaging etc. )
+      .modal-body
+        = form_tag reviews_path, id: 'review_form', remote: true do
+          .row
+            - unless @order.terminal.is_reviewed?(@order.user_id)
+              .col.s12.m6
+                .review_box
+                  %h6 Vendor: #{@order.terminal.name}
+                  = fields_for 'order' do |f|
+                    = f.hidden_field :id, value: @order.id
+                  = fields_for 'reviews[]', @review do |f|
+                    %br= f.label :rating
+                    .rate
+                      = render 'reviews/rating_stars', i: 0
+                    %br=f.label :comment
+                    = f.text_area :comment, id: 'terminal_comment', required: true
+                    = f.hidden_field :reviewable_type, value: 'Terminal'
+                    = f.hidden_field :reviewable_id, value: @order.terminal.id
+                :javascript
+                  $('#terminal_comment').text('');
+            - @order.order_details.includes(:menu_item).each_with_index do |detail, i|
+              - unless detail.menu_item.is_reviewed?(@order.user_id)
+                = fields_for 'reviews[]', @review do |f|
+                  .col.s12.m6
+                    .review_box
+                      %h6 Dish: #{detail.menu_item.name}
+                      %br= f.label :rating
+                      .rate
+                        = render 'reviews/rating_stars', i: i + 1
+                      %br=f.label :comment
+                      = f.text_area :comment, id: "comment#{i}", required: true 
+                      = f.hidden_field :reviewable_type, value: 'MenuItem'
+                      = f.hidden_field :reviewable_id, value: @order.order_details[i].menu_item_id
+                :javascript
+                  $('#comment#{i}').text('');
+          .row
+            .modal-footer
+              %center
+                -unless skipped?(@order)
+                  =link_to 'Not interested', skip_review_path(order: @order), remote: true, id: 'close', class: 'btn waves-effect waves-light red lighten-2 modal-close'
+                %button.btn.btn-info.modal-close{'data-dismiss': 'modal', type: 'button'}Ask me later
+                %button.btn.btn-primary{type: 'submit'}Submit

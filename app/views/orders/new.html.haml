@@ -1,11 +1,15 @@
 - content_for :inner_header do
   .ht-top-section
     .row
-      %h3.black-text.center-align #{@terminal.name}
+      %h3.center-align.terminal-name=link_to @terminal.name, show_comments_path(type_id: @terminal.id, type: @terminal.class), remote: true
       .center
         = render 'show_rating_stars', rating: @avg_rating
+        %span
+          = link_to show_comments_path(type_id: @terminal.id, type: @terminal.class), remote: true, class: 'blue-text' do
+            %i.material-icons{class: 'tiny comment',"aria-label" => "Add Reviews",}comment
+            %i.comment_font Reviews
       .center-align
-        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text', data: { turbolinks: false }
+        = link_to 'Changed your mind? Click to try another terminal...', vendors_path, class: 'blue-text'
 
 .container
   .row

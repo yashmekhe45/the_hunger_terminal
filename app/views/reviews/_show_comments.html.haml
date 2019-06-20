@@ -6,6 +6,8 @@
           %h5.modal-title.name_color.center-align What foodies think about #{@item.name}
           %span.center-align
             = render 'orders/show_rating_stars', rating: @item.avg_rating
+          %span.review-count
+            #{@item.reviews.count} reviews
         .col.s12.m2
           %button.close.modal-close{"aria-label" => "Close", "data-dismiss": "modal", :type => "button"}
             %span{'aria-hidden': 'true'}X
@@ -18,25 +20,25 @@
             %br
             -if can?(:destroy, review)
               %li.li_style
-                %span.bold_txt
+                %span
                   = review.reviewer.name
                 %span
                   = render 'orders/show_rating_stars', rating: review.rating  
-                %span.comment_italic
+                %span.comment_italic.bold_txt
                   = review.comment
                 %br
                 %span.date_color
                   = review.created_at.strftime("%b %d, %Y")
-                  = link_to reviews_path(id: review.id,item_id: @item.id), method: :delete, id:"delete", remote: true do
+                  = link_to reviews_path(id: review.id, type_id: @item.id, type:@item.class), method: :delete, id:"delete", remote: true, :data => {:confirm => 'Are you sure?'} do
                     %i.material-icons.icon_color{class: 'delete_icon delete_forever',"aria-label"   => "Delete Reviews"}delete_forever
                 %hr
             -else
               %li.li_style
-                %span.bold_txt
+                %span
                   = review.reviewer.name
                 %span
                   = render 'orders/show_rating_stars', rating: review.rating  
-                %span.comment_italic
+                %span.bold_txt.comment_italic
                   = review.comment
                 %br 
                 %span.date_color

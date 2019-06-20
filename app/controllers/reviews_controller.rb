@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
 
-before_action :find_menu_item_with_reviews, only:[:show_comments, :destroy]
+before_action :find_reviews_with_terminal_or_menu_item, only:[:show_comments, :destroy]
 
   def create
     review_params[:reviews].each do |review_param|
@@ -49,8 +49,12 @@ before_action :find_menu_item_with_reviews, only:[:show_comments, :destroy]
     params.permit(reviews: [:rating, :comment, :reviewable_type, :reviewable_id, :company_id])
   end
 
-  def find_menu_item_with_reviews
-    @item = MenuItem.find(params[:item_id])
+  def find_reviews_with_terminal_or_menu_item
+    if params[:type].eql?("MenuItem")
+      @item = MenuItem.find(params[:type_id])
+    else
+      @item = Terminal.find(params[:type_id])
+    end
     @reviews = @item.reviews.order('created_at DESC')
   end
 end

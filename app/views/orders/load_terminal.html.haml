@@ -62,7 +62,11 @@
     $(document).on('turbolinks:load',function(){
       $('#enter_review').modal('open');
     });
-
+- else 
+  :javascript
+    $(document).on('turbolinks:load',function(){
+      $('#enter_review').modal('close');
+    }); 
 %script{:type => 'text/javascript'}
   orderTime = "#{@end_ordering_at}"
   today = new Date()

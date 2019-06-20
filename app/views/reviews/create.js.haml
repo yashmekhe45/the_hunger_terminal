@@ -1,5 +1,4 @@
-$('#enter_review').modal().hide();
-$('#history_feedback').modal().hide();
-toastr.success("Thanks for your valuable feeddback")
-$("##{@item_id}").text('Reviewed');
+$('#enter_review').modal('close');
+$('#history_feedback').modal('close');
+toastr.success("Thanks for your valuable feedback")
 $('#orderhistory').html("#{j(render 'orders/history_table', orders: @orders)}");

@@ -80,6 +80,10 @@ class Terminal < ApplicationRecord
     Review.exists?(reviewer_id: user_id, reviewable_type: "Terminal", reviewable_id: self.id)
   end
 
+  def avg_rating
+    reviews.average(:rating)
+  end
+
   private
 
   def remove_space

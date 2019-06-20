@@ -42,7 +42,6 @@ class OrdersController < ApplicationController
     @veg = Order.veg_items(@terminal.id)
     @nonveg = Order.nonveg_items(@terminal.id)
     @tax = @terminal.tax.to_i
-    @comments = @terminal.reviews.where.not(comment: '').pluck(:comment)
     @avg_rating = @terminal.reviews.average(:rating).to_f
     add_breadcrumb @terminal.name, new_terminal_order_path
   end

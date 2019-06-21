@@ -9,48 +9,45 @@
             %div.hide-on-med-and-down#order-timer
             %span Note: There is minimum order required to be placed for some terminals.
             %br
-            %span Order will be confirmed if the confirmation possibility turns 100% (i.e all green) 
+            %span Order will be confirmed if the confirmation possibility turns 100% (i.e all green)
+            %br 
           .col.hide-on-med-and-down.s0.m2.todays-order.right
             - if todays_order
               = link_to order_path(todays_order&.id) do
                 = image_tag "hot-food.svg", class: 'order-icon'
                 = link_to "Today's Order", order_path(todays_order&.id)
 %div.shadow-top
-
-.row
-  .col.s1.m1
-  .col.s12.m10
-    - @terminals.each do |terminal|
-      .col.s12.m6.l3
-        .card.white.terminal-box
-          .card-content.black-text
-            / %span.card-title
-            - if terminal.confirmation_possibility == 100
-              .row.progress
-                .col.s2.m2
-                .col.s8.m8
-                  %text.center-align.small-text.black-text Confirmation Possibility 100%
-                  .determinate{:style => "width: #{terminal.confirmation_possibility}%"}
-                .col.s2.m2
-            - else
-              .row.progress
-                .col.s2.m2
-                  %i.amount.left.black-text ₹#{terminal.ordered_amount}
-                .col.s8.m8
-                  %text.center-align.small-text.black-text Confirmation Possibility
-                  .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
-                .col.s2.m2
-                  %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
-            %p
-              %h6.center-align.black-text= terminal.name
-              .center-align
-                = render 'show_rating_stars', rating: terminal.rating
-              .center-align
-                .thumbnail
-                  = image_tag terminal.image_url(:thumb) if terminal.image?
-                  = image_tag "enjoy_food.png" unless terminal.image?
-              .bottomFixed
-                = link_to "Order", new_terminal_order_path(terminal.id), class: "btn order-btn" 
+.container
+  .row
+    .col.s12.m12
+      - @terminals.each do |terminal|
+        .col.s12.m4.l4
+          = link_to new_terminal_order_path(terminal.id) do
+            .card.white.terminal-box.hoverable
+              .card-content.black-text
+                / %span.card-title
+                - if terminal.confirmation_possibility == 100
+                  .row.progress
+                    .col.s2.m2
+                    .col.s8.m8
+                      %text.center-align.small-text.black-text Confirmation Possibility 100%
+                      .determinate{:style => "width: #{terminal.confirmation_possibility}%"}
+                    .col.s2.m2
+                - else
+                  .row.progress
+                    .col.s2.m2
+                      %i.amount.left.black-text ₹#{terminal.ordered_amount}
+                    .col.s8.m8
+                      %text.center-align.small-text.black-text Confirmation Possibility
+                      .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
+                    .col.s2.m2
+                      %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
+                %p
+                  %h6.center-align.black-text= terminal.name
+                  .center-align
+                    .thumbnail
+                      = image_tag terminal.image_url(:thumb) if terminal.image?
+                      = image_tag "enjoy_food.png" unless terminal.image?
 
 #enter_review.modal.fade{'aria-labelledby' => 'Enter Review', role: 'dialog', tabindex: '-1', "data-backdrop" => 'false'}
 - if @order.present? && @order.ask_for_review?

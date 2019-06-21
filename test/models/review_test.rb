@@ -1,9 +1,9 @@
 require "test_helper"
 
 describe Review do
-  let(:review) { Review.new }
+  let(:review) {FactoryGirl.build(:review)}
 
   it "must be valid" do
-    value(review).must_be :valid?
+    assert review.valid?
   end
 end

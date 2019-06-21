@@ -20,7 +20,7 @@ class ReviewsControllerTest  < ActionController::TestCase
   test "show comments of a particular menu_item" do
     sign_in_new_user
     menu_item = create(:menu_item)
-    get :show_comments, params: {item_id: menu_item.id}, xhr: true
+    get :show_comments, params: {type: menu_item.class, type_id: menu_item.id}, xhr: true
     assert_response :success
   end
 
@@ -28,7 +28,7 @@ class ReviewsControllerTest  < ActionController::TestCase
     sign_in_new_user
     menu_item = create(:menu_item)
     review = create(:review)
-    delete :destroy, params: {id: review.id, item_id: menu_item.id}, format: 'js'
+    delete :destroy, params: {id: review.id, type_id: menu_item.id, type: menu_item.class}, format: 'js'
     assert_response :success
   end
 

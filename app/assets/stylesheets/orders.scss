@@ -98,3 +98,26 @@ input[type=number]::-webkit-outer-spin-button {
   position: sticky;
   top: 0;
 }
+.icon-position{
+  position: relative;
+  top: 7px;
+  color: green;
+}
+.icon-position-non-veg-tab{
+  position: relative;
+  top: 7px;
+  color: red;
+}
+.table-pos{
+  position: relative;
+  top: -17px;
+}
+.tab-li{
+  width: 50%;
+}
+.tab-th{
+  padding: 0px 4px 0px 0px;
+}
+.card-top{
+  padding: 2px 24px !important;
+}

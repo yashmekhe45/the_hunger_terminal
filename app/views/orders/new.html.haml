@@ -13,30 +13,30 @@
 
 .container
   .row
-    / - unless min_order_reached?(@terminal)
-    /   %h4 Pending orders' amount&emsp;: ₹ #{@terminal.ordered_amount}
-    /   %h4 Minimum order amount &emsp;: ₹ #{@terminal.min_order_amount}
     .col.m6.s12
       %br
       %br
-      %br
-      / .h6.black-text.center-align
-      /   Extra delivery charges may apply!
-      %ul.tabs.menu-tabs
-        %li.tab.active.green
-          %a{"data-toggle" => "tab", :href => "#veg"} Veg
-        %li.tab.red
-          %a{"data-toggle" => "tab", :href => "#nonveg"} Non-veg
-
+      %br     
   .row
-    .col.m6.s12
+    .col.m7.s12
+      %table
+        %th.tab-th
+          %ul.tabs.menu-tabs
+            %li.tab.active.teal.lighten-4.tab-li
+              %a.black-text{"data-toggle" => "tab", :href => "#veg"}
+                %span.material-icons.small.icon-position radio_button_checked
+                Veg
+            %li.tab.teal.lighten-4.tab-li
+              %a.black-text{"data-toggle" => "tab", :href => "#nonveg"}
+                %span.material-icons.small.icon-position-non-veg-tab radio_button_checked
+                Non-veg
       .div.active#veg
         = render "menu", obj: @veg
       .div#nonveg
         = render "menu", obj: @nonveg
 
 
-    .col.m6.s12.food-cart-div
+    .col.m5.s12.food-cart-div
       = form_tag terminal_orders_path do |f|
         = render 'form', f: f
 

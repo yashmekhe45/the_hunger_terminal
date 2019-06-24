@@ -161,11 +161,11 @@ class OrderTest < ActiveSupport::TestCase
   test "order should have company" do
   end
 
-  test "should return nil if terminal review present" do
+  test "should return true if terminal review present" do
     order_obj = create(:order)
     review = create(:review)
     Review.create(comment: review.comment, rating: review.rating, company_id:order_obj.company_id, reviewer_id: order_obj.user_id, reviewable_type: "Terminal",reviewable_id: order_obj.terminal_id)
-    assert_equal(order_obj.has_terminal_review?, nil)
+    assert_equal(order_obj.terminal.is_reviewed?(order_obj.user_id), true)
   end
 
   test "return true if order review is present" do

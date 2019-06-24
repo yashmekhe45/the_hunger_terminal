@@ -26,8 +26,12 @@
           toastr['#{type}']('#{f[1]}');
     .div{:class => "#{user_signed_in? ? 'ht-inner-section' : ''}" }
       = yield :inner_header
-      .ht-middle-section 
-        = yield
+      - if type_of_page
+        .ht-middle-section 
+          = yield
+      - else
+        .ht-middle-section-bg
+          = yield
     -if user_signed_in? && request.original_url != root_url
       =render "layouts/backlink"
   %footer.container-fluid.text-center

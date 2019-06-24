@@ -1,4 +1,5 @@
 $('#enter_review').modal('close');
 $('#history_feedback').modal('close');
 toastr.success("Thanks for your valuable feedback")
+$('#terminals').html("#{j(render 'orders/terminals', terminals: @terminals)}");
 $('#orderhistory').html("#{j(render 'orders/history_table', orders: @orders)}");

@@ -1,0 +1,31 @@
+.row
+  .col.s12.m12
+    - terminals.each do |terminal|
+      .col.s12.m4.l4
+        = link_to new_terminal_order_path(terminal.id) do
+          .card.white.terminal-box.hoverable
+            .card-content.black-text
+              / %span.card-title
+              - if terminal.confirmation_possibility == 100
+                .row.progress
+                  .col.s2.m2
+                  .col.s8.m8
+                    %text.center-align.small-text.black-text Confirmation Possibility 100%
+                    .determinate{:style => "width: #{terminal.confirmation_possibility}%"}
+                  .col.s2.m2
+              - else
+                .row.progress
+                  .col.s2.m2
+                    %i.amount.left.black-text ₹#{terminal.ordered_amount}
+                  .col.s8.m8
+                    %text.center-align.small-text.black-text Confirmation Possibility
+                    .determinate{:style => "width: #{terminal.confirmation_possibility}%"} 
+                  .col.s2.m2
+                    %i.amount.right.black-text ₹#{terminal.min_order_amount.to_i}
+              %p
+                %h6.center-align.black-text= terminal.name
+                .center-align
+                  = render 'orders/show_rating_stars', rating: terminal.avg_rating
+                  .thumbnail
+                    = image_tag terminal.image_url(:thumb) if terminal.image?
+                    = image_tag "enjoy_food.png" unless terminal.image?

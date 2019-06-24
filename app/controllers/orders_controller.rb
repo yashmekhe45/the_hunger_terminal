@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
 
   def load_terminal
     @terminals = Terminal.where(active: true, company: current_user.company)
-                         .select(:id, :name, :min_order_amount,
+                         .select(:id, :name, :image, :min_order_amount,
                                  :tax, 'avg(reviews.rating) as rating')
                          .left_outer_joins(:reviews)
                          .group(:id)
@@ -33,6 +33,10 @@ class OrdersController < ApplicationController
     @end_ordering_at = current_user.company.end_ordering_at.strftime('%H:%M:%S')
     @review = Review.new
     @order = current_user.orders.last
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

@@ -45,6 +45,7 @@
                 %p
                   %h6.center-align.black-text= terminal.name
                   .center-align
+                    = render 'show_rating_stars', rating: terminal.avg_rating
                     .thumbnail
                       = image_tag terminal.image_url(:thumb) if terminal.image?
                       = image_tag "enjoy_food.png" unless terminal.image?

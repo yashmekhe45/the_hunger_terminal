@@ -132,6 +132,7 @@ Landline.required:after {
     background-size: cover;
     min-height: 120vh;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     
     h3{
       margin-top: 0px;
@@ -279,7 +280,8 @@ Landline.required:after {
   background-image: url(/assets/food_bg_without_food.jpg);
   background-size: cover;
   min-height: 120vh;
-  background-repeat: no-repeat;  
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
 }
 .terminal-box:hover{
   opacity: 0.9;

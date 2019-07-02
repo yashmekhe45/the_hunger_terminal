@@ -1,0 +1,13 @@
+version: '3'
+services:
+  postgresdb:
+    image: postgres
+
+  web:
+    image: hungerterminal-staging
+    ports:
+      - "8000:80"
+    links:
+      - postgresdb
+    depends_on:
+      - postgresdb

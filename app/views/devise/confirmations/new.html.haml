@@ -5,7 +5,7 @@
       .panel.panel-success
         .panel-heading
           .panel-title
-            %h2 Resend confirmation instructions
+            %h4.white-text Resend confirmation instructions
         .panel-body
           = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| 
             = f.error_notification 

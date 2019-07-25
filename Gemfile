@@ -56,6 +56,16 @@ gem 'carrierwave-aws'
 gem 'materialize-sass'
 gem 'material_icons'
 
+# versioning Rails based RESTful APIs. Read more: https://github.com/bploetz/versionist
+gem 'versionist'
+
+# A lightning fast JSON:API serializer. Read more: https://github.com/Netflix/fast_jsonapi
+gem 'fast_jsonapi'
+
+# Pretty prints Ruby objects. Read more: https://github.com/awesome-print/awesome_print
+gem 'awesome_print'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment

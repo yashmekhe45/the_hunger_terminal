@@ -65,6 +65,10 @@ gem 'fast_jsonapi'
 # Pretty prints Ruby objects. Read more: https://github.com/awesome-print/awesome_print
 gem 'awesome_print'
 
+# Generating jwt token. Read more: https://github.com/jwt/ruby-jwt 
+gem 'jwt'
+
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

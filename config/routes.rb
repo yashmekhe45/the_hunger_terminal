@@ -106,5 +106,16 @@ Rails.application.routes.draw do
 
   # delete 'admin_dashboard/:id(.:format)', :to => 'admin_dashboard#destroy', :as => 'admin_dashboard_order_detail_remove'
   # delete 'edit/order_detail_id' => 'orders#order_detail_remove',:as => 'order_detail_remove'
+
+  # For building Api's
+  namespace :api do
+    api_version(:module => "v1", :header => {:name => "Accept", :value => "application/vnd.hunger-terminal.com; version=1"}) do
+      #match '/foos.(:format)' => 'foos#index', :via => :get
+      # match '/foos_no_format' => 'foos#index', :via => :get
+      match '/sign_in' => 'sign_in#signin', :via => :post
+      # resources :bars
+    end
+  end
+
   
 end

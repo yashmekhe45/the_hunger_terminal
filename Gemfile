@@ -68,10 +68,14 @@ gem 'awesome_print'
 # Generating jwt token. Read more: https://github.com/jwt/ruby-jwt 
 gem 'jwt'
 
+# Generating api documentation. Read more: https://github.com/zipmark/rspec_api_documentation
+gem 'rspec_api_documentation'
+
+# A simple, standardized way to build and use Service Objects (aka Commands) in Ruby Read more: https://github.com/nebulab/simple_command
+gem 'simple_command'
 
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :development, :test do
@@ -81,6 +85,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'webmock'
+  gem 'rspec-rails'
 end
 
 group :development do

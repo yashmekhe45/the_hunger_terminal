@@ -1,24 +1,18 @@
 class Api::V1::SignInController < ApiController
+	
+	skip_before_action :authenticate_request
 
-	def signin
-		@user = User.find_by( email: permitted_params[:email] )
-		if !(@user)
-			render json: { message:"User not found!" },status:404
-			return
-		end
-		if @user.valid_password?(permitted_params[:password])      
-			render json: { data: generate_auth_token, message:"Sign in successfull!" }, status: 200
-		else
-			render json: { message:"Sign in unsuccessful!" }, status: 404
-		end
-	end
+ 	def authenticate
+   	command = AuthenticateUser.call(permitted_params[:email], permitted_params[:password])
 
-	def generate_auth_token
-		payload = { id: @user.id, exp: 1.hours.from_now }  
-		JWT.encode(payload, "Secret_key", "HS256")
-	end
+   	if command.success?
+     	render json: { auth_token: command.result, message: "Sign in Successful!" }, status: 200
+   	else
+     	render json: { error: command.errors, message: "Sign in Unsuccessful!" }, status: 404
+   	end
+ 	end
 
-	private 
+ 	private 
 
 	def permitted_params
 		params.require(:user).permit(:email, :password)

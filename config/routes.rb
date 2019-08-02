@@ -112,7 +112,8 @@ Rails.application.routes.draw do
     api_version(:module => "v1", :header => {:name => "Accept", :value => "application/vnd.hunger-terminal.com; version=1"}) do
       #match '/foos.(:format)' => 'foos#index', :via => :get
       # match '/foos_no_format' => 'foos#index', :via => :get
-      match '/sign_in' => 'sign_in#signin', :via => :post
+      match '/sign_in' => 'sign_in#authenticate', :via => :post
+      match '/vendors' => 'vendor_listing#load_terminals', :via => :get
       # resources :bars
     end
   end

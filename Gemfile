@@ -71,10 +71,6 @@ gem 'jwt'
 # Generating api documentation. Read more: https://github.com/zipmark/rspec_api_documentation
 gem 'rspec_api_documentation'
 
-# A simple, standardized way to build and use Service Objects (aka Commands) in Ruby Read more: https://github.com/nebulab/simple_command
-gem 'simple_command'
-
-
 # Use ActiveModel has_secure_password
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

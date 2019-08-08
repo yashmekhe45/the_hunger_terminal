@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::SignInController, type: :controller do
-
+	
 	before do
 		@test_user = FactoryGirl.create(:user)
 	end

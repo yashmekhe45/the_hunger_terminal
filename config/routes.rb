@@ -110,11 +110,9 @@ Rails.application.routes.draw do
   # For building Api's
   namespace :api do
     api_version(:module => "v1", :header => {:name => "Accept", :value => "application/vnd.hunger-terminal.com; version=1"}) do
-      #match '/foos.(:format)' => 'foos#index', :via => :get
-      # match '/foos_no_format' => 'foos#index', :via => :get
       match '/sign_in' => 'sign_in#authenticate', :via => :post
       match '/vendors' => 'vendor_listing#load_terminals', :via => :get
-      # resources :bars
+      match '/terminals/:terminal_id/menu_items' => 'menu_listing#load_menu', :via => :get
     end
   end
 

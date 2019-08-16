@@ -56,8 +56,22 @@ gem 'carrierwave-aws'
 gem 'materialize-sass'
 gem 'material_icons'
 
+# versioning Rails based RESTful APIs. Read more: https://github.com/bploetz/versionist
+gem 'versionist'
+
+# A lightning fast JSON:API serializer. Read more: https://github.com/Netflix/fast_jsonapi
+gem 'fast_jsonapi'
+
+# Pretty prints Ruby objects. Read more: https://github.com/awesome-print/awesome_print
+gem 'awesome_print'
+
+# Generating jwt token. Read more: https://github.com/jwt/ruby-jwt 
+gem 'jwt'
+
+# Generating api documentation. Read more: https://github.com/zipmark/rspec_api_documentation
+gem 'rspec_api_documentation'
+
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :development, :test do
@@ -67,6 +81,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'webmock'
+  gem 'rspec-rails'
 end
 
 group :development do
